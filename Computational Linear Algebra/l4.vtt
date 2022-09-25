@@ -1,0 +1,2732 @@
+WEBVTT
+
+00:00.000 --> 00:10.620
+ Okay it's 1105. I'm gonna get started. So we're finishing up topic modeling and
+
+00:10.620 --> 00:24.540
+ first just can someone remind us what the SVD is? Brad? Oh wait, hold on for the
+
+00:24.540 --> 00:53.400
+ microphone. Exactly, yes. So singular value decomposition you get a matrix of
+
+00:53.400 --> 00:58.420
+ orthonormal columns and then in the center there's a diagonal matrix and as
+
+00:58.420 --> 01:03.120
+ Brad said it's got the singular values in descending order and then third
+
+01:03.120 --> 01:09.320
+ matrix U is orthonormal rows. And so we were talking the end of last time about
+
+01:09.320 --> 01:16.920
+ how we could use a randomized SVD to get the truncated form a lot faster. And so
+
+01:16.920 --> 01:22.620
+ kind of the truncated so full SVD you're getting you know you're able to fully
+
+01:22.620 --> 01:27.660
+ reconstruct your original data matrix which might be useful but if you're
+
+01:27.660 --> 01:30.880
+ trying to do data compression or you just want to do something faster you
+
+01:30.880 --> 01:33.900
+ probably don't need all of that and so it'd be quicker to not calculate the
+
+01:33.900 --> 01:40.440
+ whole thing. So I wanted to remind you that full SVD is slow so this is the
+
+01:40.440 --> 01:45.720
+ calculation back from the very beginning of this notebook and again to remind you
+
+01:45.720 --> 01:50.080
+ vectors this is actually I'll ask you what is a vectors this is kind of the
+
+01:50.080 --> 01:55.040
+ matrix we've been looking at for the past three days in notebook two. Does
+
+01:55.040 --> 01:57.520
+ anyone remember?
+
+02:02.680 --> 02:14.000
+ What data set we're looking at? Do I see your lips moving? Is that a...
+
+02:14.000 --> 02:26.360
+ Thanks Tim. So this is the news groups data set so it's kind of posts that
+
+02:26.360 --> 02:30.800
+ people have written on these message boards on the internet in different
+
+02:30.800 --> 02:35.280
+ categories and our rows are the different words and the columns are the
+
+02:35.280 --> 02:42.280
+ particular post. So when we did the SVD on it using SciPy's implementation this
+
+02:42.280 --> 02:51.240
+ is for a full one it took 28 seconds which is pretty slow. You can see that
+
+02:51.240 --> 02:56.440
+ here and I think I mentioned this before but percent time is a magic or they're
+
+02:56.440 --> 03:01.280
+ called magics in Jupyter notebooks but it's really useful to get the time of
+
+03:01.280 --> 03:05.640
+ something you're running. So then we check the shape and here we were getting
+
+03:05.640 --> 03:11.720
+ U was 2,000 by 2,000 we had 2,000 singular values and then V was 2,000 by
+
+03:11.720 --> 03:17.360
+ 26,000. However if we do the randomized SVD so suppose we were only interested
+
+03:17.360 --> 03:24.800
+ in the top five topics we run that and and this is from Scikit-learn that only
+
+03:24.800 --> 03:32.800
+ took 154 milliseconds so this is an order of magnitude faster. So that's kind
+
+03:32.800 --> 03:36.240
+ of the talk a little bit more about this but that's the idea we're closing
+
+03:36.240 --> 03:43.160
+ closing out today of doing this randomized version and it's a lot quicker.
+
+03:43.920 --> 03:48.200
+ So I looked it up this was a question last time the runtime complexity for
+
+03:48.200 --> 03:56.080
+ SVD is big O of the minimum of M squared N and MN squared. We'll be talking in a
+
+03:56.080 --> 04:00.520
+ later week about how you would actually calculate the SVD. For now we're just
+
+04:00.520 --> 04:05.960
+ going to use SciPy's implementation. We had this question of how can we speed
+
+04:05.960 --> 04:09.800
+ things up without coming up with a better implementation for finding the
+
+04:09.800 --> 04:17.000
+ SVD and our idea was to just use a smaller matrix with smaller N and so and
+
+04:17.000 --> 04:21.720
+ so this right now we're kind of explaining how the randomized SVD works.
+
+04:21.720 --> 04:27.480
+ So instead of calculating the SVD on the full matrix A which was M by N we could
+
+04:27.480 --> 04:35.480
+ just use B equals AQ and have that be M by R where R is a lot smaller than N. So
+
+04:35.480 --> 04:40.560
+ we're actually still using the same SciPy implementation of SVD we're just
+
+04:40.560 --> 04:50.060
+ multiplying our matrix to make it smaller by a random matrix and that's a
+
+04:50.060 --> 04:56.320
+ lot quicker and gives us just the information we need. Here's the
+
+04:56.320 --> 05:01.720
+ calculation again and we can see that the topics are really good. So again as a
+
+05:01.720 --> 05:20.640
+ refresher. Oh Brad? Oh that's a that's a great question. So we want B to have the
+
+05:20.640 --> 05:26.880
+ same column space as A is the hope. So yes that would be a low rank
+
+05:26.880 --> 05:47.840
+ approximation. I'm not sure that sounds like it like I actually yeah that is
+
+05:47.840 --> 05:53.280
+ that is the case that you do get it yeah best low rank approximation that's yeah
+
+05:53.280 --> 05:56.120
+ that's not what we're doing here that's a bit circular almost because in order
+
+05:56.120 --> 06:00.960
+ to do that you have to get the full SVD to know that you're taking the the best
+
+06:00.960 --> 06:05.240
+ low rank approximation. Here we want to get a low rank approximation that's kind
+
+06:05.240 --> 06:14.160
+ of good enough and then just do the SVD on that. And so well okay so a difference
+
+06:15.360 --> 06:20.000
+ so it's an approximation of the column space yeah so I guess this is another
+
+06:20.000 --> 06:24.760
+ key distinction is A and B have different dimensions because we've made
+
+06:24.760 --> 06:30.840
+ and so if A is like our giant matrix B is tall and thin so you know we've kind
+
+06:30.840 --> 06:34.480
+ of cut off all these columns so yeah this is an excellent point so B's not
+
+06:34.480 --> 06:41.200
+ actually approximating A but the the hope is that the columns of A span a
+
+06:41.200 --> 06:47.120
+ similar space to the columns of B so we're kind of using fewer columns to
+
+06:47.120 --> 07:00.880
+ hopefully span the same space. Yeah thank you. And this so and I should also say
+
+07:00.880 --> 07:04.360
+ I've kind of added so this is I tried a different perspective for talking about
+
+07:04.360 --> 07:07.840
+ the randomized SVD from the end of class last time so there's some new material
+
+07:07.840 --> 07:12.440
+ in this notebook that I am updated on github yesterday but if you have the
+
+07:12.440 --> 07:17.400
+ version from Tuesday some of this is new but I just kind of really wanted to
+
+07:17.400 --> 07:21.560
+ emphasize the speed and the fact that we haven't found a new way of finding the
+
+07:21.560 --> 07:27.680
+ SVD yet we're just kind of taking a smaller matrix to speed things up. And
+
+07:27.680 --> 07:32.320
+ then this is from the Facebook research blog post that I keep referencing that
+
+07:32.320 --> 07:37.320
+ had the nice colorful picture and they ran some a few cases that I wanted to
+
+07:37.320 --> 07:45.040
+ highlight for benchmarks but they looked at large dense matrices that were up to
+
+07:45.040 --> 07:51.040
+ a hundred thousand by two hundred thousand in size. Large sparse matrices
+
+07:51.040 --> 07:54.940
+ up to ten to the seventh by ten to the seventh in size and those had ten to the
+
+07:54.940 --> 08:00.280
+ ninth nonzero elements and then they also looked at Apache's sparse
+
+08:00.280 --> 08:05.840
+ distributed SVD implementation and they just wanted rank ten approximations so
+
+08:05.840 --> 08:12.640
+ for rank ten calculating out a matrix that is ten million by ten million is
+
+08:12.640 --> 08:19.200
+ really going to be excessive and so you can see and so our pack is kind of state
+
+08:19.200 --> 08:25.800
+ of the art like it's a matrix factorization package that is widely
+
+08:25.800 --> 08:29.200
+ used so this is not saying that kind of our pack is bad it's just kind of like
+
+08:29.200 --> 08:34.520
+ how slow it is to fully do these things and they found that it was one second to
+
+08:34.520 --> 08:39.220
+ do the randomized version versus a hundred seconds for ten to the sixth by
+
+08:39.220 --> 08:43.760
+ ten to the fifth matrices and then it was five seconds versus sixty three
+
+08:43.760 --> 08:52.800
+ minutes for ten to this oh for the this is like a denser version so yeah I just
+
+08:52.800 --> 08:56.000
+ wanted to show those numbers are a really big improvement because you yeah
+
+08:56.000 --> 09:01.480
+ five seconds versus sixty three minutes is huge and that's also I think um it's
+
+09:01.480 --> 09:07.840
+ a really compelling detail when people include things like that in blog post I
+
+09:08.680 --> 09:13.060
+ should say in preparing I've been preparing the next lesson I had found a
+
+09:13.060 --> 09:17.120
+ blog post that um it had this like threaded implementation to like run
+
+09:17.120 --> 09:20.420
+ something in parallel and it was just like oh this should be faster but they
+
+09:20.420 --> 09:25.220
+ didn't have any like actual times and so I used their code and ran it and it was
+
+09:25.220 --> 09:29.200
+ actually slower with the parallel processing and so that's something it's
+
+09:29.200 --> 09:34.800
+ very valuable to definitely run it and tell people that times yeah so that's
+
+09:34.800 --> 09:37.720
+ that's impressive and then we're not gonna get into too much detail in this
+
+09:37.720 --> 09:44.480
+ but I'm kind of the idea that should help justify why this why this is okay
+
+09:44.480 --> 09:50.920
+ is the Johnson Linden straws lemma and that is that states that a small set of
+
+09:50.920 --> 09:55.960
+ points in a high dimensional space can be embedded in a space of a much lower
+
+09:55.960 --> 10:01.240
+ dimension in such a way that distances between the points are nearly preserved
+
+10:01.240 --> 10:06.400
+ and that idea of distances between points being preserved is really about
+
+10:06.400 --> 10:10.400
+ preserving the structure kind of if you have a data set that's in a ton of
+
+10:10.400 --> 10:14.640
+ dimensions you should be able to put it into fewer dimensions and kind of keep
+
+10:14.640 --> 10:19.580
+ the structure and that's what we're doing here with a and B in a sense of
+
+10:19.580 --> 10:35.720
+ Tim yeah yeah projection is a good way to think about it yeah protecting it oh
+
+10:35.720 --> 11:03.960
+ another question yes so with the with the column space going from from a to B
+
+11:03.960 --> 11:12.760
+ so a is the the large one actually let me just draw that so kind of a is this
+
+11:12.760 --> 11:21.360
+ size B is the same height but thinner so here you can think of the data points is
+
+11:21.360 --> 11:28.000
+ the rows and so the idea is kind of you've gone from if this has and columns
+
+11:28.000 --> 11:35.400
+ and this has our columns and then they're both m tall you have m data
+
+11:35.400 --> 11:40.360
+ points and that those m data points are still have the same structure between
+
+11:40.360 --> 11:44.040
+ them or the same distance between them whether you're looking at a where it's
+
+11:44.040 --> 12:04.600
+ n-dimensional or B where it's just r-dimensional yes yeah any other
+
+12:04.600 --> 12:08.600
+ questions and we're not gonna we're definitely not gonna prove the Johnson
+
+12:08.600 --> 12:13.760
+ Linden Strass lemma in here or even if some of the details I think last time
+
+12:13.760 --> 12:20.040
+ and it's okay if you don't have all the steps from last time of kind of this
+
+12:20.040 --> 12:24.600
+ process of how we did the randomized SVD I mostly want you to kind of get this
+
+12:24.600 --> 12:28.560
+ general intuition of why it might be okay and they were taking this random
+
+12:28.560 --> 12:36.960
+ projection all right
+
+12:39.280 --> 12:43.720
+ yeah so going back so we looked at this code last time that I want to go through
+
+12:43.720 --> 12:51.240
+ it again briefly so to kind of implement the randomized SVD first we created a
+
+12:51.240 --> 12:57.880
+ randomized range finder and here this is
+
+12:59.720 --> 13:10.920
+ this is kind of getting our mapping kind of well getting the random the random
+
+13:10.920 --> 13:16.440
+ matrix that we were going to multiply our original matrix by and to do that we
+
+13:16.440 --> 13:21.600
+ randomly generate a matrix and then you could ignore this for now we take a QR
+
+13:21.600 --> 13:27.840
+ factorization on a and what that does it actually check does anyone remember what
+
+13:27.840 --> 13:42.720
+ the QR factorization gives you so you get two matrices back exactly yeah so
+
+13:42.720 --> 13:49.320
+ you get back orthogonal matrix in an upper triangular and that orthogonal
+
+13:49.320 --> 13:53.880
+ matrix is the one we'll use for our random or sorry we're taking so we're
+
+13:53.880 --> 13:59.480
+ taking randomly generated matrix Q multiply that by a and then take the QR
+
+13:59.480 --> 14:09.400
+ on that and then we call that from randomized SVD and does anyone remember
+
+14:09.400 --> 14:14.200
+ so number of components is the kind of number of singular values we want or the
+
+14:14.200 --> 14:18.440
+ ultimate number of topics for our topic modeling what is the number of over
+
+14:18.440 --> 14:40.240
+ samples anyone okay this is the this is the buffer that we kind of added on so
+
+14:40.240 --> 14:44.600
+ we're saying you know if I want five topics it's actually safer we don't want
+
+14:44.600 --> 14:49.640
+ to just compute like if we make B just have five columns that's actually
+
+14:49.640 --> 14:53.520
+ cutting it a bit close that we're really gonna get the five best singular values
+
+14:53.520 --> 14:58.000
+ of a from that and so what we'll do is we'll add some more on and be like okay
+
+14:58.000 --> 15:02.800
+ let's actually call calculate 15 columns and 15 singular values and then we'll
+
+15:02.800 --> 15:07.080
+ take the top five out of that so we'll still return five if that's our desired
+
+15:07.080 --> 15:11.240
+ amount but we're just kind of adding this safety buffer because we do have
+
+15:11.240 --> 15:14.560
+ some randomness and we don't know that we're gonna get the the best five
+
+15:14.560 --> 15:22.760
+ singular values yeah and so that's them that's mostly it so you'll notice we're
+
+15:22.760 --> 15:28.280
+ calling the same sci-fi lineage SVD method in here it's just now we're
+
+15:28.280 --> 15:38.240
+ calling it on B which is a lot narrower than a oh and then I should roll this up
+
+15:38.240 --> 15:45.020
+ so then an exercise that I wanted you to try was to write a loop to calculate the
+
+15:45.020 --> 15:52.400
+ air of your decomposition as you vary the number of topics and so and let's
+
+15:52.400 --> 15:57.720
+ take a few minutes to do this but what you're doing here is just using the
+
+15:57.720 --> 16:02.700
+ randomized SVD you don't have to change its implementation at all but kind of
+
+16:02.700 --> 16:07.340
+ decompose your matrix recompose it and then see what its air is from the
+
+16:07.340 --> 16:12.880
+ original matrix and this is a this would be useful if you're doing data
+
+16:12.880 --> 16:16.560
+ compression or something kind of to see you know how much of the original are
+
+16:16.560 --> 16:22.480
+ you capturing and something with and this one did you kind of loop through
+
+16:22.480 --> 16:27.280
+ through a few numbers to see how it's changing remember we originally had
+
+16:27.280 --> 16:33.120
+ 25,000 columns so we would expect that five singular values is not going to
+
+16:33.120 --> 16:38.760
+ capture everything so the air will be relatively high
+
+16:44.840 --> 16:56.040
+ hey let's go ahead and talk about the answer to this one and actually can you
+
+16:56.040 --> 17:01.840
+ remind me did I leave the plot in the notebooks that you had on github okay so
+
+17:01.840 --> 17:07.120
+ what do you what do you notice about the plot come back to the code in a moment
+
+17:13.280 --> 17:25.200
+ right okay yeah yeah the air drops off I thought surprisingly quickly for this
+
+17:25.200 --> 17:30.440
+ that yeah you have a lot of air initially but well really I mean around
+
+17:30.440 --> 17:34.840
+ 50 is like kind of the steepest but definitely past like a hundred it's
+
+17:34.840 --> 17:41.440
+ really a lot lower and kind of not changing as rapidly so you can see like
+
+17:41.440 --> 17:46.120
+ kind of the first the first many singular first few singular values
+
+17:46.120 --> 17:51.320
+ giving you a lot of a lot of power kind of capturing a lot but as you go on the
+
+17:51.320 --> 17:54.600
+ additional singular values aren't capturing as much it's kind of what this
+
+17:54.600 --> 18:01.160
+ is showing but so what I what I did to to get this was have a loop where I was
+
+18:01.160 --> 18:08.760
+ taking the randomized SVD of I as I is increasing and I did this in steps of 20
+
+18:08.760 --> 18:14.800
+ and then I got the select returns a US and V I created the reconstructed matrix
+
+18:14.800 --> 18:21.560
+ using you times NP dot diag turns s which is just an array into a diagonal
+
+18:21.560 --> 18:28.880
+ matrix by filling in zeros and an NP dot diag also if you give it a matrix and
+
+18:28.880 --> 18:33.040
+ not an array then it'll return an array of what was on the diagonal but here I'm
+
+18:33.040 --> 18:38.840
+ using this from array to a matrix functionality of it so I'm just doing U
+
+18:38.840 --> 18:46.040
+ times the matrix form times V and then I'm saying that the air is the norm of
+
+18:46.040 --> 18:51.480
+ the vectors minus reconstructed Jeremy
+
+18:51.480 --> 18:55.160
+ I mentioned a trick that I like
+
+18:55.160 --> 19:17.720
+ Oh yeah there any questions about this
+
+19:30.840 --> 19:35.040
+ alright are there any further questions on topic modeling before we start on
+
+19:35.040 --> 19:56.280
+ background removal and robust PCA Vincent oh oh sure yeah Kelsey
+
+20:12.880 --> 20:21.920
+ sorry oh down here yes well so that's actually let me go to the equations I
+
+20:21.920 --> 20:32.520
+ think show it better and these and I apologize one source had everything kind
+
+20:32.520 --> 20:37.360
+ of transposed from the other sources so this may not be consistent but the idea
+
+20:37.360 --> 20:50.200
+ here is that oh horrible highlighting do this so you know we've got our skinnier
+
+20:50.200 --> 20:56.320
+ B and we take the SVD on that and then what we're interested in is the SVD of A
+
+20:56.320 --> 21:02.920
+ and so we're kind of plugging back in remember from last time we said a is
+
+21:02.920 --> 21:09.200
+ approximately Q times Q transpose a where Q ends up being you know this
+
+21:09.200 --> 21:14.160
+ random matrix we've used and the Q transpose a is how we got our narrow
+
+21:14.160 --> 21:19.760
+ matrix B so we're just kind of plugging in okay this is B let's kind of plug
+
+21:19.760 --> 21:28.480
+ that into here for Q transpose a and that's how we get Q times basically the
+
+21:28.480 --> 21:31.240
+ SVD of B
+
+21:39.160 --> 21:42.360
+ any other questions
+
+21:42.360 --> 21:44.360
+ oh
+
+21:48.680 --> 21:51.960
+ okay Oh Tim
+
+21:56.920 --> 21:59.980
+ yes
+
+21:59.980 --> 22:09.380
+ You said you were going to explain later the for loop there, like what does that mean?
+
+22:09.380 --> 22:18.380
+ So I was putting that off, but as a kind of as an intuitive idea, what that's doing is
+
+22:18.380 --> 22:25.300
+ by taking additional powers of A, you're getting something that's more, kind of even more in
+
+22:25.300 --> 22:36.300
+ the range of A. Kind of by taking extra powers of A, hopefully that's helping you kind of
+
+22:36.300 --> 22:40.100
+ really get the important components of the range of A, because remember here we're trying
+
+22:40.100 --> 22:44.980
+ to find something that has the same, you know, we want B to have the same range as A, and
+
+22:44.980 --> 22:47.860
+ so additional powers of A help us do that.
+
+22:47.860 --> 22:54.820
+ But if we were just to take powers of A without, you know, here we're using this LU decomposition,
+
+22:54.820 --> 22:59.280
+ the reason we're doing that is just taking powers of A, we would have the problem of
+
+22:59.280 --> 23:04.300
+ either the matrix will kind of be like exploding as its values got larger and larger, going
+
+23:04.300 --> 23:09.620
+ towards infinity, or they would be shrinking to zero, and either way that's a problem.
+
+23:09.620 --> 23:14.460
+ And so this LU factorization is having the effect of normalizing it.
+
+23:14.460 --> 23:16.020
+ Yes, yeah.
+
+23:16.020 --> 23:17.020
+ Jeremy?
+
+23:17.020 --> 23:27.980
+ I just wanted to mention, I feel like Johnson and Stroustle is like a super power to have.
+
+23:27.980 --> 23:32.980
+ Since I've known it like 10, 15 years ago, you can use everything, like any time you're
+
+23:32.980 --> 23:40.980
+ doing a data science model of any kind and you have more columns than you can deal with,
+
+23:40.980 --> 23:47.980
+ you know, like logistic regression, too many columns, overfitting, too slow, run it by
+
+23:47.980 --> 23:54.780
+ a random matrix, less columns, and keep going, it's like, it's amazing, you can use it everywhere.
+
+23:54.780 --> 24:00.380
+ I was just going to bring up the Wikipedia page because I like that they list a ton of
+
+24:00.380 --> 24:05.900
+ different fields where they're saying this lemma has uses in compressed sensing, manifold
+
+24:05.900 --> 24:11.220
+ learning, dimensionality reduction, and graph embedding, but I just kind of like liked that
+
+24:11.220 --> 24:13.740
+ like list of places where this is useful.
+
+24:13.740 --> 24:19.540
+ Yeah, like manifold learning might contain some sort of machine learning and stuff, too.
+
+24:19.540 --> 24:25.660
+ Yeah, thank you.
+
+24:25.660 --> 24:28.300
+ Any other final SVD and NMF questions?
+
+24:28.300 --> 24:34.060
+ And we'll be returning to SVD, we're both going to use it in other applications and
+
+24:34.060 --> 24:38.780
+ then we'll learn more about how it's calculated.
+
+24:38.780 --> 24:45.860
+ All right, let's start on background removal.
+
+24:45.860 --> 24:47.740
+ This is notebook three.
+
+24:47.740 --> 24:53.900
+ I'm really excited about this one, background removal with robust PCA.
+
+24:53.900 --> 25:01.580
+ And so I'm showing here, this is our goal that we'll be working on in the notebook is
+
+25:01.580 --> 25:08.340
+ we have a surveillance video, so you see here there's some figures walking across the screen
+
+25:08.340 --> 25:13.060
+ and we want to be able to pick out what's the background and what are the people.
+
+25:13.060 --> 25:16.700
+ So we've taken the picture on the left and broken it into this middle picture and the
+
+25:16.700 --> 25:18.580
+ picture on the right.
+
+25:18.580 --> 25:20.900
+ That's the goal that we're going for.
+
+25:20.900 --> 25:28.540
+ So I'm using something called the real video of three data set, here is a link to it if
+
+25:28.540 --> 25:33.340
+ you want to download it so that you can do this as well.
+
+25:33.340 --> 25:37.340
+ And I also found some other sources of video data sets, it was something I kind of had
+
+25:37.340 --> 25:42.860
+ to look for for a while, because I would be curious if you do try this on a different
+
+25:42.860 --> 25:49.300
+ video data set to see how your results are.
+
+25:49.300 --> 25:57.900
+ So I had never worked with video data in Python before this, and I found the MoviePy library,
+
+25:57.900 --> 26:01.260
+ which seemed really neat and actually kind of made me want to do more work with videos,
+
+26:01.260 --> 26:05.580
+ because here we kind of just use it briefly to convert this into a matrix.
+
+26:05.580 --> 26:15.060
+ So yeah, I've got my imports, and then I wanted to show you this, you can actually watch the
+
+26:15.060 --> 26:20.140
+ video or at least part of it, it was too long to watch the whole thing.
+
+26:20.140 --> 26:26.660
+ So there you can see people walking, and this is in color, but I converted it to black and
+
+26:26.660 --> 26:33.660
+ white to kind of keep things simple or simpler.
+
+26:33.660 --> 26:53.780
+ All right, and that's it, that's our data.
+
+26:53.780 --> 27:01.620
+ And this video is 113 seconds long total.
+
+27:01.620 --> 27:09.360
+ So I have some helper methods, and we're not going to super go into those, but here really
+
+27:09.360 --> 27:16.980
+ it's mostly, I'm just using, so the video library has this get frame that I'll use to
+
+27:16.980 --> 27:22.940
+ kind of pick out specific frames, and then we're stacking those up to form a matrix.
+
+27:22.940 --> 27:31.300
+ And I think that's actually kind of easier to see from, I have a few pictures.
+
+27:31.300 --> 27:39.980
+ So this is a single frame, one point in time, and I actually, I guess I should first note,
+
+27:39.980 --> 27:45.820
+ so I scale this, and I tried doing it with kind of the full resolution, and it was really
+
+27:45.820 --> 27:48.900
+ slow, but I do have some pictures from the high resolution, although I don't recommend
+
+27:48.900 --> 27:49.900
+ that.
+
+27:49.900 --> 27:56.980
+ But here you can enter the scale as a percentage, and so I'm just using 25 percent scale to
+
+27:56.980 --> 27:59.180
+ make it faster.
+
+27:59.180 --> 28:04.980
+ And so an image from one moment in time will be 60 pixels by 80 pixels, and we're going
+
+28:04.980 --> 28:07.620
+ to unroll that into a single column.
+
+28:07.620 --> 28:15.300
+ So kind of each moment in time is going to be this 4,800 long column, and then we're
+
+28:15.300 --> 28:20.260
+ stacking those all together from these different points in time.
+
+28:20.260 --> 28:27.900
+ And so we end up with a matrix that's 11,300 by 4,800, representing the video.
+
+28:27.900 --> 28:37.340
+ And I wanted to show a picture of, this is what the whole video looks like.
+
+28:37.340 --> 28:43.780
+ So does anyone have ideas, what do you think those wavy black lines are?
+
+28:43.780 --> 28:48.860
+ Wait, do you want to toss the...
+
+28:48.860 --> 28:51.620
+ It's probably the people moving.
+
+28:51.620 --> 28:54.260
+ Yes, those are the people moving in the frame.
+
+28:54.260 --> 28:57.380
+ And so then what are the kind of solid horizontal lines?
+
+28:57.380 --> 28:58.380
+ The background.
+
+28:58.380 --> 29:00.300
+ The background, yeah.
+
+29:00.300 --> 29:05.660
+ So remember, each column here is a single moment in time, and so some things like that
+
+29:05.660 --> 29:11.620
+ sign are never moving and probably just show up as kind of these horizontal white lines,
+
+29:11.620 --> 29:15.460
+ but the people do move, and so those pixels are different.
+
+29:15.460 --> 29:20.700
+ So the columns are a moment in time, or the rows?
+
+29:20.700 --> 29:22.380
+ The columns are a moment in time.
+
+29:22.380 --> 29:23.380
+ Okay.
+
+29:23.380 --> 29:28.220
+ Yeah, and this is, I think, backwards from probably what I wrote in the older version
+
+29:28.220 --> 29:33.580
+ of depending on when you last pulled from GitHub, but yeah, here the columns are a moment
+
+29:33.580 --> 29:34.580
+ in time.
+
+29:34.580 --> 29:42.020
+ Okay, is this at all related to optical flow?
+
+29:42.020 --> 29:43.020
+ What do you mean by optical flow?
+
+29:43.020 --> 29:44.020
+ Yeah, I don't really know what it is.
+
+29:44.020 --> 29:55.020
+ So it's some sort of a methodology of tracking movements through, like if you have two adjacent
+
+29:55.020 --> 30:02.700
+ frames, how do you warp one to match the next frame?
+
+30:02.700 --> 30:03.700
+ Oh, okay.
+
+30:03.700 --> 30:09.980
+ Yeah, I'm not familiar with that area, so I'm not sure if there are, because that brings
+
+30:09.980 --> 30:15.260
+ up a good point that here it's assumed that the camera is fixed, and so things are kind
+
+30:15.260 --> 30:23.260
+ of being referenced by, I don't know, everything that's at X coordinate 20, Y coordinate 30
+
+30:23.260 --> 30:28.620
+ is showing up at the exact same, when you unroll it, that's kind of 0.600, and so it's
+
+30:28.620 --> 30:31.460
+ always going to be showing up in the 600th row.
+
+30:31.460 --> 30:32.460
+ This is kind of fixed.
+
+30:32.460 --> 30:33.460
+ Jeremy?
+
+30:33.460 --> 30:38.820
+ We mentioned the other day that we look at a low-rank matrix, we tend to see lines on
+
+30:38.820 --> 30:47.900
+ it, so I guess this is showing, this is a low-rank matrix already?
+
+30:47.900 --> 30:48.900
+ This is...
+
+30:48.900 --> 30:52.900
+ I mean, it could be turned into a low-rank matrix.
+
+30:52.900 --> 30:58.300
+ Yeah, I mean, yeah, so the horizontal lines indicate that it's low-rank.
+
+30:58.300 --> 31:03.500
+ And actually, first I should ask, who can tell us what rank is, when we're talking about
+
+31:03.500 --> 31:04.500
+ matrices?
+
+31:04.500 --> 31:11.500
+ Anyone I haven't heard from, or Kelsey?
+
+31:11.500 --> 31:20.260
+ So rank is the number of independent columns.
+
+31:20.260 --> 31:21.260
+ Yes.
+
+31:21.260 --> 31:27.300
+ Yeah, so rank is the number of independent columns, and that turns out to be equal to
+
+31:27.300 --> 31:30.860
+ the number of independent rows.
+
+31:30.860 --> 31:36.740
+ Another way to think about it is, it's the dimension of the column space, or the dimension
+
+31:36.740 --> 31:42.540
+ of the row space, which again is equal to the number of linear independent columns and
+
+31:42.540 --> 31:43.540
+ rows.
+
+31:43.540 --> 31:49.580
+ Yeah, so let me just kind of go back up here.
+
+31:49.580 --> 31:53.460
+ So I definitely encourage, it's really important to be able to look at your data, and kind
+
+31:53.460 --> 31:55.740
+ of find ways to visualize it.
+
+31:55.740 --> 32:04.540
+ But here, we've created our data matrix, put that all into M, this is just a NumPy 2D array.
+
+32:04.540 --> 32:12.220
+ And then here, we're kind of just saying, let's take all values in a particular, sorry,
+
+32:12.220 --> 32:15.940
+ take all rows, and then a particular column, so that's the point in time that we're looking
+
+32:15.940 --> 32:17.060
+ at.
+
+32:17.060 --> 32:20.680
+ And we do need to reshape it, to get it kind of back into a picture.
+
+32:20.680 --> 32:25.940
+ So we've kind of unrolled it into, let me see if I kept, I might have gotten rid of
+
+32:25.940 --> 32:26.940
+ it.
+
+32:26.940 --> 32:35.100
+ At one point, I had a picture of just like a single row, which is pretty boring, because
+
+32:35.100 --> 32:39.780
+ it's just, doesn't look like anything by itself, you know.
+
+32:39.780 --> 32:43.860
+ It's black, white, gray, black, white, gray, then we kind of have to reshape it back into
+
+32:43.860 --> 32:45.580
+ our square matrix.
+
+32:45.580 --> 32:48.700
+ So NumPy dot reshape is pretty handy.
+
+32:48.700 --> 32:55.660
+ But so far, just kind of on what's in M, or this setup.
+
+32:55.660 --> 33:10.980
+ OK, and then we've just talked about SVD, so kind of remember what kind of matrices
+
+33:10.980 --> 33:14.780
+ we're getting back.
+
+33:14.780 --> 33:24.340
+ So we're gonna try first, just with a, with using randomized SVD, to see what we get.
+
+33:24.340 --> 33:31.500
+ So we put in M, and then I actually, I tried this with a few different, so the second parameter
+
+33:31.500 --> 33:36.060
+ is just telling you the number of components you went back, or the number of singular values.
+
+33:36.060 --> 33:41.980
+ And I actually felt like I got the best results with two here, but I got back U, S, and V.
+
+33:41.980 --> 33:50.340
+ And then I said my low-rank matrix is U times NP dot diagonal S times V, and this is what
+
+33:50.340 --> 33:54.500
+ the low-rank version looked like here.
+
+33:54.500 --> 34:05.060
+ And just first let me ask, why is this low-rank when I do U times S times V?
+
+34:05.060 --> 34:16.700
+ Remember, U, S, V is the truncated SVD that we've asked for, and now we're multiplying
+
+34:16.700 --> 34:19.700
+ those three matrices together.
+
+34:19.700 --> 34:38.380
+ Lowering, it's lowering because we only have two columns, because there's only two orthogonal
+
+34:38.380 --> 34:39.380
+ vectors.
+
+34:39.380 --> 34:40.380
+ Exactly, yes.
+
+34:40.380 --> 34:54.740
+ So even though, and let me go to the picture, even though U's got a ton of non-zero values,
+
+34:54.740 --> 35:05.420
+ what S looks like is just, I don't know, some value S1, 0, 0, S2, and actually I guess that
+
+35:05.420 --> 35:13.980
+ means that this, sorry, this should only have two columns then to line up, but the, or no,
+
+35:13.980 --> 35:15.980
+ yeah, two columns.
+
+35:15.980 --> 35:22.460
+ Okay, so U is like this, and so U's very tall and has a lot of, you know, non-zero values
+
+35:22.460 --> 35:27.700
+ for that, but S has just kind of got these two components, and then we go to V is going
+
+35:27.700 --> 35:33.340
+ to be really long, and again, it's got a lot of non-zero values, you know, in its long
+
+35:33.340 --> 35:37.260
+ narrowness, but it's only two rows.
+
+35:37.260 --> 35:46.580
+ And so when we multiply kind of U, S, and V together, they're only going to be two linearly
+
+35:46.580 --> 35:51.020
+ independent columns in the result, because we kind of can't get more complexity than
+
+35:51.020 --> 35:57.700
+ that since we've only got two dimensions in these inputs of, you know, what we're multiplying
+
+35:57.700 --> 35:58.700
+ together.
+
+35:58.700 --> 35:59.700
+ Brad?
+
+35:59.700 --> 36:14.260
+ And so that's because when you're multiplying those basis vectors in S, each one of those
+
+36:14.260 --> 36:22.220
+ other vectors is going to be essentially scaling that vector since the other value is 0, right?
+
+36:22.220 --> 36:29.900
+ So all, like when you multiply S with U, it's all going to be adding the two basis vectors,
+
+36:29.900 --> 36:36.100
+ 5, 0, and 0, I'm not sure what the number is, but it's just going to be those two.
+
+36:36.100 --> 36:38.340
+ Yeah, so that's a good way of thinking about it.
+
+36:38.340 --> 36:43.540
+ So we talked last time about how you can think of matrix multiplication as taking a linear
+
+36:43.540 --> 36:45.740
+ combination of the columns.
+
+36:45.740 --> 36:54.300
+ So here, when we do U, S, what we're getting is, and actually let me, I'm going to redraw
+
+36:54.300 --> 37:08.300
+ this, hold on a moment.
+
+37:08.300 --> 37:19.540
+ Okay.
+
+37:19.540 --> 37:26.560
+ So U is two columns, U1 and U2.
+
+37:26.560 --> 37:37.340
+ And so then when we do U times S, we're getting, let me get something that's tall, really that's
+
+37:37.340 --> 37:45.620
+ just going to be S1 times U1 is the first column, and the second column is S2 times
+
+37:45.620 --> 37:46.620
+ U2.
+
+37:46.620 --> 37:53.620
+ Which is why you can replace the matrix product with an element-wise multiplication and get
+
+37:53.620 --> 37:54.620
+ the same results.
+
+37:54.620 --> 37:55.620
+ Yes.
+
+37:55.620 --> 38:12.180
+ And then we multiply that by our columns, sorry, rows, V1, V2.
+
+38:12.180 --> 38:15.420
+ I guess at that point we're kind of having to think about dot products, but you can see
+
+38:15.420 --> 38:20.660
+ that like really we're kind of just taking these two long vectors and that's all we have
+
+38:20.660 --> 38:25.380
+ to work with here.
+
+38:25.380 --> 38:32.020
+ You can also, let me write out the dimension of these, might be nice to see.
+
+38:32.020 --> 38:52.060
+ Yeah, so you can see back, U is 76,800 by two, S is just two, and V is two by 11,300.
+
+38:52.060 --> 38:57.020
+ And so that's kind of showing up when we plot this picture, and actually I could plot the
+
+38:57.020 --> 39:20.800
+ whole picture again, I think that would be good to see, okay, this is a little bit slow.
+
+39:20.800 --> 39:28.860
+ So we'll look at the picture of the one, basically it's got to have practically the same picture
+
+39:28.860 --> 39:29.860
+ for everything.
+
+39:29.860 --> 39:35.100
+ I guess, I mean, I guess you could have two different pictures that it could show, but
+
+39:35.100 --> 39:42.060
+ it's really not able to capture a whole video's worth of data.
+
+39:42.060 --> 39:51.220
+ Other questions about this, Kelsey?
+
+39:51.220 --> 39:59.700
+ Yeah, no, I encourage you to try this with different ones.
+
+39:59.700 --> 40:04.580
+ I just tried it with a few and thought that two looked the best, but yeah, try it with
+
+40:04.580 --> 40:05.580
+ others.
+
+40:05.580 --> 40:13.780
+ I think though, some of the idea is that, unless you're doing a huge rank, I don't know,
+
+40:13.780 --> 40:17.460
+ so if you were doing rank 1000, it's like maybe you are trying to capture all the different
+
+40:17.460 --> 40:21.260
+ places people can be, or capture the information about people.
+
+40:21.260 --> 40:26.940
+ But beyond that, I don't know, with a rank of 10, there's not really 10 pieces of information
+
+40:26.940 --> 40:27.940
+ you can capture.
+
+40:27.940 --> 40:33.020
+ I mean, you kind of have the background, and then the next piece of information is all
+
+40:33.020 --> 40:35.740
+ this information about people.
+
+40:35.740 --> 40:42.500
+ Sorry, I don't know why this hasn't shown up yet.
+
+40:42.500 --> 40:43.500
+ This is quite slow.
+
+40:43.500 --> 40:44.500
+ Oh, let me do that.
+
+40:44.500 --> 40:45.500
+ Although, I must if the other ones are showing up.
+
+40:45.500 --> 40:46.500
+ Yeah, okay.
+
+40:46.500 --> 40:55.500
+ Oh, and Sam's got a question in the back.
+
+40:55.500 --> 41:13.740
+ In the sklearn randomized SVD, is it creating additional columns when, like is it, we talked
+
+41:13.740 --> 41:23.500
+ about generating many columns, and then like maybe if we wanted five, we do 15 random columns.
+
+41:23.500 --> 41:24.500
+ Yes.
+
+41:24.500 --> 41:25.500
+ It is, yes.
+
+41:25.500 --> 41:26.500
+ Okay, so you're just using the default then, which is probably more, but is that something
+
+41:26.500 --> 41:27.500
+ else that we should try and play around with?
+
+41:27.500 --> 41:40.060
+ And I think default actually is 10 or 15, it's, yeah, and I think, and this is coming
+
+41:40.060 --> 41:44.380
+ from a paper, probably from the Halco paper.
+
+41:44.380 --> 41:48.740
+ So this is, yeah, so that is what sklearn is doing.
+
+41:48.740 --> 41:53.980
+ I don't think that's something you would want to tune yourself, unless you had like specific
+
+41:53.980 --> 41:59.580
+ reason to think that that would be helpful, but I think the paper has developed this theory
+
+41:59.580 --> 42:04.580
+ of why this should work, or why this does work.
+
+42:04.580 --> 42:13.220
+ So in trying to intuit why we get back just the background in doing this, would you say
+
+42:13.220 --> 42:24.940
+ that it's because given that the vectors that make up the background in the matrix over
+
+42:24.940 --> 42:32.940
+ time sort of are most important across the entire matrix, when you're looking at the
+
+42:32.940 --> 42:39.300
+ most important singular values, go from the largest, as opposed to the vectors that correspond
+
+42:39.300 --> 42:44.420
+ to people moving, since they're very sparse in there, when you limit it to a few singular
+
+42:44.420 --> 42:46.900
+ values, it's going to ignore those.
+
+42:46.900 --> 42:50.740
+ Right, yeah, like the most, because the most important component, so there's, I guess there's
+
+42:50.740 --> 42:51.740
+ two things going on.
+
+42:51.740 --> 42:56.780
+ One is that really in any frame, like most of the frame is background, but it's also
+
+42:56.780 --> 43:01.980
+ like looking across time, the background is what shows up in like every single point in
+
+43:01.980 --> 43:05.020
+ time, like you always have the background there, and I mean sometimes, you know, pieces
+
+43:05.020 --> 43:12.460
+ of are obscured by a person, but for the most part, the background, I guess a way to think
+
+43:12.460 --> 43:18.300
+ about it even is if you're looking at this whole picture, like most of this picture is
+
+43:18.300 --> 43:28.460
+ the horizontal lines that form the background, so those are going to be the largest singular
+
+43:28.460 --> 43:30.460
+ value, because they're kind of like the most important component.
+
+43:30.460 --> 43:39.020
+ By the way, you mentioned to Sam about the source code, a cool tip I don't think we've
+
+43:39.020 --> 43:43.020
+ mentioned is if you type in your notebook, question mark, question mark, and then the
+
+43:43.020 --> 43:48.300
+ name of the thing, it'll show you the source code, so like maybe you could still, oh, actually,
+
+43:48.300 --> 43:49.300
+ I'm not working.
+
+43:49.300 --> 43:50.300
+ Yeah, my kernel died.
+
+43:50.300 --> 43:51.300
+ I need to rerun a few things.
+
+43:51.300 --> 43:58.300
+ Yeah, question mark, you know, when out.randomized.cd, you'll see the source code, and it's really
+
+43:58.300 --> 44:03.300
+ simple, so it's fun to look at.
+
+44:03.300 --> 44:06.300
+ Yeah, no, that's a great point.
+
+44:06.300 --> 44:07.300
+ Thank you.
+
+44:07.300 --> 44:14.300
+ I'm just going to rerun this, because I do want to have the matrix to be able to use.
+
+44:14.300 --> 44:22.300
+ Oh, I didn't run my helper methods.
+
+44:22.300 --> 44:28.300
+ Oh, I was going to say, going back to this, kind of talking about rank, and creating the
+
+44:28.300 --> 44:34.780
+ data matrix is a little bit slow, so I'll have to wait a moment on that.
+
+44:34.780 --> 44:39.860
+ I would actually expect rank one to be pretty good, and I think I did it and found that
+
+44:39.860 --> 44:45.460
+ rank two was for some reason better, but really, like, the background should be able to perfectly
+
+44:45.460 --> 44:52.000
+ be captured by a rank one matrix, because remember, we've unrolled, you know, 2D space,
+
+44:52.000 --> 44:56.700
+ so that a single picture can show up just as one column, and so really, the column just
+
+44:56.700 --> 45:23.980
+ of the background that has rank one.
+
+45:23.980 --> 45:24.980
+ Here it is.
+
+45:24.980 --> 45:28.660
+ So this is our low rank reconstruction.
+
+45:28.660 --> 45:36.660
+ So we did the SVD, and then we reconstructed our matrix, and so if you think back to, kind
+
+45:36.660 --> 45:44.580
+ of from the math standpoint, what's going on is we're trying to reconstruct this matrix,
+
+45:44.580 --> 45:47.860
+ so you could think of this as a data compression problem, like you didn't want to have to store
+
+45:47.860 --> 45:55.540
+ all of this, and so with just rank two, so just these, you know, two columns in U, two
+
+45:55.540 --> 46:01.000
+ singular values, two rows in V, we get this much of our original matrix, which is a lot
+
+46:01.000 --> 46:13.100
+ of it, kind of like everything except the wavy black lines.
+
+46:13.100 --> 46:19.260
+ So then, kind of more exciting part, I think, is the people that we want to see, although
+
+46:19.260 --> 46:22.500
+ it's, you know, it's easier to pick out the background, because that's what we have information
+
+46:22.500 --> 46:31.380
+ about, so what we'll do is just subtract M, our original matrix, minus the low rank approximation,
+
+46:31.380 --> 46:36.100
+ which is just the background, and so that hopefully will give us the people.
+
+46:36.100 --> 46:41.980
+ And so you can see here, this is what's left, and here I'm just looking at a single point
+
+46:41.980 --> 46:52.660
+ in time, 140, and actually let me copy that, and so you can do this at different points
+
+46:52.660 --> 46:57.780
+ in time.
+
+46:57.780 --> 47:03.180
+ The other one was, yeah, but now I've written over my variables, so yeah, so this is, the
+
+47:03.180 --> 47:14.900
+ low-res version doesn't show quite as much, and actually I don't, here, yeah, so this
+
+47:14.900 --> 47:19.020
+ is the low-res version, so you can't see as clearly, but I was kind of trying the high-res.
+
+47:19.020 --> 47:24.100
+ I recommend staying with low-res just for the speed, though, but you can see kind of
+
+47:24.100 --> 47:27.700
+ what the people are doing at different points.
+
+47:27.700 --> 47:34.220
+ And so it's not, it's not perfect, like we do have kind of like these light marks around
+
+47:34.220 --> 47:41.600
+ the people, and then, whoops, here in the high-res version you can see that the sign
+
+47:41.600 --> 47:47.420
+ that was in the picture, or at least I guess it's kind of like white space around the sign
+
+47:47.420 --> 47:51.220
+ was getting captured, but it's pretty good.
+
+47:51.220 --> 47:59.980
+ So yeah, that's what we get from randomized SVD, which is a pretty simple, simple approach
+
+47:59.980 --> 48:03.020
+ for this.
+
+48:03.020 --> 48:09.260
+ And so then we're going to be doing, we're going through a more complicated algorithm,
+
+48:09.260 --> 48:14.340
+ and this is the result that we'll get with the more complicated algorithm, which doesn't
+
+48:14.340 --> 48:18.060
+ have the issue with the sign, so I think it is a bit better.
+
+48:18.060 --> 48:23.100
+ I will be honest, I was disappointed that it wasn't more better, because it's, it is
+
+48:23.100 --> 48:31.460
+ a lot more complicated, but it's nice because it's also kind of an example of robust, robust
+
+48:31.460 --> 48:36.180
+ PCA, and we'll be able to talk about a lot of issues that arise, and it still uses randomized
+
+48:36.180 --> 48:41.060
+ SVD as part of it, so basically we kind of have a more complicated algorithm that's iteratively
+
+48:41.060 --> 48:44.860
+ using randomized SVD for one of its steps.
+
+48:44.860 --> 48:52.340
+ Oh, okay, and I saw it's about 12 o'clock, so this is probably a good time to stop for
+
+48:52.340 --> 48:53.340
+ our break.
+
+48:53.340 --> 49:00.220
+ We can meet back at 1207, and then when we resume we'll be talking about PCA and robust
+
+49:00.220 --> 49:01.220
+ PCA.
+
+49:01.220 --> 49:19.180
+ Okay, I'm going to start back up since it's 1208, and one more thing, I announced this
+
+49:19.180 --> 49:24.420
+ last time, but I just wanted to say again that I'm going to be out of town on Friday,
+
+49:24.420 --> 49:27.940
+ which is normally when I have office hours, but let me know if you want to meet today
+
+49:27.940 --> 49:34.900
+ or next Monday or Tuesday, and then while we were on break I just tried running this
+
+49:34.900 --> 49:44.300
+ again with a rank one approximation because I was curious, and so here this is, this is
+
+49:44.300 --> 49:46.500
+ what a rank one matrix looks like.
+
+49:46.500 --> 49:52.900
+ It's just a single column repeated again and again, and so it would give you the exact
+
+49:52.900 --> 50:01.080
+ same background for any point, and here I'm subtracting the kind of original matrix minus
+
+50:01.080 --> 50:06.380
+ the background and I get the people, and so that's pretty amazing I think for a rank one
+
+50:06.380 --> 50:07.380
+ approximation.
+
+50:07.380 --> 50:22.220
+ It's not the average, no, because, so it's, if you did the full, oh and I should repeat
+
+50:22.220 --> 50:26.180
+ the question was, is rank one matrix like the average?
+
+50:26.180 --> 50:33.860
+ It's not the average, it's still doing an SVD, but it's finding the, basically the matrix
+
+50:33.860 --> 50:44.680
+ that's going to give you the closest, actually I'm unsure if that would be the average.
+
+50:44.680 --> 50:49.500
+ You want the matrix that's closest to your original matrix but only has one rank?
+
+50:49.500 --> 50:59.700
+ And so that's true, yes I think, and it might depend on your error metric, but you would
+
+50:59.700 --> 51:05.340
+ want, so you kind of your original data matrix that has the wavy lines, you would want to
+
+51:05.340 --> 51:12.400
+ be minimizing that minus, you know, this matrix, and so I think to have error just a few points
+
+51:12.400 --> 51:16.340
+ will probably end up being better than having like a small error everywhere, you know, so
+
+51:16.340 --> 51:20.980
+ if you took the average then every point that a person ever walked by is going to be like
+
+51:20.980 --> 51:28.140
+ off a little bit, so you would have a tiny, kind of tiny error everywhere if you did that.
+
+51:28.140 --> 51:32.860
+ That's a good question.
+
+51:32.860 --> 51:38.800
+ And then also I'm stepping back, I just wanted to say, so with data like this is, I don't
+
+51:38.800 --> 51:49.460
+ put it on GitHub, but you can download the data yourself from, let me go back to the
+
+51:49.460 --> 51:58.140
+ link, up here, so this is the link of where I got this from, and so this is video three
+
+51:58.140 --> 52:02.860
+ in the real videos, although I definitely, if you do run this on different videos and
+
+52:02.860 --> 52:09.760
+ get interesting results, please send them to me because I would be curious to see them.
+
+52:09.760 --> 52:15.620
+ And then the other thing I probably should have done more of is whenever you, like, here
+
+52:15.620 --> 52:20.580
+ where I calculate the matrix and it's really slow to calculate, you don't want to have
+
+52:20.580 --> 52:28.140
+ to do that every time you run this, so you can use np.save to save the NumPy array, and
+
+52:28.140 --> 52:32.980
+ this was for the high-res version, but you would probably want to do it as a low-res
+
+52:32.980 --> 52:40.600
+ version, so I'm just giving a file name, passing in my matrix M, I can save it, and then next
+
+52:40.600 --> 52:46.300
+ time I run this, instead of creating data matrix from video, I could just do np.load.
+
+52:46.300 --> 52:49.300
+ That's a nice trick.
+
+52:49.300 --> 52:51.320
+ Cool.
+
+52:51.320 --> 52:54.260
+ Any other questions about the rank one approximation?
+
+52:54.260 --> 52:59.100
+ Oh, yes, I'm past the microphone.
+
+52:59.100 --> 53:05.780
+ I didn't see it, but did anything happen with the signpost?
+
+53:05.780 --> 53:06.780
+ Anything happen with what?
+
+53:06.780 --> 53:09.780
+ The signpost that would kind of be online?
+
+53:09.780 --> 53:13.140
+ Oh, the signpost?
+
+53:13.140 --> 53:19.180
+ I think more what's happening is you're getting some blurs of the people right behind the
+
+53:19.180 --> 53:26.020
+ signpost, and so it's like having those blurs of the people are what let you, kind of are
+
+53:26.020 --> 53:34.100
+ giving you that artifact of the signpost, although it's hard to see in the low-res version.
+
+53:34.100 --> 53:44.780
+ Yeah, you kind of have to use the high-res version to see that, but yeah, so here's the,
+
+53:44.780 --> 53:49.980
+ which I just did for the rank two approximation up here, but so it's I think probably not
+
+53:49.980 --> 53:54.700
+ so much that the signpost is showing up is that you have these like light blurs of people
+
+53:54.700 --> 53:58.020
+ walking by behind it.
+
+53:58.020 --> 54:02.580
+ Okay, so principal component analysis.
+
+54:02.580 --> 54:06.520
+ Let me go to full screen.
+
+54:06.520 --> 54:10.300
+ So typically when you're dealing with a high dimensional data set, you want to use the
+
+54:10.300 --> 54:15.180
+ fact that the data usually has a low intrinsic dimensionality, so even though it's in a lot
+
+54:15.180 --> 54:22.980
+ of dimensions, not all those dimensions have information, so you can think of that kind
+
+54:22.980 --> 54:26.980
+ of as lying on a lower dimensional manifold, and so this is even kind of, you know, with
+
+54:26.980 --> 54:31.980
+ the randomized SVD, the idea of, you know, A had all these columns, but really the information
+
+54:31.980 --> 54:38.300
+ of the column space could be captured by something with a lot fewer columns, and so principal
+
+54:38.300 --> 54:45.740
+ component analysis lets us eliminate dimensions, and so classical PCA is seeking the best rank
+
+54:45.740 --> 54:54.180
+ K estimate L, so I'm just calling it L because it's low rank of a matrix M, and so K is a
+
+54:54.180 --> 54:58.580
+ parameter that you're specifying going into it, you're saying, you know, I want to see
+
+54:58.580 --> 55:03.820
+ what the best, and we just previously looked at rank two and rank one approximations, but
+
+55:03.820 --> 55:09.020
+ you could choose any value for K, and then you're going to use an algorithm that's going
+
+55:09.020 --> 55:16.300
+ to minimize the difference between M minus L for any possible L that has the rank you're
+
+55:16.300 --> 55:26.860
+ interested in, and so traditional PCA can handle noise in small magnitudes, but it's
+
+55:26.860 --> 55:33.580
+ very brittle to having, even if you just have one observation that's super wrong, that can
+
+55:33.580 --> 55:41.620
+ really throw it off, which unfortunately in a lot of real-world data sets you can have
+
+55:41.620 --> 55:48.540
+ some observations that are just, yeah, very wrong, and so robust PCA is a way around this.
+
+55:48.540 --> 55:55.820
+ Robust PCA factors a matrix into the sum of two matrices, a low-rank matrix L and a sparse
+
+55:55.820 --> 56:03.820
+ matrix S, and so I shall ask you, what does it mean for a matrix to be sparse?
+
+56:03.820 --> 56:05.820
+ Sam?
+
+56:05.820 --> 56:12.460
+ It means that there are a lot of zero values.
+
+56:12.460 --> 56:19.660
+ Exactly, yes, so there are a lot of zero values, and so going back to our example of the people,
+
+56:19.660 --> 56:23.740
+ there are a lot of zero values, and here I'm actually zoomed in, so if you think of all
+
+56:23.740 --> 56:27.340
+ this kind of gray background, those are all zero values, and they're actually even more
+
+56:27.340 --> 56:33.580
+ when you kind of zoom out to the full size, and so we want to find a factorization, and
+
+56:33.580 --> 56:38.060
+ this factorization is a little bit distinctive in that it's a sum.
+
+56:38.060 --> 56:42.060
+ Most of the factorizations, in fact I think all the other factorizations we'll learn in
+
+56:42.060 --> 56:47.460
+ this course are multiplication, but here we're factoring something into a sum, and it's the
+
+56:47.460 --> 56:50.300
+ low-rank matrix plus a sparse matrix.
+
+56:50.300 --> 56:55.040
+ Oh yeah, it's not factoring, it's a decomposition.
+
+56:55.040 --> 57:06.700
+ We are decomposing it into two, and most decompositions are factorizations because they're multiplying,
+
+57:06.700 --> 57:13.580
+ and so yeah, we'll see this in a moment, but in the problem of if your data was corrupted,
+
+57:13.580 --> 57:19.580
+ hopefully your corrupted data is not, most of your data is not corrupted, and so you
+
+57:19.580 --> 57:23.260
+ can think of the corrupted data as being the sparse matrix.
+
+57:23.260 --> 57:27.740
+ So now I have some pictures that I took.
+
+57:27.740 --> 57:35.380
+ This is from a really nice blog post, let me open it, called robust tensor PCA with
+
+57:35.380 --> 57:45.020
+ Tensorly, and I haven't tried Tensorly, which is a specific library, but these are really
+
+57:45.020 --> 57:51.780
+ great illustrations, and so this is face recognition, and it was done on a data set where you had
+
+57:51.780 --> 57:57.060
+ multiple pictures of one person's face, but from different angles with different light,
+
+57:57.060 --> 58:01.540
+ or where the light is coming from different angles, and so here there would have been
+
+58:01.540 --> 58:06.540
+ a lot of pictures of this person's face, but kind of lit up from different angles, and
+
+58:06.540 --> 58:07.540
+ so here's the original.
+
+58:07.540 --> 58:13.620
+ They've added some noise in, or you can say grossly corrupted entries, and I think this
+
+58:13.620 --> 58:15.200
+ is pretty amazing.
+
+58:15.200 --> 58:20.380
+ They get from this original, this is the low rank component, and this is the sparse component.
+
+58:20.380 --> 58:24.660
+ So the sparse component is picking out the noise, and the low rank component is picking
+
+58:24.660 --> 58:25.660
+ out the face.
+
+58:25.660 --> 58:31.660
+ I think particularly this third one is amazing, because the one on the left right here, like
+
+58:31.660 --> 58:39.160
+ I can't even tell that this is a picture of a face, but they have picked out the face.
+
+58:39.160 --> 58:43.980
+ So this is another application of this.
+
+58:43.980 --> 58:48.340
+ So remember kind of what we're looking at, the low rank one will be the background, and
+
+58:48.340 --> 58:50.340
+ the sparse component will be the people.
+
+58:50.340 --> 59:01.540
+ Here the low rank is the face, and the sparse component is this really awful noise.
+
+59:01.540 --> 59:07.760
+ And then here he takes it up even another level, and grays out entire sections in this
+
+59:07.760 --> 59:13.780
+ picture of the face, and is still able to recover the faces.
+
+59:13.780 --> 59:26.780
+ Yeah, yeah, so it's very, yeah, very impressive.
+
+59:26.780 --> 59:34.020
+ So other applications of this, latent semantic indexing, you could use robust PCA.
+
+59:34.020 --> 59:38.880
+ The low rank matrix would be the common words that show up in all documents.
+
+59:38.880 --> 59:43.500
+ So this is and, you know, probably kind of in all your documents.
+
+59:43.500 --> 59:48.860
+ And then your sparse matrix could capture a few keywords kind of from each document
+
+59:48.860 --> 59:52.900
+ that make it different than others.
+
+59:52.900 --> 59:55.860
+ And then ranking and collaborative filtering.
+
+59:55.860 --> 1:00:04.440
+ So this is an issue that Netflix has in terms of some of the data being really bad.
+
+1:00:04.440 --> 1:00:07.620
+ And I don't think they give examples of this, but I feel like this could even be things
+
+1:00:07.620 --> 1:00:13.100
+ of, I don't know if a toddler accidentally enters some ratings for movies that are just
+
+1:00:13.100 --> 1:00:22.660
+ totally have nothing to do with that person's actual preferences, but they use robust PCA.
+
+1:00:22.660 --> 1:00:32.100
+ Do you want to say more about, this is Jeremy?
+
+1:00:32.100 --> 1:00:55.780
+ There's a great example, I'm sure a lot of you know about the Netflix prize, it's a $1
+
+1:00:55.780 --> 1:00:56.780
+ million machine learning prize, and there's a lot of great write-ups with that.
+
+1:00:56.780 --> 1:00:57.780
+ And the winners had to come up with some, interestingly, like before the Netflix prize,
+
+1:00:57.780 --> 1:00:58.780
+ people have kind of forgotten about some of these robust decomposition techniques, but
+
+1:00:58.780 --> 1:00:59.780
+ the winners really brought them back into vogue and they've had a lot of attention since
+
+1:00:59.780 --> 1:01:00.780
+ then.
+
+1:01:00.780 --> 1:01:01.780
+ I can read the papers from that because they're very accessible.
+
+1:01:01.780 --> 1:01:02.780
+ I can read the papers from the Netflix prize about Napoleon Dynamite.
+
+1:01:02.780 --> 1:01:05.460
+ Are you all familiar with this movie?
+
+1:01:05.460 --> 1:01:10.820
+ So apparently Napoleon Dynamite was a hugely polarizing movie, and it also didn't relate
+
+1:01:10.820 --> 1:01:17.780
+ to people's other preferences, and so including Napoleon Dynamite in the Netflix problem
+
+1:01:17.780 --> 1:01:22.900
+ makes it way, way more difficult because it's almost like random how people will feel about
+
+1:01:22.900 --> 1:01:23.900
+ the movie.
+
+1:01:23.900 --> 1:01:27.620
+ So I thought that was kind of like a fun example of something that could really throw things
+
+1:01:27.620 --> 1:01:28.620
+ off.
+
+1:01:28.620 --> 1:01:33.620
+ And I know I'm very biased as an ex-CAGL person, but I was going to say a lot of people complain
+
+1:01:33.620 --> 1:01:38.620
+ that the Netflix prize didn't lead directly to results, but the truth is actually the
+
+1:01:38.620 --> 1:01:44.620
+ results of the Netflix prize made a huge impact on how people think about all kinds of areas
+
+1:01:44.620 --> 1:01:48.620
+ of linear algebra and collaborative filtering and it's super valuable.
+
+1:01:48.620 --> 1:01:54.620
+ So actually, yeah, studying competition-winning results is a great way to further your machine
+
+1:01:54.620 --> 1:01:57.620
+ learning and data science skills.
+
+1:01:57.620 --> 1:01:58.620
+ Thanks.
+
+1:01:58.620 --> 1:02:09.620
+ Yeah, so just, I'm actually, should ask, have you seen the L, raise your hand if you've
+
+1:02:09.620 --> 1:02:17.620
+ seen the L1 norm-inducing sparsity before, and we'll kind of review the concept of it.
+
+1:02:17.620 --> 1:02:19.700
+ And this is a good thing to be familiar with.
+
+1:02:19.700 --> 1:02:27.420
+ I've had this show up in data scientist interviews that I've done, but the idea is that, so
+
+1:02:27.420 --> 1:02:38.140
+ with the L1 norm, which is just, just taking kind of the absolute values of your entries,
+
+1:02:38.140 --> 1:02:44.020
+ so what the unit ball looks like is a diamond, whereas with the L2 norm, the unit ball is
+
+1:02:44.020 --> 1:02:45.620
+ a circle.
+
+1:02:45.620 --> 1:02:51.780
+ And so the idea here is kind of where you're looking for where this is going to intersect
+
+1:02:51.780 --> 1:02:55.940
+ kind of with this other value that you're, or other curve that you're optimizing.
+
+1:02:55.940 --> 1:03:01.940
+ With the L1 norm, that is way most likely to kind of happen at corners.
+
+1:03:01.940 --> 1:03:23.460
+ Yeah, let me briefly, I guess, say the L1 norm should, let me write it on here, so L1,
+
+1:03:23.460 --> 1:03:32.220
+ you're taking a summation of absolute values for each, if you have something in multiple
+
+1:03:32.220 --> 1:03:45.660
+ dimensions, sorry, this should be an xi, so each of your x values for the L2 norm, you're
+
+1:03:45.660 --> 1:03:49.200
+ summing the squares and then taking the square root of the whole thing.
+
+1:03:49.200 --> 1:03:55.140
+ And these are, these are generalization, so actually, this you're taking the whole thing
+
+1:03:55.140 --> 1:04:01.340
+ to the power of one, which is, which is nothing, or you know, has no effect, but this is generalization
+
+1:04:01.340 --> 1:04:08.540
+ of this idea of the LP norm, but L1 and L2 are kind of the most common, oh, for, sorry,
+
+1:04:08.540 --> 1:04:12.500
+ for regularization, and this is the penalty term that you're adding when you're doing
+
+1:04:12.500 --> 1:04:18.980
+ some sort of optimization problem, and so the idea with any, any of these is that you
+
+1:04:18.980 --> 1:04:23.340
+ don't want your weights to get too large, and so you're putting a penalty on the size
+
+1:04:23.340 --> 1:04:27.620
+ of your weights, but the type of penalty you put will kind of affect what your answers
+
+1:04:27.620 --> 1:04:28.620
+ are.
+
+1:04:28.620 --> 1:04:34.140
+ And so with the L1, it ends up kind of saying, I want to keep this sparse, and so you're
+
+1:04:34.140 --> 1:04:40.820
+ kind of getting more of a penalty for, you know, making new things non-zero, whereas
+
+1:04:40.820 --> 1:04:46.700
+ the L2 norm, since you're trying to kind of keep this whole square root of sum of squares
+
+1:04:46.700 --> 1:04:53.060
+ to a small value, you will have probably a lot of things with small values, whereas L1,
+
+1:04:53.060 --> 1:04:57.460
+ it's better to maybe have one thing slightly bigger and the other weight zero.
+
+1:04:57.460 --> 1:05:11.380
+ Yeah, so these are how those, how those penalties work.
+
+1:05:11.380 --> 1:05:16.180
+ And so these are kind of some common pictures that people will show that if you, you know,
+
+1:05:16.180 --> 1:05:19.560
+ have the problem you're trying to optimize, and then also this penalty kind of thinking
+
+1:05:19.560 --> 1:05:26.740
+ about where they intersect for L1 norm, it's going to be a corner, which, you know, here
+
+1:05:26.740 --> 1:05:31.500
+ the x-axis is zero and y is one, whereas here it's going to be kind of somewhere on the
+
+1:05:31.500 --> 1:05:32.500
+ circle.
+
+1:05:32.500 --> 1:05:38.140
+ Brad, can you throw the microphone, Jeremy?
+
+1:05:38.140 --> 1:05:43.540
+ So one question I've always had with these, these pictures is that we're saying that with
+
+1:05:43.540 --> 1:05:53.500
+ the L1 penalty, we can induce sparsity, but we can't with L2, even though when you look
+
+1:05:53.500 --> 1:05:57.580
+ at the graph, those points at zero are there.
+
+1:05:57.580 --> 1:05:58.580
+ Is that because...
+
+1:05:58.580 --> 1:06:00.580
+ So what points at zero?
+
+1:06:00.580 --> 1:06:08.060
+ At the north pole of the circle and at each pole, right?
+
+1:06:08.060 --> 1:06:09.060
+ Like here?
+
+1:06:09.060 --> 1:06:13.060
+ Yeah, or in the graphs above.
+
+1:06:13.060 --> 1:06:19.180
+ You can technically see that you could hit those corners in the square there, but is
+
+1:06:19.180 --> 1:06:23.820
+ the reason why we don't, because the circle is a continuum and the probability of hitting
+
+1:06:23.820 --> 1:06:26.100
+ any one of those points is zero?
+
+1:06:26.100 --> 1:06:32.140
+ I mean, I think it's more when you think about the structure of kind of this, kind of, so,
+
+1:06:32.140 --> 1:06:33.140
+ and I'll look at this one.
+
+1:06:33.140 --> 1:06:38.340
+ So here, these are kind of like the contours of what, in a lot of cases, this would be
+
+1:06:38.340 --> 1:06:42.340
+ kind of like the air of your model.
+
+1:06:42.340 --> 1:06:48.560
+ When you look at these, like it's very unlikely that this would be like perfectly aligned
+
+1:06:48.560 --> 1:06:53.660
+ on the, I mean, it's possible you could have something that was like perfectly here and
+
+1:06:53.660 --> 1:06:59.300
+ that like lying on the X axis, but that would just be, to me that implies like you had this
+
+1:06:59.300 --> 1:07:03.020
+ very artificial data set or something kind of bizarre going on.
+
+1:07:03.020 --> 1:07:10.740
+ So you're right, you could happen to hit those, but yeah, the chance is so minimally small
+
+1:07:10.740 --> 1:07:16.340
+ that you're, and it also to me implies that there was something very like artificially
+
+1:07:16.340 --> 1:07:19.420
+ constructed about the problem you were minimizing.
+
+1:07:19.420 --> 1:07:20.420
+ Right.
+
+1:07:20.420 --> 1:07:21.420
+ Tim?
+
+1:07:21.420 --> 1:07:27.860
+ Yeah, I feel like the only way that like ellipse or circle would hit, like you'd have actually
+
+1:07:27.860 --> 1:07:35.180
+ have it hit zero exactly is if the actual minimal, like the best solution was light
+
+1:07:35.180 --> 1:07:36.180
+ on one of the axes, right?
+
+1:07:36.180 --> 1:07:37.180
+ Yeah.
+
+1:07:37.180 --> 1:07:40.180
+ So that would mean that one of the coordinates was zero in the first place.
+
+1:07:40.180 --> 1:07:41.180
+ Right.
+
+1:07:41.180 --> 1:07:43.180
+ So that would be the only way you would get that condition.
+
+1:07:43.180 --> 1:07:44.180
+ Right.
+
+1:07:44.180 --> 1:07:45.180
+ Yeah.
+
+1:07:45.180 --> 1:07:46.700
+ Not only that it was like one of those had to be zero, but that implies there's like
+
+1:07:46.700 --> 1:07:49.980
+ no noise in your problem as well, because it's like even if you had a little bit of
+
+1:07:49.980 --> 1:07:53.940
+ noise distorting it, that's going to, yeah, take it off the axis.
+
+1:07:53.940 --> 1:07:54.940
+ Right.
+
+1:07:54.940 --> 1:07:55.940
+ Yeah.
+
+1:07:55.940 --> 1:07:56.940
+ Thank you.
+
+1:07:56.940 --> 1:07:57.940
+ Other questions?
+
+1:07:57.940 --> 1:08:09.100
+ And so this, and we're actually not going to get kind of too much into the details of
+
+1:08:09.100 --> 1:08:13.860
+ this, but I wanted you to see kind of how the robust PCA can be written as an optimization
+
+1:08:13.860 --> 1:08:14.860
+ problem.
+
+1:08:14.860 --> 1:08:24.800
+ And there it's, you're minimizing the nuclear norm of L plus some parameter lambda times
+
+1:08:24.800 --> 1:08:32.500
+ the L1 norm of S. So it's, and subject to you wanting, you want L plus S to equal M.
+
+1:08:32.500 --> 1:08:37.980
+ So M is your matrix that you're decomposing, and this is basically kind of just saying
+
+1:08:37.980 --> 1:08:42.700
+ how do we describe a sparse and low rank matrix using math.
+
+1:08:42.700 --> 1:08:49.140
+ And the way to describe a sparse matrix is to say we're minimizing the L1 norm.
+
+1:08:49.140 --> 1:08:52.900
+ And the way to describe a low rank matrix is minimizing something called the nuclear
+
+1:08:52.900 --> 1:08:58.400
+ norm, which is the L1 norm of the singular values.
+
+1:08:58.400 --> 1:09:03.980
+ And so you can think of this as kind of results in sparse singular values.
+
+1:09:03.980 --> 1:09:12.300
+ If a lot of singular values are zero, that means you have a low rank matrix.
+
+1:09:12.300 --> 1:09:15.980
+ So this is just kind of how this is formally written out.
+
+1:09:15.980 --> 1:09:20.660
+ And I should say we're not, definitely not going to get deep into optimization in this
+
+1:09:20.660 --> 1:09:26.500
+ course, but if this is a topic that interests you, optimization is a huge, huge field.
+
+1:09:26.500 --> 1:09:31.940
+ And I link to, in particular, Steven Boyd, who's a professor at Stanford, has an online
+
+1:09:31.940 --> 1:09:35.780
+ class kind of videos through Open edX.
+
+1:09:35.780 --> 1:09:41.620
+ And also, I just found this last week, he has like a tutorial or a short course he gave
+
+1:09:41.620 --> 1:09:44.220
+ using Jupyter notebooks, and so I have links for that.
+
+1:09:44.220 --> 1:09:48.820
+ Yes, yeah, yeah, the link is in here.
+
+1:09:48.820 --> 1:09:57.420
+ And so part of what I want to show with this, so we'll be looking at an algorithm called
+
+1:09:57.420 --> 1:10:02.740
+ primary component pursuit, which is one way of doing robust PCA.
+
+1:10:02.740 --> 1:10:08.820
+ And again, robust PCA is this problem statement of decomposing a matrix into a sum of a low
+
+1:10:08.820 --> 1:10:12.100
+ rank matrix and a sparse matrix.
+
+1:10:12.100 --> 1:10:18.780
+ And so this is kind of an example of implementing an algorithm from a paper, and it's okay,
+
+1:10:18.780 --> 1:10:23.140
+ we are not going to get into all the math details of this, but I kind of wanted to more
+
+1:10:23.140 --> 1:10:28.280
+ show you some of the process of doing this.
+
+1:10:28.280 --> 1:10:38.980
+ So the original paper is this one called robust PCA.
+
+1:10:38.980 --> 1:10:51.740
+ So it's by a collection of researchers from Stanford, UIUC, and Microsoft Research.
+
+1:10:51.740 --> 1:10:56.780
+ And then there's a kind of second paper that gives more details that's also used, and I
+
+1:10:56.780 --> 1:10:58.580
+ have a link to that lower down.
+
+1:10:58.580 --> 1:11:05.020
+ I also, so I'm looking at kind of encoding this, I looked at those, I looked at two existing
+
+1:11:05.020 --> 1:11:10.320
+ implementations that I found online, and there are links here.
+
+1:11:10.320 --> 1:11:16.300
+ So kind of a key thing to know is you don't need to know the math or understand the proofs
+
+1:11:16.300 --> 1:11:22.140
+ to implement an algorithm from a paper, and it can also be very distracting to try to
+
+1:11:22.140 --> 1:11:25.540
+ read all the paper, and some of this depends on your purposes and what you're trying to
+
+1:11:25.540 --> 1:11:26.540
+ get out of it.
+
+1:11:26.540 --> 1:11:32.280
+ But I think if your goal is to implement it or write the code, I think it's good to try
+
+1:11:32.280 --> 1:11:36.620
+ to get there quickly, and you don't need to kind of go through all the theorems.
+
+1:11:36.620 --> 1:11:46.740
+ So for example, let me go back to the Candace Lee Monwright paper.
+
+1:11:46.740 --> 1:11:55.100
+ Okay, here it is.
+
+1:11:55.100 --> 1:11:58.020
+ And so this is 39 pages.
+
+1:11:58.020 --> 1:12:03.660
+ I think the introduction is really nicely written on this, and explaining kind of what
+
+1:12:03.660 --> 1:12:06.640
+ robust PCA is.
+
+1:12:06.640 --> 1:12:12.420
+ It also has some nice, and you can see I've based my notes on some of this, it gives several
+
+1:12:12.420 --> 1:12:14.580
+ examples of applications.
+
+1:12:14.580 --> 1:12:19.500
+ Number one is video surveillance, so this is great to see.
+
+1:12:19.500 --> 1:12:34.900
+ But then if you scroll through, you'll see a lot of this is kind of theorems about the
+
+1:12:34.900 --> 1:12:44.380
+ kind of the correctness of your results, which are gonna be less relevant.
+
+1:12:44.380 --> 1:12:49.860
+ And so you actually have to go all the way down to, so we've got, it's telling you the
+
+1:12:49.860 --> 1:13:01.860
+ architecture of the proof before you even get to the proof.
+
+1:13:01.860 --> 1:13:08.080
+ So section two is the architecture of the proof, section three is the proofs, well part
+
+1:13:08.080 --> 1:13:14.060
+ of the proofs, and I think section four is also, oh no, section four is numerical experiments,
+
+1:13:14.060 --> 1:13:18.060
+ which is good.
+
+1:13:18.060 --> 1:13:29.640
+ And actually this is kind of nice that they do show some, using it on the surveillance
+
+1:13:29.640 --> 1:13:38.140
+ videos here.
+
+1:13:38.140 --> 1:13:39.460
+ And they also used it on faces.
+
+1:13:39.460 --> 1:13:45.500
+ Although I think the results, here they're removing shadows from the faces, so it's a
+
+1:13:45.500 --> 1:13:47.500
+ lot kind of subtler to look for.
+
+1:13:47.500 --> 1:13:56.740
+ I think you can particularly see it, like on this one, there's a pretty pronounced shadow
+
+1:13:56.740 --> 1:14:02.140
+ here coming from the nose, and you can see that that's been removed coming over here.
+
+1:14:02.140 --> 1:14:09.580
+ Although you've also kind of lost the the gleams in the eyes.
+
+1:14:09.580 --> 1:14:17.460
+ But in terms of actually getting to the algorithm of this paper, it doesn't come till page 29.
+
+1:14:17.460 --> 1:14:19.260
+ You'll find the algorithm.
+
+1:14:19.260 --> 1:14:24.740
+ And so, and I'll go back to the notebook, I just kind of wanted to show you that I think
+
+1:14:24.740 --> 1:14:28.860
+ it can be intimidating, kind of the amount of proofs that come before the algorithm,
+
+1:14:28.860 --> 1:14:34.020
+ but if the algorithm is what you're interested in, please skip to the algorithm.
+
+1:14:34.020 --> 1:14:43.340
+ Okay, here we are.
+
+1:14:43.340 --> 1:14:51.220
+ And so here on page 29, we have the principal component pursuit by alternating directions.
+
+1:14:51.220 --> 1:14:59.460
+ And the basic idea is that they will be taking, so and they define this down here, well so
+
+1:14:59.460 --> 1:15:05.420
+ they define this operator cursive D, which is the, I think they call it the singular
+
+1:15:05.420 --> 1:15:22.180
+ value thresholding, actually I should just show their definitions.
+
+1:15:22.180 --> 1:15:35.940
+ Oh, here it is, okay.
+
+1:15:35.940 --> 1:15:41.460
+ So you need to know the definitions of S, which they call curly S, the shrinkage operator
+
+1:15:41.460 --> 1:15:46.340
+ and cursive D, the singular value thresholding operator.
+
+1:15:46.340 --> 1:15:55.140
+ And so the shrinkage operator is basically, here it is, they take the singular values
+
+1:15:55.140 --> 1:15:57.580
+ and subtract a value tau off of them.
+
+1:15:57.580 --> 1:16:02.200
+ So you have this parameter tau, you take your singular values, subtract that off.
+
+1:16:02.200 --> 1:16:05.300
+ If the values were less than tau, you just round them to zero.
+
+1:16:05.300 --> 1:16:08.740
+ So you don't want to be flipping the sign on your values, but you just want to make
+
+1:16:08.740 --> 1:16:13.940
+ everything that's more than tau away from zero a little bit smaller, and then if it
+
+1:16:13.940 --> 1:16:16.540
+ was within tau of zero, just round it to zero.
+
+1:16:16.540 --> 1:16:22.300
+ So you kind of have this, yeah, this process of making the singular value smaller.
+
+1:16:22.300 --> 1:16:29.740
+ And then for curly D, let me find it here, that's the singular value thresholding operator.
+
+1:16:29.740 --> 1:16:36.960
+ And so basically that's taking the SVD and then making your singular values smaller,
+
+1:16:36.960 --> 1:16:39.820
+ and then recomposing your matrix.
+
+1:16:39.820 --> 1:16:45.460
+ So you're kind of decreasing, you're both decreasing the magnitude a little bit, and
+
+1:16:45.460 --> 1:16:50.020
+ you're taking some of your singular values to zero is a huge part of this, is that anything
+
+1:16:50.020 --> 1:16:54.020
+ that was within tau of zero, you're just rounding to zero.
+
+1:16:54.020 --> 1:16:58.860
+ So you're kind of making your singular values more sparse, which you'll remember is kind
+
+1:16:58.860 --> 1:16:59.860
+ of a goal.
+
+1:16:59.860 --> 1:17:06.860
+ So it's really very similar to just doing a truncated SVD and then model them back up
+
+1:17:06.860 --> 1:17:07.860
+ together again.
+
+1:17:07.860 --> 1:17:08.860
+ That's a great point.
+
+1:17:08.860 --> 1:17:14.340
+ So it's, Jeremy just said, it's similar to doing a truncated SVD in that you can think
+
+1:17:14.340 --> 1:17:23.300
+ of if the columns that you were chopping off all had tau or less for their singular values,
+
+1:17:23.300 --> 1:17:24.300
+ that's what you've done here.
+
+1:17:24.300 --> 1:17:30.380
+ You've kind of topped off everything that was less than tau by setting it to zero.
+
+1:17:30.380 --> 1:17:32.540
+ So this is really a lot like a truncated SVD.
+
+1:17:32.540 --> 1:17:33.540
+ Thank you.
+
+1:17:33.540 --> 1:17:38.540
+ Which makes sense, because we just learned that that creates a low rank matrix.
+
+1:17:38.540 --> 1:17:39.540
+ Yeah.
+
+1:17:39.540 --> 1:17:48.180
+ And so, and going back, going back to this algorithm, kind of the idea is the low rank
+
+1:17:48.180 --> 1:17:54.020
+ matrix you're creating is, yeah, the singular value thresholding where you've just chopped
+
+1:17:54.020 --> 1:17:59.220
+ off a bunch of singular values because they were tau or less.
+
+1:17:59.220 --> 1:18:06.500
+ The sparse matrix, here they're just kind of looking at the error that's still left
+
+1:18:06.500 --> 1:18:09.340
+ from your original matrix minus your low rank.
+
+1:18:09.340 --> 1:18:18.740
+ Because remember, you want the sparse plus the low rank matrices to equal your original
+
+1:18:18.740 --> 1:18:19.820
+ matrix.
+
+1:18:19.820 --> 1:18:23.940
+ And so you'll notice there's kind of this alternating that's happening between, okay,
+
+1:18:23.940 --> 1:18:32.960
+ for my low rank matrix, that's approximating the original matrix minus the sparse one.
+
+1:18:32.960 --> 1:18:40.020
+ The sparse matrix is approximating the original matrix minus the low rank one.
+
+1:18:40.020 --> 1:18:56.620
+ And then this mu times yk is kind of keeping track of, I guess it's keeping track of what
+
+1:18:56.620 --> 1:19:05.660
+ you still have left to approximate.
+
+1:19:05.660 --> 1:19:09.400
+ And so here I really just want you to kind of get the broad strokes out of this.
+
+1:19:09.400 --> 1:19:15.260
+ Like I think this idea of kind of the alternating back and forth between, okay, let's try to
+
+1:19:15.260 --> 1:19:20.540
+ improve our estimate for the low rank matrix, okay, let's improve our estimate for the sparse
+
+1:19:20.540 --> 1:19:25.340
+ matrix and kind of going back and forth iteratively is a really nice pattern.
+
+1:19:25.340 --> 1:19:29.260
+ And then this idea of, yeah, like at the singular value thresholding being really similar to
+
+1:19:29.260 --> 1:19:35.420
+ just truncating a bunch of our singular values.
+
+1:19:35.420 --> 1:19:53.340
+ And then there's another paper that builds on that one, okay, I don't know what happened.
+
+1:19:53.340 --> 1:19:59.420
+ Let me go back down.
+
+1:19:59.420 --> 1:20:06.380
+ So there's another paper that builds on that one and kind of gives additional detail of
+
+1:20:06.380 --> 1:20:15.900
+ how to, well, has, this is great, really takes advantage of actually calculating a truncated
+
+1:20:15.900 --> 1:20:16.900
+ SVD.
+
+1:20:16.900 --> 1:20:20.440
+ So, you know, even though we're kind of doing this truncation by throwing away a bunch of
+
+1:20:20.440 --> 1:20:25.720
+ our singular values, we don't want to have to do the full SVD first.
+
+1:20:25.720 --> 1:20:31.560
+ So the second paper kind of gives us estimates of like, okay, you can just calculate this
+
+1:20:31.560 --> 1:20:38.140
+ many singular values each time, although we'll still do the thresholding where we truncate.
+
+1:20:38.140 --> 1:20:41.740
+ Okay, that was weird.
+
+1:20:41.740 --> 1:21:01.660
+ I just tried to click on a link and I don't know why it took me back to the top.
+
+1:21:01.660 --> 1:21:05.580
+ Okay, here it is.
+
+1:21:05.580 --> 1:21:10.460
+ Okay, well, so I'll just show the clips from it.
+
+1:21:10.460 --> 1:21:21.660
+ So here in this second paper, so RPCA stands for Robust PCA, and they're using this optimization
+
+1:21:21.660 --> 1:21:27.740
+ technique, alternating Lagrange multipliers, and they give some, so here are section four
+
+1:21:27.740 --> 1:21:31.760
+ and this second paper has some really helpful implementation details.
+
+1:21:31.760 --> 1:21:37.100
+ So in particular they give you a formula of how many singular values to calculate each
+
+1:21:37.100 --> 1:21:39.300
+ time.
+
+1:21:39.300 --> 1:21:48.300
+ And so basically it's just, if it's small enough, you're just kind of incrementing,
+
+1:21:48.300 --> 1:21:58.740
+ otherwise you're taking basically like 20% of your dimensionality, so kind of doing the
+
+1:21:58.740 --> 1:22:04.260
+ minimum of this SVP, so you don't want to be calculating more than 20% of kind of whatever
+
+1:22:04.260 --> 1:22:07.520
+ the size of your matrix is.
+
+1:22:07.520 --> 1:22:12.700
+ And it also, in section four, and this is always, this is great when papers have this,
+
+1:22:12.700 --> 1:22:18.180
+ it gives values for the parameters to start with.
+
+1:22:18.180 --> 1:22:19.860
+ And so let's get down to the code.
+
+1:22:19.860 --> 1:22:34.620
+ Here are the links I mentioned to Steven Boyd's Open edX videos and his Jupyter notebooks.
+
+1:22:34.620 --> 1:22:42.140
+ So I want to show, I guess like in particular, and it's definitely, it's good to keep, try
+
+1:22:42.140 --> 1:22:48.020
+ to give, you know, have little methods and try to keep things I guess somewhat modular.
+
+1:22:48.020 --> 1:22:52.320
+ I think one of the implementations I found online that was kind of all just in one giant
+
+1:22:52.320 --> 1:22:58.140
+ method and really, really difficult to read, but having, you know, here calling it like
+
+1:22:58.140 --> 1:23:03.660
+ a shrinkage method for the shrinkage operator that they've described, and remember this
+
+1:23:03.660 --> 1:23:07.380
+ is the one that just subtracts tau.
+
+1:23:07.380 --> 1:23:12.620
+ If that, if it was less than tau away from zero, you're setting it to zero, and so that's
+
+1:23:12.620 --> 1:23:20.140
+ what this is doing.
+
+1:23:20.140 --> 1:23:26.420
+ And then our SVD reconstruct is subtracting off, actually I guess it kind of contains
+
+1:23:26.420 --> 1:23:32.980
+ that of subtracting off from the singular values and then kind of putting, or sorry,
+
+1:23:32.980 --> 1:23:39.500
+ taking an SVD, subtracting off from the singular values, and then multiplying it back together
+
+1:23:39.500 --> 1:23:40.500
+ to reconstruct.
+
+1:23:40.500 --> 1:23:41.500
+ Yes, yeah.
+
+1:23:41.500 --> 1:23:49.820
+ So, so here you could do this with, so you'll notice here we're just calling underscore
+
+1:23:49.820 --> 1:23:51.380
+ SVD.
+
+1:23:51.380 --> 1:23:58.780
+ Here underscore SVD we've set to be, to use FBPCA, which is a Facebook library for randomized
+
+1:23:58.780 --> 1:24:10.620
+ SVD, let me pull it up, and I should have saved timings for this, but basically we just
+
+1:24:10.620 --> 1:24:17.300
+ kind of tried this with several different SVD implementations to kind of try to find
+
+1:24:17.300 --> 1:24:23.100
+ what was quickest, and this was fast so we went with it, but you could, you could still
+
+1:24:23.100 --> 1:24:29.620
+ use scikit-learn's randomized SVD here if you wanted.
+
+1:24:29.620 --> 1:24:35.220
+ And this is also I think an interesting point in that there are, kind of like the speed
+
+1:24:35.220 --> 1:24:39.340
+ of your implementation with these things matters, and that there are different options, but
+
+1:24:39.340 --> 1:24:46.360
+ some of them I at one point started working with this library called PyProPack, and I made
+
+1:24:46.360 --> 1:24:51.540
+ a pull request to update it to Python 3, and the author of the library was like, oh, I
+
+1:24:51.540 --> 1:24:56.500
+ no longer am supporting this, and it was like all based off of this library ProPack, which
+
+1:24:56.500 --> 1:25:03.420
+ came out of someone's like PhD thesis 10 or 15 years ago as like this Fortran library,
+
+1:25:03.420 --> 1:25:08.300
+ so you do kind of, sometimes kind of do get into these implementation specifics even in
+
+1:25:08.300 --> 1:25:10.180
+ figuring out like which libraries to use.
+
+1:25:10.180 --> 1:25:14.700
+ So Rachel is now the official maintainer of PyProPack, thanks to you, especially.
+
+1:25:14.700 --> 1:25:20.100
+ Yes, so he did merge my, yeah, he was like if you want this library you can take over
+
+1:25:20.100 --> 1:25:28.740
+ maintaining it, but although he actually didn't switch it off to me, but yeah, so FBPCA was
+
+1:25:28.740 --> 1:25:35.180
+ fast, and it's, I'll just say personally I do find it encouraging when you see that there's
+
+1:25:35.180 --> 1:25:40.460
+ like a big company supporting a library, because that does make me feel like it'll hopefully
+
+1:25:40.460 --> 1:25:47.660
+ be maintained, but that's what we're using here, and it's a little bit confusing because
+
+1:25:47.660 --> 1:25:53.340
+ they've called the method PCA, but it's a it's an SVD, and I find that a fair amount
+
+1:25:53.340 --> 1:25:58.460
+ that there are people that almost use PCA and SVDs somewhat interchangeably.
+
+1:25:58.460 --> 1:26:09.380
+ They are different, they're slightly different, yeah I'm not gonna get into it right now unless
+
+1:26:09.380 --> 1:26:10.380
+ you wanted to talk about it.
+
+1:26:10.380 --> 1:26:18.500
+ I mean they're basically the same almost, I think it's worth mentioning that PCA basically
+
+1:26:18.500 --> 1:26:19.500
+ uses SVD.
+
+1:26:19.500 --> 1:26:25.580
+ Yes, PCA uses SVD, PCA is typically you're multiplying the matrix by its transpose first.
+
+1:26:25.580 --> 1:26:35.340
+ No, they are, sorry, I should mention they both do that, the only difference as far as
+
+1:26:35.340 --> 1:26:38.100
+ I'm aware is that PCA subtracts the mean.
+
+1:26:38.100 --> 1:26:47.500
+ Oh that's right, yeah PCA subtracts the mean, okay thank you.
+
+1:26:47.500 --> 1:26:53.100
+ That is something to be careful of with subtracting the mean, if you start off with a sparse matrix
+
+1:26:53.100 --> 1:27:04.340
+ subtracting the mean makes it no longer sparse, so you don't want to do that.
+
+1:27:04.340 --> 1:27:14.340
+ Okay so we have, actually let me see if I want to say anything else about, about this.
+
+1:27:14.340 --> 1:27:33.920
+ So this is the primary component pursuit method itself, yeah so here trans just transposes
+
+1:27:33.920 --> 1:27:41.820
+ the matrix because it, this is quicker, you want your, I guess you want this matrix to
+
+1:27:41.820 --> 1:27:47.500
+ be tall and skinny, so if you're given the reverse you need to transpose the matrix,
+
+1:27:47.500 --> 1:27:51.780
+ do this, it'll be quicker, and then go back.
+
+1:27:51.780 --> 1:28:06.460
+ Yeah so I'll just say like here we've got this loop that we're going through, we're
+
+1:28:06.460 --> 1:28:13.260
+ getting a new estimate of our sparse matrix using the shrinkage operator, then we're getting
+
+1:28:13.260 --> 1:28:23.520
+ our low rank matrix by reconstructing the SVD, we're kind of each time updating how
+
+1:28:23.520 --> 1:28:32.580
+ many singular values we want to compute, seeing what our error is, and adding that on to Y
+
+1:28:32.580 --> 1:28:45.380
+ where we kind of keep this, keep this total.
+
+1:28:45.380 --> 1:28:46.380
+ Yeah and that's it.
+
+1:28:46.380 --> 1:28:51.980
+ So next I kind of, or want to show the, the results that we get from this.
+
+1:28:51.980 --> 1:28:56.700
+ So here it's kind of taking as inputs the number, the maximum number of iterations you
+
+1:28:56.700 --> 1:29:06.060
+ want to do as well as a hyper parameter, and that, that hyper parameter I actually added
+
+1:29:06.060 --> 1:29:11.420
+ because I was trying this on different videos and found that like it was needing different
+
+1:29:11.420 --> 1:29:19.680
+ parameter values to converge, but you can see the error each time of how, how it's doing.
+
+1:29:19.680 --> 1:29:20.980
+ And these are the results.
+
+1:29:20.980 --> 1:29:27.200
+ So we've gotten back our low rank matrix and our sparse matrix and we can plot them.
+
+1:29:27.200 --> 1:29:32.740
+ So the original, the sparse, and the low rank, and you will see there's still some kind of
+
+1:29:32.740 --> 1:29:38.140
+ like blurs of people showing up that haven't been fully removed.
+
+1:29:38.140 --> 1:29:44.100
+ I wanted to note that extracting a little bit of the foreground is easier than fully
+
+1:29:44.100 --> 1:29:48.180
+ identifying the background, so you'll notice kind of like the middle pictures I think look
+
+1:29:48.180 --> 1:29:53.340
+ better than the pictures on the far right, and that's because, I don't know, as long
+
+1:29:53.340 --> 1:29:58.040
+ as you're close it'll look like people even if you don't have every piece of the person
+
+1:29:58.040 --> 1:30:04.220
+ to the right intensity, whereas with the background, you know, if any of the persons remaining
+
+1:30:04.220 --> 1:30:11.700
+ you kind of do have this little smudge or ghost, ghost image.
+
+1:30:11.700 --> 1:30:18.620
+ Any questions?
+
+1:30:18.620 --> 1:30:35.740
+ Okay, on that note, I may stop here before we start since LU factorization is kind of
+
+1:30:35.740 --> 1:30:40.660
+ a big meaty topic that we'll get to next, and you'll remember LU factorization we saw
+
+1:30:40.660 --> 1:30:46.100
+ was used in the randomized SVD that we wrote in that kind of a middle for loop, and it's
+
+1:30:46.100 --> 1:30:53.560
+ also used in Facebook, the Facebook PCA at randomized SVD that we were using has it.
+
+1:30:53.560 --> 1:30:58.260
+ So we're going to kind of dig in next time to how LU factorization works.
+
+1:30:58.260 --> 1:31:03.580
+ Yeah, we'll just end I think five minutes early.
+
+1:31:03.580 --> 1:31:14.140
+ Okay, thank you very much.
+

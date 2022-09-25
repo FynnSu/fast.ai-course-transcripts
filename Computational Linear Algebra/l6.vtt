@@ -1,0 +1,2153 @@
+WEBVTT
+
+00:00.000 --> 00:06.620
+ Okay, I'm gonna go ahead and get started. I wanted to announce first I put up the second homework on GitHub,
+
+00:06.620 --> 00:12.120
+ and that'll be due next Thursday the 15th, and that's also the day that the draft
+
+00:12.600 --> 00:15.880
+ for your writing project is due, so one week from today.
+
+00:18.440 --> 00:24.840
+ Yeah, and so I wanted to start by kind of following up with some questions that came up in previous classes.
+
+00:25.680 --> 00:27.680
+ One of those was
+
+00:27.680 --> 00:31.640
+ kind of what's going on with the randomized projections, like why does this work?
+
+00:32.800 --> 00:35.520
+ And so another way to think about it is,
+
+00:36.360 --> 00:39.940
+ so here we have our matrix representing the video,
+
+00:42.320 --> 00:46.840
+ you know, where each column is a single point in time, and what we do with the random
+
+00:47.640 --> 00:49.640
+ projection is basically take a
+
+00:49.960 --> 00:51.960
+ random row vector,
+
+00:52.160 --> 00:54.160
+ and so it's like taking a linear combination
+
+00:54.160 --> 01:02.160
+ kind of of all these columns where you've got random values for how much you're taking of each column,
+
+01:03.200 --> 01:07.280
+ and so in the case where you take one of those, what would you expect it to look like?
+
+01:13.320 --> 01:15.320
+ So this is kind of remembering what we saw,
+
+01:16.200 --> 01:19.040
+ kind of I wrote it down in the note, of like you can think of a
+
+01:19.040 --> 01:24.360
+ matrix times a vector is like taking a linear combination of the columns of that matrix.
+
+01:33.080 --> 01:39.420
+ So what would this matrix times a column vector look like?
+
+01:39.420 --> 01:51.500
+ Do you want the, I think Tim had something to say, Jeremy?
+
+01:51.500 --> 02:12.060
+ And keep in mind what your, this random vector you're using to take your linear combination of the columns,
+
+02:13.140 --> 02:15.140
+ that's appropriately
+
+02:15.300 --> 02:17.540
+ normalized, so assume that everything in there is
+
+02:17.540 --> 02:21.340
+ maybe positive and sums up to one.
+
+02:33.060 --> 02:35.060
+ Sam?
+
+02:35.060 --> 02:45.060
+ A linear combination of all of the columns, it would look a lot like one of those columns.
+
+02:46.820 --> 02:48.180
+ Exactly.
+
+02:48.180 --> 02:54.900
+ Yeah, so as Sam said, a linear combination of these columns, notice these columns are actually very similar to each other, like that's why we have these
+
+02:56.060 --> 02:59.740
+ horizontal lines. There's a little bit of feedback, Jeremy. Do you know what's causing that?
+
+02:59.740 --> 03:04.340
+ Or like the microphone, or speaker's humming.
+
+03:12.620 --> 03:19.860
+ Okay, I'll keep going. So these columns that make up this matrix all look very similar, and that's why we have horizontal lines, because
+
+03:20.420 --> 03:22.300
+ you know, kind of here at the bottom,
+
+03:22.300 --> 03:27.840
+ yeah, that looks like there's a black line, and then a dark gray line, and then a black line. That's the space where
+
+03:27.840 --> 03:35.000
+ every column in that matrix has the same value. And so if you were to kind of take this linear combination of them
+
+03:36.280 --> 03:40.560
+ that's appropriately normalized, you're gonna get kind of the same thing at the
+
+03:41.040 --> 03:43.560
+ at the bottom. Like there's no way that you're gonna get,
+
+03:43.560 --> 03:48.640
+ I don't know, like a very white pixel for your result if you're taking basically this
+
+03:48.640 --> 04:00.780
+ weighted average of all these black and dark gray pixels. So it's gonna be pretty close to the mean column? Yes, yeah, so this would be very close to the,
+
+04:01.560 --> 04:09.560
+ to taking an average. Because the average of the weights is just gonna be a number of columns, you know, a number of columns.
+
+04:10.080 --> 04:16.960
+ Yeah, so if we were perfectly taking an average, what would happen would be that we would kind of have smears,
+
+04:16.960 --> 04:18.960
+ oh and I actually I should be pointing here,
+
+04:19.800 --> 04:27.460
+ kind of smears where the black lines are. And so we won't get that because this is, it's important that this is a random weighted average.
+
+04:28.800 --> 04:35.420
+ But the the horizontal lines are going to have to show up in kind of, and what we get is just a single column,
+
+04:35.420 --> 04:38.040
+ but if you, it would match up with these horizontal lines.
+
+04:38.040 --> 04:49.640
+ There are questions about that, kind of with this idea of, so for right now we're just talking about taking one, kind of multiplying by one vector, okay.
+
+04:49.640 --> 05:01.640
+ I see a lot of puzzled expressions.
+
+05:01.640 --> 05:08.640
+ Linda?
+
+05:08.640 --> 05:21.640
+ So you're talking about using one factor times the matrix, like one single value, like factor as like one value?
+
+05:21.640 --> 05:45.640
+ Okay, that's a good question. Let me grab my stylus in my bag.
+
+05:45.640 --> 06:09.640
+ Okay, so kind of going back here, what I'm thinking about is kind of, this is our matrix M, this is made up of columns, and I'll call that C1, C2, C3, and so on.
+
+06:09.640 --> 06:19.640
+ And so I'm thinking about multiplying it by a single vector, but that'll have a lot of values, so, and I'll call these like maybe R1, R2.
+
+06:19.640 --> 06:32.640
+ And these are random, but they are normalized. I can't remember exactly, exactly how, but the idea is, so kind of these are normalized, and we're taking this multiplication,
+
+06:32.640 --> 06:42.640
+ and then just to, actually I should show, kind of to tie it in with the picture on the other plate page, the horizontal lines are still here.
+
+06:42.640 --> 06:57.640
+ But you can think of a horizontal line as just meaning, you know, maybe these all have the value like 120 kind of in this particular row, but it's kind of several separate columns like that.
+
+06:57.640 --> 07:20.640
+ And so when we multiply across, what we get is, I should zoom out a little bit, kind of R1 times C1 plus R2 times C2, and so on.
+
+07:20.640 --> 07:37.640
+ So it's like a linear combination of those, but for this one, so kind of in, in this spot down here, actually I should make, so this is going to add up to some kind of final, final sum, which is going to be a column vector.
+
+07:37.640 --> 07:47.640
+ What's going to be in this bottom spot where the 120s were?
+
+07:47.640 --> 08:03.640
+ Exactly, 120. And so the idea is kind of no matter how we do the random weights, since this is normalized, if this was 120 in every single one, you would have to get a 120 there. Matthew?
+
+08:03.640 --> 08:10.640
+ What's the advantage of doing a random vector versus just averaging it?
+
+08:10.640 --> 08:22.640
+ That's a great question, and that kind of leads into what happens, let me go back to the notebook.
+
+08:22.640 --> 08:26.640
+ It goes back into what happens when we take multiple of these.
+
+08:26.640 --> 08:32.640
+ So when we take multiple ones, if we were just taking an average, we would get the same thing each time.
+
+08:32.640 --> 08:40.640
+ But now, so now we're picking out two different vectors of coefficients, taking two linear combinations to get two columns.
+
+08:40.640 --> 08:48.640
+ Because they're random, they're going to be orthonormal to each other.
+
+08:48.640 --> 09:17.640
+ OK, so because we're taking two different ones, they're random, we end up with something orthonormal, roughly. And basically the idea is just because we have so many values that, let me go back maybe to the notebook, or to the note, that it's just so unlikely that we would end up getting something that was a multiple of something else, given that we have all these random values.
+
+09:17.640 --> 09:25.640
+ And this is nice because it lets us kind of get this new space that's capturing more information about M.
+
+09:25.640 --> 09:34.640
+ You know, like if we just took the average, we would just get the average. But here we're going to be able to kind of pick out different pieces of it.
+
+09:34.640 --> 09:54.640
+ So I think like with the kind of background video, you could think of like if you had two different backgrounds that show up in the video, you would be able to get enough information and you would probably have to take more than two vectors, but you could probably reconstruct both of those backgrounds.
+
+09:54.640 --> 10:02.640
+ This is like a, in some ways, like a very simple example that, you know, we just have this one background we're catching.
+
+10:02.640 --> 10:15.640
+ Or maybe if there's a person that kind of is, I don't know, sitting in one place for a large part of the video, you would end up catching a lot of that person, but you would also catch maybe what was behind her when she moved.
+
+10:15.640 --> 10:28.640
+ So, yeah, so you're kind of able to get different information because these are random.
+
+10:28.640 --> 10:36.640
+ Terry, do you want to hand it back to you? It looks like it's a follow up question.
+
+10:36.640 --> 10:53.640
+ Yeah, I guess I'm just not sure what your random vector is going to be in the connection with time.
+
+10:53.640 --> 10:59.640
+ So the tough thing is it's kind of capturing different points in time, you know, like it's randomly. Yeah, yeah, you're right.
+
+10:59.640 --> 11:12.640
+ It's random in time and that it's kind of saying like, let's take, I don't know, 0.15 from, you know, like second two and 0.3 from second three.
+
+11:12.640 --> 11:23.640
+ And then what the interpretation, is there any way to interpret the information added by that vector?
+
+11:23.640 --> 11:36.640
+ So let me remind you that kind of the overarching goal with this randomized projection is to get something where the columns span the same space as the columns here.
+
+11:36.640 --> 11:49.640
+ So kind of if we did several of these, we would get a matrix because this is this is a very wide matrix and we want to get something that's narrower, but has all the same information.
+
+11:49.640 --> 11:53.640
+ Sam has his hand up.
+
+11:53.640 --> 12:12.640
+ So if we had a picture that had, or we had many pictures, there was a lot of background and in maybe a third of them there was a person standing in the middle. Then we took two random vectors and multiplied it by the matrix and got two columns.
+
+12:12.640 --> 12:23.640
+ Then we could represent the person, let's say in one of the vectors it multiplied zero by some chance.
+
+12:23.640 --> 12:24.640
+ Yes, yeah.
+
+12:24.640 --> 12:45.640
+ Then you could reconstruct just the person by some positive number times the second column minus the first column.
+
+12:45.640 --> 12:56.640
+ So the information of the person is captured because now we can map anything else in any of the pictures by some linear combination of these random vectors.
+
+12:56.640 --> 13:15.640
+ Yes, yeah. That's a good example. Thank you, Sam. Because this is randomness and it's not going to work out perfectly, you would probably want more vectors in practice. But yeah, that's the idea.
+
+13:15.640 --> 13:26.640
+ Can you still go over why they're orthonormal? Like that's a pretty strong condition. It is. And this is kind of approximately and it really just comes down to dimensionality.
+
+13:26.640 --> 13:45.640
+ So the idea that if, I can't remember, this is 4800 tall. So if you had two vectors of length 4800, for them to be pointing in the same direction is just statistically unlikely.
+
+13:45.640 --> 13:48.640
+ Kind of if you have this random...
+
+13:48.640 --> 13:56.640
+ It could be pointing with slight deviation away from each other, right? It could just be a slight perturbation where they're not this...
+
+13:56.640 --> 13:59.640
+ Yeah, I guess it's more that...
+
+13:59.640 --> 14:00.640
+ They're not multiples?
+
+14:00.640 --> 14:03.640
+ Yeah, they're definitely not multiples.
+
+14:03.640 --> 14:06.640
+ It's also really unlikely that they're exactly...
+
+14:06.640 --> 14:09.640
+ Yeah, right.
+
+14:09.640 --> 14:11.640
+ Yeah, and I maybe...
+
+14:11.640 --> 14:17.640
+ Yeah, I want to emphasize that it's kind of the key thing is that they're not exact multiples of each other.
+
+14:17.640 --> 14:22.640
+ So is the idea that we want them to be orthonormal or the idea that we don't want them to be dependent?
+
+14:22.640 --> 14:28.640
+ Yeah, it's more that we don't want them to be linearly dependent. Yeah, I should change that. Yeah, sorry about that.
+
+14:28.640 --> 14:36.640
+ Well, the average correlation of two random projections will on average be zero.
+
+14:36.640 --> 14:43.640
+ It could be surprising if they were highly correlated in a high dimensional space.
+
+14:43.640 --> 14:47.640
+ I'll say maybe not highly correlated.
+
+14:47.640 --> 14:51.640
+ I was thinking like in America, you take two random vectors and you dot five them.
+
+14:51.640 --> 14:55.640
+ It'll be close to zero.
+
+14:55.640 --> 14:59.640
+ What if everything is slightly positive?
+
+14:59.640 --> 15:07.640
+ But these are random Gaussians, so zero and one random Gaussians, so what's the probability of having 4800 positive numbers?
+
+15:07.640 --> 15:09.640
+ It's not high.
+
+15:09.640 --> 15:13.640
+ Two to the 4800.
+
+15:13.640 --> 15:17.640
+ So you're picking the center at zero.
+
+15:17.640 --> 15:20.640
+ Yes?
+
+15:20.640 --> 15:24.640
+ So my question is that we randomly pick these columns.
+
+15:24.640 --> 15:27.640
+ So how do we decide which columns to pick?
+
+15:27.640 --> 15:41.640
+ I know we kind of randomize it, but then just for our own purposes, do we just see, oh, we pick these five out of 100 randomly, see what kind of background we get, and then try another one and see whether we get something different?
+
+15:41.640 --> 15:49.640
+ So really what we're doing, and let me open up this one, we had this randomized range finder method.
+
+15:49.640 --> 16:04.640
+ And so we're kind of doing this in the context of trying to find a matrix that's like our original matrix, but has far fewer columns.
+
+16:04.640 --> 16:12.640
+ Go back to it.
+
+16:12.640 --> 16:22.640
+ And so remember this is kind of like one step in getting the randomized SVD, although in some ways this is the hardest or most non-intuitive step.
+
+16:22.640 --> 16:29.640
+ But we're taking kind of random normal
+
+16:29.640 --> 16:37.640
+ of shape A, and then we're multiplying A and Q together.
+
+16:37.640 --> 16:43.640
+ So this is, I guess going to the question of how do we know which ones to take, it really is just random.
+
+16:43.640 --> 16:47.640
+ But we do have, remember, that number of oversamples.
+
+16:47.640 --> 16:50.640
+ So we are taking kind of more than we'll end up needing.
+
+16:50.640 --> 17:01.640
+ This is towards the goal of getting a randomized SVD, which is a good way to get the truncated SVD without having to calculate the full SVD, which would be really slow for a large matrix.
+
+17:01.640 --> 17:11.640
+ And so here we'll have like a number of components we're going for, and then we take this number of oversamples to kind of give us extra information.
+
+17:11.640 --> 17:17.640
+ So in this method, we actually need to define the number of components and the number of samples.
+
+17:17.640 --> 17:22.640
+ So is there an optimized way to decide what is the best example of the number of components?
+
+17:22.640 --> 17:28.640
+ So I think the number of components would come from whatever problem you are working on.
+
+17:28.640 --> 17:33.640
+ You would need to have either some intuition or something specifically that you're looking for.
+
+17:33.640 --> 17:42.640
+ I mean, you can, sometimes you can take like, take a number, and then we kind of did this here where we looked at what the singular values are and see where it suddenly dips.
+
+17:42.640 --> 17:46.640
+ And so that can be, this is looking at our error from the reconstruction.
+
+17:46.640 --> 17:55.640
+ You could use that to be like, OK, it seems like, I don't know, really getting 50 components, like my error is already kind of like leveled off a lot.
+
+17:55.640 --> 18:03.640
+ So that could be one technique. But if this was, if you were doing this for data compression, you might have particular constraints about,
+
+18:03.640 --> 18:09.640
+ I don't know, this is what acceptable error is or, you know, this is how much space I have available that I'm trying to compress into.
+
+18:09.640 --> 18:13.640
+ So kind of your problem will give you the number of components.
+
+18:13.640 --> 18:19.640
+ And then the number of oversamples was recommended to be 10 in the paper.
+
+18:19.640 --> 18:25.640
+ That's what the authors kind of found to be a good, a good number.
+
+18:25.640 --> 18:34.640
+ Yeah, great. So I guess the randomized range finder is an algorithm that is in place that is doing the optimization for us.
+
+18:34.640 --> 18:42.640
+ Yeah, so the randomized range finder, so I wrote it out so we could see what was going on in it, but it's actually implemented in SKLearn.
+
+18:42.640 --> 18:57.640
+ And so, you know, in most cases you would probably be using, really if you're using SKLearn's randomized SVD, that calls SKLearn's randomized range finder, which is here.
+
+18:57.640 --> 19:08.640
+ Oh, yeah, that's true. It's not, it's not specifically optimizing anything, but it is doing this calculation for you.
+
+19:08.640 --> 19:15.640
+ Although it is, it is random in that it just, actually I can pull this up on here.
+
+19:15.640 --> 19:20.640
+ Yeah, so here randomized range finder.
+
+19:20.640 --> 19:27.640
+ And this is very similar to what I did. I just kind of left out a lot of the kind of like fancier conditions or checks.
+
+19:27.640 --> 19:39.640
+ But it, you know, it is just taking a bunch of random normals.
+
+19:39.640 --> 19:58.640
+ Yeah, so we do iterate, and here we are using math to calculate the best stats. No, we're not getting the best of anything here. Yeah, OK, I'll go to my code because that's shorter.
+
+19:58.640 --> 20:14.640
+ So this, this iteration, and this I kind of just wanted to share like an intuition about, but the idea is that, so this is kind of going back to our goal is to find a matrix that has the same column space as A, our original matrix.
+
+20:14.640 --> 20:19.640
+ So we're trying to find something with fewer columns, but a similar column space.
+
+20:19.640 --> 20:28.640
+ And here kind of taking, taking powers of A kind of gets stuff that's like really in the column space of A.
+
+20:28.640 --> 20:38.640
+ You know, if you did A times a vector and then, you know, multiply that by A again and again, you're like kind of getting stuff like, OK, this is definitely in the column space of A.
+
+20:38.640 --> 20:50.640
+ The issue with that is that unless A kind of has exactly the right size, your answer is either going to be getting like bigger and bigger or it's going to be getting smaller and smaller and you're going to run into numerical issues.
+
+20:50.640 --> 20:53.640
+ So you can't just take a bunch of powers of A.
+
+20:53.640 --> 21:02.640
+ And so what's going on here is it's basically taking a power of A, you know, A times Q, and then it's doing the LU decomposition to kind of normalize it.
+
+21:02.640 --> 21:10.640
+ It's much more complex when you have this loop there and a lot of implementations don't have that loop at all.
+
+21:10.640 --> 21:15.640
+ So like this really simple version of something has the two lines of code.
+
+21:15.640 --> 21:24.640
+ Create a normal random matrix and then take the QRP decomposition of that random matrix times your matrix.
+
+21:24.640 --> 21:30.640
+ You really want to know what this is doing because the first line of code and the last line of code is actually all you need.
+
+21:30.640 --> 21:41.640
+ Yeah, thank you, Jeremy. This is, yeah, you could have the number of iterations set to zero and you could just be getting a random matrix and doing A times your random matrix and then the QR decomposition.
+
+21:41.640 --> 21:45.640
+ And in this context, the QR decomposition, actually, this gets back to Tim's case.
+
+21:45.640 --> 21:59.640
+ This is going to kind of like normalize what you're getting and make sure it's orthonormal for Q.
+
+21:59.640 --> 22:02.640
+ Any other questions?
+
+22:02.640 --> 22:07.640
+ And we may even revisit this again because I know this is weird.
+
+22:07.640 --> 22:31.640
+ The idea that you buy a random matrix and that's it is weird, but yeah, that's all it does.
+
+22:31.640 --> 22:37.640
+ Random matrix theory is shopping counterintuitive.
+
+22:37.640 --> 22:46.640
+ But we just multiply by a matrix and it happens to work.
+
+22:46.640 --> 23:05.640
+ Great. Yeah, and so on that note, I also wanted to just kind of remind you of the Johnson Lindenstrauss lemma that we talked about, which is that a small set of points in a high dimensional space can be embedded into a space of much lower dimension in a way that preserves kind of the important structure of the space.
+
+23:05.640 --> 23:21.640
+ And so that's what we're doing here with taking this really wide matrix and trying to put it into a narrow matrix that's going to have kind of the important same structures.
+
+23:21.640 --> 23:39.640
+ Then for something a little bit wider, this was really fun. Matthew had asked last time about kind of like the history of Gaussian elimination, and it's a lot more fascinating than I realized. So the first written record of Gaussian elimination is from 200 B.C.
+
+23:39.640 --> 23:55.640
+ I'm going to pull this up.
+
+23:55.640 --> 24:05.640
+ Let me hide this.
+
+24:05.640 --> 24:09.640
+ Middle. Oh, I see. Thank you.
+
+24:09.640 --> 24:17.640
+ So I found this history of Gaussian elimination. And so 200 B.C. in the Chinese book of arithmetic, there's a problem.
+
+24:17.640 --> 24:24.640
+ Three sheafs of a good crop, two sheafs of a mediocre crop and one sheaf of a bad crop are sold for thirty nine Dow.
+
+24:24.640 --> 24:29.640
+ Two sheafs of good, three mediocre and one bad are sold for thirty four Dow and so on.
+
+24:29.640 --> 24:35.640
+ And so this is kind of like a classic Gaussian elimination problem. So I thought that was really neat.
+
+24:35.640 --> 24:47.640
+ And then they even apparently had a system where they used different colored bamboo rods on accounting board to do Gaussian elimination.
+
+24:47.640 --> 24:59.640
+ And so I linked to this page because I think it's really interesting. So in those days they sold it with a computer. Yeah, a much earlier computer.
+
+24:59.640 --> 25:10.640
+ Anyway, so then it goes on that Gaussian elimination, kind of the next next record of it was in Japan in the 1600s.
+
+25:10.640 --> 25:27.640
+ Sekikawa actually invented the determinate, although did not get credit for it. And around the same time Leibniz independently invented the determinate and also did not get credit for it because the ideas didn't take off.
+
+25:27.640 --> 25:43.640
+ And then, OK, I thought this was neat. So then Gauss described the elimination method as being commonly known. So he was not even the first European to to discover it and never claimed to have invented it.
+
+25:43.640 --> 25:52.640
+ But he did possibly invent the Cholesky decomposition, which Cholesky did not come up with until later on, but gets credit for.
+
+25:52.640 --> 26:08.640
+ So that's just a kind of fun bit of math history. But this writing kind of emphasizes like how important Gaussian elimination is and just that it's been like a problem that people care about for over 2000 years and is still widely used.
+
+26:08.640 --> 26:14.640
+ I thought that was fun.
+
+26:14.640 --> 26:21.640
+ Any questions or comments about the history of Gaussian elimination?
+
+26:21.640 --> 26:31.640
+ OK, so then another question that came up last time was about ways to speed up Gaussian elimination, and I did not have time to dive into this as much as I want.
+
+26:31.640 --> 26:39.640
+ This is on my to-do list after this course ends. But LU decomposition can be fully parallelized.
+
+26:39.640 --> 26:52.640
+ And it looks like there are actually kind of multiple ways to do this. So I found this slide show.
+
+26:52.640 --> 27:10.640
+ So kind of here they've shown what the different dependencies are and then talk about ways to parallelize that, including one approach is kind of to break it down into conglomeration, but you know, kind of what depends on what.
+
+27:10.640 --> 27:13.640
+ Like grouping those together and other tasks.
+
+27:13.640 --> 27:28.640
+ And then also this is a 2016 paper that you can do a randomized LU decomposition, which lets you run it on a GPU without having to do GPU to CPU data transfer.
+
+27:28.640 --> 27:33.640
+ So that would be much quicker. So I just want to kind of let you know we're not going to go into these.
+
+27:33.640 --> 27:44.640
+ Let you know that they're out there because I think that's exciting. And it's also interesting that this is still an area of research that people are working on.
+
+27:44.640 --> 27:48.640
+ So another another question that came up last time was,
+
+27:48.640 --> 28:09.640
+ Valentin discovered that using scipy.linauge.solve, so we had this kind of pathological matrix that we looked at, and actually let me do it for a lower dimension just so you can kind of remember what it looks like.
+
+28:09.640 --> 28:19.640
+ So this matrix that was ones along the diagonal, ones in the last column, and negative ones in the lower triangle.
+
+28:19.640 --> 28:28.640
+ And you may remember that when we did Gaussian elimination by hand on that, basically what ends up happening is that you're kind of doubling at every row.
+
+28:28.640 --> 28:39.640
+ This final column of ones, and so you end up with these powers of two that's getting very large. And so we get the wrong answer.
+
+28:39.640 --> 28:45.640
+ We get a wrong answer when we do
+
+28:45.640 --> 28:58.640
+ use lusolve in scipy for that, however using.solve was getting the right answer. So looking into that more,
+
+28:58.640 --> 29:05.640
+ this is not a significant difference, but lusolve was quicker. This is scipy's implementation of lusolve.
+
+29:05.640 --> 29:10.640
+ And so I can imagine if you're doing a ton that there are maybe advantages there.
+
+29:10.640 --> 29:15.640
+ Particularly because if you're doing this a lot of times you only have to do the LU factorization once of A.
+
+29:15.640 --> 29:21.640
+ If you have like a lot of different columns B you're solving for, you can kind of save that decomposition.
+
+29:21.640 --> 29:42.640
+ But looking at scipy's lin-alg-solve, I looked at the Fortran source code for what it's calling in lawpack, and in the comments, actually I'll pull this up.
+
+29:42.640 --> 29:51.640
+ Let's go to the right place.
+
+29:51.640 --> 29:58.640
+ I kind of mentioned several times that it's looking at the reciprocal pivot growth factor.
+
+29:58.640 --> 30:06.640
+ And so if you'll remember we defined this term rho back
+
+30:06.640 --> 30:15.640
+ in the notebook, rho was the growth factor, and that's the kind of the greatest ratio of the AI over UI.
+
+30:15.640 --> 30:23.640
+ And in this case it's 2 to the 59th. This is where n equals 60. So it's 2 to the n minus 1.
+
+30:23.640 --> 30:38.640
+ So the lawpack's method is actually taking that into account, whereas straight LU solve is not.
+
+30:38.640 --> 30:50.640
+ And I think it can be, like you probably don't want to go too far down this rabbit hole, but I think it is, it can be interesting to kind of look up the lawpack methods that are being called by a particular
+
+30:50.640 --> 30:56.640
+ kind of scipy method, just to get an idea of what it's doing.
+
+30:56.640 --> 31:01.640
+ Any questions about that?
+
+31:01.640 --> 31:05.640
+ Kelsey?
+
+31:05.640 --> 31:33.640
+ What property, when you say row pivoting, you mean when we're shuffling the rows but not the columns?
+
+31:33.640 --> 31:44.640
+ Yeah. So we saw when we weren't shuffling the rows, we had that example with 10 to the negative 20th,
+
+31:44.640 --> 31:59.640
+ where we looked at this matrix, 10 to the negative 20th, and here we had problems because we hadn't shuffled the row order.
+
+31:59.640 --> 32:15.640
+ And what's happening here is that you're, I guess, having to multiply by 10 to the 20th in order to, no, you have to multiply by 10 to the negative 20th to zero out this 1 on the next row.
+
+32:15.640 --> 32:26.640
+ And kind of multiplying by this really tiny number is setting you up for these kind of like potential underflow errors, which is kind of what happens here.
+
+32:26.640 --> 32:35.640
+ That like in general, you don't want to be multiplying by tiny numbers.
+
+32:35.640 --> 32:41.640
+ And so what switching did is, so we had,
+
+32:41.640 --> 32:57.640
+ oh, did I pass it? Yeah.
+
+32:57.640 --> 33:15.640
+ OK, so then we had this other matrix where we had switched them, and here when we calculate the LU decomposition, actually I can change it.
+
+33:15.640 --> 33:31.640
+ I guess like the fact that we multiply by 10 to the negative 20th and cancel those out.
+
+33:31.640 --> 33:35.640
+ If you're multiplying by something large.
+
+33:35.640 --> 33:49.640
+ So this is a good question. So like part of the issue, I don't think this is the heart of it, is that like over here you end up with 1 minus 10 to the negative 20th, which rounds to 1.
+
+33:49.640 --> 33:55.640
+ And that's an OK way to round.
+
+33:55.640 --> 34:03.640
+ Let me let me do this one out by hand. I think might be helpful.
+
+34:03.640 --> 34:18.640
+ Kind of like why the negative.
+
+34:18.640 --> 34:22.640
+ Why the one case breaks down.
+
+34:22.640 --> 34:37.640
+ So in this A, we had 10 to the negative 20th is the first one.
+
+34:37.640 --> 34:50.640
+ 20th, 1, 1, 1.
+
+34:50.640 --> 34:56.640
+ Oh, you know what? The other issue is going to be that we're like leaving this as a pivot.
+
+34:56.640 --> 35:20.640
+ So later on, we're going to have to come back and multiply through by 10 to the 20th, which doesn't seem like seem like a good idea.
+
+35:20.640 --> 35:26.640
+ And actually, let me even put down so that would mean L would be.
+
+35:26.640 --> 35:29.640
+ This negative.
+
+35:29.640 --> 35:32.640
+ 10 to the negative 20th.
+
+35:32.640 --> 35:42.640
+ 1, 1, 0.
+
+35:42.640 --> 35:48.640
+ Well, aren't we we're multiplying this one by.
+
+35:48.640 --> 35:55.640
+ Oh, I see. Right. We're multiplying. Yeah. Thank you. Thanks, Tim.
+
+35:55.640 --> 36:02.640
+ Oh, because the subtraction is implicit. Yes. Thank you. That's 10 to the 20th.
+
+36:02.640 --> 36:28.640
+ So this was a. In the case with a hat, we're getting or starting with 1, 1, 10 to the negative 20th, 1.
+
+36:28.640 --> 36:43.640
+ Is this entry correct? The 1 minus 10 to the negative 20th. That should be.
+
+36:43.640 --> 37:07.640
+ What. So we're multiplying by 10 to the 20th. Yeah. Plus one.
+
+37:07.640 --> 37:21.640
+ One minus. Thank you. And then this one will be one minus 10 to the negative.
+
+37:21.640 --> 37:42.640
+ OK, so in this. Oh, OK. In the first day, the unstable one, we're ending up with pivots that are like we have one pivot that's like tiny, like dangerously tiny, and then our other pivot is dangerously huge, which is kind of like the worst of both worlds.
+
+37:42.640 --> 37:53.640
+ Whereas when we've switched them, actually, both these pivots are good because they're close to one kind of much more reasonable numbers.
+
+37:53.640 --> 38:07.640
+ So having having this 10 to the negative 20th as a pivot, I think is the issue, because that's what then kind of led to us getting huge and tiny pivot columns.
+
+38:07.640 --> 38:17.640
+ The other thing that's going to happen is like when we're solving this system, you know, kind of doing the UX part, like we're going to have to divide by 10 to the 20th.
+
+38:17.640 --> 38:33.640
+ And then on the next row, we've got these coefficients, I guess, that we're now like dividing by that are huge and tiny, which is bad.
+
+38:33.640 --> 38:40.640
+ So it's only a problem because we do have the composition going down. So it's only like the ratio.
+
+38:40.640 --> 38:58.640
+ Yes, yes. Yeah, the ratio is kind of what's creating these, but it's also like the ratio is kind of artificial because you could put the rows in any order and it would.
+
+38:58.640 --> 39:12.640
+ So what it is is you would actually when you do this, if you had like a matrix that was more than two by two, is that on each iteration, you want to choose like the largest value that you have.
+
+39:12.640 --> 39:18.640
+ Yeah. And then swap those two rows. But kind of once you have more rows, you can't you can't do it all in advance.
+
+39:18.640 --> 39:32.640
+ Like you kind of have to go, you know, like see how it changes your rows to do one, one of the outer loop where you zero something out and then for the next one to, you know, pivot, which is, you know, swapping two rows.
+
+39:32.640 --> 39:38.640
+ But kind of each time you're going to like find what's the best row to swap with.
+
+39:38.640 --> 39:42.640
+ You're welcome.
+
+39:42.640 --> 39:53.640
+ Any other questions about this?
+
+39:53.640 --> 40:01.640
+ OK, let me go back down.
+
+40:01.640 --> 40:10.640
+ OK, and so then that was it for kind of following up on LU factorization. I wanted to return to a question from last week about block matrices.
+
+40:10.640 --> 40:15.640
+ And this is something that I wanted to teach at some point and kind of wasn't sure where to stick it.
+
+40:15.640 --> 40:23.640
+ So let's talk about it here. First I wanted to talk about ordinary matrix multiplication to contrast.
+
+40:23.640 --> 40:37.640
+ And so I want you to take a moment to think about what is the computational complexity or big O of matrix multiplication if you have n by n matrices?
+
+40:37.640 --> 40:43.640
+ I just want to raise their hand if they know the answer.
+
+40:43.640 --> 40:47.640
+ Roger.
+
+40:47.640 --> 40:54.640
+ It's n cubed. Exactly, it's n cubed.
+
+40:54.640 --> 40:59.640
+ No, that's good. I was going to ask you how you got that.
+
+40:59.640 --> 41:07.640
+ So to calculate one entry, you need to multiply a row by the column and that's n multiplications?
+
+41:07.640 --> 41:08.640
+ Yes.
+
+41:08.640 --> 41:13.640
+ And then there's n squared for the entries, so that's n squared times n.
+
+41:13.640 --> 41:16.640
+ Exactly. Yeah, thank you.
+
+41:16.640 --> 41:20.640
+ Yeah, so matrix multiplication and n cubed is slow.
+
+41:20.640 --> 41:26.640
+ Like it's not a good computational complexity. And that's what matrix multiplication is, though.
+
+41:26.640 --> 41:36.640
+ But a different or kind of an additional perspective to think about is, you know, we've talked about this memory hierarchy.
+
+41:36.640 --> 41:44.640
+ And in general, what can we say about slower types of memory?
+
+41:44.640 --> 41:51.640
+ Or how much slower are they?
+
+41:51.640 --> 41:55.640
+ I'm just looking for like a phrase, not a number.
+
+41:55.640 --> 41:59.640
+ Yes, a lot. So slower. Yeah, I was thinking order of magnitude.
+
+41:59.640 --> 42:06.640
+ But yeah, like typically going to a slower, the next slowest type of memory is going to be like an order of magnitude slower.
+
+42:06.640 --> 42:08.640
+ And much cheaper.
+
+42:08.640 --> 42:15.640
+ Yeah, they are also much cheaper, which is a benefit and why we have slower memory.
+
+42:15.640 --> 42:20.640
+ But if we think about matrix multiplication and kind of take into account memory,
+
+42:20.640 --> 42:28.640
+ what's happening is, say we're reading row i of A into fast memory in an outer loop.
+
+42:28.640 --> 42:32.640
+ Then we'll read column j of B into fast memory.
+
+42:32.640 --> 42:35.640
+ Then we'll multiply that row times that column.
+
+42:35.640 --> 42:40.640
+ So this inner loop is kind of like the n to get a single entry in C, our product.
+
+42:40.640 --> 42:44.640
+ We're doing A times B. And here it's written.
+
+42:44.640 --> 42:47.640
+ Oh, here it's written with a mistake.
+
+42:47.640 --> 42:53.640
+ This was supposed to be plus equals.
+
+42:53.640 --> 43:02.640
+ With the idea that you've, you know, you're kind of, you know, multiplying pairwise the elements of this row of A, this column of B,
+
+43:02.640 --> 43:07.640
+ and adding those to your kind of running total to get this element C.
+
+43:07.640 --> 43:10.640
+ And it takes n of those just to get one entry of C.
+
+43:10.640 --> 43:17.640
+ And then kind of you'll write that element back to slow memory once you've got it.
+
+43:17.640 --> 43:21.640
+ Are there questions first just about kind of what this algorithm is doing?
+
+43:21.640 --> 43:24.640
+ This is just standard matrix multiplication,
+
+43:24.640 --> 43:37.640
+ only kind of like assuming that you can only fit one row of A and one column of B into your faster memory.
+
+43:37.640 --> 43:44.640
+ Okay, so I want you to think about how many reads and writes are made in doing, in doing this.
+
+43:44.640 --> 43:49.640
+ So if you're multiplying two matrices together.
+
+43:49.640 --> 43:51.640
+ Question.
+
+43:51.640 --> 43:59.640
+ So how is fast memory and slow memory separated?
+
+43:59.640 --> 44:03.640
+ So, yeah, this is kind of hard because this is hidden for you.
+
+44:03.640 --> 44:07.640
+ So you're not explicitly telling the computer to do these things.
+
+44:07.640 --> 44:12.640
+ And by slow memory here, I probably mean cache, or not, sorry, fast memory.
+
+44:12.640 --> 44:20.640
+ I mean cache, slow memory, like main memory.
+
+44:20.640 --> 44:22.640
+ Yeah, you're not explicitly controlling this, though.
+
+44:22.640 --> 44:27.640
+ It's kind of like a lower level of the languages handling this.
+
+44:27.640 --> 44:32.640
+ I mean, often when you write these, the people that write the libraries we use do do this.
+
+44:32.640 --> 44:34.640
+ Yeah, that's true.
+
+44:34.640 --> 44:39.640
+ Either it's like really big parallel stuff, they read and write to the network from time to time,
+
+44:39.640 --> 44:45.640
+ or for the fast stuff on their computers, they try and manage the cache.
+
+44:45.640 --> 44:48.640
+ Particularly on GPU, you have to manage it manually.
+
+44:48.640 --> 44:56.640
+ And I guess this also comes up with like, so LaPAC is like specifically optimized for each type of computer.
+
+44:56.640 --> 44:59.640
+ You know, unfortunately, it's the standard, so it's out there.
+
+44:59.640 --> 45:07.640
+ But LaPAC and BLAST are being kind of optimized to the specific architecture of your computer.
+
+45:07.640 --> 45:11.640
+ In practice, probably a lot of people in the past will end up having to deal with this directly
+
+45:11.640 --> 45:16.640
+ because they'll find themselves at jobs as data scientists where they're working on clusters,
+
+45:16.640 --> 45:19.640
+ and so you're basically pulling stuff off the network.
+
+45:19.640 --> 45:25.640
+ When you multiply matrices, you're probably using these kind of techniques to do it on multiple computers.
+
+45:25.640 --> 45:30.640
+ Yeah, that's a good point that this is like a helpful way of thinking
+
+45:30.640 --> 45:36.640
+ because it applies to so many different levels of the memory hierarchy as well.
+
+45:36.640 --> 45:44.640
+ Yeah, you'll see this kind of if you're doing large amounts of data on a network.
+
+45:44.640 --> 45:53.640
+ Yeah, so take a moment, write down how many reads and writes are being made to do this matrix multiplication.
+
+45:53.640 --> 46:07.640
+ And sorry, I want you to make a distinction between...
+
+46:07.640 --> 46:36.640
+ Actually, yeah, never mind, just write down how many reads and writes.
+
+46:36.640 --> 47:05.640
+ Okay.
+
+47:05.640 --> 47:34.640
+ Okay.
+
+47:34.640 --> 47:59.640
+ Hello.
+
+47:59.640 --> 48:26.640
+ Okay, raise your hand if you want more time.
+
+48:26.640 --> 48:35.640
+ Does anyone have an answer they want to share?
+
+48:35.640 --> 48:56.640
+ Yes, and actually before you throw it back, how does that break down for kind of A versus B?
+
+48:56.640 --> 49:07.640
+ Yes, exactly.
+
+49:07.640 --> 49:09.640
+ Right, right.
+
+49:09.640 --> 49:13.640
+ Yeah, thank you. That's great. So yeah, Sam said kind of this outer loop.
+
+49:13.640 --> 49:19.640
+ We just read each row of A into memory once, which will end up taking n squared total.
+
+49:19.640 --> 49:23.640
+ It's n each time, and we go through the loop n times.
+
+49:23.640 --> 49:28.640
+ However, with B, we're doing for each row, we're going to read in each column.
+
+49:28.640 --> 49:33.640
+ And so that ends up being n cubed reads for B.
+
+49:33.640 --> 49:38.640
+ And then C.
+
+49:38.640 --> 49:54.640
+ So for each j, we're making n reads to read column j in, and we're having to do that for j equals 1 to n, so that's n squared.
+
+49:54.640 --> 49:59.640
+ And we're doing that then for each row of each row of A.
+
+49:59.640 --> 50:15.640
+ The issue is like each column, because it's a column, so it has n length n.
+
+50:15.640 --> 50:35.640
+ Yeah, sorry, so this is a number of element-wise reads, but it's important to note that it's n more reads for B than for A, because you've got this redundancy of your pulling in each column of B multiple times, because you have to do it for every single row of A.
+
+50:35.640 --> 50:40.640
+ And then in the k loop, you're assuming that doesn't count, because it's fast memory now.
+
+50:40.640 --> 50:49.640
+ K loop, well, they've already been pulled in, yeah, so you're not having to, yeah, right, right.
+
+50:49.640 --> 51:00.640
+ Thanks, Jeremy. So questions about how I got, and then you're doing n squared writes to kind of write C back out to slow memory.
+
+51:00.640 --> 51:09.640
+ Questions about that calculation?
+
+51:09.640 --> 51:14.640
+ Okay, so now we're going to contrast it with block matrix multiplication.
+
+51:14.640 --> 51:25.640
+ And the idea behind block matrix multiplication is basically that you're just kind of subdividing A and B into several smaller matrices.
+
+51:25.640 --> 51:29.640
+ So we could say you're making big N blocks.
+
+51:29.640 --> 51:35.640
+ Each one will be of size little n over big N times little n over big N.
+
+51:35.640 --> 51:39.640
+ Here, big N is just two.
+
+51:39.640 --> 51:43.640
+ So we're just getting four blocks, two by two.
+
+51:43.640 --> 51:47.640
+ And it turns out like kind of the matrix multiplication works exactly the same.
+
+51:47.640 --> 51:57.640
+ So the kind of top left quadrant of C is going to be A11 times B11 plus A12 times B21,
+
+51:57.640 --> 52:09.640
+ which you get from just thinking about rows of A times columns of B are giving you this result.
+
+52:09.640 --> 52:16.640
+ Similarly, over here, you're taking the top, and here when I say row,
+
+52:16.640 --> 52:26.640
+ I mean the top row of blocks of A times the second column of blocks of B to get this value.
+
+52:26.640 --> 52:37.640
+ And so on. And so you kind of are just doing these smaller matrix multiplications and then putting them together to get your result.
+
+52:37.640 --> 52:47.640
+ So what this looks like in pseudocode, and here I'm just referring to them as block IK.
+
+52:47.640 --> 52:52.640
+ It's kind of talking which one of these, you know, four smaller matrices of A are you getting.
+
+52:52.640 --> 52:57.640
+ So you have three nested loops and kind of an inner one.
+
+52:57.640 --> 53:08.640
+ You're taking block IK of A, block KJ of B, and then saying block IJ of C plus equals block of A times the block of B.
+
+53:08.640 --> 53:14.640
+ And you have to kind of go through each of your Ks, keep adding those to your running total,
+
+53:14.640 --> 53:17.640
+ and you get block IJ of C.
+
+53:17.640 --> 53:28.640
+ First, are there questions kind of about just how this matrix multiplication is working?
+
+53:28.640 --> 53:42.640
+ Okay, so what is that? What is the big O of this?
+
+53:42.640 --> 53:49.640
+ Pass the microphone, Jeremy. Looks like we should have the same amount of small operation.
+
+53:49.640 --> 53:57.640
+ Yes. It shouldn't be magic, but we could have a little bit more operations because of moving those blocks, but it's negligible.
+
+53:57.640 --> 54:02.640
+ So in terms of the like actually doing like additions and multiplications, it's the same.
+
+54:02.640 --> 54:07.640
+ So it'll be n cubed again. And we'll talk about the movement as the next question.
+
+54:07.640 --> 54:14.640
+ But we've not changed our computational complexity.
+
+54:14.640 --> 54:21.640
+ So, yeah, next question. Now, how many reads and writes are made?
+
+54:21.640 --> 54:28.640
+ And here, like before, I want the answer to kind of be element wise.
+
+54:28.640 --> 54:33.640
+ And this will be in terms of both little n and big N.
+
+54:33.640 --> 54:47.640
+ And I should note that here. Here your loops are just, you're just looping through big N because you're kind of just going through the blocks.
+
+54:47.640 --> 54:52.640
+ And you can talk to the person next to you about this as you think about it.
+
+54:52.640 --> 55:06.640
+ Oh, yes. Jeremy can pass the. Before we answer this question, would you briefly explain why this is considered a very different method from the previous one?
+
+55:06.640 --> 55:13.640
+ Because it seems to me that it didn't seem to me obviously that this has found something very different.
+
+55:13.640 --> 55:26.640
+ Yeah, so it's not very different. It's it's different in that just the previous method, you're kind of thinking of A and B as a whole and dealing, you know, like row by row, column by column.
+
+55:26.640 --> 55:38.640
+ Here you've broken it into several small matrices. And so kind of inside these loops, you're now thinking a small matrix at a time.
+
+55:38.640 --> 55:53.640
+ And I've even kind of cheated here because I say block of A times block of B. Really doing a block of A times a block of B would be like calling the previous method.
+
+55:53.640 --> 55:57.640
+ I guess if the answer to question two turns out to be different, then that's the answer.
+
+55:57.640 --> 56:09.640
+ That's true. Yeah. So we are. Spoiler alert. We are going to see that there's a different number of reads and writes being made and then we'll talk about some other benefits of doing this approach. Yeah.
+
+56:09.640 --> 56:38.640
+ I was just saying from an algorithm perspective.
+
+56:38.640 --> 57:03.640
+ Yeah.
+
+57:03.640 --> 57:28.640
+ Yeah.
+
+57:28.640 --> 57:48.640
+ Who wants more time?
+
+57:48.640 --> 58:00.640
+ Does anyone have an answer they want to share?
+
+58:00.640 --> 58:26.640
+ Yeah. So there's three for loops with big N each. So if you're just doing like an operation on the order of linear time within those three for loops, it would be big N cubed. But since you're reading a block in each of those and the blocks are of size little n over big N, then it winds up being big N squared times little n for the number of reads.
+
+58:26.640 --> 58:44.640
+ Yes. Exactly. Yes. Let me write that out.
+
+58:44.640 --> 59:03.640
+ Okay. I was trying to pull up the thing where I could write on the screen. So let me delete what I have.
+
+59:03.640 --> 59:22.640
+ Yeah. So as Vincent said, it's important to remember our blocks are of size little n over big N by little n over big N. So that's little n over big N squared is the amount of work.
+
+59:22.640 --> 59:39.640
+ And then we've got big N cubed worth of loops since we have those three nested loops. And this reduces to big N times little n squared.
+
+59:39.640 --> 59:47.640
+ And you'll have yet it's two times as Tim indicated. So you're doing that for A and then also for B.
+
+59:47.640 --> 59:57.640
+ So I'll just multiply by two. And then C is still going to be little n squared writes.
+
+59:57.640 --> 1:00:08.640
+ So this is an improvement in the amount of reads from, you know, going between slow and fast memory that we have to do, because we're assuming that big N is substantially less than little n.
+
+1:00:08.640 --> 1:00:12.640
+ It's the number of blocks that we've made.
+
+1:00:12.640 --> 1:00:23.640
+ So this kind of illustrates, yeah, one big benefit of block matrix multiplication is you've really reduced how much you have to kind of read from slower memory.
+
+1:00:23.640 --> 1:00:31.640
+ And you're kind of taking better or the reason behind this is you're taking better advantage of locality of kind of when you, you know, pulling things in a block,
+
+1:00:31.640 --> 1:00:45.640
+ you're getting to kind of more fully utilize them than before with B. It was like we're pulling a column in of B only using it once and then like throwing it back and pulling in a different column of B.
+
+1:00:45.640 --> 1:00:54.640
+ Are there questions about this?
+
+1:00:54.640 --> 1:01:02.640
+ Can anyone think of what another benefit of using block matrix multiplication might be?
+
+1:01:02.640 --> 1:01:09.640
+ So this shows better locality.
+
+1:01:09.640 --> 1:01:24.640
+ Kelsey?
+
+1:01:24.640 --> 1:01:40.640
+ That's a good point, although that's actually possible with ordinary matrix multiplication as well.
+
+1:01:40.640 --> 1:01:57.640
+ That's true. Yeah. Yeah. You could ignore blocks that are zero. I like that you're thinking about sparse matrices. Tim? Yes. Yes. I was thinking I could parallelize this more easily.
+
+1:01:57.640 --> 1:02:04.640
+ Because this is kind of already clearly separated.
+
+1:02:04.640 --> 1:02:18.640
+ What about memory? You never actually read the whole matrix into memory. So Tim's point is basically another scalability thing.
+
+1:02:18.640 --> 1:02:34.640
+ Yeah. If you had a giant matrix where even reading in a single row is excessive.
+
+1:02:34.640 --> 1:02:38.640
+ A vectorization.
+
+1:02:38.640 --> 1:02:48.640
+ We have block IJFC plus block A. Instead of in the original iteration, you're adding each entry one by one.
+
+1:02:48.640 --> 1:02:54.640
+ If you're calling all the blocks together, it's faster because you're calling the underlying.
+
+1:02:54.640 --> 1:03:18.640
+ That's a great point. Thank you.
+
+1:03:18.640 --> 1:03:25.640
+ I have to say we're a little bit late for our break, so let's go ahead and take a break now for seven minutes.
+
+1:03:25.640 --> 1:03:30.640
+ We'll be back at twelve thirteen.
+
+1:03:30.640 --> 1:03:43.640
+ I'm going to start back up. Any final questions about block matrix multiplication?
+
+1:03:43.640 --> 1:03:51.640
+ And I also wanted to remind you again, I forgot to say this at the beginning of class, but if you haven't filled out the mid-course feedback survey, please do that today.
+
+1:03:51.640 --> 1:03:58.640
+ And the link for that is in the Slack channel.
+
+1:03:58.640 --> 1:04:17.640
+ Valentine and I have a question. Just in terms of the difference between vectorization and parallelization, my understanding is that parallelization divides the course into computing tasks,
+
+1:04:17.640 --> 1:04:28.640
+ while vectorization is more like computing some number in kind of matrix form.
+
+1:04:28.640 --> 1:04:34.640
+ Vectorization often refers to SIMD, which is single instruction multiple data.
+
+1:04:34.640 --> 1:04:41.640
+ It's kind of like you have a few, like a little vector that you're doing kind of like the same operation to.
+
+1:04:41.640 --> 1:04:55.640
+ It turns out that modern processors have these processor-level instructions that can operate on four or eight things at a time on a single floor.
+
+1:04:55.640 --> 1:05:20.640
+ And that's vectorization.
+
+1:05:20.640 --> 1:05:25.640
+ Yeah. And then, as you said, SIMD is often described as vectorization.
+
+1:05:25.640 --> 1:05:40.640
+ And then, as you said, parallelization, you have kind of different cores handling the processes or even different computers.
+
+1:05:40.640 --> 1:05:52.640
+ So is it correct to say that like for vectorization, we write it in a vectorized form and then we hope then that the compiler or whatever will parallelize it on their hardware level.
+
+1:05:52.640 --> 1:05:57.640
+ But for parallelization, we make it parallelized.
+
+1:05:57.640 --> 1:06:00.640
+ Yeah, so NumPy handles vectorization for you.
+
+1:06:00.640 --> 1:06:07.640
+ Yeah, so we don't have to usually explicitly vectorize it because NumPy is doing that for us.
+
+1:06:07.640 --> 1:06:12.640
+ Whereas you have parallelization, you are having to write out more explicitly.
+
+1:06:12.640 --> 1:06:18.640
+ But it would kind of vectorization, it depends what libraries you're using, like if they automatically do that.
+
+1:06:18.640 --> 1:06:25.640
+ Thanks. You're welcome. Good questions.
+
+1:06:25.640 --> 1:06:30.640
+ All right. Now we're going to be starting a new lesson.
+
+1:06:30.640 --> 1:06:36.640
+ Notebook 4, so compressed sensing of CT scans with robust regression.
+
+1:06:36.640 --> 1:06:47.640
+ And we're going to start kind of before we get into the CT scans or compressed sensing with just a few foundational concepts that show up a lot of places.
+
+1:06:47.640 --> 1:06:50.640
+ And the first one of these is broadcasting.
+
+1:06:50.640 --> 1:06:56.640
+ And the term broadcasting actually originated with NumPy, although it's now used by a bunch of other libraries.
+
+1:06:56.640 --> 1:07:03.640
+ And it describes how arrays with different shapes are treated during arithmetic operations.
+
+1:07:03.640 --> 1:07:09.640
+ And so some of this I think you've already seen and maybe haven't thought about because a lot of it feels very intuitive.
+
+1:07:09.640 --> 1:07:14.640
+ So here we have an array A that's one, two, three.
+
+1:07:14.640 --> 1:07:20.640
+ It's got three values. B is just a scalar, two, and we can do A times B.
+
+1:07:20.640 --> 1:07:26.640
+ And what happens is really it did two times one, two times two, and two times three.
+
+1:07:26.640 --> 1:07:39.640
+ So in a sense, it's almost it's almost like A was treated as being two, two, two, so that the dimensions matched.
+
+1:07:39.640 --> 1:07:47.640
+ Another example, if we take a matrix,
+
+1:07:47.640 --> 1:07:55.640
+ where we can define a matrix then kind of using this to be V comma V times two comma V times three.
+
+1:07:55.640 --> 1:08:01.640
+ And what we get out is one, two, three, two, four, six, three, six, nine.
+
+1:08:01.640 --> 1:08:08.640
+ So the first row is one, two, three, our original matrix V.
+
+1:08:08.640 --> 1:08:13.640
+ Then we've got two times each entry and then three times each entry.
+
+1:08:13.640 --> 1:08:18.640
+ We have a three by three matrix.
+
+1:08:18.640 --> 1:08:21.640
+ And then we can say M plus V.
+
+1:08:21.640 --> 1:08:26.640
+ And remember M is a three by three matrix and V is a vector one, two, three.
+
+1:08:26.640 --> 1:08:31.640
+ And so typically kind of in written math, you would not want to do a matrix plus a vector.
+
+1:08:31.640 --> 1:08:37.640
+ Like what does that even mean? But here NumPy kind of handles it for us and says, OK,
+
+1:08:37.640 --> 1:08:45.640
+ you probably wanted to get back two, four, six, three, six, nine, four, eight, twelve.
+
+1:08:45.640 --> 1:08:54.640
+ And so what was happening is that it just added one, two, three to each row.
+
+1:08:54.640 --> 1:09:15.640
+ Are there questions about these two examples so far? What if I wanted to add a column wise?
+
+1:09:15.640 --> 1:09:20.640
+ That's a good question. And that actually leads kind of directly into the next example.
+
+1:09:20.640 --> 1:09:24.640
+ So we transpose V, make it a column.
+
+1:09:24.640 --> 1:09:31.640
+ So you'll notice up here the shape of V was three comma, which is like saying three by one.
+
+1:09:31.640 --> 1:09:39.640
+ And we've made V one, which is oh, sorry, this is like one by three.
+
+1:09:39.640 --> 1:09:44.640
+ V one is three by one because we've transposed it.
+
+1:09:44.640 --> 1:09:53.640
+ And now when we do M plus V one, we get two, three, four, four, six, eight, six, nine, twelve.
+
+1:09:53.640 --> 1:09:57.640
+ So this highlights that it's important to kind of keep track of these dimensions.
+
+1:09:57.640 --> 1:10:04.640
+ So if you were doing M plus V and you had a specific answer in mind, either adding it by rows or adding it by columns,
+
+1:10:04.640 --> 1:10:17.640
+ you would want to make sure that you you did what you were hoping to do.
+
+1:10:17.640 --> 1:10:21.640
+ So NumPy has a set of rules that kind of govern how this is happening.
+
+1:10:21.640 --> 1:10:29.640
+ And those are that NumPy compares the shapes element wise, and it always starts with the trailing dimensions.
+
+1:10:29.640 --> 1:10:32.640
+ So those are the dimensions kind of on the far right hand side.
+
+1:10:32.640 --> 1:10:39.640
+ And it's looking for them to either match perfectly or one of them to be equal to one.
+
+1:10:39.640 --> 1:10:45.640
+ And I think this is helpful. NumPy documentation is pretty good for this.
+
+1:10:45.640 --> 1:10:53.640
+ They have a lot of examples, and so I want to walk through maybe a few of these.
+
+1:10:53.640 --> 1:10:58.640
+ So here, and this is one that comes up a lot, if you were dealing with RGB values,
+
+1:10:58.640 --> 1:11:09.640
+ so a picture, that channel is three, and maybe add a 256 by 256 picture or number of pixels.
+
+1:11:09.640 --> 1:11:18.640
+ And then if you wanted to scale it by three, or sorry, scale, if you're scaling red, green and blue all by different values,
+
+1:11:18.640 --> 1:11:23.640
+ you would have three values. So it's kind of dimension three. And these line up.
+
+1:11:23.640 --> 1:11:30.640
+ So the last two dimensions are the same. You can kind of think of, since this is shorter,
+
+1:11:30.640 --> 1:11:38.640
+ you can think of it as being like one by one by three. And so this this works.
+
+1:11:38.640 --> 1:11:45.640
+ Down here, if you had A being eight by one by six by one, B being seven by one by five,
+
+1:11:45.640 --> 1:11:54.640
+ you can add those and get something that's eight by seven by six by five.
+
+1:11:54.640 --> 1:12:02.640
+ So that's pretty amazing because A and B don't seem to have any dimensions in common starting out.
+
+1:12:02.640 --> 1:12:09.640
+ But fortunately their ones line up properly. So A has one in the last dimension. B has five.
+
+1:12:09.640 --> 1:12:15.640
+ It goes with five. For the second to last dimension, we've got a six and a one, so it goes with six.
+
+1:12:15.640 --> 1:12:23.640
+ Third to last dimension, a one and a seven, goes with seven. Final dimension, eight.
+
+1:12:23.640 --> 1:12:28.640
+ And so it goes with eight.
+
+1:12:28.640 --> 1:12:40.640
+ Are there questions about this? Matthew?
+
+1:12:40.640 --> 1:12:50.640
+ Yeah, starting with the right to left.
+
+1:12:50.640 --> 1:12:56.640
+ And these, I think it's really good to try, to kind of play around with trying a few different examples.
+
+1:12:56.640 --> 1:13:02.640
+ There will be, in the homework, there's some of just kind of, I give you different sets of dimensions and you have to say,
+
+1:13:02.640 --> 1:13:07.640
+ you know, yes, this would work and this is what the dimensions would be, or no, I'm going to get an error.
+
+1:13:07.640 --> 1:13:14.640
+ These don't line up properly.
+
+1:13:14.640 --> 1:13:20.640
+ Yes.
+
+1:13:20.640 --> 1:13:24.640
+ Yeah. So we just start by looking at the end.
+
+1:13:24.640 --> 1:13:29.640
+ And so they've kind of written these out very nicely that you can see, kind of like, OK,
+
+1:13:29.640 --> 1:13:36.640
+ like let's look at the far right and see if these line up. Because you'll notice, like here, A was a 4D array.
+
+1:13:36.640 --> 1:13:42.640
+ It was eight by one by six by one and B was seven by one by five.
+
+1:13:42.640 --> 1:13:47.640
+ We don't start comparing like eight and seven. Those don't match. We're not going to do this.
+
+1:13:47.640 --> 1:13:51.640
+ We start with the far right side.
+
+1:13:51.640 --> 1:14:07.640
+ Yes. Yes. So the two things that have to be true is they either need to be exactly equal or one of them has to be one.
+
+1:14:07.640 --> 1:14:14.640
+ It makes intuitive sense because if there were anything else, it wouldn't be obvious how to broadcast it.
+
+1:14:14.640 --> 1:14:17.640
+ Yeah. Yeah.
+
+1:14:17.640 --> 1:14:31.640
+ I mean, even. So let me try making a matrix that's larger.
+
+1:14:31.640 --> 1:14:52.640
+ We can make a new matrix N that is.
+
+1:14:52.640 --> 1:15:00.640
+ I'll also say that I think dot shape is just a really helpful.
+
+1:15:00.640 --> 1:15:10.640
+ Why is that making it an array? That shape is a really helpful attribute.
+
+1:15:10.640 --> 1:15:13.640
+ Just to be able to see kind of what you're dealing with. And like,
+
+1:15:13.640 --> 1:15:20.640
+ I think it's a good thing to check on your data in general, like, OK, do I have what I think I have here?
+
+1:15:20.640 --> 1:15:28.640
+ And so like here with N, and we can even kind of confirm, OK, what was the shape of it?
+
+1:15:28.640 --> 1:15:33.640
+ M was three by three. Would I be able to add N and M?
+
+1:15:33.640 --> 1:15:38.640
+ If one is two by three by three and the other is three by three.
+
+1:15:38.640 --> 1:15:42.640
+ I heard a yes. Thumbs up. Yeah. And that's correct. We could.
+
+1:15:42.640 --> 1:15:47.640
+ And that's because we would start with, OK, the trailing dimension is three for M and three for N.
+
+1:15:47.640 --> 1:15:53.640
+ Those match. Then the second to last is three and three. Those match.
+
+1:15:53.640 --> 1:15:59.640
+ And then we have a two. And this is like having a one. So we're OK.
+
+1:15:59.640 --> 1:16:04.640
+ Any other questions? Jeremy?
+
+1:16:04.640 --> 1:16:24.640
+ I was just going to mention I love broadcasting. And I find when I read other people's code, they don't normally use it, even in popular open source libraries. And often I'll rewrite it with broadcasting and it'll be four times less code and ten times faster.
+
+1:16:24.640 --> 1:16:35.640
+ It seems to be something that's underappreciated. I actually like it so much that in my favorite GPU library called PyTorch, I wrote a broadcasting library and made this code much easier.
+
+1:16:35.640 --> 1:16:40.640
+ In two weeks time you'll be adding a bunch of PyTorch broadcasting.
+
+1:16:40.640 --> 1:16:43.640
+ That's awesome. Thank you.
+
+1:16:43.640 --> 1:17:02.640
+ Something that's nice about broadcasting is that NumPy is vectorizing the array operations for you. So it's very efficient.
+
+1:17:02.640 --> 1:17:14.640
+ You also found that thing the other day. In the last couple of weeks they've changed it so it doesn't even have to reallocate memory.
+
+1:17:14.640 --> 1:17:28.640
+ That might have been a month ago now, but that's a recent improvement to NumPy, which was already a great library.
+
+1:17:28.640 --> 1:17:38.640
+ Our next general or foundational topic I want to talk about is sparse matrices and specific ways of dealing with them.
+
+1:17:38.640 --> 1:17:44.640
+ So just to remind you, a matrix with lots of zeros is sparse. Here's an example.
+
+1:17:44.640 --> 1:17:58.640
+ So all the light gray values are zeros and then we've got some other values but not a ton. So it's more memory efficient to just save the non-zero values and not allocate a memory position for everything.
+
+1:17:58.640 --> 1:18:16.640
+ And sparse matrices show up a lot in various engineering problems and they often have kind of interesting patterns and you'll get them from multi-grid methods and also from differential equations and so this is just an example of one kind of with a pattern.
+
+1:18:16.640 --> 1:18:25.640
+ And here the black entries are all non-zero, the white entries are zero, and you can see most of the matrix is zeros.
+
+1:18:25.640 --> 1:18:31.640
+ So I wanted to go into more detail about, okay, I've said we're just storing the entries, but what does that actually look like?
+
+1:18:31.640 --> 1:18:48.640
+ So there are three really common sparse storage formats and those are coordinate-wise, which SciPy calls COO, compressed sparse row, which is CSR, and compressed space column, CSC.
+
+1:18:48.640 --> 1:19:11.640
+ And I found a page that has, I think, some nice examples. And actually, yeah, I found two pages that we're going to look at.
+
+1:19:11.640 --> 1:19:23.640
+ All right, so this is the coordinate-wise storage method we'll talk about first, and I think in some ways to me it kind of seems like the most natural one.
+
+1:19:23.640 --> 1:19:27.640
+ Yeah, so here we've got a matrix, and are you guys able to see this okay?
+
+1:19:27.640 --> 1:19:40.640
+ Kind of the matrix on yellow, and everywhere there's no number, that's a zero. So they've only written the non-zero entries in this matrix. You can see this is a eight by eight matrix.
+
+1:19:40.640 --> 1:19:50.640
+ And then they've color-coded some of the entries, and that's just nice because then you can kind of see, so down here on green is the representation.
+
+1:19:50.640 --> 1:19:54.640
+ Yellow is kind of how we would think about the matrix, green is what the computer's storing.
+
+1:19:54.640 --> 1:20:04.640
+ And so in spot 00 there's an 11, and we see down here they're storing value 11 is in row zero, column zero.
+
+1:20:04.640 --> 1:20:16.640
+ So on there's a 22 in spot 11, and so it stores value 22, row one, column one. So just storing the coordinates for each one.
+
+1:20:16.640 --> 1:20:22.640
+ There's a 75 in row six, column four, and so it stores 75, six, four.
+
+1:20:22.640 --> 1:20:36.640
+ So all kind of the computer needs is these three vectors, one of the values, one of the rows, and one of the columns to have all the information from this matrix.
+
+1:20:36.640 --> 1:20:41.640
+ And so in this example there were 20 entries in the matrix.
+
+1:20:41.640 --> 1:20:55.640
+ And so you are having to note that for each entry you are having, you know, you're having to store the row and column, so this is taking, I guess like 60 spots in memory to have this information.
+
+1:20:55.640 --> 1:21:05.640
+ Which you can imagine many cases where that's, yeah, less than, you know, here this is a seven by seven matrix, that would have been 49 spots in memory.
+
+1:21:05.640 --> 1:21:13.640
+ Yeah, are there questions about coordinate wise storage?
+
+1:21:13.640 --> 1:21:19.640
+ So this is kind of slightly more per entry, but overall if you have a lot of zeros you're saving memory.
+
+1:21:19.640 --> 1:21:27.640
+ And you're also, this is going to change how you access, access points. I mean here you would,
+
+1:21:27.640 --> 1:21:41.640
+ I don't know if you wanted to see what the value at a particular coordinate was, you would have to check like is the row column paired even in this matrix, if not it must be zero.
+
+1:21:41.640 --> 1:21:54.640
+ Okay, so some properties of coordinate wise method, the rows or columns don't need to be ordered in any way, you can put them in kind of in any, any order.
+
+1:21:54.640 --> 1:22:06.640
+ And then you have to store, nnz stands for number of non zeros, but yeah, the number of non zero entries plus two times nnz, integers for the indices.
+
+1:22:06.640 --> 1:22:12.640
+ I should have noted that above, like if these, if these were decimals,
+
+1:22:12.640 --> 1:22:22.640
+ I don't know, we're not really getting into memory types, but row and column are integers, so they can take up less memory.
+
+1:22:22.640 --> 1:22:27.640
+ Okay, so the next, oh, actually and first it talks about matrix vector multiplication.
+
+1:22:27.640 --> 1:22:37.640
+ And so with that, what you can do is just basically loop through all your entries.
+
+1:22:37.640 --> 1:22:41.640
+ So here it's just looping through values.
+
+1:22:41.640 --> 1:22:59.640
+ And then for those values, you know, looking up the column value and the row value, but you don't actually have to go through every spot in the matrix, you're just going through the number of non zeros, because you can kind of loop through that value vector.
+
+1:22:59.640 --> 1:23:06.640
+ Questions?
+
+1:23:06.640 --> 1:23:14.640
+ Okay, so then it, go on to the compressed sparse row data structure.
+
+1:23:14.640 --> 1:23:18.640
+ So this set, this is actually kind of even more consolidated.
+
+1:23:18.640 --> 1:23:23.640
+ And the idea is we can store things in row, sorry,
+
+1:23:23.640 --> 1:23:30.640
+ in order by row, and then we're only having to keep track of like when we go to a new row.
+
+1:23:30.640 --> 1:23:32.640
+ So we have a row pointer that does that.
+
+1:23:32.640 --> 1:23:37.640
+ So here you'll see in row zero, we've got 11, 12, and 14.
+
+1:23:37.640 --> 1:23:40.640
+ So we store the values 11, 12, and 14.
+
+1:23:40.640 --> 1:23:45.640
+ And then we're saying those are in row zero.
+
+1:23:45.640 --> 1:23:48.640
+ Or here, let me come back to the row pointer a bit in a bit.
+
+1:23:48.640 --> 1:23:53.640
+ So we're saying, okay, those were in columns zero, one, and three.
+
+1:23:53.640 --> 1:23:58.640
+ And then we don't enter anything into this row pointer vector until we go to the next row.
+
+1:23:58.640 --> 1:24:05.640
+ And so basically we're saying, okay, entries zero, one, and two are in row zero.
+
+1:24:05.640 --> 1:24:08.640
+ But then entry three is in row one.
+
+1:24:08.640 --> 1:24:15.640
+ So for this row pointer, you actually, if you look back to the index, that's kind of telling you,
+
+1:24:15.640 --> 1:24:27.640
+ okay, here row three is the first, sorry, the third value, which is 22, is the first thing in row one.
+
+1:24:27.640 --> 1:24:30.640
+ Then a new row starts with the sixth value.
+
+1:24:30.640 --> 1:24:34.640
+ The sixth value we can look up here is 31.
+
+1:24:34.640 --> 1:24:39.640
+ And so row two must start with a 31.
+
+1:24:39.640 --> 1:24:41.640
+ And it does.
+
+1:24:41.640 --> 1:24:45.640
+ So this takes a little bit of getting used to how it works.
+
+1:24:45.640 --> 1:24:48.640
+ Let me do another one.
+
+1:24:48.640 --> 1:24:56.640
+ The third row starts with a ninth, no, the ninth entry.
+
+1:24:56.640 --> 1:24:58.640
+ Yeah, so we go over here.
+
+1:24:58.640 --> 1:25:01.640
+ That's 42 is the ninth value.
+
+1:25:01.640 --> 1:25:11.640
+ And that is the first, the first one in row three since we started indexing at zero.
+
+1:25:11.640 --> 1:25:17.640
+ Then we can go to the 12th value is 55.
+
+1:25:17.640 --> 1:25:22.640
+ 55 is the first thing in the fourth row.
+
+1:25:22.640 --> 1:25:28.640
+ So everyone see kind of what this is doing.
+
+1:25:28.640 --> 1:25:31.640
+ So what do you think a benefit of this is?
+
+1:25:31.640 --> 1:25:42.640
+ This is on the surface harder to, I think, figure out at first.
+
+1:25:42.640 --> 1:26:08.640
+ Jeremy, can you pass the microphone?
+
+1:26:08.640 --> 1:26:13.640
+ So kind of the coordinate method also gives us a way to put them in a table.
+
+1:26:13.640 --> 1:26:18.640
+ What's the benefit of this over kind of that previous coordinate method?
+
+1:26:18.640 --> 1:26:24.640
+ I think the previous coordinate, we can't really put every single value, right?
+
+1:26:24.640 --> 1:26:31.640
+ This is a lot more compact into one fixed length fixed width table.
+
+1:26:31.640 --> 1:26:37.640
+ But previously, if we extend it out, it's no longer valuable.
+
+1:26:37.640 --> 1:26:40.640
+ So we have to compact it into this format.
+
+1:26:40.640 --> 1:26:44.640
+ Okay, so this is more compact for the row pointer.
+
+1:26:44.640 --> 1:26:47.640
+ You're just keeping track of kind of when you switch rows.
+
+1:26:47.640 --> 1:26:50.640
+ So you've got less redundant information.
+
+1:26:50.640 --> 1:26:53.640
+ Can anyone think of any other potential benefits?
+
+1:26:53.640 --> 1:26:59.640
+ Matthew, you want to grab the microphone?
+
+1:26:59.640 --> 1:27:22.640
+ So I think this may be similar to what you're saying, that this makes it really easy to look at particular rows.
+
+1:27:22.640 --> 1:27:25.640
+ Like if you needed to access your data by row.
+
+1:27:25.640 --> 1:27:33.640
+ So like if you were interested in getting row with index three, you know, you can just look up, okay, that starts at nine.
+
+1:27:33.640 --> 1:27:35.640
+ And then it's stopping right before 12.
+
+1:27:35.640 --> 1:27:42.640
+ And so then you can come over here and say, okay, let me get the values that start at nine and stop right before 12.
+
+1:27:42.640 --> 1:27:49.640
+ And I've picked out this row in a fast way.
+
+1:27:49.640 --> 1:28:00.640
+ So I'd say this is, row access is easy, I guess is how they say it.
+
+1:28:00.640 --> 1:28:03.640
+ But notice it's difficult to look up columns this way.
+
+1:28:03.640 --> 1:28:12.640
+ In fact, it's going to be like, I mean, so you can look up, you know, like go through here and say like, okay, I want to know everything.
+
+1:28:12.640 --> 1:28:23.640
+ Whoops, didn't mean to enlarge that. You know, you might say, okay, I want everything that's in column four, which is a lot of things.
+
+1:28:23.640 --> 1:28:29.640
+ But notice going to, okay, here's something column four, 25.
+
+1:28:29.640 --> 1:28:35.640
+ If I want to find what row 25 is in, that's going to be a little bit more of a pain.
+
+1:28:35.640 --> 1:28:41.640
+ Like you're going to have to kind of like go through your row pointers.
+
+1:28:41.640 --> 1:28:45.640
+ You know, here there are a bunch of, like even, yeah, you could say like, okay, 45 is also in column four.
+
+1:28:45.640 --> 1:28:50.640
+ But now I have to figure out which row it's in. And that's less obvious.
+
+1:28:50.640 --> 1:28:57.640
+ So kind of knowing if you're going to be accessing your data by rows or columns would be really important here.
+
+1:28:57.640 --> 1:29:01.640
+ Valentin, can you grab the microphone?
+
+1:29:01.640 --> 1:29:04.640
+ Thanks.
+
+1:29:04.640 --> 1:29:13.640
+ So why don't we just transpose the matrix, then it will be easy to find the column, right?
+
+1:29:13.640 --> 1:29:22.640
+ So when you say transpose, so there's also a compressed sparse column format, which is, yeah, the same thing only by column.
+
+1:29:22.640 --> 1:29:35.640
+ Okay, and then just to the question, so if we just traverse through this representation to find like row i, the complexity is V O of n, where n is the number of rows, right?
+
+1:29:35.640 --> 1:29:44.640
+ So in the worst case scenario, we'll have to make n steps until we go to the row number n, right?
+
+1:29:44.640 --> 1:29:47.640
+ Say that again if you're trying to find what?
+
+1:29:47.640 --> 1:30:00.640
+ So if I look into the row i, in the worst case we'll have to make like i comparisons until we get to the row, right?
+
+1:30:00.640 --> 1:30:09.640
+ It'll, yeah, I mean, I do think you'll have to walk through the number of row pointers, but that's going to be,
+
+1:30:09.640 --> 1:30:17.640
+ when you're saying i is like, in this case, eight by eight, like the number of potential rows there are, I think that's true.
+
+1:30:17.640 --> 1:30:25.640
+ Why not just keep another hash table or binary tree with indices of every row?
+
+1:30:25.640 --> 1:30:32.640
+ Then it will be much possible for the graph index of the row, right?
+
+1:30:32.640 --> 1:30:42.640
+ So you kind of want to, you're suggesting almost like combining the coordinate storage where you do have all the rows.
+
+1:30:42.640 --> 1:30:48.640
+ Yeah, and the rest will be a big O of number of rows, right?
+
+1:30:48.640 --> 1:30:56.640
+ I'll say like these have different benefits, like so if you really were going to have to be looking things up by row and column a lot,
+
+1:30:56.640 --> 1:31:06.640
+ you might want just to go with the coordinate wise method of storage, since that does let you look things up by row or column.
+
+1:31:06.640 --> 1:31:13.640
+ You know, like kind of if you start having aspects of both, you are taking up a lot more storage space.
+
+1:31:13.640 --> 1:31:20.640
+ So then there's a trade off of like, you know, if you have both like coordinate wise storage and the compressed row storage,
+
+1:31:20.640 --> 1:31:28.640
+ you've now really increased kind of how much memory you're using.
+
+1:31:28.640 --> 1:31:30.640
+ Sam?
+
+1:31:30.640 --> 1:31:52.640
+ Wouldn't compressed row storage always be faster than the first method, COO? Because if you're trying to select your column in compressed row, you have to do a search through all of the column indices.
+
+1:31:52.640 --> 1:32:17.640
+ So it's, yeah, so if you're, if you're, the issue with the pulling a column from CSR is that you are having to do more work, though, to find the row coordinates that correspond.
+
+1:32:17.640 --> 1:32:25.640
+ You know, like you can iterate through and you're right, you have to go through everything to find all the fours since this isn't in order and COO is not in order either.
+
+1:32:25.640 --> 1:32:31.640
+ But with COO, when you find the fours, you're also automatically getting with the row indexes.
+
+1:32:31.640 --> 1:32:40.640
+ Whereas here you have to kind of do this like bookkeeping of like, okay, you know, here was a four at value 10.
+
+1:32:40.640 --> 1:32:53.640
+ Which row corresponds to value 10? So that is more work to figure out the rows.
+
+1:32:53.640 --> 1:33:00.640
+ Yeah, these are good questions, though. Yeah, this is good to think about. Any other questions on this?
+
+1:33:00.640 --> 1:33:10.640
+ And I'm not going to go through, and actually I think they don't have compressed column on this one because it's so similar to compressed row only.
+
+1:33:10.640 --> 1:33:20.640
+ Now it's easy to look up or easy to get a column, harder to get a row of data because you would have to like work backwards to find the column.
+
+1:33:20.640 --> 1:33:33.640
+ So here the amount of memory accesses is reduced. It's really, or they even kind of say advantage of CSR over coordinate wise method.
+
+1:33:33.640 --> 1:33:41.640
+ Yeah, fewer memory accesses.
+
+1:33:41.640 --> 1:33:46.640
+ But yeah, it will be difficult to look things up by column.
+
+1:33:46.640 --> 1:34:00.640
+ And then actually this other web page, let me just do one more example.
+
+1:34:00.640 --> 1:34:09.640
+ And are you able to see, I just like here they have a single matrix and they show it in,
+
+1:34:09.640 --> 1:34:20.640
+ oh this is translating numbers, that's not, okay let me stop this and open it again.
+
+1:34:20.640 --> 1:34:32.640
+ This also I thought was fun. Just at the top it lists a ton of different sparse matrix compression formats. I had never heard of most of these, but I was like wow there are a lot of methods out there.
+
+1:34:32.640 --> 1:34:37.640
+ Jagged diagonal format, non-symmetric skyline format.
+
+1:34:37.640 --> 1:34:43.640
+ So depending on, you know, if you had a very,
+
+1:34:43.640 --> 1:34:51.640
+ if you really knew the algorithms you would be using, you would kind of know like okay what are the most efficient ways to be accessing my data.
+
+1:34:51.640 --> 1:35:03.640
+ But I like this page and that it's kind of color coded this matrix and then it has it in compressed row storage, also in compressed column storage.
+
+1:35:03.640 --> 1:35:14.640
+ And then, yeah, it's even got additional modified ones. But here, yeah, you can compare and they kind of represent the row start index a little bit differently.
+
+1:35:14.640 --> 1:35:21.640
+ But just showing that 11, 12, 13, and 14, this is like light red.
+
+1:35:21.640 --> 1:35:29.640
+ Those are in row one. You're just storing a one once, but you have to store the column indexes all these times.
+
+1:35:29.640 --> 1:35:37.640
+ And then next up for rows you just store a five because you're up to value five.
+
+1:35:37.640 --> 1:36:04.640
+ Yes, and like that is something that people do. It's like so, you know, and we saw with the kind of the coordinate wise multiplication that you do, you know, it is possible to only look at the entries you have.
+
+1:36:04.640 --> 1:36:13.640
+ Yeah, there are, yeah, like you can store your kind of block matrix as all being a zero.
+
+1:36:13.640 --> 1:36:20.640
+ Yeah, any more questions on these sparse formats?
+
+1:36:20.640 --> 1:36:29.640
+ And so then I took this from the SciPy documentation.
+
+1:36:29.640 --> 1:36:38.640
+ So, because I was seeing this in like code that I was finding online, the COO format can be a way to efficiently construct matrices.
+
+1:36:38.640 --> 1:36:54.640
+ And so sometimes they were constructing them with COO format and then transferring them to CSC or CSR because that, and I guess this is like it would be, it would be a pain to figure out how to manually enter CSC or CSR.
+
+1:36:54.640 --> 1:37:13.640
+ So you probably want to use a different way. So I just want to note that multiplication or inversion are better done with CSC or CSR format and all conversions among the different types of formats are pretty efficient linear time operations.
+
+1:37:13.640 --> 1:37:28.640
+ So that's nice that you can go between them. And that kind of gets at, I guess, the earlier question of, yeah, like what if you want to be able to access rows at some points and columns at another.
+
+1:37:28.640 --> 1:37:36.640
+ Okay, so we'll be, we'll be seeing some sparse, sparse matrices in a little bit.
+
+1:37:36.640 --> 1:37:45.640
+ But yeah, now I wanted to kind of start our next application, which is CT scans. And I found this article that I thought was really nice.
+
+1:37:45.640 --> 1:37:58.640
+ And it starts with, let me pull it up, saving lives, the mathematics of tomography.
+
+1:37:58.640 --> 1:38:03.640
+ There it goes.
+
+1:38:03.640 --> 1:38:08.640
+ And it starts with the quote, can maths really save your life? Of course it can.
+
+1:38:08.640 --> 1:38:12.640
+ And this is, this is written in a pretty accessible way.
+
+1:38:12.640 --> 1:38:26.640
+ It felt like it kind of talks a bit about, makes this, this analogy with milk bottles kind of stored in those kind of stacking crates.
+
+1:38:26.640 --> 1:38:31.640
+ So they give, actually let me just go up to their problem.
+
+1:38:31.640 --> 1:38:39.640
+ So they're saying milk and fruit juice is delivered in bottles that are placed in trays, you know, a three by three grid.
+
+1:38:39.640 --> 1:38:49.640
+ And so maybe you're wondering which type of bottle is in which compartment. And you can't see because there's some in the middle, you know, like it's been stacked up and we've got these grids.
+
+1:38:49.640 --> 1:38:55.640
+ And the idea is that different amounts of light passing through milk and juice, you could get a total like from the lights.
+
+1:38:55.640 --> 1:39:07.640
+ And this is a bit like a Sudoku puzzle where you just know, you know, some of the totals going across a grid and you're trying to figure out the individual entries.
+
+1:39:07.640 --> 1:39:11.640
+ Are there questions? And this is just kind of like as an analogy.
+
+1:39:11.640 --> 1:39:18.640
+ So here they're saying, OK, maybe like five units of light have made it through here, six, four, six, three, six.
+
+1:39:18.640 --> 1:39:26.640
+ Let's work backwards to see which is in each of these.
+
+1:39:26.640 --> 1:39:34.640
+ I don't know if you're amplifying.
+
+1:39:34.640 --> 1:39:38.640
+ Yeah, the lights are on.
+
+1:39:38.640 --> 1:39:42.640
+ It was. It's off now.
+
+1:39:42.640 --> 1:39:49.640
+ Try again. It just went off again.
+
+1:39:49.640 --> 1:40:03.640
+ Batteries might be dead.
+
+1:40:03.640 --> 1:40:25.640
+ Go ahead and just ask your question, perhaps.
+
+1:40:25.640 --> 1:40:36.640
+ Wow. Yeah.
+
+1:40:36.640 --> 1:40:43.640
+ So just to emphasize, Jeremy was just saying that earlier diagnosis can increase survival rates tenfold.
+
+1:40:43.640 --> 1:40:47.640
+ So doing CT scans well is really valuable.
+
+1:40:47.640 --> 1:40:51.640
+ Saving lives.
+
+1:40:51.640 --> 1:40:54.640
+ Let me go back to the notebook.
+
+1:40:54.640 --> 1:41:04.640
+ So kind of what's going on with a CT scan is you've got this source of X-rays going through, you know, semi dense object kind of being the person.
+
+1:41:04.640 --> 1:41:15.640
+ And then we've got a detector picking up kind of the strength of the signal to get information about the density that it's passed through.
+
+1:41:15.640 --> 1:41:26.640
+ And I should say all this is coming from a scikit-learn example, but I've kind of added more explanation and visualizations of it.
+
+1:41:26.640 --> 1:41:43.640
+ So in our last lesson, we used robust PCA and we saw that that was an optimization problem where we're trying to minimize the nuclear norm of L in order to get a low rank matrix and the L1 norm of S.
+
+1:41:43.640 --> 1:41:49.640
+ And what's special about the L1 norm?
+
+1:41:49.640 --> 1:41:55.640
+ What does it give us? Sparsity. Yeah, exactly.
+
+1:41:55.640 --> 1:42:02.640
+ And so that'll be useful today. And let me show you.
+
+1:42:02.640 --> 1:42:11.640
+ Let me show you what the.
+
+1:42:11.640 --> 1:42:32.640
+ OK, so these are what our pictures are going to look like, and actually I'm going to show you where we're going and then I'll come back and kind of show you more about how to get there.
+
+1:42:32.640 --> 1:42:46.640
+ Basically, where we're going is that we'll have this data where, you know, this is kind of an artificial data set that we're going to create.
+
+1:42:46.640 --> 1:42:52.640
+ And the idea is that we're going to pass out lines through it at different angles from all different directions.
+
+1:42:52.640 --> 1:43:01.640
+ And we're just going to get a single number from this line going through this complicated picture, basically about what it's hitting.
+
+1:43:01.640 --> 1:43:09.640
+ So here you can see it. This kind of intersects these circle globs at several points.
+
+1:43:09.640 --> 1:43:13.640
+ And we'll get a slightly larger number, 6.4.
+
+1:43:13.640 --> 1:43:25.640
+ I'll talk about how this is boiled down in a moment, but thinking about a CT scan, you know, it's kind of sending an X-ray along this line and then just measuring something on the other side.
+
+1:43:25.640 --> 1:43:38.640
+ And then here we've got a line going through, you know, different direction, different angle. This is not intersecting with much, like it's just kind of catching the tail of this blob.
+
+1:43:38.640 --> 1:43:45.640
+ And we get a much smaller number, 2. So before we had 6.4 or something, here we've just got 2.
+
+1:43:45.640 --> 1:43:58.640
+ And so it's kind of amazing that you're just, you know, for each like X-ray shoot, you're just getting a single number, but kind of knowing that these are coming from, you know, different angles and different directions.
+
+1:43:58.640 --> 1:44:08.640
+ The idea is that we want to work backwards to being able to reconstruct our original picture.
+
+1:44:08.640 --> 1:44:19.640
+ Oh, no, that's good. So Jeremy was just pointing out that this is an analogy in real life. They're doing 2D projections onto 3D. Sorry.
+
+1:44:19.640 --> 1:44:37.640
+ Well, person is 3D and you're coming up with these 2D pictures. Here to keep it simple, we kind of just have this 2D data set and we're just getting one dimensional data to reconstruct the two dimensional data set.
+
+1:44:37.640 --> 1:44:46.640
+ Yeah, and then it's 1255, so we'll stop now, but I just wanted to at least kind of introduce the problem that we'll be looking at next time.
+
+1:44:46.640 --> 1:44:50.640
+ Thanks. Matthew?
+
+1:44:50.640 --> 1:44:54.640
+ Oh, that was 6. Let me go back up.
+
+1:44:54.640 --> 1:45:02.640
+ So there is, it's kind of just a measure of how much it's intersected with these other lines.
+
+1:45:02.640 --> 1:45:18.640
+ So I think in a person it's more about kind of like the density or like the, kind of what the material it's traveling through is.
+
+1:45:18.640 --> 1:45:33.640
+ Yeah, in real life it's not as direct as this, they do like wavelets and transforms, like it's not, real life CT stands out sparser, it's all that always sparser.
+
+1:45:33.640 --> 1:45:48.640
+ In this case it's just a dot product.
+
+1:45:48.640 --> 1:46:07.640
+ Yeah, you're welcome.
+

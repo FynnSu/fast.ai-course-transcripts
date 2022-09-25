@@ -1,0 +1,2909 @@
+WEBVTT
+
+00:00.000 --> 00:05.320
+ Yeah, so I took a kind of very theoretical linear algebra class my
+
+00:05.320 --> 00:09.240
+ first semester of college. It was all proof-based, so no computations basically,
+
+00:09.240 --> 00:14.600
+ and I loved it. It convinced me to be a math major instead of computer science.
+
+00:14.600 --> 00:20.560
+ In hindsight it might not have been the most practical introduction, but I really
+
+00:20.560 --> 00:25.280
+ enjoyed it. I did a math PhD and I took numerical linear algebra my first
+
+00:25.280 --> 00:29.080
+ semester and really liked the course. Numerical linear algebra is a very
+
+00:29.080 --> 00:32.960
+ different perspective on linear algebra in general because it's all about kind
+
+00:32.960 --> 00:37.160
+ of how computers do it. And that kind of in many ways blew my mind to have this
+
+00:37.160 --> 00:43.320
+ like very different perspective on a subject that I liked. And it was still, it
+
+00:43.320 --> 00:45.960
+ was a great course. I'll be kind of teaching with a very different approach
+
+00:45.960 --> 00:50.440
+ and focus though from a traditional course. I wanted to highlight I had an
+
+00:50.440 --> 00:54.940
+ internship my last year of graduate school in healthcare economics and I
+
+00:54.940 --> 00:58.840
+ think that's the first place where I was really using linear algebra in like this
+
+00:58.840 --> 01:02.480
+ is a business where these people are using linear algebra every day. And we'll
+
+01:02.480 --> 01:06.760
+ actually see an example pretty similar to some of the stuff I did in a moment.
+
+01:06.760 --> 01:16.500
+ Yeah I worked as a quant for two years. I was, oh question? Oh that was Steven
+
+01:16.500 --> 01:32.360
+ Marrer. Oh that's awesome. Very cool. Yeah that's so great. So yeah I was a quant
+
+01:32.360 --> 01:36.760
+ for two years which is a lot of working with data and I would say linear algebra
+
+01:36.760 --> 01:40.320
+ kind of yeah having tables of data and that convinced me to become a data
+
+01:40.320 --> 01:44.120
+ scientist. I was at Uber and then I taught software engineering at
+
+01:44.120 --> 01:49.600
+ Hackbright. That's, it was mostly software development. I did get to overhaul their
+
+01:49.600 --> 01:52.520
+ machine learning and collaborative filtering lectures which was exciting.
+
+01:52.520 --> 01:57.440
+ And then one year ago Jeremy and I started fast AI to kind of make deep
+
+01:57.440 --> 02:06.800
+ learning easier to use. So going into teaching this, it's a different, I have a
+
+02:06.800 --> 02:11.400
+ different approach than most math courses. It's gonna be top-down so I'm in
+
+02:11.400 --> 02:15.320
+ a bottom-up approach which is kind of the more common one in math. That's where
+
+02:15.320 --> 02:18.840
+ you first learn all these separate components that you'll need and then you
+
+02:18.840 --> 02:22.440
+ kind of build things of increasing complexity as time goes on and you know
+
+02:22.440 --> 02:27.080
+ more components. And that's kind of tough because people lose motivation, they
+
+02:27.080 --> 02:31.160
+ don't have a sense of the big picture. And what I'll be doing instead is kind
+
+02:31.160 --> 02:35.160
+ of starting with kind of doing interesting things using algorithms and
+
+02:35.160 --> 02:40.200
+ then we'll kind of go into more depth and break down the pieces. And I
+
+02:40.200 --> 02:43.520
+ apologize if you heard, I gave a talk on this at the Friday seminar a few weeks
+
+02:43.520 --> 02:48.480
+ ago. So sorry if this is repeat. But there's a wonderful book called Making
+
+02:48.480 --> 02:52.340
+ Learning Whole where a Harvard professor uses an analogy with baseball and says
+
+02:52.340 --> 02:57.080
+ you know we don't require kids to learn all the, memorize all the formal rules of
+
+02:57.080 --> 03:00.160
+ baseball before they're allowed to play. You know we let them play and then over
+
+03:00.160 --> 03:05.480
+ time they learn more and more of the formal rules. Yeah and so kind of don't
+
+03:05.480 --> 03:08.420
+ worry if at first you don't understand everything that's going on. That's kind
+
+03:08.420 --> 03:13.820
+ of the point. And focus on what things do as opposed to what they are. So with
+
+03:13.820 --> 03:17.720
+ these matrix decompositions it's really important to know what type of matrices
+
+03:17.720 --> 03:20.660
+ are you getting back from the decomposition. And then over time we'll
+
+03:20.660 --> 03:26.120
+ kind of get into how would you program them. So for the course I have two textbooks.
+
+03:26.120 --> 03:30.820
+ Neither of these is required and I've asked Kirsten to buy a few copies to
+
+03:30.820 --> 03:37.440
+ have on hand. So my number one choice is Numerical Linear Algebra by Trevathan.
+
+03:37.440 --> 03:42.640
+ It's a really well-written book and I'll say kind of when I'm referencing parts
+
+03:42.640 --> 03:49.880
+ of it. And then kind of a secondary book that I liked is Numerical Methods by Greenbaum and Chartier.
+
+03:49.880 --> 03:56.040
+ And this is actually intended for kind of senior undergrad courses and it
+
+03:56.040 --> 04:00.160
+ includes numerical linear algebra but it also includes Monte Carlo methods,
+
+04:00.160 --> 04:03.680
+ numerical differentiation. I think it's a really interesting book and it has a lot
+
+04:03.680 --> 04:10.300
+ of applications. It's a fun fact. Chartier is actually, he's a math professor but he
+
+04:10.300 --> 04:17.520
+ trained as a mime under Marcel Marceau and I saw him perform at a math
+
+04:17.520 --> 04:27.560
+ conference on how to kind of use miming to teach math. But it's a very accessible book.
+
+04:28.120 --> 04:33.600
+ So I was gonna hold office hours from 2 to 4 on Friday afternoons after the
+
+04:33.600 --> 04:39.160
+ seminar. If that doesn't work feel free to email me about another time.
+
+04:39.160 --> 04:43.960
+ Yeah my email is rachel at fast.ai and there's a class slack channel although I
+
+04:43.960 --> 04:50.200
+ haven't done anything with that yet but I'll send you invites. There's the link
+
+04:50.200 --> 04:54.620
+ for the github. Oh and then I wanted to, so this is important to note, kind of a
+
+04:54.620 --> 04:58.720
+ difficult thing about Jupyter notebooks is even just running them changes the
+
+04:58.720 --> 05:04.480
+ code and so you can get merge conflicts if you've cloned the repository and so
+
+05:04.480 --> 05:07.040
+ it's up to you if you want to deal with those or it might just be easier to kind
+
+05:07.040 --> 05:10.760
+ of download the notebooks. And there are places that I kind of leave blank for
+
+05:10.760 --> 05:16.780
+ exercises. So the idea is you will be doing some coding in them as well. And I
+
+05:16.780 --> 05:21.880
+ just included these to check if you have MathJax running which
+
+05:21.880 --> 05:25.900
+ renders LaTeX and I believe if you're using Anaconda that's automatically
+
+05:25.900 --> 05:32.080
+ installed. But let me definitely let me know and sooner rather than later if
+
+05:32.080 --> 05:36.600
+ you're having any trouble with the setup for this or any of the imports or
+
+05:36.600 --> 05:39.220
+ anything because I definitely want you to be able to run these notebooks at
+
+05:39.220 --> 05:48.800
+ home. So here is a, actually I should check, any questions so far? Okay here's a
+
+05:48.800 --> 05:54.720
+ grading room work. So there'll be some homework assignments and I'll give you
+
+05:54.720 --> 05:59.680
+ always a full week to do the homework from when I when I give it. I want
+
+05:59.680 --> 06:03.760
+ losing your writing assignment for this course and you can choose the topics and
+
+06:03.760 --> 06:07.960
+ actually I'll say a little bit more about that in a moment but that's kind
+
+06:07.960 --> 06:11.600
+ of broken into three pieces just your proposal, your draft, and then the final
+
+06:11.600 --> 06:18.800
+ and then there'll be a final exam. So no cheating or plagiarism is allowed and
+
+06:18.800 --> 06:22.560
+ you know we have the standard honor code from USF which I'm sure you're really
+
+06:22.560 --> 06:29.820
+ familiar with from this point. For laptops please avoid surfing the web or
+
+06:29.820 --> 06:37.440
+ using social media or messaging during class. Well and then here's a syllabus.
+
+06:37.440 --> 06:42.480
+ I'll just say kind of that um the way it'll work is kind of each lesson is
+
+06:42.480 --> 06:45.800
+ mostly centered around an application and then we'll kind of dive into
+
+06:45.800 --> 06:49.720
+ algorithms and tech or techniques that are used for that application but it's
+
+06:49.720 --> 06:54.560
+ kind of this almost application first approach. So we have the introductory
+
+06:54.560 --> 06:58.560
+ lesson which is a little bit unusual in that it'll be less code and it's more
+
+06:58.560 --> 07:03.360
+ kind of introducing concepts but then we'll talk about topic modeling using
+
+07:03.360 --> 07:10.520
+ NMF and SVD, background removal with robust PCA, compressed sensing for CT
+
+07:10.520 --> 07:15.260
+ scans which are kind of some really interesting looking kind of CT scan like
+
+07:15.260 --> 07:22.600
+ pictures, predicting health outcomes, this is on a diabetes data set, page rank to
+
+07:22.600 --> 07:27.580
+ go through eigendecompositions and how you program those, and then finally the
+
+07:27.580 --> 07:32.060
+ QR factorization which will have shown up in almost all of the previous lessons
+
+07:32.060 --> 07:40.560
+ as a tool. Okay so about the writing assignment, yeah writing about technical
+
+07:40.560 --> 07:45.800
+ concepts is really valuable. I hope that you'll publish it as a blog post, you
+
+07:45.800 --> 07:49.280
+ don't have to, and if you do it's a really good name to kind of get your way
+
+07:49.280 --> 07:52.300
+ to get your name out there, something to show to future employers or when you're
+
+07:52.300 --> 07:56.480
+ applying for jobs. Technical writing is also important when you're creating
+
+07:56.480 --> 08:00.920
+ documentation at work, kind of explaining and sharing your ideas with co-workers,
+
+08:00.920 --> 08:05.760
+ applying to speak at conferences, and practicing for interviews, kind of just
+
+08:05.760 --> 08:10.760
+ even practicing like how do you explain what you're doing. So I have a list of
+
+08:10.760 --> 08:23.760
+ ideas, oh and I actually, oh yeah this is, I might have an updated version, hold on a
+
+08:23.760 --> 08:36.120
+ moment, yeah this is the old version. Well escape is not taking me out of full
+
+08:36.120 --> 08:48.520
+ time. F11? Okay well I'm running this from a different repository. Let me just go
+
+08:48.520 --> 08:55.840
+ here. Oh no, that's the issue.
+
+09:07.320 --> 09:11.160
+ And with all these ideas, these are just suggestions, if you have a different idea
+
+09:11.160 --> 09:16.400
+ that's not on the list, feel free to ask me about it. I really want it to be
+
+09:16.400 --> 09:23.280
+ something that you're interested in learning more about. So I have a list of,
+
+09:23.280 --> 09:28.280
+ there are so many numerical linear algebra algorithms and so we'll get into
+
+09:28.280 --> 09:31.000
+ most of the core ones, but there are a lot that we won't have time to cover so
+
+09:31.000 --> 09:35.920
+ you could choose one of those. So here's a list of several of them. You could also
+
+09:35.920 --> 09:39.680
+ speed up an algorithm of your choice and that could either be something that
+
+09:39.680 --> 09:45.200
+ we've covered in the course or not using the GPU and PyTorch and we'll be talking
+
+09:45.200 --> 09:50.640
+ about how to do that in the first lesson. Number, Cython, which we'll cover,
+
+09:50.640 --> 09:56.840
+ parallelization, or randomized projections. So randomized algorithms are
+
+09:56.840 --> 10:01.440
+ a really interesting area that give you a kind of a lot of speed up. You could
+
+10:01.440 --> 10:05.480
+ also find an interesting academic paper that you've been wanting to read and
+
+10:05.480 --> 10:11.120
+ summarize and implement it. And then here, let me go to this link, and there's
+
+10:11.120 --> 10:17.400
+ something called the matrix factorization jungle, which is just a handy web page
+
+10:17.400 --> 10:20.920
+ that someone put together with kind of a list of a ton of different matrix
+
+10:20.920 --> 10:27.560
+ algorithms. And so if you scroll, they're kind of whole sections on different
+
+10:27.560 --> 10:42.280
+ concepts. And then I posted a link to, oh one other thing I wanted to say, so you
+
+10:42.280 --> 10:47.600
+ can do your blog post or your writing assignment as a Jupyter notebook. I mean
+
+10:47.600 --> 10:52.000
+ you can also do it as a Kaggle kernel and you can, Kaggle kernels kind of are
+
+10:52.000 --> 10:55.280
+ Jupyter notebooks, but that's another kind of great way to share your work and
+
+10:55.280 --> 11:00.520
+ you can also share data sets that way. And then I've linked to several number
+
+11:00.520 --> 11:04.120
+ of technical blog posts that I like, and I think that's something that's kind of
+
+11:04.120 --> 11:08.520
+ good to get into the habit of, and maybe after you graduate and have more time,
+
+11:08.520 --> 11:15.000
+ but just kind of reading other people's blog posts. And so for the
+
+11:15.000 --> 11:18.440
+ proposal, that's just gonna be a brief paragraph about what you want to do. I
+
+11:18.440 --> 11:21.240
+ should also say it could be like an experiment you want to do, like if you're
+
+11:21.240 --> 11:25.640
+ curious, you know, how does, I don't know, changing this factor affect this
+
+11:25.640 --> 11:36.680
+ algorithm, you can propose that. And then four sources. Any questions? Okay, so I'll
+
+11:36.680 --> 11:41.360
+ try, I'll try to review some linear algebra in class. If there are things
+
+11:41.360 --> 11:46.000
+ that you feel like you need extra review in, these are some resources I recommend.
+
+11:46.000 --> 11:53.040
+ One is three blue, one brown. This I would recommend to everybody for any reason.
+
+11:53.040 --> 11:57.200
+ It's just they're really fantastic videos, and I'll probably show one in
+
+11:57.200 --> 12:04.280
+ class in a later lesson, but it's a very, very kind of geometric and visual
+
+12:04.280 --> 12:07.840
+ perspective on linear algebra, and so it's very different from how most linear
+
+12:07.840 --> 12:12.320
+ algebra courses are taught. The guy who created these wrote his own graphics
+
+12:12.320 --> 12:18.080
+ library because he wanted to do things that he wasn't able to do otherwise, but
+
+12:18.080 --> 12:21.040
+ they're really beautiful. And so if you're a visual learner, I would
+
+12:21.040 --> 12:23.960
+ definitely recommend them.
+
+12:27.600 --> 12:33.160
+ There's also an immersive linear algebra free online textbook. Chapter 2 of Ian
+
+12:33.160 --> 12:37.240
+ Goodfellow's Deep Learning book is all about linear algebra, and that's kind of
+
+12:37.240 --> 12:41.760
+ coming from a machine learning perspective. Yes, I think that's it. So then
+
+12:41.760 --> 12:47.320
+ the USF policies are in here, but again you should have seen these in most of
+
+12:47.320 --> 12:55.200
+ your courses about academic integrity, accommodations for disabilities, and so
+
+12:55.200 --> 13:10.160
+ on. All right, you guys ready for the first lesson? And again, this is going to be
+
+13:10.160 --> 13:15.840
+ less codeful than future lessons, but it introduces some really interesting
+
+13:15.840 --> 13:25.800
+ concepts, I think. So kind of why are we setting this? So the key
+
+13:25.800 --> 13:29.800
+ question of this course is how can we do matrix computations with acceptable
+
+13:29.800 --> 13:36.040
+ speed and acceptable accuracy? And this is from a news algorithm, or not a news
+
+13:36.040 --> 13:41.080
+ algorithm, a journal article that came up with the top 10 algorithms of science
+
+13:41.080 --> 13:44.960
+ and engineering during the 20th century. And three of the things on the list
+
+13:44.960 --> 13:50.160
+ we'll cover in this course, which is exciting. And one is the idea of matrix
+
+13:50.160 --> 13:54.280
+ decompositions as an approach to linear algebra itself, because it's such a
+
+13:54.280 --> 13:59.800
+ powerful idea. So a lot of this course is about breaking matrices into other
+
+13:59.800 --> 14:07.000
+ matrices that are going to be easier to work with. And so they're going to be
+
+14:07.000 --> 14:11.600
+ four things to keep in mind broadly when choosing or designing an algorithm. We'll
+
+14:11.600 --> 14:17.440
+ go into each of these in a little bit more depth. Memory use, speed, accuracy, and
+
+14:17.440 --> 14:26.320
+ scalability. And then kind of on the motivation of doing this, so you know a
+
+14:26.320 --> 14:29.780
+ lot of the things we'll talk about, you know, could be done in Scikit-Learn or
+
+14:29.780 --> 14:37.680
+ SciPy. It's really great to know kind of how those libraries work in case that...
+
+14:37.680 --> 14:42.320
+ in case you want to do a variation that's not accounted for, knowing the
+
+14:42.320 --> 14:47.040
+ trade-offs that you're making when you choose between different options. Also a
+
+14:47.040 --> 14:50.420
+ lot of these fields are moving very quickly and you might find new results
+
+14:50.420 --> 14:54.160
+ that haven't yet been implemented in one of these libraries, particularly the
+
+14:54.160 --> 14:59.200
+ areas of deep learning, recommendation systems, approximate algorithms, and graph
+
+14:59.200 --> 15:06.000
+ analytics. There's a lot of research happening in all of those right now. And
+
+15:06.000 --> 15:12.600
+ so yeah, knowing how to debug algorithms can really kind of accelerate your work.
+
+15:12.600 --> 15:17.840
+ Or sorry, knowing how they work helps you debug them, but knowing how to debug
+
+15:17.840 --> 15:28.840
+ them also helps accelerate what you're doing. So in this part we'll probably be
+
+15:28.840 --> 15:33.440
+ review. I just want to say there are two main types of matrix computations,
+
+15:33.440 --> 15:38.120
+ which are taking products and then decomposition. So putting them together
+
+15:38.120 --> 15:51.800
+ and then pulling them apart. So for an example, here this is a matrix. I'm going to make this a
+
+15:51.800 --> 16:01.760
+ little bit smaller just so it can fit on one screen. This is a matrix of... sorry.
+
+16:01.760 --> 16:05.720
+ Yeah, well it's a matrix of probabilities, but this is a Markov chain with
+
+16:05.720 --> 16:10.680
+ different states of health. And so there's kind of an asymptomatic HIV
+
+16:10.680 --> 16:14.960
+ stage, symptomatic full-blown AIDS and death, and these are kind of the
+
+16:14.960 --> 16:20.560
+ different states of the Markov chain. And then this matrix of probabilities is
+
+16:20.560 --> 16:24.480
+ saying what are your chances if you're in one state of moving to each of the
+
+16:24.480 --> 16:29.640
+ other states. And so you'll notice each row sums to one since they're
+
+16:29.640 --> 16:34.400
+ probabilities. And that's kind of the row gives you the state you're starting in,
+
+16:34.400 --> 16:38.960
+ the column gives you the destination state you're moving to. So I mentioned
+
+16:38.960 --> 16:44.120
+ earlier I had an internship while I was in grad school that was a whole kind of
+
+16:44.120 --> 16:48.280
+ research group that looked at problems like these. They would also take into
+
+16:48.280 --> 16:52.120
+ account kind of the cost of health care and different types of treatment and use
+
+16:52.120 --> 17:01.280
+ that to kind of weigh recommendations. So here I want you to take if this is kind
+
+17:01.280 --> 17:06.880
+ of your starting vector of what, you know, you have a group of people 85% are in
+
+17:06.880 --> 17:12.480
+ the asymptomatic group, 10% are symptomatic, and so on. And if this
+
+17:12.480 --> 17:15.320
+ matrix kind of is giving you the probabilities of what their health will
+
+17:15.320 --> 17:20.720
+ be like in a year, can you tell me what those probabilities are? So take a take a
+
+17:20.720 --> 17:28.200
+ few moments to code that, just to warm up.
+
+17:31.400 --> 17:38.000
+ Oh yes, although I don't want to, so if you go to the answer tab it should show
+
+17:38.000 --> 17:46.440
+ up as a cell that says exercise. I'm not opening mine because I have the answer
+
+17:46.440 --> 17:53.680
+ written there. It shows you what the correct answer should be. Oh oh yes yeah
+
+17:53.680 --> 18:10.080
+ it shows you the output as well.
+
+19:08.800 --> 19:17.520
+ Yes? Oh yes, okay yeah. So the question was from someone not registered for the
+
+19:17.520 --> 19:33.160
+ class, so let me pull up the GitHub. So on GitHub it's users fast AI and then
+
+19:33.160 --> 19:53.400
+ numerical dash linear dash algebra is the repository. And I've also put the
+
+19:53.400 --> 19:57.320
+ syllabus in the readme of the repository kind of with links so you can view the
+
+19:57.320 --> 20:16.080
+ notebooks and we'll be adding to it. Raise your hand if you're done. Raise
+
+20:16.080 --> 20:28.440
+ your hand if you want more time.
+
+21:26.600 --> 21:43.280
+ Let's look at the answer. So you can use NumPy to put these in as arrays.
+
+21:43.280 --> 21:48.760
+ So this is a two-dimensional array for the matrix, the vectors, but actually I
+
+21:48.760 --> 21:58.280
+ guess I put that as two-dimensional as well. So I did A dot T which is transpose.
+
+21:58.280 --> 22:05.560
+ The at sign is matrix multiplication in Python 3, I believe you need. So for
+
+22:05.560 --> 22:11.040
+ Python 2 you could be using NP dot matmul for matrix multiplication, although I
+
+22:11.040 --> 22:15.480
+ highly recommend switching to Python 3.
+
+22:15.480 --> 22:36.160
+ So does anyone want to say why am I doing a transpose?
+
+22:55.360 --> 23:01.720
+ Yeah, yeah, and so it would have been fine if you had multiplied on the left. Also
+
+23:01.720 --> 23:05.560
+ the other way I think about it is...
+
+23:10.000 --> 23:13.600
+ Just by the way, the reason we're using the microphone is so we can hear it on
+
+23:13.600 --> 23:23.680
+ the recording. The other way to think about this is your matrix,
+
+23:23.680 --> 23:31.960
+ kind of the dimensions are basically, let me point, like sources by destinations
+
+23:31.960 --> 23:36.160
+ and so I kind of think of like when you do the matrix multiplication you're
+
+23:36.160 --> 23:40.840
+ wanting to multiply it by the sources and so I know if you want the sources
+
+23:40.840 --> 23:48.100
+ over here you would need the sources to be the columns to kind of line up as you
+
+23:48.100 --> 23:55.880
+ want, you know, sources by sources. Any questions?
+
+23:55.880 --> 24:18.320
+ Oh well no, that would work as well. That's actually equivalent. The kind of
+
+24:18.320 --> 24:29.000
+ taking two transposes is, I can write this, like this is equal to like that
+
+24:29.000 --> 24:44.160
+ whole thing transposed. Yeah, so now for our matrix matrix products. This is a
+
+24:44.160 --> 24:49.920
+ problem that I've taken from kind of this fact sheet that has several
+
+24:49.920 --> 24:55.560
+ different linear algebra problems and so here this is, and a lot of them, I think a
+
+24:55.560 --> 24:59.400
+ lot of times when you're doing things by hand they look like overly simplified
+
+24:59.400 --> 25:02.920
+ examples, but it's important to remember that the power of matrices is that you
+
+25:02.920 --> 25:08.160
+ can do these on really large data sets and large matrices as well, but here
+
+25:08.160 --> 25:15.360
+ you've got three people who want to buy some different groceries and they have
+
+25:15.360 --> 25:20.560
+ different prices for two different shops. Each person only wants to go to one shop
+
+25:20.560 --> 25:27.640
+ which is the better shop for each person to go to. So take a moment to do that and
+
+25:27.640 --> 25:31.800
+ again if you go to the answer tab there'll be a little bit a little bit of
+
+25:31.800 --> 25:38.720
+ space and it should show you what the ideal answer is.
+
+27:48.520 --> 27:55.320
+ Raise your hand if you're finished. Raise your hand if you want some more time.
+
+27:55.320 --> 28:04.600
+ Okay, go ahead and look at the answer for this. Yeah, so this is kind of pretty
+
+28:04.600 --> 28:10.880
+ straightforward of entering the matrices as NumPy arrays and I did A at B or you
+
+28:10.880 --> 28:20.080
+ could do np.matmall if you're in Python 2. Any questions? And this, if you
+
+28:20.080 --> 28:24.960
+ look at, I think it's even in the part I copied, it's kind of nice how they copied
+
+28:24.960 --> 28:31.040
+ out this example of, you know, the amount spent by person 1 is this row and we're
+
+28:31.040 --> 28:37.640
+ multiplying it by this column to get what they would spend in shop 1. Oh, so
+
+28:37.640 --> 28:46.840
+ next up is image data. I really like this GIF that illustrates how images can
+
+28:46.840 --> 28:51.040
+ be represented by a matrix of numbers and so here this is black and white and
+
+28:51.040 --> 28:58.600
+ the values are between 0 and 255 to show that this is the handwritten digit 8 and
+
+28:58.600 --> 29:04.360
+ it could be represented by a matrix of, not exactly sure if this is like 20 by 20 or
+
+29:04.360 --> 29:10.240
+ so on. And typically a lot of times what happens is that matrix might be unrolled
+
+29:10.240 --> 29:16.600
+ then into a single row, but now you've got, you know, 400 numbers representing
+
+29:16.600 --> 29:21.560
+ what that picture looked like. And for color images you just have three
+
+29:21.560 --> 29:31.880
+ matrices, one for red, green, and blue. Any questions about that? Okay, so we're
+
+29:31.880 --> 29:38.120
+ gonna look at convolutions briefly. So this is not a deep learning course, but I
+
+29:38.120 --> 29:41.800
+ think deep learning is a really good illustration of how linear algebra is
+
+29:41.800 --> 29:47.160
+ being heavily used right now. So convolutions are the heart of convolutional
+
+29:47.160 --> 29:53.120
+ neural networks, CNNs, and so basically pretty much any results you hear that
+
+29:53.120 --> 29:58.360
+ have AI or deep learning that are related to images are using CNNs. And
+
+29:58.360 --> 30:05.120
+ then even, this is just from a few weeks ago, Facebook's AI team published
+
+30:05.120 --> 30:10.840
+ results for speech translation where they use CNNs instead of RNNs,
+
+30:10.840 --> 30:14.520
+ which are kind of typically what people use for language, and they were nine
+
+30:14.520 --> 30:21.120
+ times faster. So convolutions are very useful. So using convolutions or
+
+30:21.120 --> 30:24.960
+ convolutional neural networks, computers are more accurate than people at
+
+30:24.960 --> 30:33.320
+ classifying images. I should zoom in on these. So some of these I wouldn't get.
+
+30:33.320 --> 30:40.220
+ This is an ultra marathon, not a half marathon. So the computer got the top
+
+30:40.220 --> 30:45.120
+ choice was ultra marathon, their second guess was half marathon, third guess was
+
+30:45.120 --> 30:49.320
+ running, and fourth guess was marathon. So a lot of times these are very
+
+30:49.320 --> 30:56.240
+ fine-grained categories or distinctions. I like this one. This is a heptathlon, not
+
+30:56.240 --> 31:03.280
+ a decathlon, hurdles, or pentathlon. But this is what computers are
+
+31:03.280 --> 31:11.680
+ capable of. And then here's an example of an algorithm to kind of find
+
+31:11.680 --> 31:16.600
+ bounding boxes for different objects inside a picture, and then identify what
+
+31:16.600 --> 31:24.760
+ the object is. Oh my goodness, okay. Wow, so that's even more impressive. I think
+
+31:24.760 --> 31:33.840
+ this was done on videos is what Jeremy just said. Yeah, so this one
+
+31:33.840 --> 31:37.480
+ they've identified two different chairs in the picture, you know, including this
+
+31:37.480 --> 31:41.760
+ one which is kind of you're only seeing part of it and it's in the dark, you know,
+
+31:41.760 --> 31:45.840
+ in a person and a dog. And this is pretty intricate. There are a lot of
+
+31:45.840 --> 31:53.260
+ objects overlapping each other and algorithms recognizing them. And so we
+
+31:53.260 --> 31:56.380
+ will not be getting into the full details of this, but I wanted to talk a
+
+31:56.380 --> 32:01.060
+ little bit about how convolutions work since they're useful building block for
+
+32:01.060 --> 32:07.720
+ deep learning and an application of linear algebra. So this is some images
+
+32:07.720 --> 32:16.000
+ from a blog post. Yeah, written by a student in the deep learning class that
+
+32:16.000 --> 32:30.800
+ was here at the Data Institute. And the idea behind a convolution is that it
+
+32:30.800 --> 32:34.960
+ applies a filter. So here we've got a filter that's just four numbers, alpha,
+
+32:34.960 --> 32:40.800
+ beta, gamma, and delta, and it's being applied to a picture perhaps that's just
+
+32:40.800 --> 32:46.760
+ three by three, so pretty small. And you kind of put it in each location, so we
+
+32:46.760 --> 32:50.840
+ put it in the top left corner and then we'll multiply alpha by A, add that to
+
+32:50.840 --> 32:59.040
+ beta times B plus D times gamma plus E times delta, and get a single number out
+
+32:59.040 --> 33:04.960
+ P as the result. And then you slide that filter across the picture and do it at
+
+33:04.960 --> 33:11.400
+ each possible space. So here it is in the top right, we get out one result, bottom
+
+33:11.400 --> 33:16.920
+ left, bottom right. So this is just with a single filter on a small picture. And
+
+33:16.920 --> 33:21.720
+ so that's kind of one way to think about how a convolution works. Another is,
+
+33:21.720 --> 33:25.920
+ and I find these pictures less helpful, but a lot of people like to draw neural
+
+33:25.920 --> 33:30.160
+ networks from this point, so this is a neural network. Here the alpha, beta,
+
+33:30.160 --> 33:34.440
+ gamma, and delta are the connections, and so those would be the weights on the
+
+33:34.440 --> 33:38.960
+ connections. So whenever you see a red line, you know, that's saying there's a
+
+33:38.960 --> 33:43.720
+ connection between A and P, and the weight of that connection is alpha. And
+
+33:43.720 --> 33:50.120
+ so the same operation is happening that we saw before to get P. P's, you know, got
+
+33:50.120 --> 34:00.120
+ four connections going into it. A times alpha, B times beta, D times, is that right?
+
+34:00.120 --> 34:10.160
+ Yeah, D times gamma, and then, what else, E times delta. So that's another perspective. And I
+
+34:10.160 --> 34:13.600
+ really, I really like this approach of thinking about topics from different
+
+34:13.600 --> 34:16.800
+ perspectives, because I think that kind of help, can help you get a deeper
+
+34:16.800 --> 34:25.200
+ understanding. And then this is, this is neat. Here Matthew's kind of unrolled the
+
+34:25.200 --> 34:31.000
+ the filter and put it into this larger sparse matrix and shown, hey, this is
+
+34:31.000 --> 34:36.320
+ actually a matrix multiplication. So now our kind of A, B, C, D, E from our picture
+
+34:36.320 --> 34:40.880
+ is just a single vector, and we've got this sparse matrix, and that just sparse
+
+34:40.880 --> 34:45.120
+ means it has a lot of zeros. And those actually show up a lot, kind of matrices
+
+34:45.120 --> 34:49.120
+ that have lots of zeros in a specific structure, like this one does with the
+
+34:49.120 --> 34:54.080
+ diagonals. And you can do a matrix multiplication and get the same result.
+
+34:54.080 --> 35:02.880
+ Any questions? Okay, so now we're going to look at how we could use this for edge
+
+35:02.880 --> 35:11.080
+ detection in this notebook. And this, don't worry, don't worry too much about
+
+35:11.080 --> 35:18.120
+ the setup, but these are kind of the files you need to, or libraries you need
+
+35:18.120 --> 35:25.720
+ to import. Yes? Yes, oh thank you. This is convolution intro, and this was
+
+35:25.720 --> 35:32.400
+ originally part of the deep learning course. So we'll be looking at MNIST
+
+35:32.400 --> 35:37.680
+ data, which is, you know, this really popular data set of lots of handwritten
+
+35:37.680 --> 35:42.880
+ digits. This is very useful for banks being able to automatically identify, you
+
+35:42.880 --> 35:47.280
+ know, when you insert your check into the ATM, what the numbers on it are, post
+
+35:47.280 --> 35:51.980
+ offices automatically sort our mail by zip code using image recognition on the
+
+35:51.980 --> 35:56.960
+ digits. And then I should say scikit-learn has a lot of built-in data
+
+35:56.960 --> 36:01.120
+ sets, which are a really useful feature, and we'll be using several of them in
+
+36:01.120 --> 36:08.520
+ this course. Yeah, so we kind of import, and here we're, so for the larger data sets
+
+36:08.520 --> 36:12.520
+ that scikit-learn includes, it doesn't include the data set, it includes a data
+
+36:12.520 --> 36:19.840
+ loading utility that you can run to get the actual data. So we run that. You can
+
+36:19.840 --> 36:23.640
+ kind of check what the keys are of what you get back, because you're kind of
+
+36:23.640 --> 36:30.360
+ getting back this dictionary-like object. We're interested in the data and the
+
+36:30.360 --> 36:34.160
+ target, and target is going to be kind of the label of saying this is what the
+
+36:34.160 --> 36:39.720
+ digit is. The data itself, and then something else that's always great to do
+
+36:39.720 --> 36:43.120
+ whenever you're kind of starting anything, is just check your dimensions to see if
+
+36:43.120 --> 36:47.800
+ they are what you expect. And you can often also kind of find stuff about the
+
+36:47.800 --> 36:55.640
+ meaning based on the dimensions. So here this is 70,000 by 784. So even if you
+
+36:55.640 --> 36:59.960
+ didn't know, you could guess, hey maybe this is 70,000 different samples or
+
+36:59.960 --> 37:05.920
+ different digits. And this is a 28 by 28 if it was put back together. So each row
+
+37:05.920 --> 37:11.600
+ is just a single digit that's kind of been unrolled. And so we're going to
+
+37:11.600 --> 37:18.560
+ reshape them to be 28 by 28 using NumPy's reshape. So now we have, and often
+
+37:18.560 --> 37:23.840
+ so kind of higher dimensional matrices are referred to as tensors. So you could
+
+37:23.840 --> 37:35.440
+ say this is a tensor that's 70,000 by 28 by 28. So for the labels, we're converting
+
+37:35.440 --> 37:41.520
+ them to integers. And then we're gonna, I think it's actually best to probably kind of
+
+37:41.520 --> 37:47.080
+ skip to looking at these places. So here we've plotted images zero. So that's the
+
+37:47.080 --> 37:51.280
+ kind of first entry of images.
+
+37:51.280 --> 38:06.880
+ And you could confirm that's 28 by 28. That's our our picture. So we plot it.
+
+38:06.880 --> 38:13.680
+ It's a zero. We check the label and that is also, or says zero. Was that a hand
+
+38:13.680 --> 38:25.480
+ over here? Okay so that's a great question. Oh okay yeah the question was
+
+38:25.480 --> 38:33.760
+ why are we dividing by 255 in I guess input 53 which I should probably run
+
+38:33.760 --> 38:39.480
+ again. And this you you wouldn't have to and it would still plot properly. This
+
+38:39.480 --> 38:52.680
+ comes up later when when we're using correlate I believe. But yeah if you plot
+
+38:52.680 --> 38:58.200
+ it if you, so we're trying to turn these into numbers between zero and one. It
+
+38:58.200 --> 39:03.400
+ would still work if you had them between zero and 255. So kind of just a way of
+
+39:03.400 --> 39:15.440
+ normalizing. Or I'm sorry I should say the plots would still work. It would
+
+39:15.440 --> 39:19.720
+ still be when you plot it you'd be like this is clearly the same image. Some of
+
+39:19.720 --> 39:26.600
+ the computations we're gonna use later we needed it to be normalized for. Here
+
+39:26.600 --> 39:30.480
+ we also have a plots helper function and so these were the methods that were kind
+
+39:30.480 --> 39:35.760
+ of defined up here. Although I would say don't worry too much about the details
+
+39:35.760 --> 39:41.640
+ of them unless you're particularly interested. We're using and it lets us
+
+39:41.640 --> 39:46.400
+ put in a whole array of images and plots them like this which is really handy for
+
+39:46.400 --> 39:50.520
+ being able to look at our data. And this is also something I would recommend. I
+
+39:50.520 --> 39:54.280
+ think sometimes it can feel kind of finicky writing the helper methods to be
+
+39:54.280 --> 39:58.800
+ able to look at your data, but it's pretty much always worth it because as
+
+39:58.800 --> 40:01.800
+ you're doing computations you want to check that things are what you think
+
+40:01.800 --> 40:07.400
+ they are and be able to see what your results are. We can also zoom in on our
+
+40:07.400 --> 40:12.880
+ images. So if you want to see just a plot of part of one here we're just getting
+
+40:12.880 --> 40:17.800
+ the rows from 0 to 14, columns from 8 to 22. So this is kind of the middle top of
+
+40:17.800 --> 40:30.720
+ the 0 is what this this thing is from this picture. Okay so for edge detection
+
+40:30.720 --> 40:36.440
+ we're gonna have a matrix with the name that kind of gives a lot away called top
+
+40:36.440 --> 40:41.920
+ that's negative ones along the top row, ones along the middle row, and then zeros
+
+40:41.920 --> 40:49.640
+ along the bottom. And this is why that what top looks like. And so something to
+
+40:49.640 --> 40:56.360
+ keep in mind and actually oh here this is an interesting perspective and this
+
+40:56.360 --> 41:01.280
+ could have been in higher up. Using NumPy we can look at kind of just a part of
+
+41:01.280 --> 41:07.240
+ the the matrix and see this is so it's not plot plotted but this is what the
+
+41:07.240 --> 41:12.600
+ matrix looks like. And here the zeros are black and these numbers between 0 and 1
+
+41:12.600 --> 41:17.600
+ are giving the intensity of the white part for the handwritten 0. So we're
+
+41:17.600 --> 41:25.320
+ still still kind of looking at this just from different perspectives. And so
+
+41:25.320 --> 41:31.960
+ we're using a method called correlate and this came from it's scikit-learn's
+
+41:31.960 --> 41:43.600
+ image. Oh there it is. Oh sorry, scipy's nd image filters provides a
+
+41:43.600 --> 41:51.040
+ correlate. Correlate method. And then something you can do that's a nice
+
+41:51.040 --> 41:58.120
+ feature of Jupyter notebook is if you're inside the parentheses for a method if
+
+41:58.120 --> 42:02.120
+ you hit shift tab a few times it pulls up the method signature and
+
+42:02.120 --> 42:08.400
+ documentation which is nice to see. And so this gives an array correlated with a
+
+42:08.400 --> 42:16.600
+ given kernel and so here we pass in images 0 and top and if we plot that
+
+42:16.600 --> 42:20.820
+ this is what we get. And so you'll kind of notice that they're white which is
+
+42:20.820 --> 42:27.040
+ the highest value along the tops of the 0 and black kind of the lowest values
+
+42:27.040 --> 42:33.160
+ along the bottoms of the edges. So this is picked off the edges. I'm going to
+
+42:33.160 --> 42:41.040
+ talk about kind of what's going on there with this negative 1, 1, and 0. A way to
+
+42:41.040 --> 42:45.320
+ think about that that's going to be greatest when the negative ones are
+
+42:45.320 --> 42:49.000
+ multiplying by zeros and getting canceled out. If we were trying to think
+
+42:49.000 --> 42:55.520
+ about how could we maximize you know top multiplied by something else. And this is
+
+42:55.520 --> 42:59.720
+ I should be clear this is element wise multiplication we're doing so this is
+
+42:59.720 --> 43:04.560
+ not a matrix product but we're element wise kind of you know putting the filter
+
+43:04.560 --> 43:09.480
+ on top of something and then multiplying each element on what it's kind of on top
+
+43:09.480 --> 43:17.520
+ of. And so having zeros in a full row and then having like the highest value since
+
+43:17.520 --> 43:21.240
+ this is normalized there should be ones and another row that would give the
+
+43:21.240 --> 43:25.480
+ biggest value for this. And so that's why it's picking out tops because it's
+
+43:25.480 --> 43:30.960
+ whenever you go from something small to something large this this correlation
+
+43:30.960 --> 43:37.240
+ will have the highest values. Your questions?
+
+43:40.240 --> 43:45.720
+ I yes yeah okay so Jeremy asked the question about convolution versus core
+
+43:45.720 --> 43:50.320
+ or suggested that I talked about convolution versus correlation. The
+
+43:50.320 --> 43:55.080
+ key difference is just with convolutions they're actually flipped and so this is
+
+43:55.080 --> 44:03.440
+ kind of a mathematical accounting thing right like there's not a yeah that it's
+
+44:03.440 --> 44:06.680
+ yeah so it's really it's the same and kind of in the math you take into
+
+44:06.680 --> 44:09.440
+ account like oh okay this has actually been rotated when you're doing a
+
+44:09.440 --> 44:14.400
+ convolution but it's the same idea as a correlation and I think correlations are
+
+44:14.400 --> 44:17.440
+ easier to think about otherwise you're just kind of flipping everything but
+
+44:17.440 --> 44:46.080
+ getting the same result. This is actually element wise. Oh yes yeah so this is
+
+44:46.080 --> 44:51.200
+ this is different from a correlation matrix that you hear about of in
+
+44:51.200 --> 44:56.880
+ statistics yeah so kind of overuse of the word correlation yeah this is a
+
+44:56.880 --> 45:09.400
+ different use. Yeah but yeah but think about that kind of in a separate bucket
+
+45:09.400 --> 45:16.120
+ from the statistics idea of correlation between between different variables.
+
+45:17.280 --> 45:23.760
+ Yeah so that was really kind of the key idea of how a matrix can be used for
+
+45:23.760 --> 45:28.680
+ edge detection. Here we'll see if we rotate so remember top was that three by
+
+45:28.680 --> 45:40.320
+ three matrix we can rotate it by 90 degrees. Oh okay so now it's identical
+
+45:40.320 --> 45:43.880
+ because we've rotated it so it still does the same thing. I would I would not
+
+45:43.880 --> 45:47.760
+ worry too much about this distinction the key thing here is just the idea of
+
+45:47.760 --> 45:56.080
+ you can pick up edges by sliding a filter and then this is kind of nice we
+
+45:56.080 --> 46:01.000
+ rotate number of times kind of to get these different ones and this will give
+
+46:01.000 --> 46:08.320
+ us edge detection for bottom top left and right can also do diagonals and so
+
+46:08.320 --> 46:12.920
+ if we apply that kind of all these different filters to the the picture of
+
+46:12.920 --> 46:18.560
+ the zero here you see we've picked off the top this one's picked off the
+
+46:18.560 --> 46:24.080
+ left-hand side since that's where the white marks are picking off the bottom
+
+46:24.080 --> 46:32.560
+ right-hand side this is picking off kind of the diagonals towards the bottom
+
+46:32.560 --> 46:38.600
+ right corner white here it's kind of on the diagonals I mean you can almost
+
+46:38.600 --> 46:42.520
+ think of it as like a light shining from the top right corner in this line here
+
+46:42.520 --> 46:49.440
+ from the top left and then I guess this one is bottom left although the edges
+
+46:49.440 --> 46:59.360
+ are not as defined okay any questions on this
+
+47:05.880 --> 47:08.880
+ thanks
+
+47:10.000 --> 47:16.000
+ all right so that's it for putting matrices together I mean we'll be using
+
+47:16.000 --> 47:21.000
+ matrix products every day but I kind of in the intro applications and now I'm
+
+47:21.000 --> 47:25.000
+ just gonna very briefly say some of the matrix decompositions we'll be seeing
+
+47:25.000 --> 47:30.320
+ we'll be covering all of these in a lot of depth in the future lessons so one is
+
+47:30.320 --> 47:36.880
+ topic modeling and we'll see it with NMF and SVD and so a group of documents can
+
+47:36.880 --> 47:42.640
+ be represented by a term document matrix here these are works of Shakespeare
+
+47:42.640 --> 47:48.000
+ along the top is the particular play on the left is different words that appear
+
+47:48.000 --> 47:54.000
+ in those plays and so you can see Anthony and Cleopatra the word Anthony
+
+47:54.000 --> 48:01.160
+ appears 157 times in Julius Caesar the word Anthony appears 73 times and this
+
+48:01.160 --> 48:05.960
+ is a way that you can represent a group of documents as a matrix and this is
+
+48:05.960 --> 48:12.000
+ notice that nothing about syntax or order or structures being included this
+
+48:12.000 --> 48:16.480
+ is treating them as a bag of words basically but it can let you figure out
+
+48:16.480 --> 48:24.120
+ different topics and in matrices what that looks like so this is for NMF so
+
+48:24.120 --> 48:29.160
+ the the words are the rows the documents are the columns and you can decompose
+
+48:29.160 --> 48:36.560
+ that into a matrix of topics so that would be topics by words and then
+
+48:36.560 --> 48:45.600
+ topics importance indicators kind of by topics or I mean really that's the kind
+
+48:45.600 --> 48:51.880
+ of documents by how how important each topic is for that document and I think
+
+48:51.880 --> 48:55.480
+ it's always um always helpful to kind of write out what your dimensions are when
+
+48:55.480 --> 48:59.180
+ thinking about it but here topics is kind of going to be your short dimension
+
+48:59.180 --> 49:08.320
+ that you're finding we'll see background removal which will use robust PCA which
+
+49:08.320 --> 49:15.280
+ uses SVD and SVD uses QR so there's kind of some nesting going on and that's to
+
+49:15.280 --> 49:21.080
+ kind of remove so we have this surveillance video and we can kind of
+
+49:21.080 --> 49:27.600
+ pick out what's the background and what are the people which could be useful the
+
+49:27.600 --> 49:31.840
+ page rank algorithm is all based off of eigendecompositions and finding an
+
+49:31.840 --> 49:35.960
+ eigenvector so we'll look at that and we'll look at that at on a data set of
+
+49:35.960 --> 49:41.840
+ Wikipedia pages and then that page I linked to before of the matrix
+
+49:41.840 --> 49:48.920
+ factorization jungle has a number of other decompositions well and actually
+
+49:48.920 --> 49:53.720
+ this is a like perfect timing so it's it's noon I was thinking we could take
+
+49:53.720 --> 50:00.320
+ maybe a seven or eight minute break and then come back yeah get some water go to
+
+50:00.320 --> 50:06.560
+ the bathroom and then we'll dive into kind of yeah these four concepts that I
+
+50:06.560 --> 50:14.200
+ think are pretty fundamental to numerical linear algebra great alright
+
+50:14.200 --> 50:20.800
+ so it's um it's 1207 we're gonna start back and actually um Jeremy said that
+
+50:20.800 --> 50:25.400
+ everyone is used or that the MC on recommends Python 2 so he's just going
+
+50:25.400 --> 50:30.240
+ to briefly talk about and having both 2 and 3 installed and so you can switch
+
+50:30.240 --> 50:36.560
+ between them so for those who are interested in trying Python 3 there's
+
+50:36.560 --> 50:40.520
+ only two things you need to really know the first is that print statements now
+
+50:40.520 --> 50:45.200
+ have parentheses around them the second is that when you divide an integer by an
+
+50:45.200 --> 50:50.320
+ integer you get a float rather than integer which makes a lot more sense but
+
+50:50.320 --> 50:55.400
+ if you're used to the Python 2 behavior you're playing that surprising there's a
+
+50:55.400 --> 50:58.760
+ really fantastic thing called anaconda which some of you may have come across
+
+50:58.760 --> 51:03.360
+ it's a Python distribution that when you install it it'll offer by default to
+
+51:03.360 --> 51:07.920
+ install it in your home directory rather than replacing your system Python so you
+
+51:07.920 --> 51:13.120
+ can install anaconda 3 and that'll give you the latest Python 3.6 that supports
+
+51:13.120 --> 51:17.240
+ all the cool linear algebra stuff virtual showing and it won't replace
+
+51:17.240 --> 51:23.240
+ your current Python in any way so then you've got a choice with anaconda you
+
+51:23.240 --> 51:28.720
+ can actually run multiple versions of Python inside anaconda so like we can
+
+51:28.720 --> 51:32.200
+ help you do that on slack if you guys want to do that or you can just switch
+
+51:32.200 --> 51:38.600
+ between the two by changing your path to add or remove your home directory Python
+
+51:38.600 --> 51:43.640
+ from the path so so that's definitely an option there like don't I don't suggest
+
+51:43.640 --> 51:47.440
+ you replace your system Python with Python 3 that's going to cause you a lot
+
+51:47.440 --> 51:52.720
+ of confusion but instead install anaconda and then other another nice
+
+51:52.720 --> 51:58.400
+ thing about anaconda is that all of the well for example pytorch but which we'll
+
+51:58.400 --> 52:02.840
+ be using later for using the GPU by far the easiest way to install it is with
+
+52:02.840 --> 52:08.480
+ with anaconda in fact that's the officially sanctioned method so there's
+
+52:08.480 --> 52:12.120
+ a number of reasons maybe to try out anaconda but definitely don't replace
+
+52:12.120 --> 52:22.400
+ your system Python yeah so feel free to ask on slack or ask either of us if you
+
+52:22.400 --> 52:26.440
+ have questions about that and then also I want to say Python 3 is not required
+
+52:26.440 --> 52:31.560
+ for this course so if you want to keep using Python 2 that's fine as well but
+
+52:31.560 --> 52:36.400
+ it is a neat option and anaconda and Jupiter both make it pretty easy
+
+52:36.400 --> 52:40.200
+ something that's nice about Jupiter is when you start a new notebook it'll ask
+
+52:40.200 --> 52:43.480
+ you like which kernel you want to use and so if you have both installed you
+
+52:43.480 --> 52:46.840
+ can choose whichever one you want
+
+52:47.400 --> 52:53.760
+ Rachel's code often won't run as is in Python 2 if you are using Python 2 but we can also show you a
+
+52:53.760 --> 52:58.200
+ couple of lines you can add to the top of every page which makes a Python 3
+
+52:58.200 --> 53:03.000
+ file largely compatible with Python 2 so we should probably start adding that to
+
+53:03.000 --> 53:08.440
+ our yeah and then also as Jeremy said many of the things that don't work are
+
+53:08.440 --> 53:12.560
+ very minor and it's yeah adding parentheses around your print statements
+
+53:12.560 --> 53:18.800
+ or I guess yeah some casting if we were dividing integers by integers to get
+
+53:18.800 --> 53:29.080
+ floats okay so um yeah in this part I'm going to talk about kind of four four
+
+53:29.080 --> 53:34.160
+ huge areas of concern in numerical linear algebra or when doing matrix
+
+53:34.160 --> 53:42.680
+ matrix computations on a computer in general so the first is the first is
+
+53:42.680 --> 53:48.400
+ floating-point arithmetic and so to understand accuracy we need to look at
+
+53:48.400 --> 53:54.320
+ how computers store numbers because it's and this is something that really I
+
+53:54.320 --> 53:59.640
+ hadn't thought about thought about until I got to grad school is when you're
+
+53:59.640 --> 54:05.160
+ doing math it's continuous and it's infinite you know you kind of have this
+
+54:05.160 --> 54:09.720
+ infinite precision as possible but computers are inherently finite and
+
+54:09.720 --> 54:14.480
+ inherently discrete so it's really kind of important to think about how
+
+54:14.480 --> 54:20.200
+ computers deal with numbers in math so for an exercise I want you to look at
+
+54:20.200 --> 54:26.680
+ this method F that I have defined so F takes a value if the value is less than
+
+54:26.680 --> 54:32.040
+ or equal to a half it returns two times that value if X is greater than a half
+
+54:32.040 --> 54:38.640
+ it returns two times the value minus one and imagine that we feed one tenth into
+
+54:38.640 --> 54:43.880
+ that and so that would be one tenth is less than a half so it's gonna return
+
+54:43.880 --> 54:49.920
+ two tenths and now feed that two tenths back into F and I want you to keep doing
+
+54:49.920 --> 54:53.840
+ that and just write out on paper kind of what you would get for the first ten
+
+54:53.840 --> 55:01.160
+ iterations of kind of starting with one tenth doing F of that and then do F of
+
+55:01.160 --> 55:30.880
+ your answer and this I definitely want you to kind of write out before you
+
+55:30.880 --> 55:34.080
+ before you run the code
+
+56:39.240 --> 56:42.800
+ raise your hand if you want more time
+
+56:42.800 --> 57:03.400
+ all right someone tell me what you got for kind of working this by hand
+
+57:13.000 --> 57:18.040
+ right yeah so it's a cycle great thank you
+
+57:25.640 --> 57:33.920
+ okay yeah so this is a cycle so now we're gonna try running it for 80
+
+57:33.920 --> 57:41.520
+ iterations to see what happens so it starts off point one point two point
+
+57:41.520 --> 57:46.600
+ four point eight point six point two point four point eight point six but
+
+57:46.600 --> 57:50.400
+ what's what's happening is this goes on
+
+57:55.080 --> 58:01.760
+ and then we actually end up getting one just over and over again so the method
+
+58:01.760 --> 58:09.440
+ on the computer has converged to one being the answer and I think I think
+
+58:09.440 --> 58:13.800
+ this is pretty cool like it's a fairly simple example and it's something that
+
+58:13.800 --> 58:17.800
+ you can work by hand and work on the computer and you're clearly getting two
+
+58:17.800 --> 58:23.960
+ different things and so we'll talk about this in a moment and something to keep
+
+58:23.960 --> 58:29.480
+ in mind is that when you do get kind of these computer kind of numeric errors
+
+58:29.480 --> 58:32.220
+ it's often happening with repetition when an error is kind of getting
+
+58:32.220 --> 58:38.440
+ multiplied because you'll notice that this you know this wasn't exactly point
+
+58:38.440 --> 58:42.400
+ six but it was pretty close right it was point six I don't know how many ten
+
+58:42.400 --> 58:46.360
+ zeros or something and then a one so that's a pretty small error but those
+
+58:46.360 --> 58:55.660
+ got bigger and bigger kind of how far it was off yeah and so that kind of the
+
+58:55.660 --> 59:00.280
+ two limitations of how computers represent numbers are numbers can't be
+
+59:00.280 --> 59:05.000
+ arbitrarily large or small like there has to be some limit and there have to
+
+59:05.000 --> 59:12.880
+ be gaps between them they can't be continuous and so the way that computers
+
+59:12.880 --> 59:16.800
+ store numbers and this is called floating-point arithmetic and I want to
+
+59:16.800 --> 59:21.680
+ specify floating-point arithmetic is just one piece of accuracy so we're kind
+
+59:21.680 --> 59:25.280
+ of talking about the broader concept of accuracy on a computer and this is one
+
+59:25.280 --> 59:30.280
+ component to consider but floating-point numbers have three parts there's a sign
+
+59:30.280 --> 59:34.920
+ this is just a single bit positive or negative what's called the mantissa or
+
+59:34.920 --> 59:40.320
+ often the significant and that kind of has the digits if you're familiar with
+
+59:40.320 --> 59:45.600
+ scientific notation when you have the like 1.73 that's you know that's the
+
+59:45.600 --> 59:50.840
+ mantissa and then in scientific notation the rate X is 10 which is the base you
+
+59:50.840 --> 59:54.200
+ know you have an exponent so you've actually kind of seen this before of
+
+59:54.200 --> 1:00:00.240
+ having significant and exponent and in computers the rate X is 2 but this is
+
+1:00:00.240 --> 1:00:03.560
+ the idea and that you I mean the computer has to make space to sort the
+
+1:00:03.560 --> 1:00:09.560
+ store these things the sign the number of digits and are the significant kind
+
+1:00:09.560 --> 1:00:15.560
+ of the value or precision of those digits and then the exponent and so I
+
+1:00:15.560 --> 1:00:20.840
+ triple E is a set of standards that came out and I haven't written down I think
+
+1:00:20.840 --> 1:00:27.480
+ it was maybe like mid 80s about how computers should store numbers and it's
+
+1:00:27.480 --> 1:00:30.240
+ really great to have something that's consistent no matter what type of
+
+1:00:30.240 --> 1:00:34.400
+ computer you're using because that could be a big issue and in the early days of
+
+1:00:34.400 --> 1:00:41.840
+ computing there people were doing different things so this is just and we
+
+1:00:41.840 --> 1:00:46.960
+ will talk about this a little bit pythons if you've primarily been using
+
+1:00:46.960 --> 1:00:51.400
+ Python Python doesn't require you to say what your types are and kind of hide
+
+1:00:51.400 --> 1:00:56.760
+ that from you many languages and particularly older languages you had to
+
+1:00:56.760 --> 1:01:00.360
+ say what type something was and that's what the computer knew how much memory
+
+1:01:00.360 --> 1:01:05.360
+ to set aside and so for what we think of decimal numbers they're actually you
+
+1:01:05.360 --> 1:01:09.960
+ know typically a float or a double those are both kind of same type of numbers
+
+1:01:09.960 --> 1:01:14.120
+ but double saying you want more space to store it and so here I've just said and
+
+1:01:14.120 --> 1:01:18.000
+ Python is handling all this stuff behind the scenes it just kind of hides that
+
+1:01:18.000 --> 1:01:28.720
+ from you yeah so here are what the requirements for doubles are numbers can
+
+1:01:28.720 --> 1:01:36.440
+ be as large as this is something 10 to the 308th which is that's pretty big or
+
+1:01:36.440 --> 1:01:41.600
+ as small as 10 to the negative 308th and then I think I think this is really
+
+1:01:41.600 --> 1:01:44.820
+ interesting the way that they're represented so we'll think about the
+
+1:01:44.820 --> 1:01:51.120
+ interval from 1 to 2 you can represent 1 and then 1 plus 2 to the negative 52 1
+
+1:01:51.120 --> 1:01:58.120
+ plus 2 times 2 to the negative 52 1 plus 3 times 2 to the negative 52 and so on
+
+1:01:58.120 --> 1:02:18.320
+ up to 2 and then the interval from groups the interval from 2 to 4 is going oh and this is an error is going
+
+1:02:18.320 --> 1:02:23.800
+ kind of you can represent 2 and then 2 plus 2 to the negative 51 2 plus 2 times
+
+1:02:23.800 --> 1:02:32.400
+ 2 to the negative 51 2 plus 3 times 2 to the negative 51 and so the you'll notice
+
+1:02:32.400 --> 1:02:38.280
+ the numbers are not equidistant apart basically the bigger that the magnitude
+
+1:02:38.280 --> 1:02:42.200
+ of the numbers get the kind of the more they're spaced out which I think is kind
+
+1:02:42.200 --> 1:02:48.360
+ of weird and interesting so this is a nice kind of a graphic showing that that
+
+1:02:48.360 --> 1:02:56.440
+ close to kind of for small numbers they're closer together Jeremy pointing
+
+1:02:56.440 --> 1:03:00.680
+ out that of the two things that we're using in this class to you to represent
+
+1:03:00.680 --> 1:03:05.360
+ numbers being NumPy and PyTorch
+
+1:03:05.960 --> 1:03:12.440
+ isn't so with NumPy if you feed it they won't it will create a double precision
+
+1:03:12.440 --> 1:03:20.240
+ float anything is a float array if anything if they're all instal create a
+
+1:03:20.240 --> 1:03:24.560
+ long integer array and then when we use PyTorch will also be explicitly saying
+
+1:03:24.560 --> 1:03:29.360
+ what type it is so we are using type libraries pretty much exclusively in
+
+1:03:29.360 --> 1:03:32.960
+ this course thank you that's a great point and then also even another
+
+1:03:32.960 --> 1:03:38.400
+ library we'll use is number which lets you add types to Python in general Oh
+
+1:03:38.400 --> 1:03:44.600
+ just I thon okay sorry I thon is the one that lets you add types to the Python
+
+1:03:44.600 --> 1:03:49.280
+ um so that is something that comes you will often want to add and that yeah
+
+1:03:49.280 --> 1:03:54.680
+ NumPy kind of has built in when you're doing scientific computing and also for
+
+1:03:54.680 --> 1:04:02.480
+ improving performance it typically lets you kind of go faster to handle it
+
+1:04:02.480 --> 1:04:09.960
+ yourself and so machine epsilon that's kind of defined to be half the distance
+
+1:04:09.960 --> 1:04:17.880
+ between one and the next larger number so for double precision machine epsilon
+
+1:04:17.880 --> 1:04:25.320
+ is 2 to the negative 53 you kind of see that up here that the thing kind of the
+
+1:04:25.320 --> 1:04:30.240
+ next number after one is to the negative 52 more so half of that is 2 to the
+
+1:04:30.240 --> 1:04:35.280
+ negative 53 and this is a kind of a term that you'll hear people people talk
+
+1:04:35.280 --> 1:04:41.840
+ about and then converting from base 2 to base 10 that's equivalent to about 10 to
+
+1:04:41.840 --> 1:04:48.080
+ the negative 16th and we'll see this I'm going to show up an example later any
+
+1:04:48.080 --> 1:04:58.120
+ questions why does machine epsilon matter so machine epsilon often you'll
+
+1:04:58.120 --> 1:05:02.800
+ talk about your air as a in terms of machine epsilon because that's something
+
+1:05:02.800 --> 1:05:08.240
+ that's kind of inescapable that you know the computer can't represent something
+
+1:05:08.240 --> 1:05:13.140
+ smaller than that and so you'll just kind of talk about I mean if you have an
+
+1:05:13.140 --> 1:05:19.560
+ algorithm that makes that worst or is in terms of you know the square root of
+
+1:05:19.560 --> 1:05:23.880
+ that then that's kind of worse than the computer could be doing and depending on
+
+1:05:23.880 --> 1:05:28.960
+ what you're trying to do it varies what's possible but this is kind of a
+
+1:05:28.960 --> 1:05:35.800
+ good unit to talk about how you're how you're doing and then two important
+
+1:05:35.800 --> 1:05:42.960
+ properties of floating-point arithmetic one is that the difference between a
+
+1:05:42.960 --> 1:05:48.040
+ real number and its closest floating-point approximation is always
+
+1:05:48.040 --> 1:05:55.080
+ smaller than machine epsilon in relative terms so here FL of X is the floating
+
+1:05:55.080 --> 1:05:58.760
+ point representation and then the X is kind of the true number you're wanting
+
+1:05:58.760 --> 1:06:02.600
+ to represent and it's saying the floating-point representation is going
+
+1:06:02.600 --> 1:06:09.520
+ to be equal to X times 1 plus some epsilon and that epsilon is less than
+
+1:06:09.520 --> 1:06:13.440
+ or equal to machine epsilon so that's kind of nice it gives you a bound on
+
+1:06:13.440 --> 1:06:19.360
+ your accuracy and then for the kind of key floating-point operations which are
+
+1:06:19.360 --> 1:06:24.640
+ addition subtraction multiplication and division so we'll let star represent
+
+1:06:24.640 --> 1:06:29.680
+ that operation and then circle star is the floating-point equivalent of that
+
+1:06:29.680 --> 1:06:35.920
+ kind of how it's implemented your result is going to be no more than a multiple
+
+1:06:35.920 --> 1:06:46.280
+ of 1 plus epsilon off and then this next part I included cuz I just found it was
+
+1:06:46.280 --> 1:06:51.720
+ really interesting to read about I found there's a book called handbook of
+
+1:06:51.720 --> 1:06:56.920
+ floating-point arithmetic and chapter 1 is available for free but it lists a lot
+
+1:06:56.920 --> 1:07:02.700
+ of other types of storage schemes that were tried with numbers at various
+
+1:07:02.700 --> 1:07:06.440
+ points and so I I don't know what all of these are but I thought it was an
+
+1:07:06.440 --> 1:07:13.480
+ interesting list that people tried kind of possibly infinite strings of rational
+
+1:07:13.480 --> 1:07:18.180
+ numbers floating slash number systems so there's been a lot of different
+
+1:07:18.180 --> 1:07:21.400
+ approaches that have tried and actually let me skip ahead there's a really nice
+
+1:07:21.400 --> 1:07:26.560
+ quote from the book that really you're having to make compromises between speed
+
+1:07:26.560 --> 1:07:31.380
+ accuracy dynamic range ease of use implementation and memory they're kind
+
+1:07:31.380 --> 1:07:34.600
+ of like all these different considerations and that floating-point
+
+1:07:34.600 --> 1:07:39.240
+ arithmetic arithmetic seemed to be a good compromise for kind of all of this
+
+1:07:39.240 --> 1:07:45.040
+ and a lot of people kind of converge to accepting this here is a interesting
+
+1:07:45.040 --> 1:07:51.200
+ history of floating-point arithmetic Donald Knuth sites the Babylonians is
+
+1:07:51.200 --> 1:07:57.720
+ being the first to have a floating-point arithmetic system and theirs was base 60
+
+1:07:57.720 --> 1:08:05.640
+ and that was 8,000 BC and in 1630 the slide rule was invented and there you're
+
+1:08:05.640 --> 1:08:11.000
+ manipulating only significance and that's base 10 and radix and base are
+
+1:08:11.000 --> 1:08:17.080
+ kind of the same thing 1941 this is interesting was kind of the first real
+
+1:08:17.080 --> 1:08:25.640
+ modern implementation Conrad Zeus made the z3 computer and Conrad Zeus lived
+
+1:08:25.640 --> 1:08:29.040
+ and worked in Nazi Germany and so he was really cut off from the rest of the
+
+1:08:29.040 --> 1:08:33.240
+ scientific community and so he built some very interesting computers that
+
+1:08:33.240 --> 1:08:36.640
+ kind of nobody else knew about for quite some time and although many of them were
+
+1:08:36.640 --> 1:08:42.200
+ destroyed in bombings but he was the first to kind of kind of implement this
+
+1:08:42.200 --> 1:08:48.880
+ in a modern computer and then yet 1985 and William Cahan who was I believe at
+
+1:08:48.880 --> 1:08:52.720
+ Berkeley played a huge role in kind of pushing for this standardization of
+
+1:08:52.720 --> 1:09:00.760
+ wanting different computer manufacturers to be doing the same thing and then just
+
+1:09:00.760 --> 1:09:07.880
+ a real quick so I think with computers you know kind of zeros and ones radix
+
+1:09:07.880 --> 1:09:12.800
+ having base two seems to make a lot of sense apparently the Russians were using
+
+1:09:12.800 --> 1:09:16.480
+ radix three for a while and there are some benefits to that and this is in the
+
+1:09:16.480 --> 1:09:30.160
+ 50s everyone's yeah and it was neat because it says that this does kind of
+
+1:09:30.160 --> 1:09:36.120
+ minimize in some ways like the number of symbols times digits you have to use
+
+1:09:36.120 --> 1:09:46.680
+ also rounding gets nicer okay any questions about floating point okay so
+
+1:09:46.680 --> 1:09:53.480
+ we're still under these up we're still under the sub point of accuracy right
+
+1:09:53.480 --> 1:09:59.000
+ now but the next thing to think about act with accuracy is conditioning and
+
+1:09:59.000 --> 1:10:06.560
+ stability and so since we can't represent numbers exactly on a computer it becomes
+
+1:10:06.560 --> 1:10:11.120
+ really important to know how having a small change in your input affects the
+
+1:10:11.120 --> 1:10:14.360
+ output because sometimes that's going to happen inevitably with how you're
+
+1:10:14.360 --> 1:10:24.920
+ representing your numbers and so try but then had a quote saying a stable
+
+1:10:24.920 --> 1:10:30.360
+ algorithm gives nearly the right answer to nearly the right question and so that
+
+1:10:30.360 --> 1:10:33.960
+ kind of nearly the right question is referring to you can't represent your
+
+1:10:33.960 --> 1:10:37.920
+ numbers exactly and then you want your algorithm to be doing nearly the right
+
+1:10:37.920 --> 1:10:43.840
+ thing conditioning and stability and I think many people kind of use them as
+
+1:10:43.840 --> 1:10:49.360
+ synonyms technically conditioning is referring to the problem itself how it
+
+1:10:49.360 --> 1:10:54.920
+ behaves under perturbations which are small changes to input stability is
+
+1:10:54.920 --> 1:10:59.400
+ about the behavior of an algorithm and so we'll be talking about it in the
+
+1:10:59.400 --> 1:11:04.880
+ context of a few different algorithms and so then a kind of simple example is
+
+1:11:04.880 --> 1:11:13.760
+ we look at the matrices A and B so a is one a thousand zero one B being one
+
+1:11:13.760 --> 1:11:18.960
+ thousand point zero zero one and one these are very similar matrices right
+
+1:11:18.960 --> 1:11:24.800
+ there's only a point zero zero one difference in one entry between A and B
+
+1:11:24.800 --> 1:11:33.320
+ if you calculate me so you would actually kind of hope that these would
+
+1:11:33.320 --> 1:11:37.480
+ have similar eigenvalues and they don't and that's not because of how we're
+
+1:11:37.480 --> 1:11:43.600
+ calculating them that's kind of an issue of the problem of finding algorithms
+
+1:11:43.600 --> 1:11:53.760
+ highlighting so here for a the eigenvalues are one and one it has a
+
+1:11:53.760 --> 1:11:59.600
+ kind of multiplicity two for the eigenvalue one and then for B they're two
+
+1:11:59.600 --> 1:12:08.280
+ and zero so those are very different and J is for the imaginary term a lot we are
+
+1:12:08.280 --> 1:12:12.560
+ just we're just gonna focus on real numbers in this course but a lot of
+
+1:12:12.560 --> 1:12:17.960
+ these problems in general can give complex values and so real valued
+
+1:12:17.960 --> 1:12:25.400
+ matrices can have complex valued eigenvalues or eigenvectors and then I
+
+1:12:25.400 --> 1:12:30.120
+ also just wanted to highlight because I think this command is so useful NP dot
+
+1:12:30.120 --> 1:12:36.720
+ set print options suppress equals true otherwise what happens is and you've
+
+1:12:36.720 --> 1:12:41.200
+ probably seen this you get like zero written out with like 15 digits and
+
+1:12:41.200 --> 1:12:46.800
+ scientific notation and just zero zero zero zero so suppress equals true turns
+
+1:12:46.800 --> 1:12:55.320
+ that off and makes make sure zeros just show up is zero any questions about the
+
+1:12:55.320 --> 1:13:02.520
+ eigenvalue example and so that is something kind of to keep in mind kind
+
+1:13:02.520 --> 1:13:05.920
+ of things you'll see that relate to the math because this is something even if
+
+1:13:05.920 --> 1:13:09.480
+ you weren't using a computer and you solved for the eigenvalues by hand you
+
+1:13:09.480 --> 1:13:18.960
+ would still get these different answers for what are fairly similar inputs and
+
+1:13:18.960 --> 1:13:22.280
+ then just looking ahead this will come up again when we talk about classic
+
+1:13:22.280 --> 1:13:27.920
+ versus modified Gram-Schmidt which are methods for the QR factorization also
+
+1:13:27.920 --> 1:13:37.600
+ with Gram-Schmidt versus Householder and conditioning a system of equations and
+
+1:13:37.600 --> 1:13:47.200
+ then another area to kind of think about with accuracy is approximations it's
+
+1:13:47.200 --> 1:13:51.440
+ actually pretty rare that we need to do highly accurate matrix computations at
+
+1:13:51.440 --> 1:13:56.600
+ scale particularly if you are doing machine learning often being slightly
+
+1:13:56.600 --> 1:13:59.640
+ less accurate is the form of regularization that can help you prevent
+
+1:13:59.640 --> 1:14:04.840
+ overfitting and if you are willing to accept some decrease in accuracy you can
+
+1:14:04.840 --> 1:14:09.120
+ often increase your speed by orders of magnitude which could let you calculate
+
+1:14:09.120 --> 1:14:15.800
+ an answer several times and kind of regain some accuracy with that approach
+
+1:14:15.800 --> 1:14:20.480
+ and then I guess the issue that I didn't write down here but to think about is
+
+1:14:20.480 --> 1:14:25.440
+ also the the quality of your data and kind of if you're aware that your data
+
+1:14:25.440 --> 1:14:30.000
+ may not be super precise it's then bizarre to spend a lot of time trying to
+
+1:14:30.000 --> 1:14:34.120
+ get the kind of most accurate answer possible when you know that your data
+
+1:14:34.120 --> 1:14:37.520
+ wasn't even collected in the most precise way and I think this happens
+
+1:14:37.520 --> 1:14:48.480
+ really a lot in the kind of tech world and then a kind of popular example so
+
+1:14:48.480 --> 1:14:54.280
+ this idea of kind of inserting randomization or approximation into
+
+1:14:54.280 --> 1:14:58.800
+ algorithms yeah it's very powerful and a really kind of popular example is a
+
+1:14:58.800 --> 1:15:04.200
+ bloom filter and that's something that allows you to search for set mom
+
+1:15:04.200 --> 1:15:09.980
+ membership with 1% false positives if you were using that uses less than 10
+
+1:15:09.980 --> 1:15:14.200
+ bits per element the kind of general idea is with a bloom filter if it tells
+
+1:15:14.200 --> 1:15:20.360
+ you no it's definitely no like you know that's correct if it tells you yes it's
+
+1:15:20.360 --> 1:15:26.000
+ probably right there could be some error there and so this is a tweet joke about
+
+1:15:26.000 --> 1:15:31.280
+ it would you like to learn more about bloom filters no or probably because you
+
+1:15:31.280 --> 1:15:37.160
+ can never get a definite yes with them but you can get a definite no and then
+
+1:15:37.160 --> 1:15:43.320
+ a kind of a place that they're used is looking for kind of if you want a web
+
+1:15:43.320 --> 1:15:48.040
+ browser wants to block pages with viruses it could use a bloom filter and
+
+1:15:48.040 --> 1:15:54.320
+ if it says no then it you know lets you view the web page no problem if it says
+
+1:15:54.320 --> 1:15:59.080
+ maybe then it can look it up you know and that takes a little bit longer but
+
+1:15:59.080 --> 1:16:06.760
+ it's only having to do it for a small percentage of the pages any questions
+
+1:16:07.120 --> 1:16:15.920
+ okay and then this is also kind of just for fun but kind of expensive expensive
+
+1:16:15.920 --> 1:16:22.280
+ errors the European Space Agency spent ten years and seven billion dollars on
+
+1:16:22.280 --> 1:16:28.680
+ the Arian-5 rocket but it was trying to fit a 64-bit number into a 16-bit space
+
+1:16:28.680 --> 1:16:55.640
+ at one place and so it exploded. Let me just skip ahead to that.
+
+1:16:55.640 --> 1:17:11.160
+ This is maybe in the 90s. 94 yeah.
+
+1:17:13.960 --> 1:17:17.800
+ There was also I couldn't say as this is going off I didn't include it that the
+
+1:17:17.800 --> 1:17:41.160
+ U.S. had a Patriot missile defense system in the Middle East and this was supposed to get the U.S. space agency back in the space race game.
+
+1:17:41.160 --> 1:17:48.600
+ So this stuff can have big implications. But yeah as I say a U.S. kind of missile defense system its clock like
+
+1:17:48.600 --> 1:17:52.520
+ gradually got more inaccurate that actually they made I think 28 people
+
+1:17:52.520 --> 1:17:56.920
+ were like killed by a missile that it failed to recognize because it was like
+
+1:17:56.920 --> 1:18:01.320
+ you have to look it up I think the clock what might have was significantly off
+
+1:18:01.320 --> 1:18:06.180
+ because it hadn't been reset whereas this yeah the kind of air accumulated
+
+1:18:06.180 --> 1:18:17.320
+ and then another very expensive air is Intel released a chip in 94 that in just
+
+1:18:17.320 --> 1:18:22.160
+ in certain cases only had like five digits of accuracy and so they ended up
+
+1:18:22.160 --> 1:18:25.320
+ having to kind of do a recall on that and it cost them close to half a billion
+
+1:18:25.320 --> 1:18:50.240
+ dollars. So just to highlight that this stuff does have real-world implications wow
+
+1:18:50.240 --> 1:19:00.000
+ yeah so that was just the cost to Intel not to people who yes yeah so that's a
+
+1:19:00.000 --> 1:19:05.200
+ that's it for accuracy and all these concepts will kind of return to as the
+
+1:19:05.200 --> 1:19:12.800
+ course goes on this is just introducing them. So memory use so we've talked about
+
+1:19:12.800 --> 1:19:18.120
+ how numbers are stored now looking at how matrices are stored and so a key way
+
+1:19:18.120 --> 1:19:22.640
+ to save memory and also computation is not to store all of your matrix and you
+
+1:19:22.640 --> 1:19:25.880
+ could just store the nonzero elements and then you know anything but you're
+
+1:19:25.880 --> 1:19:31.040
+ not storing must be zero. This is called sparse storage well suited to sparse
+
+1:19:31.040 --> 1:19:36.560
+ matrices. Here's an example and these actually show up a lot in problems where
+
+1:19:36.560 --> 1:19:39.960
+ you kind of have some sort of structure and maybe things on the diagonal or
+
+1:19:39.960 --> 1:19:48.560
+ tri-diagonal are nonzero but that you have zeros elsewhere. This picture is
+
+1:19:48.560 --> 1:19:52.320
+ from something called a finite element problem and they show up in engineering
+
+1:19:52.320 --> 1:19:57.040
+ we won't cover them here but it's also a multi-grid problem whenever you're kind
+
+1:19:57.040 --> 1:20:01.920
+ of having to model like airflow around a plane engine or something or nose of a
+
+1:20:01.920 --> 1:20:08.040
+ plane you get these matrices with sometimes very pretty patterns of where
+
+1:20:08.040 --> 1:20:11.880
+ the nonzero elements are and so in this picture this is you know like a hundred
+
+1:20:11.880 --> 1:20:17.520
+ by a hundred matrices and black squares are nonzero values white squares are
+
+1:20:17.520 --> 1:20:25.600
+ zero values. And so we'll come back to this because scipy in the future lesson
+
+1:20:25.600 --> 1:20:29.480
+ we'll kind of talk about scipy gives you three different ways to store a sparse
+
+1:20:29.480 --> 1:20:33.520
+ matrix and so you you know once you've decided like okay I'm not gonna have a
+
+1:20:33.520 --> 1:20:36.660
+ cell for everything you do have to kind of talk about like okay what are you
+
+1:20:36.660 --> 1:20:41.460
+ gonna store to keep track of so we'll return to that. And then the opposite of
+
+1:20:41.460 --> 1:20:45.720
+ sparse is dense which is probably kind of what you're most used to with both
+
+1:20:45.720 --> 1:20:51.300
+ matrices and storage. And then kind of as a rule of thumb some people say that you
+
+1:20:51.300 --> 1:20:56.840
+ can consider a matrix sparse if the number of nonzero elements scales with
+
+1:20:56.840 --> 1:21:02.520
+ either the number of rows or the number of columns whereas a dense matrix the
+
+1:21:02.520 --> 1:21:07.280
+ number of nonzero elements is scaling with the product of the number of rows
+
+1:21:07.280 --> 1:21:21.500
+ and the number of columns. Any questions about that? Okay so speed and speed is
+
+1:21:21.500 --> 1:21:26.280
+ another one that has several kind of sub sub points underneath it and things that
+
+1:21:26.280 --> 1:21:31.200
+ affect the speed of your algorithm are the computational complexity,
+
+1:21:31.200 --> 1:21:38.840
+ vectorization, scaling to multiple cores and nodes, and locality. We're not gonna
+
+1:21:38.840 --> 1:21:44.120
+ I'm really gonna get into computational complexity and big O notation in here
+
+1:21:44.120 --> 1:21:50.560
+ just to check who's familiar with big O notation. Okay I've linked to a few
+
+1:21:50.560 --> 1:21:55.240
+ resources kind of interview cake has a nice overview and I went through that
+
+1:21:55.240 --> 1:21:58.080
+ kind of the start of code Academy I think has a really nice kind of buildup
+
+1:21:58.080 --> 1:22:01.920
+ of it has you doing starts with simple problems that kind of get more complex
+
+1:22:01.920 --> 1:22:07.600
+ but I think those are kind of useful tools if you do want to review it or
+
+1:22:07.600 --> 1:22:22.040
+ learn about it. And typically yeah and this is something that in software
+
+1:22:22.040 --> 1:22:27.160
+ engineering definitely comes up in every interview. Data science I would see is
+
+1:22:27.160 --> 1:22:33.280
+ more mixed but will come up but like yeah like in coding boot camps people
+
+1:22:33.280 --> 1:22:36.800
+ kind of spend the first 80% of the course actually learning to build web
+
+1:22:36.800 --> 1:22:40.240
+ develop you know build web apps and stuff and then at the end it's like just
+
+1:22:40.240 --> 1:22:43.040
+ study the theory of computational complexity because that's what you'll
+
+1:22:43.040 --> 1:22:49.560
+ see on interviews. And that kind of idea behind it is that it's giving you just
+
+1:22:49.560 --> 1:22:53.840
+ this approximation that's kind of like an order of magnitude you're not
+
+1:22:53.840 --> 1:22:59.400
+ interested in kind of your constant terms or even your coefficients of how
+
+1:22:59.400 --> 1:23:05.920
+ how slow things would be. And so if you had an m by n matrix you might have you
+
+1:23:05.920 --> 1:23:09.800
+ might describe an algorithm as being n squared times n and if you were having
+
+1:23:09.800 --> 1:23:12.840
+ to do if that's kind of how many operations you had to do for your
+
+1:23:12.840 --> 1:23:27.080
+ algorithm. Vectorization, so modern CPUs and GPUs can apply the same operation to
+
+1:23:27.080 --> 1:23:32.320
+ multiple elements at the same time. This is called SIMD, single instruction
+
+1:23:32.320 --> 1:23:38.120
+ multiple data. You will not be explicitly writing SIMD code and this is
+
+1:23:38.120 --> 1:23:44.240
+ typically done in assembly, but libraries like NumPy which we will use a lot have
+
+1:23:44.240 --> 1:23:52.000
+ been vectorized to do that. And those rely on low-level linear algebra libraries
+
+1:23:52.000 --> 1:23:56.240
+ such as BLAST and LOPAC which I want to say a little bit about because you'll
+
+1:23:56.240 --> 1:24:05.720
+ probably hear about them and they're they're like everywhere. So BLAST started
+
+1:24:05.720 --> 1:24:12.080
+ out as a Fortran library in 1979 and it's a specification for low-level
+
+1:24:12.080 --> 1:24:18.240
+ matrix and vector arithmetic operations. So kind of very kind of the more basic
+
+1:24:18.240 --> 1:24:25.000
+ like you're doing matrix multiplication or matrix vector product. Some examples
+
+1:24:25.000 --> 1:24:31.560
+ of it include AMD, Atlas, MKL and OpenBLAST. So you may hear about these.
+
+1:24:31.560 --> 1:24:40.040
+ Then LOPAC is uses BLAST and so it's kind of like a layer above it. And LOPAC
+
+1:24:40.040 --> 1:24:45.240
+ is for matrix factorizations which is what we'll be seeing in this course. So
+
+1:24:45.240 --> 1:24:55.640
+ LU, Telesky, QR, SVD. Yeah and LOPAC arose out of kind of previously there were
+
+1:24:55.640 --> 1:25:00.480
+ two separate libraries Icepack and Linpack. Icepack was for eigenvalue
+
+1:25:00.480 --> 1:25:05.360
+ routines. Linpack was for linear equations and neither of those were
+
+1:25:05.360 --> 1:25:09.140
+ really taking advantage of cache. So they were developed in the 70s and 80s and I
+
+1:25:09.140 --> 1:25:12.920
+ think LOPAC came out in the early 90s to kind of take advantage of cache in
+
+1:25:12.920 --> 1:25:17.960
+ modern systems. And you'll see like if you're reading the SciPy source code at
+
+1:25:17.960 --> 1:25:21.720
+ many points you'll see it calling LOPAC routines. And so there are points where
+
+1:25:21.720 --> 1:25:26.400
+ if you want it to go in depth you can kind of look at that at the LOPAC
+
+1:25:26.400 --> 1:25:31.200
+ documentation to kind of see, okay, this is what is happening when SciPy calls
+
+1:25:31.200 --> 1:25:34.240
+ this LOPAC routine.
+
+1:25:38.120 --> 1:25:49.440
+ Well and then the next concept is locality. And so a lot of the kind of
+
+1:25:49.440 --> 1:25:53.120
+ slowness from computers nowadays comes from when they're having to move data
+
+1:25:53.120 --> 1:25:58.000
+ around from one location to another. And slower ways to access data such as
+
+1:25:58.000 --> 1:26:01.960
+ getting something from the internet can be up to a billion times slower than
+
+1:26:01.960 --> 1:26:06.980
+ faster ways such as the register which is basically the fastest memory. And it's
+
+1:26:06.980 --> 1:26:10.960
+ important to remember that basically the faster memory is the less you have of it
+
+1:26:10.960 --> 1:26:18.560
+ and so your fastest types of memory are much more limited in space. And so once
+
+1:26:18.560 --> 1:26:22.600
+ you have data in fast storage it would be great to, I don't know if you're gonna have to do
+
+1:26:22.600 --> 1:26:26.080
+ three computations with that data, to do all of them while it's in fast storage
+
+1:26:26.080 --> 1:26:31.040
+ as opposed to like putting it back in slow storage, retrieving it, doing your
+
+1:26:31.040 --> 1:26:35.040
+ second computation, putting it back in slow storage, doing something else and
+
+1:26:35.040 --> 1:26:38.320
+ then retrieving it for your third computation because it's that, you know,
+
+1:26:38.320 --> 1:26:42.160
+ having to retrieve it that's slow. And so you really want to minimize those and so
+
+1:26:42.160 --> 1:26:47.080
+ kind of ways that you can group together, you know, times that you're gonna use a
+
+1:26:47.080 --> 1:26:56.040
+ particular piece of data are really helpful. And so kind of issues in that
+
+1:26:56.040 --> 1:27:02.200
+ category are known as locality. This is, so Jeff Dean of Google gave a
+
+1:27:02.200 --> 1:27:09.720
+ presentation on numbers every programmer should know and these versions are from,
+
+1:27:09.720 --> 1:27:13.060
+ and a lot of people still, so it's been years, a lot of people still share the
+
+1:27:13.060 --> 1:27:19.640
+ slideshow. There's an updated version. I would say, actually let me open this
+
+1:27:19.640 --> 1:27:22.480
+ because it's kind of neat, the updated version has like a slider so you can
+
+1:27:22.480 --> 1:27:31.200
+ even look at like what the numbers were in different years. The key thing to kind
+
+1:27:31.200 --> 1:27:35.860
+ of look at is that an L1 cache reference, one nanosecond, that's kind of the
+
+1:27:35.860 --> 1:27:44.740
+ fastest, fastest you can do. Main memory reference, and this is also kind of RAM,
+
+1:27:44.740 --> 1:27:49.960
+ would be a hundred nanoseconds. And here, I don't know if you can read this from there, they're
+
+1:27:49.960 --> 1:27:55.800
+ switching colors so they're kind of saying a hundred nanoseconds, you know, a
+
+1:27:55.800 --> 1:27:59.640
+ hundred black boxes is one blue box. So that's kind of what's going on with the
+
+1:27:59.640 --> 1:28:04.000
+ colors in this picture. So main memory reference, okay that's a
+
+1:28:04.000 --> 1:28:16.120
+ hundred times slower. And then if you get to disk seek, that's really slow. So that's
+
+1:28:16.120 --> 1:28:22.600
+ three million nanoseconds. So it's kind of important to keep these in mind. More
+
+1:28:22.600 --> 1:28:25.960
+ the idea of kind of the orders of magnitude that you're seeing as opposed
+
+1:28:25.960 --> 1:28:43.600
+ to memorizing specific numbers. Any questions? And I definitely encourage you
+
+1:28:43.600 --> 1:28:50.480
+ to check out a lot of these links. So now I'm going to show part of this video, and
+
+1:28:50.480 --> 1:28:56.040
+ so this video is about a language called Halide, which we will not be using, but
+
+1:28:56.040 --> 1:29:00.160
+ it's just a really good illustration of some of the things you would have to
+
+1:29:00.160 --> 1:29:06.080
+ think about in kind of thinking about what order to do things in. And so in the
+
+1:29:06.080 --> 1:29:10.200
+ video, don't worry about, just briefly at the beginning, he shows kind of a bunch
+
+1:29:10.200 --> 1:29:14.000
+ of code. There'll be these kind of visualizations though with green boxes,
+
+1:29:14.000 --> 1:29:16.920
+ and green means that you're reading something, and red means that you're
+
+1:29:16.920 --> 1:29:22.140
+ writing kind of what order things are happening in. And the problem he's
+
+1:29:22.140 --> 1:29:26.580
+ looking at is just the blur of a photo. So kind of taking a lot of the
+
+1:29:26.580 --> 1:29:30.020
+ developers on Halide work at Adobe, so they do a lot of kind of photo
+
+1:29:30.020 --> 1:29:35.040
+ processing, but the idea of just you need to read, you know, a few pixels to be able
+
+1:29:35.040 --> 1:29:38.940
+ to give the XY blur. So you're kind of taking this photo and then we want to
+
+1:29:38.940 --> 1:29:44.080
+ look at a few pixels around it to get what the blurred version would be. Oh yes,
+
+1:29:44.080 --> 1:29:48.360
+ this is a convolution. So kind of similar to what we saw before, that idea of kind
+
+1:29:48.360 --> 1:29:56.640
+ of sliding a filter. Hi, I'm Andrew Adams and this video is about Halide, a new
+
+1:29:56.640 --> 1:30:02.720
+ language and then a vertical blur, which reads and averages three points
+
+1:30:02.720 --> 1:30:07.400
+ from intermediate results, which we store in a temporary image. This code takes
+
+1:30:07.400 --> 1:30:12.080
+ about 10 milliseconds per megapixel on the quad-core x86 that I benchmarked it
+
+1:30:12.080 --> 1:30:22.640
+ on. But an optimized implementation, this machine is more than 10 times faster. The
+
+1:30:22.640 --> 1:30:26.240
+ code is hideously complex. All we're trying to do is average together 3 by
+
+1:30:26.240 --> 1:30:33.280
+ 3 pixels, but an 11x speedup is too much to ignore. So why is this code fast?
+
+1:30:33.280 --> 1:30:37.320
+ We've transformed the pipeline to optimize for both parallelism and
+
+1:30:37.320 --> 1:30:43.520
+ locality. The parallelism comes from distributing work across threads, and
+
+1:30:43.520 --> 1:30:48.720
+ that's what that Pragma OMP parallel 4 at the top does, and also from computing
+
+1:30:48.720 --> 1:30:54.760
+ in 8-wide SIMD chunks on each core's SSE unit. Exposing parallelism though is
+
+1:30:54.760 --> 1:30:59.520
+ only half the story. Just as important and often much harder to think about or
+
+1:30:59.520 --> 1:31:04.960
+ express is locality. For example, making sure the pixels produced by one stage
+
+1:31:04.960 --> 1:31:09.400
+ are still in cache when the next stage reads them. And without locality
+
+1:31:09.400 --> 1:31:14.000
+ optimization, even a really well parallelized pipeline will probably be
+
+1:31:14.000 --> 1:31:18.360
+ limited by the available memory bandwidth. So here the optimized code
+
+1:31:18.360 --> 1:31:22.760
+ improves locality by computing each stage in tiles, interleaving the
+
+1:31:22.760 --> 1:31:27.280
+ computation of tiles across stages. So we compute just a single tile of blur in x
+
+1:31:27.280 --> 1:31:31.520
+ and then a single tile of blur in y, and then we go back to compute the next tile
+
+1:31:31.520 --> 1:31:37.440
+ of blur in x. So this, hopefully, keeps all that intermediate data in small
+
+1:31:37.440 --> 1:31:41.600
+ buffers that never leave cache. But it complicates the code because it's
+
+1:31:41.600 --> 1:31:47.920
+ interleaved the computation of each stage. So the execution of the pipeline
+
+1:31:47.920 --> 1:31:52.320
+ looks like this. The input image is at the top, flowing down through the blur x
+
+1:31:52.320 --> 1:31:57.800
+ and blur y stages below. The earlier stages are evaluated over larger buffers
+
+1:31:57.800 --> 1:32:01.360
+ because we're computing filters that have a footprint, so we need more inputs
+
+1:32:01.360 --> 1:32:06.800
+ than there are outputs. Each point in blur y, the output stage, depends on three
+
+1:32:06.800 --> 1:32:13.160
+ pixels in blur x, which in turn depend on nine pixels total in the input. So the
+
+1:32:13.160 --> 1:32:17.000
+ unoptimized version that we looked at first computes every pixel in the first
+
+1:32:17.000 --> 1:32:21.840
+ stage, writing them out to memory before computing the next stage which has to
+
+1:32:21.840 --> 1:32:26.880
+ slowly read them back in. The optimized version interleaves the stages instead.
+
+1:32:26.880 --> 1:32:31.800
+ To compute a chunk of blur y, we first need the corresponding chunk of blur x,
+
+1:32:31.800 --> 1:32:38.020
+ which loads a chunk of the input. The blur x stage filters that input, and then
+
+1:32:38.020 --> 1:32:42.880
+ blur y immediately consumes it to compute a chunk of the output. So next we
+
+1:32:42.880 --> 1:32:48.160
+ throw away that intermediate data, that chunk of blur x, load the next chunk of
+
+1:32:48.160 --> 1:32:53.600
+ the input, compute the next chunk of blur x, followed immediately by that next
+
+1:32:53.600 --> 1:32:58.400
+ chunk of blur y. So we've moved the computation of each chunk of pixels in a
+
+1:32:58.400 --> 1:33:05.320
+ consumer stage closer in time to the computation of its inputs. This improves
+
+1:33:05.320 --> 1:33:09.360
+ producer-consumer locality by keeping all the intermediate data nearby in
+
+1:33:09.360 --> 1:33:14.200
+ local caches, but it's made optimization a global problem of carefully
+
+1:33:14.200 --> 1:33:19.080
+ interleaving the computation and storage down an entire imaging pipeline. You
+
+1:33:19.080 --> 1:33:23.600
+ can't address locality just by optimizing stages in isolation or by
+
+1:33:23.600 --> 1:33:29.280
+ just tweaking operations in your inner loops. Also we're making a trade-off here.
+
+1:33:29.280 --> 1:33:33.080
+ We're saying that for each chunk of blur y we should independently compute,
+
+1:33:33.080 --> 1:33:38.200
+ consume, and then throw away the required chunk of blur x. This means that
+
+1:33:38.200 --> 1:33:42.680
+ neighboring chunks, which depend on overlapping pixels from higher up in the
+
+1:33:42.680 --> 1:33:47.960
+ pipeline, do redundant work where they overlap. Now for this pipeline it made
+
+1:33:47.960 --> 1:33:52.080
+ sense to redundantly compute some values in exchange for the increase in locality
+
+1:33:52.080 --> 1:33:55.720
+ that we get by never letting the intermediate values move out of cache
+
+1:33:55.720 --> 1:34:01.160
+ into main memory, but this is not always the right choice. Let's try to get a full
+
+1:34:01.160 --> 1:34:06.400
+ handle on the space of choices we could have made. In general in an imaging
+
+1:34:06.400 --> 1:34:10.640
+ pipeline there are two questions you must answer for each stage. The first is
+
+1:34:10.640 --> 1:34:16.720
+ in what order should that stage compute its values? Let's look at some choices.
+
+1:34:16.720 --> 1:34:21.360
+ The most common way to traverse a region is in scanline order. This means we
+
+1:34:21.360 --> 1:34:25.400
+ traverse a region of a function sequentially across y and within that
+
+1:34:25.400 --> 1:34:30.000
+ sequentially across x. This walks down scanlines just like the loops you would
+
+1:34:30.000 --> 1:34:35.680
+ typically write in C. We can transpose the x and y dimensions which gives a
+
+1:34:35.680 --> 1:34:42.600
+ column major traversal which walks down each column in turn. Or we could go back
+
+1:34:42.600 --> 1:34:50.680
+ to scanline order but traverse the x dimension in vectors of width 4. We could
+
+1:34:50.680 --> 1:35:00.240
+ distribute the scanlines across parallel threads. Finally we can split the x and
+
+1:35:00.240 --> 1:35:05.000
+ y dimension into tiles which opens up further recursive choices for the
+
+1:35:05.000 --> 1:35:08.680
+ order of the outer and inner components of each dimension. By traversing the
+
+1:35:08.680 --> 1:35:13.720
+ outer components outside the inner components we get a simple tile traversal.
+
+1:35:13.720 --> 1:35:18.200
+ That's the first question. The second question is more subtle. When should each
+
+1:35:18.200 --> 1:35:23.320
+ stage compute its inputs? Let's look at some options. Here we have a
+
+1:35:23.320 --> 1:35:27.400
+ visualization of the blur pipeline. On the left is the input, on the right is
+
+1:35:27.400 --> 1:35:33.040
+ the output and in the middle is the blur in x stage. Green means we're reading, red
+
+1:35:33.040 --> 1:35:37.040
+ means we're writing and blue means we've allocated a temporary buffer. So right
+
+1:35:37.040 --> 1:35:41.880
+ now we're reading from the input and using it to write to the blur in x stage.
+
+1:35:41.880 --> 1:35:48.040
+ We read three values from the input one two three to compute a single value of
+
+1:35:48.040 --> 1:35:55.360
+ the blur in x stage. We haven't even started writing to the output yet. So the
+
+1:35:55.360 --> 1:35:59.240
+ choice we've made here is that we're going to compute all of the blur in x
+
+1:35:59.240 --> 1:36:04.080
+ stage before computing any of the blur in y stage. If we phrase this as a
+
+1:36:04.080 --> 1:36:09.080
+ decision made by blur in y that decision is compute all of my inputs ahead of
+
+1:36:09.080 --> 1:36:14.920
+ time before I start computing any of my values. So what's the pitfall with this
+
+1:36:14.920 --> 1:36:26.000
+ approach? Why is this slow? The answer is of course locality. By the time the blur
+
+1:36:26.000 --> 1:36:29.960
+ in y stage goes to read some of the intermediate data it's probably been
+
+1:36:29.960 --> 1:36:35.000
+ evicted from cache. So that load will be slow and will be limited by the system
+
+1:36:35.000 --> 1:36:43.000
+ memory bandwidth. So let's look at a different option. Here we compute three
+
+1:36:43.000 --> 1:36:46.840
+ values of blur in x by reading nine values from the input and we
+
+1:36:46.840 --> 1:36:51.400
+ immediately use that to compute one value of the output. So here we get
+
+1:36:51.400 --> 1:36:56.000
+ maximum locality. We're using data as soon as it's available without giving it
+
+1:36:56.000 --> 1:37:04.640
+ any time to be evicted from a cache. What's the pitfall here? Well if you look
+
+1:37:04.640 --> 1:37:09.440
+ carefully at what the blur in x stage is doing you'll realize that we're doing a
+
+1:37:09.440 --> 1:37:16.280
+ lot of wasted work. Each point in blur in x is redundantly recomputed three times.
+
+1:37:16.680 --> 1:37:22.560
+ Okay well maybe we can figure out how to get around that. Here's another choice.
+
+1:37:22.560 --> 1:37:26.320
+ At first it's going to look similar but notice that we've allocated enough
+
+1:37:26.320 --> 1:37:29.960
+ memory to keep around all of the intermediate stage and we're not
+
+1:37:29.960 --> 1:37:35.280
+ throwing away values as we go. That means when we get to the second scan line we
+
+1:37:35.280 --> 1:37:40.360
+ can start reusing values that we computed earlier. So great we have
+
+1:37:40.360 --> 1:37:46.400
+ locality and we're not doing any redundant work. What's the pitfall here?
+
+1:37:46.400 --> 1:37:52.360
+ We've introduced a serial dependence in the scan lines of the output. We're
+
+1:37:52.360 --> 1:37:56.880
+ relying on the fact that we've computed scan line n minus 1 before we can start
+
+1:37:56.880 --> 1:38:02.040
+ computing scan line n. This means that we can't paralyze across scan lines with
+
+1:38:02.040 --> 1:38:07.060
+ this strategy. With the previous two strategies we could. So this approach has
+
+1:38:07.060 --> 1:38:19.680
+ poor parallelism. I really like kind of that visual approach if he's kind of
+
+1:38:19.680 --> 1:38:24.080
+ showing these different ways of doing the same computation and that each one
+
+1:38:24.080 --> 1:38:28.760
+ has different positives and negatives and in fact none of them seems ideal
+
+1:38:28.760 --> 1:38:33.840
+ because there's kind of a trade-off no matter what. I just want to mention that
+
+1:38:33.840 --> 1:38:43.680
+ later on we are actually going to build an algorithm in all of those different ways in Python and see how they are different.
+
+1:38:43.680 --> 1:38:50.160
+ Keep that video in mind because when we get there it'll be useful to think about those pictures.
+
+1:38:50.160 --> 1:38:56.000
+ Yeah, thank you. And then something that he said in the video is just
+
+1:38:56.000 --> 1:38:59.400
+ locality is really hard because you kind of have trade-offs it feels like no
+
+1:38:59.400 --> 1:39:05.360
+ matter what you do. Sometimes redundant computation can save you memory bandwidth.
+
+1:39:05.360 --> 1:39:09.520
+ So kind of computing things multiple times means that you know you don't have
+
+1:39:09.520 --> 1:39:15.360
+ to kind of be pulling them in and out of memory as much or you can sacrifice
+
+1:39:15.360 --> 1:39:20.000
+ parallelism to get better reuse but then you can't parallelize. And he kind of
+
+1:39:20.000 --> 1:39:24.680
+ says and the people building this are experts who have been working in Adobe
+
+1:39:24.680 --> 1:39:28.600
+ for a long time like they really often just have to try a bunch of different
+
+1:39:28.600 --> 1:39:36.640
+ stuff and can be hard to predict what's gonna end up being fastest. And then kind
+
+1:39:36.640 --> 1:39:43.320
+ of another. The difference in speed that Rachel's talking about is many orders of
+
+1:39:43.320 --> 1:39:47.640
+ magnitude not a few percent. So this isn't like a minor thing these are
+
+1:39:47.640 --> 1:39:51.320
+ things where like in practice you'll run something overnight and it hasn't finished
+
+1:39:51.320 --> 1:39:57.520
+ you'll make one of these small changes and it runs in three seconds. It can be that big of a difference.
+
+1:39:57.520 --> 1:40:01.200
+ Yes, thank you. Yeah, if it was a minor difference in speed it wouldn't be worth
+
+1:40:01.200 --> 1:40:05.000
+ the bother. And something even I think in the part I showed you he mentioned kind
+
+1:40:05.000 --> 1:40:10.200
+ of getting an 11x speed up by writing this more complicated version and it's
+
+1:40:10.200 --> 1:40:13.420
+ I mean I couldn't even see what the code said but it was a full screen of code
+
+1:40:13.420 --> 1:40:19.920
+ just to do this blurn X blurn Y operation. And then another issue that
+
+1:40:19.920 --> 1:40:26.080
+ comes up is temporaries and that's when you're doing a calculation and kind of
+
+1:40:26.080 --> 1:40:33.360
+ temporary variables end up getting stored. And so this can be a lot a lot
+
+1:40:33.360 --> 1:40:36.580
+ slower than if you're able to keep all the data in cache. So this is if the
+
+1:40:36.580 --> 1:40:42.240
+ temporary variables are stored in RAM. NumPy creates temporaries for kind of
+
+1:40:42.240 --> 1:40:48.280
+ every operation it does. So if you were doing A equals B times C squared plus
+
+1:40:48.280 --> 1:40:54.060
+ the natural log of D, what NumPy would have to do is calculate C squared, store
+
+1:40:54.060 --> 1:40:59.720
+ that, multiply that by B, store that result, take the natural log of D, store
+
+1:40:59.720 --> 1:41:03.320
+ that somewhere, and then use those two variables it's stored you know to add
+
+1:41:03.320 --> 1:41:07.000
+ them together and give you the answer you want. And so kind of along the way
+
+1:41:07.000 --> 1:41:11.360
+ NumPy is having to deal with this creating temporary variables and putting
+
+1:41:11.360 --> 1:41:21.360
+ them somewhere. And then I'm about to get to the scalability section but I just
+
+1:41:21.360 --> 1:41:25.800
+ want to note that scalability definitely impacts the the speed of what you're
+
+1:41:25.800 --> 1:41:30.760
+ doing and whether you're kind of fully taking advantage of the resources that
+
+1:41:30.760 --> 1:41:41.280
+ you have. So for scalability kind of there's the one approach is to be able
+
+1:41:41.280 --> 1:41:46.480
+ to scale an algorithm across multiple cores within a single computer or
+
+1:41:46.480 --> 1:41:51.840
+ scaling across multiple computers in a network which we will not be covering.
+
+1:41:51.840 --> 1:41:56.320
+ But yeah we will talk about kind of parallelizing which is scaling across
+
+1:41:56.320 --> 1:42:04.360
+ multiple multiple cores in a computer. Yeah and I think this is great timing. I
+
+1:42:04.360 --> 1:42:10.280
+ can take questions. Oh yes. Just a tip, you'll see that Rachel's used a lot of
+
+1:42:10.280 --> 1:42:15.720
+ hierarchical headings and it's really easy to navigate those and understand
+
+1:42:15.720 --> 1:42:21.240
+ her thought process by collapsing sections. You need to install a Jupyter
+
+1:42:21.240 --> 1:42:27.880
+ extension or collapsible headings for that to work. So you might want to look at installing that extension.
+
+1:42:27.880 --> 1:42:40.400
+ Yes yeah that's a great extension. Any questions? Okay well I'll see you on
+
+1:42:40.400 --> 1:42:57.000
+ Thursday. Thanks.
+

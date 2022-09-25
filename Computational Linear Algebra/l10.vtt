@@ -1,0 +1,1844 @@
+WEBVTT
+
+00:00.000 --> 00:04.720
+ All right, I'm going to go ahead and get started. So yeah, just to announce again,
+
+00:04.720 --> 00:11.680
+ I won't be here next week, so no class on Tuesday, and then Thursday there will be the test at the
+
+00:11.680 --> 00:16.720
+ kind of the final exam during the normal class time, and David Umansky will be here to proctor
+
+00:16.720 --> 00:24.240
+ that. On Tuesday, the final draft of the blog post is due, as well as homework three, and homework
+
+00:24.240 --> 00:33.600
+ three is just a single question. Yes, and I won't have my regular office hours tomorrow afternoon,
+
+00:34.240 --> 00:38.000
+ but I could meet with you either this afternoon or tomorrow morning if you need to. So just ask
+
+00:38.000 --> 00:43.760
+ me after class, and then I just wanted to thank everyone for being such an engaged
+
+00:44.400 --> 00:49.120
+ group of students. I've really enjoyed teaching this class. This has been fun, so thank you.
+
+00:49.120 --> 00:56.320
+ Yeah, so we'll get into it. We've run out of time a little bit, so we're not going to
+
+00:56.320 --> 01:01.360
+ fully cover lesson seven, but I did want to go a little bit further in it.
+
+01:02.720 --> 01:09.120
+ Just to remember kind of what we did last time, we were looking at...
+
+01:12.960 --> 01:14.880
+ Thanks for pointing that out.
+
+01:14.880 --> 01:21.360
+ Thank you. This will make class a lot easier to follow.
+
+01:27.200 --> 01:32.560
+ Yeah, so last time we talked about eigendecompositions, and there's kind of this close
+
+01:32.560 --> 01:38.720
+ relationship between the eigendecomposition and the SVD. So even though we're looking
+
+01:38.720 --> 01:45.200
+ specifically at how to do eigendecompositions, similar techniques are used for calculating the SVD.
+
+01:48.960 --> 01:55.280
+ And so we were looking at this DDPedia data set, which is a data set of all the Wikipedia links,
+
+01:56.240 --> 02:03.520
+ and we were finding the kind of the principal eigenvector of that. And what's significant
+
+02:03.520 --> 02:09.680
+ about that eigenvector? What information is it giving us?
+
+02:19.040 --> 02:19.680
+ Wait, hold on.
+
+02:22.240 --> 02:28.080
+ I think the most significant is that we can easily find the any power of the matrix just
+
+02:28.080 --> 02:34.080
+ by multiplying the eigenvalues and finding this diagonal of the matrix.
+
+02:34.080 --> 02:40.000
+ So that's something that's really powerful about having the full eigendecomposition,
+
+02:40.000 --> 02:48.800
+ is that you can quickly take powers of matrices. Yes. And then what's kind of the meaning? So we're
+
+02:48.800 --> 02:53.200
+ actually just finding... So you need kind of all the eigenvectors and eigenvalues to do that.
+
+02:53.200 --> 02:59.200
+ For the DDPedia data set, we're just finding a single eigenvector.
+
+02:59.200 --> 03:02.080
+ Okay, what's the meaning of that eigenvector?
+
+03:02.080 --> 03:21.120
+ Matthew and Valentine, can you throw the microphone to Matthew McKelland?
+
+03:25.840 --> 03:26.480
+ Good ducking.
+
+03:26.480 --> 03:33.200
+ You're talking about the solution vector?
+
+03:33.200 --> 03:33.520
+ Yes.
+
+03:34.240 --> 03:40.720
+ Isn't that the probability, the overall probability that it'll end there if you
+
+03:40.720 --> 03:42.240
+ did a random walk?
+
+03:42.240 --> 03:45.360
+ Yes, yeah. So it is kind of telling you the probability that you're going to be on each
+
+03:45.360 --> 03:50.240
+ page if you're randomly walking. So what does that mean for ones that have higher probabilities?
+
+03:51.120 --> 03:53.120
+ Maybe it's more likely to end there, I guess.
+
+03:53.120 --> 03:57.120
+ Yeah, yeah. And so this is kind of the idea behind PageRank, which was Google's original
+
+03:57.120 --> 04:00.880
+ algorithm, but it's giving you kind of the most important pages because people are more
+
+04:00.880 --> 04:09.200
+ likely to end up there. Thank you. So yeah, that's kind of the idea that even though it's
+
+04:09.200 --> 04:13.040
+ a single eigenvector, it's actually pretty important because it's giving you... Some
+
+04:13.040 --> 04:18.240
+ people call that the stationary distribution when you have a Markov chain of kind of where
+
+04:18.240 --> 04:23.600
+ things will end up. And for web pages, that's kind of their relative importance. Matthew?
+
+04:24.800 --> 04:31.120
+ Is there some meaning to the actual value of the matrix? Have you keep multiplying them?
+
+04:32.320 --> 04:38.560
+ Yeah. So we talked about... We had kind of our original matrix, which was the graph
+
+04:38.560 --> 04:44.880
+ adjacency matrix, and those were zeros and ones. And there, when you take values...
+
+04:44.880 --> 04:49.360
+ So once you start taking powers, they can kind of be any integer values, and that's
+
+04:49.360 --> 04:57.360
+ giving you the number of ways you could get from page A to page B in k steps. So if you
+
+04:57.360 --> 05:02.960
+ took the third power, that's kind of saying how many ways are there to get from A to B,
+
+05:04.400 --> 05:08.000
+ taking three hops. So you could go... Yeah.
+
+05:08.000 --> 05:12.640
+ So you could like, with normalize, you could look up one and you'd go...
+
+05:12.640 --> 05:18.160
+ Yeah. And so then it... Exactly. Yeah. So then it becomes a probability when you normalize.
+
+05:19.440 --> 05:20.240
+ Yeah. Good question.
+
+05:24.480 --> 05:29.680
+ Yeah. And so the method we looked at last time, the power method... Go down to it.
+
+05:37.200 --> 05:40.960
+ I would just highlight again, since we've talked about sparse matrices a lot,
+
+05:40.960 --> 05:48.080
+ here we kind of very naturally had our data in the coordinate sparse form, since we just know
+
+05:48.800 --> 05:54.560
+ kind of this page links to this page, and we don't explicitly have... This is all the pages
+
+05:54.560 --> 06:01.440
+ that it doesn't link to, and there's not really a point in storing all that. So we kind of use
+
+06:02.000 --> 06:09.760
+ coordinate form to create a sparse matrix, and then we switch to compressed sparse row format.
+
+06:09.760 --> 06:23.520
+ And why did we switch? Sam?
+
+06:25.920 --> 06:28.400
+ Because it takes half as many reads from memory.
+
+06:28.400 --> 06:34.240
+ Exactly. So for matrix multiplication, it's the same number of floating point operations,
+
+06:34.240 --> 06:40.560
+ but half as many reads from memory to be in sparse row format as opposed to coordinate,
+
+06:41.520 --> 06:42.720
+ sparse coordinate format.
+
+06:49.280 --> 06:56.000
+ Yeah. And the kind of general idea behind the power method is that we're multiplying
+
+06:56.640 --> 07:01.360
+ A times... I called the scores because it's kind of the score of how important
+
+07:01.360 --> 07:07.440
+ each page is, but you could also think of that as the probability of a person being on a particular
+
+07:07.440 --> 07:13.440
+ page, and we're just doing that a bunch of times, but normalizing to make sure that things don't go
+
+07:13.440 --> 07:27.120
+ to zero or to infinity. And then something I wanted to point out is, if you remember back in lesson
+
+07:27.120 --> 07:34.480
+ three when we did the surveillance video background removal, we used Facebook's fast randomized PCA
+
+07:34.480 --> 07:41.200
+ SVD library, FBPCA, and in the source code I found a comment where they're using the
+
+07:41.200 --> 07:46.480
+ power method at one point, which I thought was exciting. So showing up in the real world.
+
+07:46.480 --> 07:54.560
+ Any questions on that and what we did last time?
+
+08:01.920 --> 08:04.800
+ Okay. So we'll go on to the QR algorithm.
+
+08:07.120 --> 08:13.840
+ So last time we were just finding a single eigenvector, and the QR algorithm lets us find
+
+08:13.840 --> 08:25.200
+ potentially all the eigenvectors. This is a paper called The Second Eigenvalue of the Google Matrix,
+
+08:26.640 --> 08:32.160
+ which I thought was neat, and it kind of lists some benefits of what you can get from
+
+08:33.280 --> 08:39.360
+ even just the second eigenvalue, and that's that it relates to the convergence rate as well as
+
+08:39.360 --> 08:46.160
+ the stability given kind of as the structure of the web's changing, detection of spammers,
+
+08:46.800 --> 08:51.920
+ and for the design of algorithms to speed up paint drink. You can check that out for more
+
+08:51.920 --> 08:57.040
+ information. This is, yeah, again kind of more practical uses of the second eigenvalue.
+
+08:58.720 --> 09:04.080
+ So I just want to avoid confusion. So right now we're going to talk about the QR algorithm.
+
+09:04.960 --> 09:08.560
+ Later in class we'll talk about the QR decomposition, and the QR decomposition
+
+09:08.560 --> 09:15.520
+ is something we've been using from time to time, and the decomposition is what takes A
+
+09:15.520 --> 09:24.080
+ and gives you back Q and R, where Q has orthonormal columns in the reduced form,
+
+09:24.080 --> 09:32.400
+ or for the full form it's an orthonormal matrix, and R is upper triangular. And then the QR
+
+09:32.400 --> 09:39.280
+ algorithm, which is different, uses the QR decomposition, so just to keep those separate
+
+09:39.280 --> 09:48.480
+ in your mind. It's a little bit of linear algebra review. Two matrices, A and B, are similar if
+
+09:48.480 --> 09:55.600
+ there's a non-singular matrix X, such that V equals X inverse A X. Does anyone remember what
+
+09:55.600 --> 10:06.880
+ non-singular means? Yes, it has full rank, and that's equivalent to saying it has an inverse.
+
+10:07.440 --> 10:14.000
+ Exactly. So this relationship, so we watched a three blue one brown video last time.
+
+10:14.000 --> 10:25.200
+ What's the kind of analogy they used about similar matrices?
+
+10:34.800 --> 10:37.200
+ Kelsey? Sam, can you pass the microphone?
+
+10:39.200 --> 10:41.120
+ They were using like a language map?
+
+10:41.120 --> 10:44.240
+ Yes, yeah. What's happening between A and B?
+
+10:45.040 --> 10:50.000
+ That they're like, they're different coordinate systems for expressing them the same.
+
+10:50.000 --> 10:55.120
+ Exactly, yeah. So A and B are kind of different coordinate systems, and we can think of kind of
+
+10:55.120 --> 10:59.680
+ applying this X as a way to translate between them. So we're wanting to kind of translate from
+
+10:59.680 --> 11:08.480
+ A to B. And they also, they had a nice, I think at one point they described this whenever you
+
+11:08.480 --> 11:14.720
+ multiply by X inverse in front and X on the right hand side, that that's a kind of a mathematical
+
+11:14.720 --> 11:20.320
+ form of empathy, but transforming A to kind of understand B better.
+
+11:24.400 --> 11:32.880
+ So there's a theorem that A and X inverse A X have the same eigenvalues.
+
+11:32.880 --> 11:40.880
+ So this is going to turn out to be useful, but A and, so here A and B have the same eigenvalues
+
+11:40.880 --> 11:53.120
+ if they're related this way. And then, yeah, I apologize that there's a new vocabulary,
+
+11:53.120 --> 12:02.400
+ but a sure factorization is a factorization basically exactly like this, only if the matrix
+
+12:02.400 --> 12:11.040
+ in the middle is upper triangular. So here you would still say A and A and T are similar and T's
+
+12:11.040 --> 12:21.520
+ upper triangular. Actually first I'll ask, does anyone know what the eigenvalues of T or of an
+
+12:21.520 --> 12:35.440
+ upper triangular matrix are? You want to grab the microphone? Exactly. Yeah, so the eigenvalues of
+
+12:35.440 --> 12:42.160
+ a triangular matrix or the diagonal. So what would the eigenvalues of A be in this case?
+
+12:42.160 --> 12:52.520
+ You can say it, yeah. Yes, so this is why the sure factorization is going to end up being useful is
+
+12:52.520 --> 12:57.560
+ that we're, you know, finding a matrix that's similar to, you know, there's nothing special
+
+12:57.560 --> 13:02.760
+ about A, like it's not necessarily triangular, but it's similar to a triangular matrix and then
+
+13:02.760 --> 13:07.760
+ it's really easy to get the eigenvalues of a triangular matrix because you just grab the
+
+13:07.760 --> 13:30.280
+ diagonal. Any questions? Okay. And so we're kind of going to go over the the basic version of the
+
+13:30.280 --> 13:36.200
+ QR algorithm, which is really simple. Then you have a loop and you get the QR decomposition of
+
+13:36.200 --> 13:47.160
+ A and then you kind of set your new A to be equal to R times Q. And under certain conditions this
+
+13:47.160 --> 13:53.720
+ algorithm is going to converge and give you the sure form of A, which means that it's going to
+
+13:53.720 --> 14:01.640
+ return something triangular. So now I've kind of written this, so here I've got some pseudocode.
+
+14:01.640 --> 14:11.520
+ I've written it again with subscripts, and so I'm saying QK, RK is equal to A from your previous
+
+14:11.520 --> 14:20.680
+ iteration, so that's just the QR factorization. And then we're setting our next K equal to R times Q,
+
+14:20.680 --> 14:27.000
+ which is different than the matrix we just factored because we're taking the factors
+
+14:27.000 --> 14:39.920
+ and switching their order. So one way to think about this is, so AK equals QK times RK,
+
+14:39.920 --> 14:46.120
+ because that's the definition of a QR factorization. Then we could multiply by Q inverse
+
+14:46.120 --> 14:56.240
+ on each side and get Q K inverse times AK equals RK. And why is that when I multiply by Q inverse?
+
+14:56.240 --> 15:17.320
+ Louder. Just how did I get from this line to this line? Wait, grab the microphone.
+
+15:17.320 --> 15:32.200
+ It cancels Q on the right side? Yeah, exactly, because Q is orthonormal. Yeah, thank you Sam.
+
+15:32.200 --> 15:39.480
+ So Q is orthonormal, so it cancels out when we multiply by Q inverse. So then we can kind of
+
+15:39.480 --> 15:46.200
+ take this equation, and what happens when we multiply R times Q? We can say, oh really that's
+
+15:46.200 --> 15:57.000
+ like saying Q inverse times A times Q. So I've just plugged this in for RK down here, and I get
+
+15:57.000 --> 16:04.560
+ Q inverse AK QK. And so this, and we're not going to do kind of all the proofs for, there's some
+
+16:04.560 --> 16:11.120
+ other relationships, but the idea here is that by getting the QR factorization and then switching,
+
+16:11.120 --> 16:17.960
+ we're kind of just repeatedly applying these similarity transformations to A. And so after
+
+16:17.960 --> 16:24.240
+ a bunch of iterations we're ending up with QK inverse, oh there should be some dots here,
+
+16:24.240 --> 16:39.040
+ let me fix that. Okay, QK inverse dot dot dot on down to Q2 inverse Q1 inverse times A times Q1
+
+16:39.040 --> 16:46.800
+ times Q2 dot dot dot up to QK. So what we're getting back is something that's definitely
+
+16:46.800 --> 16:53.520
+ similar to our original matrix we started with, and then Trevathan has a proof showing that if we
+
+16:53.520 --> 16:59.120
+ were, so I was using these subscript K's to talk about the values we were getting each time we
+
+16:59.120 --> 17:06.480
+ iterated, so just to denote that we had a different QR and A for each iteration. Here I'm
+
+17:06.480 --> 17:13.840
+ taking a power again, so A raised to the Kth power is going to be equal to Q1 times Q2 dot dot dot
+
+17:13.840 --> 17:22.920
+ QK times RK, RK minus 1 dot dot dot R1. And so you can look in Trevathan on page 216 to 217 for
+
+17:22.920 --> 17:28.840
+ the proof of that if you're interested. But that kind of, the main idea here is that the QR
+
+17:28.840 --> 17:38.480
+ algorithm is coming up with orthonormal bases for successive powers of AK. And so let's see what
+
+17:38.480 --> 17:50.560
+ this looks like in code. So this is the pure QR algorithm. I'm making a copy of A, but you often
+
+17:50.560 --> 17:56.920
+ would do this in place, and when you use something in place you're, you know, writing over your
+
+17:56.920 --> 18:01.880
+ original matrix, which saves memory, although if you wanted to use your original matrix again
+
+18:01.880 --> 18:06.880
+ later that would be a problem. And so I'm just going through a bunch of iterate, well, so I
+
+18:06.880 --> 18:18.160
+ initialize Q to be the identity, and then I am getting the QR factorization just using NumPy's
+
+18:18.160 --> 18:28.720
+ implementation. Get back Q and R, set AK equal to R times Q, so I flip the order, and then I'm
+
+18:28.720 --> 18:35.040
+ keeping this kind of a running total of what happens each time you multiply Q by each other,
+
+18:35.040 --> 18:46.560
+ and then at the end I'm returning AK and QQ. And so if we do that on, this is just a randomly
+
+18:46.560 --> 19:00.600
+ generated matrix A. Let me do this with fewer iterations, this is a lot. And so I'm just
+
+19:00.600 --> 19:06.880
+ printing it out every hundred iterations so we can see how AK is updating. So what do you see
+
+19:06.880 --> 19:13.480
+ happening? So this is our original, actually this is, this is after ten iterations, but it's still
+
+19:13.480 --> 19:21.600
+ kind of a full matrix. Let me put the original A here so you can compare. So even after ten
+
+19:21.600 --> 19:29.640
+ iterations we can see the bottom left-hand corner. This should be larger, perhaps. Are you able to
+
+19:29.640 --> 19:38.760
+ read this all right? The bottom left-hand corner is starting to get closer to zero, right? We've
+
+19:38.760 --> 19:59.760
+ gone from these values of like 0.4, 0.5, down to 0.06. Whoops. And then as it goes, now we're getting
+
+19:59.760 --> 20:10.400
+ some zeros along this kind of left-hand triangular, getting more, more. And so what is this matrix
+
+20:10.400 --> 20:20.920
+ heading towards? What type of matrix? Exactly, triangular. So we can see if we're getting kind
+
+20:20.920 --> 20:28.880
+ of more and more zeros in this bottom left part. And so here I've just done this for a thousand
+
+20:28.880 --> 20:36.560
+ iterations. We don't quite have a triangular matrix, but we've gotten quite close, right? So
+
+20:36.560 --> 20:47.720
+ we still have this 0.47 here and here, but the other values are zeros. And if it was perfectly
+
+20:47.720 --> 21:04.840
+ triangular, what would we expect about the eigenvalues? Exactly. Sam, can you pass the
+
+21:04.840 --> 21:21.600
+ microphone to Linda? Thank you. The eigenvalues, yes, yeah. So the eigenvalues of this AK or T
+
+21:21.600 --> 21:26.560
+ that's triangular would be equal to the eigenvalues of the original. And so here we can compare that.
+
+21:26.560 --> 21:33.520
+ What are the eigenvalues of A? Notice the first one, 2.78, that's the first value here. So we did
+
+21:33.520 --> 21:48.720
+ find that eigenvalue. We also have negative 0.11832, that's this value. So we've, let me see
+
+21:48.720 --> 22:00.520
+ if we have any more. Okay, so here it looks like we've just gotten two of the eigenvalues. But the
+
+22:00.520 --> 22:11.440
+ idea is that when and if this converged, you could have all of them. And we can also check that the
+
+22:11.440 --> 22:22.160
+ Q we get back is worth the normal. So downsides to this algorithm are that it's really slow,
+
+22:22.160 --> 22:34.680
+ and it's also not guaranteed to converge. But I think it is neat that we get, yeah,
+
+22:34.680 --> 22:39.280
+ that we can get some of the eigenvalues with this because it's a fairly simple approach. This idea
+
+22:39.280 --> 22:45.080
+ of just taking the QR factorization and then switching them and doing R times Q and taking
+
+22:45.080 --> 22:51.200
+ the Q factor, QR factorization of that, switching those R times Q and getting the QR factorization
+
+22:51.200 --> 23:07.640
+ of that. Any questions about this, about the pure QR algorithm? Okay, so practical QR algorithm is
+
+23:07.640 --> 23:17.320
+ adding shifts. So the idea is basically just instead of factoring AK as QKRK, we'll get the
+
+23:17.320 --> 23:27.080
+ QR factorization of AK minus some scalar times the identity into Q and R. And then we'll do R times
+
+23:27.080 --> 23:36.040
+ Q. We have to kind of add back on the scalar times the identity to kind of cancel that out. And that
+
+23:36.040 --> 23:41.800
+ will be our new AK. So it's quite similar. It's just we've basically subtracted something from
+
+23:41.800 --> 23:48.440
+ the diagonal, then the QR factorization, multiply R times Q and add back on what we had subtracted
+
+23:48.440 --> 23:56.520
+ from the diagonal and keep going. And this is called adding shifts. The SK is kind of the shift
+
+23:56.520 --> 24:03.800
+ that you're like moving, moving it over a little bit. And this speeds up convergence and also can
+
+24:03.800 --> 24:08.280
+ help it converge in cases where it wouldn't otherwise. And I really, I wanted you to see
+
+24:08.280 --> 24:13.800
+ this because it shows up in a lot of different numerical linear algebra methods as a way to
+
+24:13.800 --> 24:22.200
+ speed things up. And this will be, this is the homework 3 problem, is to take the QR algorithm
+
+24:22.200 --> 24:30.480
+ from above and add shifts to it. So that'll just be kind of modifying this algorithm up here to
+
+24:30.480 --> 24:37.960
+ no longer be, no longer doing the QR decomposition on AK, but using AK minus the scalar times the
+
+24:37.960 --> 24:52.920
+ identity. And the recommendation for, so ideally you want SK to be an eigenvalue that you've
+
+24:52.920 --> 24:59.640
+ already calculated. And you can kind of just use the diagonal of where your current, or use a value
+
+24:59.640 --> 25:14.240
+ from the diagonal of where you're currently at for that. Any questions about this? Okay, so in that
+
+25:14.240 --> 25:23.200
+ case we're gonna move on to, oh actually I should just comment a few things. So this is a lot better
+
+25:23.200 --> 25:29.040
+ than the unshifted version since that was not guaranteed to converge and was really slow. But
+
+25:29.040 --> 25:41.600
+ this is still order of n to the fourth power, which is bad for a runtime. For symmetric
+
+25:41.600 --> 25:46.560
+ matrices it would be O of n cubed. So we've got a method for finding all the eigenvalues,
+
+25:46.560 --> 25:53.640
+ but it's really slow. And so what's done in practice is that if you start with something
+
+25:53.640 --> 26:02.120
+ called a Hessenberg matrix, which has zeros below the first sub diagonal, it's a lot faster. And so
+
+26:02.120 --> 26:09.640
+ in practice what you'll do, so this picture is from Trevathan, is you'll have, so your QR algorithm
+
+26:09.640 --> 26:15.120
+ is gonna end up being phase two, but you'll have a phase one that introduces a bunch of zeros and
+
+26:15.120 --> 26:21.240
+ gets you to something that's almost triangular. So you'll see this matrix H, it's like a triangular
+
+26:21.240 --> 26:26.700
+ matrix except it has an extra, this is called a sub diagonal, but right below the diagonal there's
+
+26:26.700 --> 26:34.040
+ some nonzero values. And so you'll kind of use one algorithm to get things to this Hessenberg form,
+
+26:34.040 --> 26:42.320
+ and then you could use the QR algorithm to get from Hessenberg to your triangular matrix. Matthew
+
+26:42.320 --> 26:56.520
+ and Linda, can you pass the microphone? So you could, it's just really slow. So this is a way
+
+26:56.520 --> 27:03.360
+ to feed it up, speed it up, is that this phase one is going to be much quicker. Yeah, but it would work
+
+27:03.360 --> 27:14.680
+ if you had the time. So it's like, well we're using a new algorithm here, so then yeah, kind of once
+
+27:14.680 --> 27:24.600
+ you're at this Hessenberg, then it's faster to just get to the, yeah. Yeah, good question. Okay,
+
+27:24.600 --> 27:28.840
+ and so yeah, we're not gonna, we're not gonna talk about phase one. If you're interested,
+
+27:28.840 --> 27:37.280
+ I've written about it in the notebook though, and so you can go through this later on your own. Yeah,
+
+27:37.280 --> 27:43.200
+ I just wanted to kind of at least give you a little bit of a map of how finding the eigenvalues works.
+
+27:43.200 --> 27:49.200
+ And this is, like I would say, a fairly complicated area of numerical linear algebra just because
+
+27:49.200 --> 27:52.600
+ you're kind of having to like switch between algorithms, and there are like different versions
+
+27:52.600 --> 28:14.240
+ of what you can use for phase one or phase two. Okay, so now we're gonna start notebook eight. This
+
+28:14.240 --> 28:20.400
+ is, this is exciting, final notebook. And then this is also, we're gonna learn how to implement
+
+28:20.400 --> 28:30.360
+ the QR factorization, which is something we've been using kind of for most of the course. So
+
+28:30.360 --> 28:37.840
+ you'll remember we used it just now for computing eigenvalues. It was also a way to compute the
+
+28:37.840 --> 28:43.920
+ least squares regression. It showed up in the primary component pursuit, how we did robust PCA.
+
+28:43.920 --> 28:51.480
+ It showed up in our randomized rangefinder. So it's a really important factorization. In fact,
+
+28:51.480 --> 28:56.080
+ Trevathan says one algorithm in numerical linear algebra is more important than all the others,
+
+28:56.080 --> 29:07.120
+ QR factorization. So real, kind of real fundamental building block. So here I'm just
+
+29:07.120 --> 29:14.640
+ illustrating, so we're using NumPy's QR factorization. We take in matrix A, we get back
+
+29:14.640 --> 29:31.600
+ Q and R, and we can confirm Q is, Q is orthonormal and R is triangular. And so today we're gonna
+
+29:31.600 --> 29:39.520
+ actually talk about three different methods for finding the QR factorization. And there'll be
+
+29:39.520 --> 29:44.120
+ kind of some fun examples at the end of how they have different stability properties from each
+
+29:44.120 --> 29:52.320
+ other. But first I wanted to review the idea of projections in linear algebra. So the idea of a
+
+29:52.320 --> 30:01.640
+ projection is that, actually here I should go ahead and go to this link. This is, there's
+
+30:01.640 --> 30:11.880
+ something called the Immersive Linear Algebra textbook. And it's still, I find it to be like
+
+30:11.880 --> 30:18.440
+ fairly mathy in its explanations of things, but all the graphics are interactive, which is kind
+
+30:18.440 --> 30:37.160
+ of nice. So I was just going to show their, their example for projection. If it loads. Okay. So the
+
+30:37.160 --> 30:44.160
+ basic idea is here we have a vector U that we're projecting onto V. This is their diagram for 3.4.
+
+30:44.160 --> 30:54.400
+ And then W is the projection. Move you around and see how W is changing. What it is, is you can
+
+30:54.400 --> 31:01.600
+ think of it as you're kind of decomposing U into this component W that lies along V, as well as
+
+31:01.600 --> 31:07.760
+ something that is perpendicular or orthonormal to V. So you're kind of taking out all part,
+
+31:07.760 --> 31:13.800
+ like any part of U that can be represented by V is being taken out. That's W. And then you're
+
+31:13.800 --> 31:23.000
+ just left with this like orthonormal part. And this dotted line would be U minus W. Are there
+
+31:23.000 --> 31:30.720
+ questions? Just about the kind of like idea of you're getting, getting the part of U that lies
+
+31:30.720 --> 31:53.280
+ along V and then what's left over has to be perpendicular to V. Okay. So you can also do
+
+31:53.280 --> 31:58.640
+ this with a plane. And I took this from a blog post that I thought was pretty good that you might
+
+31:58.640 --> 32:03.960
+ like called the linear algebra view of least squares regression. So I just wanted to show
+
+32:03.960 --> 32:09.800
+ you that that's out there, which we've kind of covered somewhat when we covered least squares
+
+32:09.800 --> 32:19.800
+ regression. So here we've got a plane A. And really this plane is like the column space of
+
+32:19.800 --> 32:27.000
+ the matrix A. And a vector B. And now we're trying to find, you know, what's the vector that lies on
+
+32:27.000 --> 32:35.960
+ the plane that kind of captures, you know, every part of B that's parallel to the plane. So we get
+
+32:35.960 --> 32:49.400
+ that. And then we've got this B minus P and that's perpendicular to the plane. So we can get the
+
+32:49.400 --> 32:59.480
+ formula for projection coming from the idea that, okay, this dotted line must be perpendicular to
+
+32:59.480 --> 33:11.720
+ the projection. And so here, and I apologize for the different variable names, B minus XA dot with
+
+33:11.720 --> 33:23.400
+ A is going to be zero. So in this case XA is the projection of B onto a line A. And X hat is kind
+
+33:23.400 --> 33:28.920
+ of the scalar that you're multiplying by. And those are dotted with each other because that's
+
+33:28.920 --> 33:35.840
+ what's true of perpendicular is just kind of like another name for orthonormal. Or sorry, orthogonal.
+
+33:35.840 --> 33:45.920
+ They're not necessarily going to have length one, but yeah, they're orthogonal to each other. And so
+
+33:45.920 --> 33:58.320
+ then to find what the scalar is, you can do A dot B divided by A dot A. Questions on projection or
+
+33:58.320 --> 34:08.640
+ orthogonality? And Trevathan, I think, has a whole section on projectors in the kind of in the first
+
+34:08.640 --> 34:18.960
+ part of the book since it is a concept that shows up a lot in numerical linear algebra. Okay, then
+
+34:18.960 --> 34:28.960
+ we'll get to, so it's going to turn out projection is really useful for Gram-Schmidt. So classical
+
+34:28.960 --> 34:34.480
+ Gram-Schmidt, the idea is, so remember our goal is we're trying to come up with a QR factorization,
+
+34:34.480 --> 34:41.080
+ and in Gram-Schmidt we're going to come up with one column of Q at a time. And the idea is kind
+
+34:41.080 --> 34:52.680
+ of iterate through, and each time we want to calculate a single projection. So projection PJAJ
+
+34:52.680 --> 35:00.880
+ where you're kind of projecting onto the the space orthogonal to the span of your your previous Qs.
+
+35:00.880 --> 35:14.880
+ So what this looks like code-wise is, so we're going to just pick off the jth column of the,
+
+35:14.880 --> 35:28.520
+ and then, well the first time through, I guess we still, so we need to project,
+
+35:28.520 --> 35:38.680
+ we need to project A onto our already existing Qs. In the initial case we don't have any,
+
+35:38.680 --> 35:42.400
+ so you can kind of just like take the the first column of Q and have it normalized,
+
+35:42.400 --> 35:47.160
+ or sorry first column of A, normalize it, and that's going to be your first column of Q. And
+
+35:47.160 --> 35:57.840
+ then to get the second column of Q, you want to kind of take the second column of A, project it
+
+35:57.840 --> 36:03.960
+ onto the first column of Q, subtract that off, and then that'll be your second column of Q once you
+
+36:03.960 --> 36:09.640
+ normalize. And you go through, and so each time you're kind of taking a column of A and you want
+
+36:09.640 --> 36:14.560
+ to represent it, but you need to kind of subtract off everything that's already been accounted for
+
+36:14.560 --> 36:24.120
+ in your Q. And so as you do this you're creating, you know, these orthonormal columns of Q that are
+
+36:24.120 --> 36:43.440
+ going to represent your columns of A. And so we can we can test this out. So we want to confirm
+
+36:43.440 --> 36:48.480
+ that this algorithm, so to make sure that you have like a valid algorithm that's actually finding
+
+36:48.480 --> 36:55.000
+ your QR factorization, you want to check that Q times R gives you your original matrix back. That's
+
+36:55.000 --> 37:01.040
+ an important part of being a factorization. We want to check that Q is actually orthonormal,
+
+37:01.040 --> 37:13.520
+ which is what we expected. And I probably should have checked that R is actually triangular,
+
+37:13.520 --> 37:22.400
+ and it is, oh in this case maybe A is not, let me see, A might not be square. But yeah,
+
+37:22.400 --> 37:31.320
+ that you're getting something triangular back. So that's that's Gram-Schmidt. Questions about
+
+37:31.320 --> 37:58.640
+ classic Gram-Schmidt? Kelsey, and can you pass the microphone? Okay, yeah. Let me see. This will work
+
+37:58.640 --> 38:05.160
+ to let me... okay.
+
+38:28.640 --> 38:35.040
+ So I'm gonna see if I can put maybe put them side by side so you can kind of, whoops,
+
+38:35.040 --> 39:04.040
+ see the algorithm and some pseudocode. Let me just see if Trevathan writes this out.
+
+39:04.040 --> 39:20.400
+ Actually, okay, so one thing that Trevathan has that might be helpful is what you're coming up
+
+39:20.400 --> 39:47.240
+ with. So here A1 is going to be the first column of A. And basically that's just going to be a
+
+39:47.240 --> 39:53.480
+ multiple of Q1. So we're trying to build an orthonormal basis, starting off with A, and
+
+39:53.480 --> 40:04.600
+ actually let me go ahead and leave myself space. Put this over to the side for a moment. So you
+
+40:04.600 --> 40:15.480
+ can think of, we're kind of starting with, we've got these columns A1, A2, up through AN. And we
+
+40:15.480 --> 40:22.160
+ want to end up with this being, we're kind of trying to find, you know, what can we choose for
+
+40:22.160 --> 40:46.800
+ these columns Q1 up to Q, QN, such that we've got this triangular matrix R. Those are all zeros.
+
+40:46.800 --> 40:52.640
+ And so a way to think about that is that you're getting a set of equations, actually maybe I'll
+
+40:52.640 --> 40:57.280
+ put this full screen just for a little bit and then I'll go back. You're getting the set of
+
+40:57.280 --> 41:05.880
+ equations, A1 is going to be just a multiple of Q1, and we're going to store that in the
+
+41:05.880 --> 41:18.240
+ this rectangular matrix R. So how would, so we have A, how would we choose what R11 and Q1
+
+41:18.240 --> 41:46.480
+ should be? Any ideas? Matthew? You can pass the microphone down. Well so we don't, we don't have
+
+41:46.480 --> 42:00.400
+ the Q's or the R's yet, we're trying to find them. But basically, yeah. So that's, that equation
+
+42:00.400 --> 42:13.200
+ would hold, but what other property do we want Q to have in addition? Yes. Well so, you're very close,
+
+42:13.200 --> 42:19.800
+ but yeah, does Tim want to chime in? So yeah, Matthew's suggestion was kind of choose Q1 to
+
+42:19.800 --> 42:28.920
+ be equal to A1, which is close. Tim? You just said R11 to be the norm of A1. Exactly. Yeah,
+
+42:28.920 --> 42:39.280
+ so you want to, you would set R11 to be the norm of A1, and Q1 is just A1 divided by that. Yeah,
+
+42:39.280 --> 42:43.600
+ so the idea is you need to normalize it because Q1 has to have length one, is kind of the
+
+42:43.600 --> 42:51.840
+ additional property of an orthonormal set of vectors. And so take A1, normalize it, that's Q1,
+
+42:51.840 --> 42:59.800
+ and then R11 should be the norm so that you get the right magnitude back. And kind of thinking
+
+42:59.800 --> 43:04.720
+ about that in terms of vectors, it's Q1 is pointing in the exact same direction as A1,
+
+43:04.720 --> 43:13.400
+ but it's just been scaled appropriately to have length one. And let me even maybe write that.
+
+43:13.400 --> 43:30.400
+ Like if this, this is A1, remember A1 is a column so it's a vector, then Q1 is going in the exact
+
+43:30.400 --> 43:41.680
+ same direction, except it just has length one. Oops, not a very clear one. And then the length
+
+43:41.680 --> 44:00.520
+ of all of A1 will set to be R11, or rather we set R11 to be the length of A1. Okay,
+
+44:00.520 --> 44:17.960
+ so what's the, what's the next equation I could write? Yes, Matthew? A2 equals R12 times A1,
+
+44:17.960 --> 44:36.160
+ or Q1 plus R22 times Q2. Yes. Yeah, that's great. So A2 is going to equal R12 times Q1 plus R22
+
+44:36.160 --> 44:46.800
+ times Q2. And so that's just coming from, we're kind of taking the second column of R,
+
+44:46.800 --> 44:52.280
+ let me scroll over it, second column of R, multiplying that by the matrix Q,
+
+44:52.280 --> 44:59.400
+ which just picks off Q1 and Q2. Remember everything below R22 is zero, so we have
+
+44:59.400 --> 45:07.120
+ zero coefficient for Q3, Q4 up to Qn. And so taking this linear combination of the columns
+
+45:07.120 --> 45:19.600
+ of Q, we get R12 times Q1 plus R22 times Q2 equals A2. And so at this point, we know what
+
+45:19.600 --> 45:24.880
+ A2 is, or sorry, no, we do not know, oh yes, we know A2, because that's our original matrix A,
+
+45:24.880 --> 45:30.720
+ so we've got A2. We know what Q1 is, because we just solved for that in the previous step,
+
+45:30.720 --> 45:41.360
+ and so now we're trying to find Q2, R22, and R12. And we have this constraint that we're going to
+
+45:41.360 --> 45:51.160
+ want Q1 and Q2 to be orthogonal to each other, and Q2 is going to have to have norm 1. And so
+
+45:51.160 --> 46:05.000
+ that gives us enough information that we can, what we can do is project A2 onto Q1, and we'll get
+
+46:05.000 --> 46:15.640
+ kind of R12 is the scalar we need, given that, kind of to get back to the full kind of component
+
+46:15.640 --> 46:24.880
+ of A2. And then we can find Q2 is just kind of what's left over, the perpendicular part.
+
+46:24.880 --> 46:54.760
+ Questions about that? Matthew? Yeah, so at that point what you're doing is
+
+46:54.760 --> 47:14.400
+ you're gonna have A2 minus R12 Q1, and so in a picture this A2 minus R12 Q1 would be the dotted
+
+47:14.400 --> 47:39.240
+ line, and actually let me draw that picture. So if this is A2, then maybe this is Q1. Remember
+
+47:39.240 --> 47:56.360
+ Q1's only got length one, so different colors, and this is, these are perpendicular to each
+
+47:56.360 --> 48:08.640
+ other. So the idea is we've projected A2 onto Q1, and we get that R12 is the scalar, you know,
+
+48:08.640 --> 48:15.080
+ since we might have to scale Q1 to be the appropriate length. And then now we're interested
+
+48:15.080 --> 48:21.640
+ in this kind of perpendicular piece that's left over, so this part in red. It's okay if I erase
+
+48:21.640 --> 48:37.560
+ this first diagram over here. Everyone? Not get too crowded. Some space. So then in red what we
+
+48:37.560 --> 49:00.160
+ have is this whole thing. Whoops, that's not red. This thing is A2 minus R12 Q1, and we're going to
+
+49:00.160 --> 49:14.480
+ want that to be equal to R22 Q2. So how do we get from, so we've got A2 minus R12 Q1, how do we get
+
+49:14.480 --> 49:29.560
+ this from this red vector? How do we decide what R22 is and what Q2 is? Exactly, yes.
+
+49:29.560 --> 49:37.520
+ Yeah, so we normalize them because again, let me draw it, so maybe this is what length one is,
+
+49:37.520 --> 49:43.640
+ so that'll be Q2, and then we have to use R22 to get the right length. So Q2 is giving us the
+
+49:43.640 --> 49:57.960
+ direction, but just with length one, and R22 gives us the correct magnitude. Are there more
+
+49:57.960 --> 50:09.600
+ questions about this? Yeah, this is a great question to kind of draw this out in more detail. Linda?
+
+50:09.600 --> 50:31.520
+ Can you pass the microphone? Can you go through Q3 so we can see what's next? Sure, yeah. Yeah,
+
+50:31.520 --> 50:40.200
+ let's go through Q3. And this will get a little bit trickier with drawing just because it's
+
+50:40.200 --> 51:00.800
+ going to be in three dimensions. Okay, so now we've got A3 equals R13 times Q1 plus R23 times
+
+51:00.800 --> 51:12.360
+ Q2 plus, on the next line, R33 times Q3. And so that comes from taking the third column of R,
+
+51:12.360 --> 51:19.040
+ and that's giving us a linear combination of the QI, and now we're just picking off the first three
+
+51:19.040 --> 51:31.680
+ QI, then everything else zeros out. I'll also just put a line to kind of separate this part. Can I
+
+51:31.680 --> 52:01.120
+ erase the drawing from finding Q2? Okay.
+
+52:01.120 --> 52:21.400
+ Let me just go down to have a little bit more space. So now we're gonna have to imagine that
+
+52:21.400 --> 52:34.160
+ we're in three dimensions. I'm gonna draw a background. So we're in three dimensions,
+
+52:34.160 --> 52:45.880
+ and we've already found... I'm actually gonna make length one a little bit longer just so this
+
+52:45.880 --> 53:01.400
+ doesn't get too tight, but this is Q1 and this is Q2. So we have two vectors, and these are
+
+53:01.400 --> 53:07.480
+ orthogonal to each other, and that can be... you know, remember we're in three dimensions,
+
+53:07.480 --> 53:12.760
+ so that can look different depending on kind of what angle we're viewing this from. But we've got
+
+53:12.760 --> 53:29.360
+ this Q1 and Q2, and we're interested in taking our vector A3, and we want to find a good Q3 for it.
+
+53:29.360 --> 53:46.160
+ So what should we do first? Exactly. So we're gonna project it onto Q1. Sorry, my one looks
+
+53:46.160 --> 53:58.960
+ like a two. Yeah, so we project it onto Q1. I probably should have drawn this. I'm gonna
+
+53:58.960 --> 54:14.600
+ redraw A3 just so that it is clearer what its projection would look like. Okay, so maybe A3
+
+54:14.600 --> 54:26.880
+ is actually off in this direction. We project it onto Q1, and then we're interested in that,
+
+54:26.880 --> 54:35.000
+ and this case is also gonna kind of have to be extended out to be the appropriate distance. So
+
+54:35.000 --> 54:39.120
+ we subtract that off, and then what do we want to do next?
+
+54:39.120 --> 54:53.720
+ Matthew, and can you pass the microphone, Linda?
+
+54:53.720 --> 55:00.000
+ Do we have to take care of the Q2 projection?
+
+55:00.000 --> 55:06.440
+ Exactly, yeah. So we'll project onto Q2 to kind of get that part, and so in this case...
+
+55:06.440 --> 55:13.320
+ yeah, and it's really hard to visualize these in three dimensions, but the idea is that,
+
+55:13.320 --> 55:22.120
+ the way I've drawn it, there might be like very little of A3 that's represented on Q2,
+
+55:22.120 --> 55:28.840
+ but we've got some component here of A3 was represented from Q2, and part of it was
+
+55:28.840 --> 55:36.200
+ represented with Q1, and then we're interested in what's left. So we're kind of looking at...
+
+55:36.200 --> 55:51.000
+ I'll do these in black. So we kind of have like the Q1 part of A3 and the Q2 part of A3,
+
+55:51.000 --> 55:58.600
+ but then that probably doesn't capture all of A3, and so whatever's left is gonna be the Q3 part of
+
+55:58.600 --> 56:06.840
+ A3. So we would do kind of A3 minus, you know, this Q1 times a scalar that gets this direction,
+
+56:06.840 --> 56:16.000
+ minus Q2 times a scalar that gets this direction, and then what we're left with is Q3 once we
+
+56:16.000 --> 56:32.160
+ normalize it. Yeah, I guess, I don't know, maybe in this case that would be like... maybe there's
+
+56:32.160 --> 56:35.720
+ something like going a little bit this way that hasn't been captured so far, and that could be...
+
+56:35.720 --> 56:48.440
+ and that could even be... like that would be R33 times Q3, and then we normalize it to get,
+
+56:48.440 --> 57:04.320
+ okay, this is Q3. Questions about this? All right, and we are kind of well due for a break,
+
+57:04.320 --> 57:21.280
+ so it's 1204, so let's meet back here at 1210 to continue. Thanks everyone. All right,
+
+57:21.280 --> 57:30.040
+ let's go ahead and start back up. So I wanted to kind of go back to the code now that we've seen
+
+57:30.040 --> 57:38.040
+ these pictures of what's going on, and so what's happening with this inner for loop... so the outer
+
+57:38.040 --> 57:47.200
+ for loop is where we're trying to find like a particular Q, Qi or Q2, and then in this inner
+
+57:47.200 --> 57:54.200
+ for loop is where we're doing the projections onto the previous Qs. So for the case of Q3,
+
+57:54.200 --> 58:01.200
+ we're trying to find this, you know, for kind of outer loop J equals 3, and then we go in here and
+
+58:01.200 --> 58:11.240
+ we project the third... A3 onto Q1 and subtract that off, and we project it onto Q2 and subtract
+
+58:11.240 --> 58:19.120
+ that off, and then that's going to leave us with what we can use for our Q3. No more questions
+
+58:19.120 --> 58:35.680
+ about this? Okay. Yeah, so this is what we saw. This is perhaps like the most straightforward way
+
+58:35.680 --> 58:41.560
+ of coming up with a QR factorization. Unfortunately, it turns out it's unstable,
+
+58:41.560 --> 58:52.480
+ which we'll see an example of later on. So we're going to use the... Our next look at the modified
+
+58:52.480 --> 59:07.440
+ Gram-Schmidt. And modified Gram-Schmidt basically... So in classic Gram-Schmidt, for each J,
+
+59:07.440 --> 59:15.560
+ you're coming up with this single, kind of single projection onto your QJ to get the kind of the
+
+59:15.560 --> 59:24.520
+ final like this is Q3, you know, we've projected onto it. Where, you know, like and in that case,
+
+59:24.520 --> 59:32.100
+ you know, Q3 is the projection onto this space that's orthogonal to Q1 and Q2. For modified
+
+59:32.100 --> 59:45.440
+ Gram-Schmidt, you're doing... Sorry, hold on a moment.
+
+1:00:06.640 --> 1:00:12.360
+ Actually, I think what I showed you is really modified Gram-Schmidt of doing the projection
+
+1:00:12.360 --> 1:00:25.640
+ separately. Oh, we're gonna... No. Yeah, really, in some ways this is good because modified
+
+1:00:25.640 --> 1:00:38.240
+ Gram-Schmidt was actually used that were... Like for each J, we're kind of calculating onto...
+
+1:00:38.240 --> 1:00:50.320
+ Yeah, getting something that's the part that's perpendicular to Q1 and to Q2. Let me... I'll
+
+1:00:50.320 --> 1:01:08.840
+ email you about this. I'll think about this some more. Okay, no, no, because like... Okay,
+
+1:01:08.840 --> 1:01:14.520
+ so with this one, I was starting with the column and then kind of subtracting off how it projected
+
+1:01:14.520 --> 1:01:27.120
+ onto the other ones. With modified Gram-Schmidt, I... Really, I'm kind of starting by normalizing
+
+1:01:27.120 --> 1:01:46.920
+ my vector and saying that that's Qi. Yeah, let me continue and I will email you an update
+
+1:01:46.920 --> 1:01:53.040
+ about modified Gram-Schmidt. But keep that picture of kind of like... The general idea
+
+1:01:53.040 --> 1:01:59.720
+ is that Gram-Schmidt is all about projections and that it's about constructing both classical
+
+1:01:59.720 --> 1:02:07.200
+ and modified Gram-Schmidt are constructing your matrix Q one column at a time and that kind of
+
+1:02:07.200 --> 1:02:12.800
+ each outer iteration at the end of it you want to have an additional column of Q. And so this is
+
+1:02:12.800 --> 1:02:19.440
+ kind of a point about Gram-Schmidt. If you were to stop part of the way through, you would have,
+
+1:02:19.440 --> 1:02:28.000
+ you know, like a partial set of Qs that are orthonormal to each other. And so Trevathan
+
+1:02:28.000 --> 1:02:34.400
+ refers to this as triangular orthogonalization and that you're kind of just coming up with this
+
+1:02:34.400 --> 1:02:45.640
+ one Q. But you could actually think of that as being a lot of smaller, not smaller, but less
+
+1:02:45.640 --> 1:02:53.200
+ informative triangular matrices because basically kind of doing these projections could be represented
+
+1:02:53.200 --> 1:03:00.240
+ by this triangular operation. But you're just getting one Q and kind of the focus is on building
+
+1:03:00.240 --> 1:03:11.760
+ Q. So Householder is a different approach where basically you're focused on zeroing out the bottom
+
+1:03:11.760 --> 1:03:18.160
+ triangle in A and so kind of the whole focus is putting in basically each iteration for Householder
+
+1:03:18.160 --> 1:03:24.160
+ you're gonna take another column and make everything below the diagonal zeros. And you
+
+1:03:24.160 --> 1:03:30.800
+ keep doing that and it turns out that that's equivalent to multiplying by a orthonormal matrix
+
+1:03:30.800 --> 1:03:38.800
+ each time. So kind of like, yeah, I guess the opposite thing is center. With Gram-Schmidt the
+
+1:03:38.800 --> 1:03:44.880
+ central idea is, yeah, getting these Qs and you're focused on what do we need to get the next Q. With
+
+1:03:44.880 --> 1:04:04.560
+ Householder it's how can I zero out some more entries below the diagonal. So with Householder,
+
+1:04:04.560 --> 1:04:18.120
+ Householder I think is a lot a lot harder to think about conceptually. I even think I might,
+
+1:04:18.120 --> 1:04:29.560
+ yeah, we're not gonna get into the details of the algorithm. Let's check that what we get. So there's
+
+1:04:29.560 --> 1:04:35.360
+ this, there's also this concept called Householder reflectors. And so it's basically, this is where
+
+1:04:35.360 --> 1:05:04.640
+ I put my stylus. Each time with a Householder you're multiplying by a block matrix where part
+
+1:05:04.640 --> 1:05:10.640
+ of the matrix is the identity, so block matrix is a way of kind of putting together smaller
+
+1:05:10.640 --> 1:05:16.040
+ matrices into a bigger matrix. And part of that is the identity matrix and then part of it is this
+
+1:05:16.040 --> 1:05:22.280
+ special matrix called a Householder reflector. And this is kind of designed and what's gonna
+
+1:05:22.280 --> 1:05:31.720
+ happen is that I is getting bigger and bigger as you iterate. Let me check back. But you're
+
+1:05:31.720 --> 1:05:38.800
+ going in one direction of I either getting bigger or smaller, F getting smaller or bigger,
+
+1:05:38.800 --> 1:05:50.280
+ and this whole thing is orthonormal. And the idea is that multiplying this times,
+
+1:05:50.280 --> 1:05:59.560
+ it's on this side, this times A is going to zero out an additional column. So you'll get
+
+1:05:59.560 --> 1:06:15.840
+ kind of more zeros. So you're kind of constructing, constructing these matrices. Um, yeah. So we
+
+1:06:15.840 --> 1:06:38.640
+ calculate Q and R using these block matrices F. And here I'm kind of just showing, okay,
+
+1:06:38.640 --> 1:06:44.800
+ so it must be that I, yeah, I starts out small. So this is a one by one identity matrix right
+
+1:06:44.800 --> 1:06:54.560
+ here. And F is three by three. Actually, then we can see this would be nice to look at.
+
+1:06:54.560 --> 1:07:21.800
+ Now, we've got a two by two identity matrix in this corner, and F is two by two. Here
+
+1:07:21.800 --> 1:07:27.960
+ I is three by three, and then F ends up having to be one since it's got to be orthonormal.
+
+1:07:27.960 --> 1:07:33.400
+ It's either going to be one or negative one. You're kind of constructing these. And the
+
+1:07:33.400 --> 1:07:39.040
+ key is you get back Q and R, you can check. Well, so actually, Householder is described
+
+1:07:39.040 --> 1:07:45.120
+ in Trevathan doesn't explicitly calculate Q. It just calculates R. It turns out for most
+
+1:07:45.120 --> 1:07:52.360
+ problems you don't need, you don't actually need Q. And there are kind of these implicit
+
+1:07:52.360 --> 1:08:02.960
+ methods that can use the Householder reflectors to get, to get what would Q times, Q transpose
+
+1:08:02.960 --> 1:08:12.120
+ times B be or Q transpose, solve QX equals B. So either like multiply or solve that equation.
+
+1:08:12.120 --> 1:08:16.120
+ I mean, this is something that kind of shows up in numerical linear algebra periodically
+
+1:08:16.120 --> 1:08:20.440
+ is that you don't always like need the explicit matrix. You just need to know what is that
+
+1:08:20.440 --> 1:08:28.200
+ matrix times a vector or what is the solution of that, can I solve a system of equations
+
+1:08:28.200 --> 1:08:51.240
+ AX equals B when I know A and B. Yeah, so I think I'm going to go on to, yeah, sorry
+
+1:08:51.240 --> 1:08:56.680
+ that I'm not getting into the details on these. And Householder is covered in Trevathan, but
+
+1:08:56.680 --> 1:09:03.000
+ it's a less intuitive algorithm than Gram-Schmidt where you're taking these projections. And
+
+1:09:03.000 --> 1:09:06.880
+ I want to see, like I think part of the fun part is kind of seeing how these are different
+
+1:09:06.880 --> 1:09:12.040
+ from each other numerically. And I wanted to definitely make sure we get to this with
+
+1:09:12.040 --> 1:09:19.680
+ plenty of time. So this is coming from lecture nine of Trevathan. It has a few examples of
+
+1:09:19.680 --> 1:09:28.000
+ how they vary. And so one of these is comparing the classic versus modified Gram-Schmidt.
+
+1:09:28.000 --> 1:09:35.000
+ And so here we're going to kind of intentionally construct a matrix that has singular values
+
+1:09:35.000 --> 1:09:40.920
+ spaced by factors of two between two to the negative one and two to the negative n plus
+
+1:09:40.920 --> 1:09:49.960
+ one. So that means the magnitude of the singular values is really varying logarithmically.
+
+1:09:49.960 --> 1:10:01.920
+ And so kind of to make this matrix, we're taking NP dot power of two then to this range
+
+1:10:01.920 --> 1:10:09.480
+ from negative one to negative n plus one. And so we're using the idea of a kind of SVD
+
+1:10:09.480 --> 1:10:16.160
+ to construct a matrix that has the singular values we want. So we'll just get kind of
+
+1:10:16.160 --> 1:10:24.240
+ two orthonormal matrices for U and V and then S, we're putting what we want along the diagonal
+
+1:10:24.240 --> 1:10:30.200
+ and multiplying U times S times V and that'll presumably have this, will have the singular
+
+1:10:30.200 --> 1:10:38.520
+ value decomposition with the values of S that we've created. I should stop. Are there questions
+
+1:10:38.520 --> 1:10:43.720
+ about this way of constructing a matrix to kind of make sure it has the singular values
+
+1:10:43.720 --> 1:10:55.760
+ that we want? This is the reverse of the SVD is we're coming up with two orthonormal matrices
+
+1:10:55.760 --> 1:11:08.680
+ and a diagonal matrices and multiplying them together. Okay, so we create a, we do a classical
+
+1:11:08.680 --> 1:11:13.160
+ Gram-Schmidt and modified Gram-Schmidt on it. And then actually I should have checked
+
+1:11:13.160 --> 1:11:28.200
+ that. And these might end up, I'll see if this works, they might be off by a sign. So
+
+1:11:28.200 --> 1:11:44.440
+ you can have variations with kind of where your negative signs are. Let's get the, oh
+
+1:11:44.440 --> 1:11:48.880
+ actually no, the point is these are going to not be the same. So ideally we want these
+
+1:11:48.880 --> 1:11:59.120
+ to be similar to each other, but it turns out that they're not. So we can graph S, which
+
+1:11:59.120 --> 1:12:06.240
+ is what we know the true singular values to be, and those are the red dots. And then we're
+
+1:12:06.240 --> 1:12:13.880
+ graphing the diagonal of R and the diagonal, the diagonal of RM, which is the modified
+
+1:12:13.880 --> 1:12:20.520
+ Gram-Schmidt's R, and the classic Gram-Schmidt was the blue. And so first I'm going to ask
+
+1:12:20.520 --> 1:12:26.480
+ you why, why should the diagonals, why would we expect those to be similar to the singular
+
+1:12:26.480 --> 1:12:38.000
+ values or to be the singular values? The diagonal of R. Oh wait, grab the microphone.
+
+1:12:38.000 --> 1:12:51.960
+ So the, yes, well there's another piece that I think you're probably thinking, and why
+
+1:12:51.960 --> 1:13:00.360
+ are you talking about eigenvalues? Can you talk in the microphone? Right, so the eigenvalues
+
+1:13:00.360 --> 1:13:03.960
+ are related to the singular values, and then how is that related to the diagonal of R?
+
+1:13:03.960 --> 1:13:15.000
+ Linda, do you want to say it? It's a triangular? Yeah, since it's a triangular matrix, the
+
+1:13:15.000 --> 1:13:20.360
+ diagonal, yeah, it gives you the eigenvalues, which are the singular values in this case.
+
+1:13:20.360 --> 1:13:30.760
+ I have a question. Is the singular value also eigenvalues? So how do they relate it? How
+
+1:13:30.760 --> 1:13:36.080
+ do they relate it? So singular values, yeah, so singular values are like a generalization
+
+1:13:36.080 --> 1:13:55.400
+ of eigenvalues, and the idea, let me go back to the notepad, is that singular values we
+
+1:13:55.400 --> 1:14:11.120
+ can think of as A times V equals sigma times U, and then eigenvalues can be thought of
+
+1:14:11.120 --> 1:14:19.640
+ as Ax equals lambda x. And so notice that this first equation, typically like when we're
+
+1:14:19.640 --> 1:14:24.160
+ talking about the SVD, we're writing out the full matrices. This is just thinking about
+
+1:14:24.160 --> 1:14:31.720
+ particular vectors and they're, you know, like one, kind of one vector at a time, or
+
+1:14:31.720 --> 1:14:38.600
+ one pair of vectors being U, and one singular value from the diagonal. So this is, you know,
+
+1:14:38.600 --> 1:14:55.720
+ coming from A equals U sigma V, and we would have a number of these for different singular
+
+1:14:55.720 --> 1:15:01.000
+ values. Kelsey, can you pass the microphone? Linda?
+
+1:15:01.000 --> 1:15:08.840
+ Is the singular value kind of like the stretching that you're doing?
+
+1:15:08.840 --> 1:15:13.400
+ It is, yeah. The stretching that you're doing.
+
+1:15:13.400 --> 1:15:18.840
+ Like if A is rotating and like elongating, or?
+
+1:15:18.840 --> 1:15:28.800
+ Yes, yes, exactly. Yeah, that's a great thing to note. So it's kind of, with singular values,
+
+1:15:28.800 --> 1:15:39.320
+ then you'll see these pictures, maybe you're taking a circle, and perhaps A transforms
+
+1:15:39.320 --> 1:16:02.960
+ it to an ellipse. So if matrix A changes the unit circle into this ellipse, you're getting
+
+1:16:02.960 --> 1:16:10.440
+ the vectors U and V are basically like a change of basis. And so you can think of kind of,
+
+1:16:10.440 --> 1:16:15.080
+ this is really relates back to the three blue, one brown video that we're kind of interested
+
+1:16:15.080 --> 1:16:19.320
+ in, like what's the, I don't know, like more natural basis for this ellipse, and that would
+
+1:16:19.320 --> 1:16:25.520
+ be like, oh that's a different color. You know, like really like these are the axes
+
+1:16:25.520 --> 1:16:35.560
+ of that. And so those vectors, kind of the directions are coming from U or V, and the
+
+1:16:35.560 --> 1:16:45.640
+ magnitude is coming from sigma, as Kelsey said. And here really that's like, you know,
+
+1:16:45.640 --> 1:16:52.000
+ what was just a unit axis. So hopefully that looks familiar in thinking about change of
+
+1:16:52.000 --> 1:17:02.160
+ basis. And so singular value decomposition is really a change of basis. And then kind
+
+1:17:02.160 --> 1:17:09.120
+ of going back to, or actually first I should ask, are there questions about that? This
+
+1:17:09.120 --> 1:17:23.800
+ idea of SVD being a bit like a change of basis. Sam, can you pass the microphone back?
+
+1:17:23.800 --> 1:17:35.400
+ So would you be, would you have a magnitude of one in the basis provided by A? Like in
+
+1:17:35.400 --> 1:17:41.440
+ this case you're stretching it and elongating it. So the elongation would be with respect
+
+1:17:41.440 --> 1:17:56.040
+ to the original axes. So I think, so the elongation is captured by the sigma so that you...
+
+1:17:56.040 --> 1:18:02.760
+ So I guess my question is, would you have a magnitude of one in this case? So you, you
+
+1:18:02.760 --> 1:18:21.480
+ do have a magnitude of one, yes. And so looking at kind of the eigenvalues, eigenvectors,
+
+1:18:21.480 --> 1:18:27.040
+ so here this is a very similar equation and the difference is just that you don't have
+
+1:18:27.040 --> 1:18:50.880
+ separate u and v, you just have x. And so this, this could be written, why was I able
+
+1:18:50.880 --> 1:19:06.880
+ to change the order of sigma and x when I went to the matrix form? Yeah, because sigma
+
+1:19:06.880 --> 1:19:11.520
+ is just a scalar. So you're in, you're just putting those on the diagonal of your, your
+
+1:19:11.520 --> 1:19:24.600
+ big sigma, or sorry, big lambda. And so then, whoops, this is this, which should look familiar
+
+1:19:24.600 --> 1:19:30.400
+ of kind of this is what it means for A and lambda to be similar. We have this change
+
+1:19:30.400 --> 1:19:46.600
+ of basis and that's what the eigen decomposition is doing. Do all, do all matrices have a full
+
+1:19:46.600 --> 1:20:00.120
+ eigen decomposition? Thumbs up for yes, thumbs down for no. Okay, good, I see mostly thumbs
+
+1:20:00.120 --> 1:20:05.280
+ down, yeah. So not all, not all matrices have a full eigen decomposition. A full eigen decomposition
+
+1:20:05.280 --> 1:20:15.080
+ is where you can get a matrix X that's orthonormal, or a matrix X of full rank. And then, but
+
+1:20:15.080 --> 1:20:20.400
+ all, all matrices have a singular value decomposition, so it's kind of more general, you know, it
+
+1:20:20.400 --> 1:20:34.360
+ doesn't have this additional constraint on it. So kind of going back to this, this comparison
+
+1:20:34.360 --> 1:20:39.000
+ of, you know, we're trying to get the true singular values, we know what they're supposed
+
+1:20:39.000 --> 1:20:46.440
+ to be, we look at the diagonal, and we're definitely, we're right up here, like it seems,
+
+1:20:46.440 --> 1:20:55.160
+ you know, both classic and modified did well. Does anyone want to guess what one of these
+
+1:20:55.160 --> 1:21:10.280
+ places where it's leveling off is? This is a concept or term that we talked about in
+
+1:21:10.280 --> 1:21:35.160
+ lesson one. Any guesses? Kelsey, I'm gonna grab the microphone from Sam. Yes, machine
+
+1:21:35.160 --> 1:21:41.680
+ epsilon. So this is the, and in particular that's for a modified Gram-Schmidt. It can't
+
+1:21:41.680 --> 1:21:56.480
+ capture something that small. Tim? Why does it look like it levels around to the negative
+
+1:21:56.480 --> 1:22:07.680
+ 57? Yeah, I am. I'm not fully sure about that. That was like close enough that I was like
+
+1:22:07.680 --> 1:22:15.160
+ the seams right on, but yeah, I don't know why it's, yeah, not, not perfect. Good question.
+
+1:22:15.160 --> 1:22:23.120
+ Yeah, so I've written down here, so there's a way from numpy.finfo to find out what numpy
+
+1:22:23.120 --> 1:22:32.600
+ saying machine epsilon is for float 64. And so, and remember we've, you know, we're graphing
+
+1:22:32.600 --> 1:22:40.400
+ this by powers of two. We get that epsilon is around negative 52. This is close to that.
+
+1:22:40.400 --> 1:22:48.420
+ And then the square root of epsilon is around to the negative 26. Remember when for values
+
+1:22:48.420 --> 1:22:57.360
+ less than one, square root makes things larger, not smaller. It's kind of a reverse for greater
+
+1:22:57.360 --> 1:23:04.680
+ than one. And so this is, I thought, like a neat illustration of kind of when, when machine
+
+1:23:04.680 --> 1:23:09.240
+ epsilon is posing a problem and also kind of the difference between depending on machine
+
+1:23:09.240 --> 1:23:14.040
+ epsilon for your accuracy and depending on the square root of machine epsilon, which
+
+1:23:14.040 --> 1:23:22.080
+ is what classic Gram-Schmidt does. This is, although it's a contrived example, it's nice
+
+1:23:22.080 --> 1:23:28.320
+ because we know exactly kind of what the answer should be and we see when each one stops following,
+
+1:23:28.320 --> 1:23:45.520
+ following the line. Questions about this example or machine epsilon? And so classic, classic
+
+1:23:45.520 --> 1:23:58.320
+ Gram-Schmidt is not, not used in practice for this reason. Okay, so now we're gonna
+
+1:23:58.320 --> 1:24:03.360
+ look at another example. And if we were, if we were to do Householder on this graph, it's
+
+1:24:03.360 --> 1:24:10.560
+ basically the same accuracy as modified Gram-Schmidt, so it levels off at the same place. So I had
+
+1:24:10.560 --> 1:24:17.680
+ it on here at one point, but it's harder to read. But in terms of accuracy, well, for
+
+1:24:17.680 --> 1:24:21.680
+ this example, for accuracy, Householder and modified Gram-Schmidt are giving you the same
+
+1:24:21.680 --> 1:24:34.360
+ thing. Okay, so the next example we're gonna look at is a matrix, and this is, this is
+
+1:24:34.360 --> 1:24:43.640
+ also coming from Lecture 9 of Trebethin. So we have a matrix A that's 0.7, 0.70711 and
+
+1:24:43.640 --> 1:24:52.360
+ then 0.70001, 0.70711. And you can probably, just from looking at this matrix, already
+
+1:24:52.360 --> 1:25:08.040
+ guess maybe, guess where this, this may be going. So this matrix is close to not having
+
+1:25:08.040 --> 1:25:15.480
+ full rank because the second row was almost a repeat of the first row, you know, there's
+
+1:25:15.480 --> 1:25:23.880
+ just this difference of one to the negative fifth between them. So we'll use our modified
+
+1:25:23.880 --> 1:25:32.000
+ Gram-Schmidt to get Q and R. We can use Householder to get Q and R. And I did this, I guess, both
+
+1:25:32.000 --> 1:25:43.440
+ with R version and NumPy's. And then check that all the QR factorizations work. And so
+
+1:25:43.440 --> 1:25:50.520
+ here notice that in all cases, we're not actually getting back the original A because this bottom
+
+1:25:50.520 --> 1:25:57.320
+ left entry has been, has ended at 0.7, although that is close to what the original A was.
+
+1:25:57.320 --> 1:26:04.080
+ But now we can check how close is Q to being perfectly orthonormal. And so here there's
+
+1:26:04.080 --> 1:26:08.760
+ no difference between what we're getting from Gram-Schmidt and Householder in terms of reconstructing
+
+1:26:08.760 --> 1:26:16.480
+ our A. So looking to get a measure on kind of how close Q is to being orthonormal, we'll
+
+1:26:16.480 --> 1:26:25.200
+ take Q, Q times Q transpose minus the identity. If it was perfectly orthonormal, what would
+
+1:26:25.200 --> 1:26:33.520
+ Q times Q transpose minus the identity be? I heard someone whisper it, but yeah, zero,
+
+1:26:33.520 --> 1:26:39.600
+ because it was perfectly orthonormal, Q times Q transpose would be the identity. Here we're
+
+1:26:39.600 --> 1:26:47.080
+ looking at the norm of that. And you'll notice with Gram-Schmidt, it's something to the negative
+
+1:26:47.080 --> 1:26:55.240
+ 11th, 10 to the negative 11th. And with Householder, it's 10 to the negative 16th. And so that's
+
+1:26:55.240 --> 1:27:01.920
+ kind of an example that Householder got us a Q that was closer to being perfectly orthonormal
+
+1:27:01.920 --> 1:27:28.440
+ than Gram-Schmidt did. And I believe Numpy's implementation of QR is using Householder.
+
+1:27:28.440 --> 1:27:35.800
+ Linda and Tim has the microphone.
+
+1:27:35.800 --> 1:27:44.200
+ So if we go back to the graph, I was wondering what makes it different between the classic
+
+1:27:44.200 --> 1:27:46.880
+ and modified this.
+
+1:27:46.880 --> 1:27:52.040
+ That's causing that? So the difference lies in the algorithms. And we didn't really talk
+
+1:27:52.040 --> 1:27:56.200
+ about what's going on with modified Gram-Schmidt. But modified Gram-Schmidt basically looks
+
+1:27:56.200 --> 1:28:00.600
+ like you've just kind of made this algebraic change. Like you're doing the same thing,
+
+1:28:00.600 --> 1:28:07.680
+ but you're kind of changing the order of how you do things. But it's something that the
+
+1:28:07.680 --> 1:28:13.080
+ operations are compounding, or like the error is compounding differently between them. Even
+
+1:28:13.080 --> 1:28:17.680
+ though mathematically, if you're like proving it on paper and pencil, it's like, oh, these
+
+1:28:17.680 --> 1:28:42.760
+ things need to be equivalent. Yeah, good question. Yeah, are there questions?
+
+1:28:42.760 --> 1:28:56.160
+ I think that might be all I want to say about, well, I'll briefly put classified Gram-Schmidt
+
+1:28:56.160 --> 1:29:02.600
+ and modified Gram-Schmidt next to each other just to compare.
+
+1:29:02.600 --> 1:29:13.280
+ Oh, you know what it is? Sorry. With modified Gram-Schmidt, yeah, so what I showed you with
+
+1:29:13.280 --> 1:29:16.920
+ the picture when I drew the vectors, that was classic Gram-Schmidt, where you're kind
+
+1:29:16.920 --> 1:29:26.920
+ of doing these projections once. Modified Gram-Schmidt, it's like you're modifying each
+
+1:29:26.920 --> 1:29:36.280
+ value of, like you're getting this whole matrix of projections that you're modifying
+
+1:29:36.280 --> 1:29:49.880
+ each time. So we have V, which is what we're kind of copying A into. And so like here with
+
+1:29:49.880 --> 1:29:55.400
+ classic Gram-Schmidt, you just need to have a single vector V each time that you're just
+
+1:29:55.400 --> 1:30:07.520
+ kind of like, you know, projecting it, and then you subtract off something else, project,
+
+1:30:07.520 --> 1:30:12.280
+ subtract off something else. Whereas here, you actually have to have a whole matrix V
+
+1:30:12.280 --> 1:30:31.080
+ and like in this, well, yeah, and it affects what your norms are. So basically it's like
+
+1:30:31.080 --> 1:30:36.160
+ you're calculating more projections kind of in this more complicated way, like each projection
+
+1:30:36.160 --> 1:30:45.600
+ is really made up of several small projections. Matthew, and can you pass the microphone?
+
+1:30:45.600 --> 1:30:47.600
+ Oh, this Matthew.
+
+1:30:47.600 --> 1:31:07.200
+ Oh, actually I wasn't planning on it, but yeah, we can talk about it. Yeah, and Kelsey
+
+1:31:07.200 --> 1:31:24.440
+ also has her hand up, it seems, about this.
+
+1:31:24.440 --> 1:31:40.760
+ Let me go back to the QR factorization.
+
+1:31:40.760 --> 1:32:10.280
+ And
+
+1:32:10.280 --> 1:32:13.920
+ I don't have anything off the top of my head of, yeah, like intuition for that in
+
+1:32:13.920 --> 1:32:16.400
+ particular.
+
+1:32:33.600 --> 1:32:36.840
+ Okay, and I can, oh, Sam has something and then I will say a little bit about the
+
+1:32:36.840 --> 1:32:49.240
+ final exam after that. The diagonal that's produced or close to diagonal
+
+1:32:49.240 --> 1:32:57.960
+ will, if we have all real eigenvalues, then it will be, it will merge to a total diagonal, but if there
+
+1:32:57.960 --> 1:33:03.380
+ are complex eigenvalues, then there will be extra values in the lower half of the
+
+1:33:03.380 --> 1:33:10.000
+ matrix. And looking at the matrix, how are we supposed to know which of the
+
+1:33:10.000 --> 1:33:22.120
+ diagonal are the eigenvalues? Is it ones that have no other values, like in the column or in the row then?
+
+1:33:22.120 --> 1:33:27.860
+ Yeah, so I'm actually not sure if this is a theorem, like in just all the cases I
+
+1:33:27.860 --> 1:33:34.580
+ did, if it like didn't have other stuff beneath it, it was turning out to be an
+
+1:33:34.580 --> 1:33:44.000
+ eigenvalue, but I don't know if that's always the case or not. That's a good
+
+1:33:44.000 --> 1:33:54.000
+ question. Okay, so yeah, about the, about the final, so that's gonna be all on
+
+1:33:54.000 --> 1:34:04.280
+ paper, so no computers for that. And it's, yeah, I've tried to take questions, kind of,
+
+1:34:04.280 --> 1:34:08.360
+ many of them are things, yeah, I mean all of them are definitely like related to
+
+1:34:08.360 --> 1:34:18.720
+ what we've done in class and in the homework and in the notebooks, and so a
+
+1:34:18.720 --> 1:34:24.840
+ mix. So like there are, there are some examples where I like give you code and
+
+1:34:24.840 --> 1:34:29.920
+ ask you to modify it, and this will be written, but then there are also, yeah,
+
+1:34:29.920 --> 1:34:33.280
+ like conceptual questions.
+
+1:34:33.280 --> 1:34:44.880
+ Um, well, what do you mean? Anything about the algorithms?
+
+1:34:49.520 --> 1:34:54.340
+ Yes, there are questions, yeah, on the algorithms that we've learned, and also
+
+1:34:54.340 --> 1:35:03.260
+ on the specific examples that we've covered in the class. No, yeah, and I tried
+
+1:35:03.260 --> 1:35:08.960
+ to stay away from stuff that I thought was like just like annoying memorization,
+
+1:35:08.960 --> 1:35:14.560
+ like I wanted it to be more be like do you understand the concepts, and like key
+
+1:35:14.560 --> 1:35:20.600
+ points that I thought you should know of maybe kind of like what an algorithm
+
+1:35:20.600 --> 1:35:25.520
+ gives you or what an algorithm is used for, but yeah, you definitely do not have
+
+1:35:25.520 --> 1:35:38.560
+ to regurgitate the algorithms. Yeah, I've tried to make it not something that's
+
+1:35:38.560 --> 1:35:45.400
+ like tricky or overly, like I tried to make it fair, I guess, and like kind of
+
+1:35:45.400 --> 1:35:58.480
+ about the like concepts and important parts. Any other questions about it? Okay,
+
+1:35:58.480 --> 1:36:03.280
+ now we're on this can end a few minutes early today, and then I will definitely
+
+1:36:03.280 --> 1:36:08.200
+ be available through email, and so yeah, feel free to email me if you have
+
+1:36:08.200 --> 1:36:21.360
+ questions in the next week. Okay, that's all. Thank you. Thanks.
+

@@ -1,0 +1,2228 @@
+WEBVTT
+
+00:00.000 --> 00:20.640
+ I'm gonna go ahead and get started. I wanted to just briefly return to the
+
+00:20.640 --> 00:27.820
+ problem of the compressed sensing of reconstructing what the CT scan had
+
+00:27.820 --> 00:32.860
+ detected, and so kind of thinking about Tim's question from last time of how
+
+00:32.860 --> 00:39.100
+ would we represent this, so you know kind of as linear regression. So here if
+
+00:39.100 --> 00:45.160
+ linear regression is matrix X of data times a vector beta of coefficients
+
+00:45.160 --> 00:51.840
+ equals some vector Y, here X is the projection, they call it the
+
+00:51.840 --> 00:58.540
+ projection operator, and it's this matrix as you can see is black and then has
+
+00:58.540 --> 01:04.720
+ some some white lines that seem to have a little bit of a pattern to them. Does
+
+01:04.720 --> 01:22.720
+ anyone know where these are coming from?
+
+01:22.720 --> 01:35.780
+ Tim? Um close, so you're actually getting a little bit ahead of this, so this is
+
+01:35.780 --> 01:54.440
+ just the matrix X, but we'll get there soon. Matthew? So it's actually not the
+
+01:54.440 --> 02:16.460
+ readings. So what you're getting at, I'll actually skip ahead, is the
+
+02:16.460 --> 02:25.800
+ vector Y, so here the density readings. So yeah this is kind of the measurements
+
+02:25.800 --> 02:30.620
+ that the CT scan was recording, and what we do to get our vector Y, so this is the
+
+02:30.620 --> 02:34.300
+ right-hand side of the equation for the linear regression, is we're just
+
+02:34.300 --> 02:39.980
+ unwrapping this or raveling it as the NumPy operation to get this really one
+
+02:39.980 --> 02:48.820
+ and a tall vector that's 2,000 by 1. That's Y. Any other guesses of, I know
+
+02:48.820 --> 02:53.740
+ this is kind of a tricky question, what this X could be?
+
+02:53.740 --> 03:11.300
+ Matthew? Good catch. Not yet, so that's that's why kind of the reading from the
+
+03:11.300 --> 03:40.180
+ different angles. Then Sam behind you has a guess. Is it the total intensity, like before when we looked at the projection operator at just one slice, there's a line going through a space, but now are we looking at, like is the X dimension, the position, and Y is the angle, and then the dot is like the length of the line almost?
+
+03:40.180 --> 03:53.500
+ That's very close. Yeah, so let me kind of go back up to, it was this section where we
+
+03:53.500 --> 03:59.980
+ had these pictures of lines at different angles in different locations, and so
+
+03:59.980 --> 04:03.460
+ this was part of a, so this was originally part of a four-dimensional
+
+04:03.460 --> 04:09.660
+ matrix where we had the different angles and the positions, which is the vertical
+
+04:09.660 --> 04:15.220
+ position of how high up the line is, and then an XY coordinate for each, and so
+
+04:15.220 --> 04:20.020
+ here we were kind of just showing pictures where we'd index on the first
+
+04:20.020 --> 04:24.940
+ and second dimension, so the angle in a vertical position, and then see the XY
+
+04:24.940 --> 04:30.300
+ for all these different lines, and so this mystery matrix X that I was showing
+
+04:30.300 --> 04:36.720
+ you is actually the collection of all of these, so this is kind of what the
+
+04:36.720 --> 04:42.060
+ x-rays look like before they've intersected with anything, and here
+
+04:42.060 --> 04:47.860
+ we've kind of unwrapped them, or not unwrapped, reshaped them, so we took this,
+
+04:47.860 --> 04:56.520
+ this was in 40, and we said look, okay, like let's make, I think the x-axis is
+
+04:56.520 --> 05:02.580
+ the angles and positions, and then we've unwrapped each picture to be just a
+
+05:02.580 --> 05:10.180
+ single long row, and so that's why it has the appearance that it does down here of
+
+05:10.180 --> 05:21.420
+ like these do contain little lines, but they've been unwrapped. Yes? Oh, could you
+
+05:21.420 --> 05:48.700
+ throw the catch box, Sam? This might need an intermediate, oh, good throw in, good catch.
+
+05:48.700 --> 05:56.700
+ Yeah, so the the y-axis here is the angle and the vertical position, and then this
+
+05:56.700 --> 06:16.220
+ one is the X and the Y, correct? Well, so what 2Dense is doing is we're
+
+06:16.220 --> 06:24.180
+ storing this as a sparse matrix. Yes, yeah, and actually kind of going off of that,
+
+06:24.180 --> 06:28.580
+ why would it be a good idea to store this matrix as sparse? Anyone can answer
+
+06:28.580 --> 06:37.980
+ this? So Valentine said because it's sparse, and that's correct, yes, so we see
+
+06:37.980 --> 06:43.660
+ we see a lot of them black here which represent zero, so the white is where
+
+06:43.660 --> 06:47.820
+ they're ones, and that's a relatively small portion. So we've got this stored
+
+06:47.820 --> 06:52.580
+ as a sparse sci-fi matrix, and we're just converting it to dense so we can look at
+
+06:52.580 --> 06:56.380
+ pictures of it. So to kind of actually do the math, we don't need it to be dense,
+
+06:56.380 --> 07:03.580
+ it's more just to be able to look at these pictures. And I also just wanted to
+
+07:03.580 --> 07:09.420
+ highlight that this matrix is a lot wider than it is tall, and that's because
+
+07:09.420 --> 07:17.660
+ the width is L by L, which is 128 by 128, and we only had, so we have 128
+
+07:17.660 --> 07:24.100
+ vertical positions, but only 1 7th of that number of angles, which is 18, so
+
+07:24.100 --> 07:30.340
+ that's why it's much shorter, is we have a kind of smaller number of angles.
+
+07:30.340 --> 07:46.180
+ Any other questions about this this X matrix? Okay, so let's move on to beta.
+
+07:46.180 --> 07:51.940
+ So beta is what we're solving for with the linear regression, and that's the
+
+07:51.940 --> 07:57.060
+ image, so we're trying to kind of recover the image from, you know, given knowing
+
+07:57.060 --> 08:01.780
+ just knowing what angle, what position the x-rays are coming from, and knowing
+
+08:01.780 --> 08:07.340
+ what the outputs are in terms of these kind of measurements of density that
+
+08:07.340 --> 08:15.340
+ were picked up by the CT scan, we're trying to solve for this image, which we
+
+08:15.340 --> 08:20.700
+ wouldn't actually have. And so in order to do that, or kind of to express that as
+
+08:20.700 --> 08:26.380
+ our linear regression, we have raveled the image from a 2D array into a 1D
+
+08:26.380 --> 08:34.500
+ array. So you'll see this is just this very tall, over 16,000 length vector, and
+
+08:34.500 --> 08:41.740
+ it consists of just a little bit hard to see, but it's mostly black with a few,
+
+08:41.740 --> 08:47.500
+ some white spots, which fits with this picture being mostly black background
+
+08:47.500 --> 08:57.100
+ and just a little bit of white. And so you can can see that how the kind of the
+
+08:57.100 --> 09:02.580
+ measurements, how they were gathered, were basically just by taking these x-rays
+
+09:02.580 --> 09:12.140
+ and multiplying them by the image we were x-raying, only as a vector. Any
+
+09:12.140 --> 09:30.780
+ questions? Does this help to kind of have it as a more standard linear
+
+09:30.780 --> 09:39.420
+ regression right out of matrix times a vector equals a vector? All right, and
+
+09:39.420 --> 09:45.820
+ then just to review, what penalty for our linear regression gave us the
+
+09:45.820 --> 10:00.060
+ best answer? And I hear mumblings, but I couldn't hear what was said. Yes, L1 is
+
+10:00.060 --> 10:05.060
+ the correct answer, and that's because the L1 norm induces sparsity. And so we
+
+10:05.060 --> 10:12.060
+ saw, I'm going to briefly show those again, that when we did a linear
+
+10:12.060 --> 10:19.060
+ regression with the L2 penalty, we don't get a very good answer. However, doing it
+
+10:19.060 --> 10:27.180
+ with the L1 penalty gives us almost exactly the right answer. Any final
+
+10:27.180 --> 10:42.420
+ questions on kind of notebook 4 compressed sensing? Okay, head back to
+
+10:42.420 --> 10:56.740
+ notebook 5. So we talked about this some last time, but I want to review some of
+
+10:56.740 --> 11:03.940
+ what we saw. So we're looking at this data set of diabetes data, and we've
+
+11:03.940 --> 11:07.700
+ broken it into a training set and a test set, which is really important so that
+
+11:07.700 --> 11:14.540
+ you don't overfit. Our training data is 353 rows, those are the measurements,
+
+11:14.540 --> 11:22.980
+ times 10 variables. And these are often called features in machine learning. We
+
+11:22.980 --> 11:29.140
+ did a linear regression in scikit-learn, just using, is this large enough? I should
+
+11:29.140 --> 11:37.260
+ probably make this bigger. Yeah, so we just use scikit-learn linear regression.
+
+11:37.260 --> 11:46.700
+ We get a prediction, and so here kind of as a starting point, our L2 error is 75,
+
+11:46.700 --> 11:54.860
+ our L1 error is 60, so not a great fit. And we talked about one way to
+
+11:54.860 --> 12:00.860
+ try to get a better fit would be to add polynomial features. And so kind of
+
+12:00.860 --> 12:05.860
+ linear regression for, here I just did a problem where you had three features, x0,
+
+12:05.860 --> 12:11.700
+ x1, and x2, you're trying to find the best coefficients beta naught, beta 1, beta 2.
+
+12:11.700 --> 12:19.300
+ And adding polynomial features just means taking, still have x0, x1, x2, and
+
+12:19.300 --> 12:29.740
+ then adding x0 squared, x0 x1, x0 x2, x1 squared, x1 times x2, and x2 squared.
+
+12:29.740 --> 12:35.100
+ Why do you think this is still a linear regression problem, even though we have
+
+12:35.100 --> 12:44.620
+ squared terms in here? Wait, Linda, can you throw that catch box to Connor?
+
+12:48.620 --> 12:53.820
+ Exactly, the coefficients are still linear. So we're just solving for the
+
+12:53.820 --> 12:58.780
+ betas, and so we're now solving for eight coefficients. And so this is a way to
+
+12:58.780 --> 13:02.900
+ kind of create a model that's going to capture a little bit more complexity in
+
+13:02.900 --> 13:08.820
+ case their interactions between x0 and x1, or if there's a squared relationship
+
+13:08.820 --> 13:13.660
+ between how the dependent variable, which in this case is I think like a
+
+13:13.660 --> 13:17.980
+ long-term health outcome for the diabetes patient, how that depends on
+
+13:17.980 --> 13:24.580
+ your inputs. But yeah, this still, you kind of calculate these additional features
+
+13:24.580 --> 13:29.340
+ and then you still have a matrix of values that are linear with beta. You
+
+13:29.340 --> 13:34.740
+ just have more coefficients you're finding. Questions about the setup of
+
+13:34.740 --> 13:38.220
+ using polynomial features?
+
+13:41.780 --> 13:50.420
+ All right, so we started off Scikit-Learn has a polynomial features method that
+
+13:50.420 --> 13:56.100
+ will create them for us. So we did that to get some additional training features,
+
+13:56.100 --> 14:03.780
+ which it's printed out here. And in our case, since we had ten, ten features that
+
+14:03.780 --> 14:13.180
+ we started with, we're getting back, we're now up to 65 features. And so it's just
+
+14:13.180 --> 14:19.500
+ calculated all the possible combinations. So H squared, H times sex, H times BMI,
+
+14:19.500 --> 14:29.420
+ blood pressure times serum level 2, but just any possible combination. So this
+
+14:29.420 --> 14:35.340
+ reduces our error when we run linear regression again with our kind of having
+
+14:35.340 --> 14:43.140
+ more features. The only issue is that time is squared just to even create
+
+14:43.140 --> 14:47.660
+ these features, and so this could possibly get slow as we have a larger
+
+14:47.660 --> 14:50.700
+ and larger data set.
+
+14:54.620 --> 15:02.660
+ So we saw Numba last time, and to make it clear Numba is a compiler and it is a
+
+15:02.660 --> 15:09.420
+ Python library that compiles code directly to C. I wanted to highlight, so I
+
+15:09.420 --> 15:12.860
+ think Jake Vander Plaas has some really nice, it's kind of like a nice
+
+15:12.860 --> 15:20.500
+ introduction. He also has a later blog post, let me open this, where he tries
+
+15:20.500 --> 15:25.460
+ to do a, or not tries, but does a non-trivial algorithm, which I thought
+
+15:25.460 --> 15:30.380
+ was nice since often we kind of see these test cases on simpler algorithms,
+
+15:30.380 --> 15:33.920
+ which is what I gave you, but so I definitely recommend checking out this
+
+15:33.920 --> 15:44.820
+ this blog post. And then I wanted to highlight a quote of his. This is from
+
+15:44.820 --> 15:50.980
+ his kind of intro post. He says that, so for this problem he does, Numba is a
+
+15:50.980 --> 15:55.300
+ thousand times faster than a pure Python implementation and only marginally
+
+15:55.300 --> 16:00.340
+ slower than nearly identical Cython code, and Cython is another Python library
+
+16:00.340 --> 16:05.140
+ slash compiler, you know, that compiles directly to C. And he says that he has
+
+16:05.140 --> 16:10.020
+ years of experience with Cython and only an hour's experience with Numba, and he
+
+16:10.020 --> 16:13.840
+ was using every optimization he knew for the Cython variation and just the basic
+
+16:13.840 --> 16:18.220
+ vanilla syntax for Numba. So I think this is a really strong endorsement of
+
+16:18.220 --> 16:23.220
+ Numba over Cython, that it took less knowledge, and I've only used Cython a
+
+16:23.220 --> 16:28.460
+ little bit, but this was my experience that there was more more to learn about
+
+16:28.460 --> 16:34.180
+ Cython and it felt closer to C, whereas Numba is very simple to use, and I saw
+
+16:34.180 --> 16:40.660
+ kind of similar results for the problem that I, problems I've tried it on. And
+
+16:40.660 --> 16:47.020
+ again, Cython and Numba are both, both ways to compile your Python to C for
+
+16:47.020 --> 16:58.220
+ additional optimization. So I wanted to walk through kind of our example again
+
+16:58.220 --> 17:07.060
+ that we saw last time. So we have this Python algorithm that is bit contrived,
+
+17:07.060 --> 17:11.740
+ and we'll be using it for polynomial feature generation though next. This is
+
+17:11.740 --> 17:17.900
+ just as an introduction, and so we're going through this for loop with kind of
+
+17:17.900 --> 17:22.860
+ doing a number of operations with X and Y to calculate a new vector Z. We time it
+
+17:22.860 --> 17:29.940
+ and it's 49 millisecond, yeah 49 milliseconds, and then we use NumPy to
+
+17:29.940 --> 17:36.220
+ vectorize it. So here we've taken out the for loop and are just acting on the
+
+17:36.220 --> 17:41.340
+ vectors. So you can see this pure Python got a for loop where we go through each
+
+17:41.340 --> 17:46.260
+ element of the array, and then NumPy has this built-in vectorization where we can
+
+17:46.260 --> 17:53.180
+ just treat X and Y as vectors and do our operations on them. And this is a lot
+
+17:53.180 --> 17:58.740
+ faster. This is 30, 35 microseconds. So again, we've gone from milliseconds to
+
+17:58.740 --> 18:04.500
+ microseconds, which is a thousand times speed up using NumPy. And so what's a,
+
+18:04.500 --> 18:23.020
+ what's a downside to this NumPy approach? Any ideas?
+
+18:23.020 --> 18:39.860
+ Sam? Oh wait, Connor threw the catch box. Thanks. Yes, poor localization. You want to say
+
+18:39.860 --> 18:46.060
+ more about what that means? Yeah, instead of doing one operation on a single value
+
+18:46.060 --> 19:04.860
+ from the X vector and a single value from the Y vector, it's going to read in all of X and all of Y at every stage and process. Yes, exactly. So that I can give this back. Thank you.
+
+19:04.860 --> 19:11.620
+ Yeah, so as Sam said, what's happening here is that it's gonna read in all of X
+
+19:11.620 --> 19:15.820
+ and Y, and if these are very long vectors they might not all fit in cache. And so
+
+19:15.820 --> 19:19.180
+ that would mean it's reading in the first part of X and the first part of Y,
+
+19:19.180 --> 19:24.060
+ doing this computation, then reading in, you know, a later part of X, later part of
+
+19:24.060 --> 19:28.860
+ Y, still on the same line, you know, doing this X squared minus Y times 55
+
+19:28.860 --> 19:33.500
+ computation, and then another section of X and Y, and then it goes to the next
+
+19:33.500 --> 19:37.180
+ line and it has to do all that again. You know, it has to read in the first part of
+
+19:37.180 --> 19:42.020
+ the vector X, the first part of the vector Y, read in the second part, and so
+
+19:42.020 --> 19:47.140
+ on, if the vector, you know, is large enough to not fit all in all in cache.
+
+19:47.140 --> 19:51.820
+ And so, yeah, as Sam said, that's poor localization and can be more time
+
+19:51.820 --> 20:00.420
+ consuming. So then we get Numba. Numba offers several different decorators and
+
+20:00.420 --> 20:06.620
+ we're just going to talk about two of them. One is at JIT, which stands for
+
+20:06.620 --> 20:12.660
+ just-in-time compilation. It's a little bit confusing because I think all of
+
+20:12.660 --> 20:17.420
+ Numba's compilers are just-in-time, but this is kind of the most general one.
+
+20:17.420 --> 20:23.920
+ And then we'll also look at vectorize, which doesn't require us to write a
+
+20:23.920 --> 20:28.460
+ for loop, and so that's really useful when operating on vectors of the same
+
+20:28.460 --> 20:34.420
+ size. And what vectorize is doing is it's automatically writing something
+
+20:34.420 --> 20:42.180
+ called a numpy u-funk for us. So a numpy u-funk, that's a, I'll pull up the
+
+20:42.180 --> 20:51.220
+ the page, and it's a universal function. And that's something that's a kind of
+
+20:51.220 --> 20:56.900
+ like lower level within numpy and more of a more difficult to write yourself
+
+20:56.900 --> 21:01.500
+ where you are writing in C to be creating those. But Numba will kind of
+
+21:01.500 --> 21:09.540
+ create those for you if you use that vectorize. Yeah, we'll start though with
+
+21:09.540 --> 21:17.740
+ at JIT. So you just put the decorator on the line before, kind of before you
+
+21:17.740 --> 21:25.460
+ define your method. We still have our for loop. We're going through, and now when we
+
+21:25.460 --> 21:32.660
+ time it, it's six microseconds. So again, just to remember, the numpy version was
+
+21:32.660 --> 21:39.100
+ 36 microseconds. So this has been a six, six times speed up over numpy, and numpy
+
+21:39.100 --> 21:51.420
+ was a thousand times speed up over pure Python. And then with at vectorize, this
+
+21:51.420 --> 21:55.660
+ is kind of the same as the at JIT version, only we don't have the for loop.
+
+21:55.660 --> 22:02.420
+ And there we get five point eight two microseconds, which is kind of almost the
+
+22:02.420 --> 22:07.020
+ same, although I think this is cleaner to read because you don't have the for loop.
+
+22:07.020 --> 22:11.700
+ However, if you were doing something where you weren't acting on vectors of
+
+22:11.700 --> 22:15.740
+ the same size to kind of get back a vector of that size, at JIT would be
+
+22:15.740 --> 22:22.180
+ good to use. So I just want to say numpy, or sorry, numba is amazing, because
+
+22:22.180 --> 22:39.780
+ this is really fast and fairly simple to write. Sam? Yes, and so actually a ufunk,
+
+22:39.780 --> 22:44.740
+ so really what's at vectorize is doing is creating this numpy ufunk, which is
+
+22:44.740 --> 22:49.980
+ required to have broadcasting for you. So yeah, this would have broadcasting. And
+
+22:49.980 --> 22:53.740
+ that's a benefit of numba is you're not having to like code the broadcasting
+
+22:53.740 --> 23:16.900
+ yourself to create the ufunk. Correct.
+
+23:16.900 --> 23:29.980
+ Yes, and that's because numba is kind of has smarter optimization than numpy. So
+
+23:29.980 --> 23:36.620
+ the issue with numpy is it's not able to look ahead, like numpy is still going
+
+23:36.620 --> 23:41.020
+ kind of line by line through this algorithm. So it's basically kind of
+
+23:41.020 --> 23:47.260
+ completing, you know, x squared minus y times 55 before it even looks at this
+
+23:47.260 --> 23:54.460
+ like, oh now I have to do something with x and y again. Whereas because
+
+23:54.460 --> 23:58.620
+ this decorator is like for the whole method, numba is optimizing kind of that
+
+23:58.620 --> 24:02.900
+ whole method as a unit. So it's got a little bit of, you know, this like bigger
+
+24:02.900 --> 24:12.300
+ picture of like, hey I'm gonna be using x and y again on the next line. Any other
+
+24:12.300 --> 24:33.580
+ questions about this? All right, so let's, oh, oh wait, wait for the microphone.
+
+24:33.580 --> 24:55.140
+ That's a good question. Numpy is gonna have a lot more specialized methods
+
+24:55.140 --> 25:02.140
+ written, like numpy is a much larger library. So I think it's possible that if
+
+25:02.140 --> 25:09.500
+ you are doing kind of like some fancy specific numpy method that numba may not
+
+25:09.500 --> 25:20.580
+ have that written. Right, yes, yeah, yeah, and you can use them together, yeah. Yeah
+
+25:20.580 --> 25:24.020
+ and I I really feel like this is something that numba just doesn't seem
+
+25:24.020 --> 25:29.740
+ that widely known to exist, but I think it's a relatively simple tool that
+
+25:29.740 --> 25:32.740
+ gives you a nice speed-up.
+
+25:48.740 --> 25:53.860
+ I'm not sure about that one. And the other, I want to say a numba has more
+
+25:53.860 --> 25:58.540
+ functionality that I'm not getting into, but numba gives you the option of
+
+25:58.540 --> 26:02.660
+ explicitly passing types or like explicitly setting like this is what the
+
+26:02.660 --> 26:15.500
+ types of the method will be. Okay, so let's go back to the problem we were
+
+26:15.500 --> 26:23.620
+ interested in of polynomial features. So we're adding our at JIT decorator and
+
+26:23.620 --> 26:34.820
+ here, and actually let me go to, um, this gives you different, different options.
+
+26:34.820 --> 26:38.780
+ And no Python
+
+26:44.020 --> 26:52.980
+ disables the use of pi objects and Python API calls. And there's also, I'll
+
+26:52.980 --> 26:56.940
+ show an example of this later, but there is also, you could pass the types in, I
+
+26:56.940 --> 27:00.100
+ believe, here if you want to say explicitly what kind of types the
+
+27:00.100 --> 27:03.500
+ method's taking.
+
+27:13.140 --> 27:19.820
+ So I wanted to just kind of show the punchline of when we use, we use this
+
+27:19.820 --> 27:30.500
+ method, our polynomial vectorization, the time is seven microseconds. And so to
+
+27:30.500 --> 27:34.660
+ compare that to what we were getting above with the scikit-learn of
+
+27:34.660 --> 27:40.740
+ polynomial features, we were getting 600 microseconds. So this is about a hundred
+
+27:40.740 --> 27:45.300
+ times speed up, which is pretty impressive because everything at
+
+27:45.300 --> 27:49.340
+ scikit-learn has been kind of written by experts and pretty heavily optimized. And
+
+27:49.340 --> 27:55.980
+ so here, I should maybe go through a little bit. Here basically what we're
+
+27:55.980 --> 28:03.460
+ doing is just kind of looping, looping through our, our features and taking all
+
+28:03.460 --> 28:08.940
+ possible combinations, multiplying them together, and kind of in order to
+
+28:08.940 --> 28:22.640
+ increase our number of features. And this is just adding something, kind of adding
+
+28:22.640 --> 28:34.540
+ all the squared terms. Okay, yeah, so, so a big speed up there. And then something I
+
+28:34.540 --> 28:39.020
+ skipped over, let me go back to this, is I basically I wanted to talk a little
+
+28:39.020 --> 28:44.260
+ bit about row major versus column major storage, and I found there's a nice blog
+
+28:44.260 --> 28:55.940
+ post on it. And so the idea of row major storage is you're storing things by rows
+
+28:55.940 --> 29:01.860
+ and column major you're storing by columns. So here kind of first column,
+
+29:01.860 --> 29:14.060
+ second column, third column. And so it's important to know, or it can be very
+
+29:14.060 --> 29:18.100
+ important to know how your data is stored, you know, and and in many ways it
+
+29:18.100 --> 29:22.980
+ doesn't matter beyond just knowing because it makes it easier kind of to
+
+29:22.980 --> 29:26.540
+ access your data. If you're using column major, it's easier to access it by column.
+
+29:26.540 --> 29:31.800
+ If you're using row major, it's easier to access it by row. Actually I should show
+
+29:31.800 --> 29:38.180
+ so here with row major storage, if you wanted to access the first column, you
+
+29:38.180 --> 29:41.400
+ would have to kind of grab this element and then this element and then this
+
+29:41.400 --> 29:45.900
+ element, you know, which are not not contiguous in memory. Whereas column
+
+29:45.900 --> 29:49.060
+ major storage, it's easy to get a particular column because they're all
+
+29:49.060 --> 29:53.580
+ next to each other and so it'll be quicker to access, but vice-versa that
+
+29:53.580 --> 29:57.220
+ it's easier to grab a row from row major storage, whereas here if you wanted the
+
+29:57.220 --> 30:04.100
+ second row, you have to kind of jump around to grab the elements. So this
+
+30:04.100 --> 30:10.060
+ somewhat unfortunately is that this is not consistent between languages and so
+
+30:10.060 --> 30:15.860
+ FORTRAN is column major layout and it was kind of the first major language to
+
+30:15.860 --> 30:23.660
+ use column major. And then MATLAB, R, and Julia also use column major. C, C++, Python,
+
+30:23.660 --> 30:28.820
+ Pascal, and Mathematica all use row major. And this really just kind of
+
+30:28.820 --> 30:32.060
+ matters when you're writing algorithms. If you're using column major, you
+
+30:32.060 --> 30:34.880
+ probably want to loop by columns. If you're using row major, you want to loop
+
+30:34.880 --> 30:41.900
+ by rows. And so NumPy gives you the functionality to switch between those. So
+
+30:41.900 --> 30:47.380
+ there's this as FORTRAN array to convert it from row major to
+
+30:47.380 --> 30:53.860
+ column major. And so we're using that here. That's kind of the logic behind
+
+30:53.860 --> 31:05.540
+ that. Questions about row major versus column major? Okay, so here we've
+
+31:05.540 --> 31:14.660
+ converted our train and test because that's what we need for this our
+
+31:14.660 --> 31:20.940
+ polynomial vectorization. Since we're, you know, taking columns of data and
+
+31:20.940 --> 31:24.460
+ multiplying them by each other to create our new features, we want column major
+
+31:24.460 --> 31:26.900
+ layout.
+
+31:33.940 --> 31:39.300
+ And so again this is this is giving us a big speed up over scikit-learn. And this
+
+31:39.300 --> 31:42.980
+ is a kind of real problem we might want to solve to to improve our linear
+
+31:42.980 --> 31:45.460
+ regression.
+
+31:53.740 --> 31:58.860
+ Alright, so then as a final step we want to add some regularization to our model
+
+31:58.860 --> 32:09.220
+ to reduce overfitting. So here lasso regression is what uses an L1
+
+32:09.220 --> 32:14.060
+ penalty. We're gonna try using that here. And I've linked to, there's a Coursera
+
+32:14.060 --> 32:19.100
+ video on lasso regression if anyone wanted more. And at this point we've
+
+32:19.100 --> 32:27.820
+ already seen the L1 penalty a few times, or at least two times. Can anyone
+
+32:27.820 --> 32:36.300
+ remember what the two times we've seen the L1 penalty is? Someone raise
+
+32:36.300 --> 32:39.940
+ their hand and get the microphone from Sam.
+
+32:43.460 --> 32:48.020
+ Exactly, yeah. So robust PCA for the background removal of the surveillance
+
+32:48.020 --> 32:55.460
+ video and then for the CT scan compressed sensing problem. Yeah, so here
+
+32:55.460 --> 33:00.780
+ scikit-learn has a lasso CV. We're not going to get too deep into, have you
+
+33:00.780 --> 33:05.860
+ have you all seen cross-validation in your other courses? Okay, great. I see a
+
+33:05.860 --> 33:12.260
+ lot of nodding heads. And that's just kind of comparing different parameters.
+
+33:12.260 --> 33:16.860
+ And so here, so alpha is the weight of how much weight to put on the air and
+
+33:16.860 --> 33:22.020
+ this will compare ten different alphas and tell us what the best the best one
+
+33:22.020 --> 33:29.580
+ is. So we do that and we get an improvement in our regression, our metrics.
+
+33:29.580 --> 33:40.620
+ Again, this is the L2 norm and the L1 norm. Those are now down to 50 and 40. And
+
+33:40.620 --> 33:49.260
+ so kind of when we ran this cross lasso cross-validation we were getting back a
+
+33:49.260 --> 33:57.300
+ model that had alpha set to you know what the optimal one was. And this does
+
+33:57.300 --> 34:05.420
+ have additional parameters like if you wanted to set yourself which which alphas
+
+34:05.420 --> 34:08.140
+ you want to try.
+
+34:08.140 --> 34:27.980
+ And finally we're gonna add some noise to the data. So we do that here and this
+
+34:27.980 --> 34:39.020
+ can be another way to try to kind of reduce our overfitting. Then I also just
+
+34:39.020 --> 34:43.780
+ wanted to kind of briefly show you the the Hoover loss and that's a yet another
+
+34:43.780 --> 34:49.240
+ loss method, loss function. I mean it's less sensitive to outliers than squared
+
+34:49.240 --> 34:54.300
+ error loss. Basically what it is is it's quadratic for small error values and
+
+34:54.300 --> 34:58.980
+ then linear for large values. So this is what this method is doing. It's saying
+
+34:58.980 --> 35:05.860
+ for X less than a certain value this is going to be quadratic. For larger X this
+
+35:05.860 --> 35:13.260
+ will be linear. And the use of the 1 halves are to make sure that it's
+
+35:13.260 --> 35:19.780
+ differentiable. So even where it meets up at point delta it's still differentiable.
+
+35:19.780 --> 35:25.500
+ So we tried to try using that that or actually so I guess here this is kind of
+
+35:25.500 --> 35:35.100
+ illustrating you know if we had this had noise our method is giving us a worse
+
+35:35.100 --> 35:55.220
+ error but we can kind of improve it by using a better loss function. Any
+
+35:55.220 --> 36:13.060
+ questions Roger? And Tim can you throw the microphone? So here oh that's a great
+
+36:13.060 --> 36:18.380
+ question. Really that would be the error. So that would be the difference between
+
+36:18.380 --> 36:25.020
+ the prediction and the actual value. Good question.
+
+36:25.020 --> 36:45.500
+ Any other questions? Matthew? And can you throw that microphone?
+
+36:45.500 --> 37:03.460
+ That's yeah that's that's a good question. I think some of it also
+
+37:03.460 --> 37:07.540
+ depends on your problem like if you think that outliers are kind of less
+
+37:07.540 --> 37:16.580
+ important it could be good to to use the Hooper loss method. Yeah choosing a loss
+
+37:16.580 --> 37:23.540
+ method in general is kind of involves some of kind of like your perspective on
+
+37:23.540 --> 37:27.900
+ the problem. You know so like with the going back to the CT scan we could like
+
+37:27.900 --> 37:32.700
+ look at the pictures and know like okay this L2 picture is not what we want. We
+
+37:32.700 --> 37:35.680
+ know that we're supposed to be getting something that looks more like the
+
+37:35.680 --> 37:41.660
+ picture getting from the L1 but yeah I think they're kind of it requires some
+
+37:41.660 --> 37:46.300
+ domain knowledge about your problem or what you're what you're trying to find.
+
+37:46.300 --> 37:52.180
+ Yeah it's tough because you know each like the loss method itself is what's
+
+37:52.180 --> 38:02.060
+ saying a good solution is but you have to still choose which loss method. Thanks.
+
+38:02.060 --> 38:05.700
+ Any other questions?
+
+38:09.700 --> 38:13.260
+ Yeah we're a little bit early but I think this might be a good time to stop
+
+38:13.260 --> 38:20.420
+ for our break and not not start the next notebook until after that. Yeah so let's
+
+38:20.420 --> 38:30.140
+ meet back here in eight minutes so that'll be 11 11 56. Okay I'm gonna go
+
+38:30.140 --> 38:37.060
+ ahead and start back up. So yeah I just wanted to kind of say the key takeaways from lesson
+
+38:37.060 --> 38:44.380
+ five are kind of one you know polynomial features as relatively easy way to try
+
+38:44.380 --> 38:50.340
+ to kind of improve performance while still using linear regression and you
+
+38:50.340 --> 38:55.580
+ know let you capture kind of this interaction of how how features interact
+
+38:55.580 --> 39:03.380
+ with each other and then number as a is a great way to speed up your code. Any
+
+39:03.380 --> 39:17.000
+ questions? Let's start start on lesson lesson six how to implement linear
+
+39:17.000 --> 39:21.260
+ regression. So we've been using scikit-learns implementation and now
+
+39:21.260 --> 39:24.660
+ we're kind of gonna go a level deeper and think about how would we implement
+
+39:24.660 --> 39:29.780
+ this ourselves. First so we're still going to be working with the same same
+
+39:29.780 --> 39:34.580
+ data set as before the diabetes data set.
+
+39:34.740 --> 39:40.540
+ First let's look at how scikit-learn did this and so you can check the source
+
+39:40.540 --> 39:45.820
+ code and it's really handy actually I didn't go there but on the scipy
+
+39:45.820 --> 39:51.180
+ documentation so let me show this typically when you search for something
+
+39:51.180 --> 40:00.780
+ you know you're interested in scikit-learn least squares. Actually I
+
+40:00.780 --> 40:18.960
+ should probably do scipy and it's kind of nice on the documentation there's
+
+40:18.960 --> 40:23.420
+ always a link to the source code and so I think this is can be really helpful
+
+40:23.420 --> 40:28.320
+ for getting more more information about what you're doing. Let me just go back
+
+40:28.320 --> 40:34.860
+ here to make sure. So here I wanted to look at scipy linear regression that
+
+40:34.860 --> 40:41.040
+ we've been using and see kind of what is it what is it doing and then we'll be
+
+40:41.040 --> 40:44.540
+ there'll be stuff you can kind of skim through more where they're just you know
+
+40:44.540 --> 40:50.780
+ like maybe checking the inputs or creating an object. And here the
+
+40:50.780 --> 40:57.060
+ interesting part to me was I was saying okay how did they get the coefficients
+
+40:57.060 --> 41:01.860
+ and here they're handling the case if it's sparse or not. We were working with
+
+41:01.860 --> 41:08.260
+ a matrix that wasn't sparse and we see it's calling linouch.leastsquare so
+
+41:08.260 --> 41:23.940
+ then we can go there and just confirm that they are importing linouch from
+
+41:23.940 --> 41:49.700
+ scipy. So we want actually, sorry, they had called it LSTQ, right?
+
+41:49.700 --> 42:14.660
+ Yeah, linouch.lstsq. So come here to the documentation and then into the
+
+42:14.660 --> 42:25.180
+ source code. Then we scroll down and so we're kind of getting a hint here that
+
+42:25.180 --> 42:29.920
+ so they're using a law pack driver. Actually can anyone remember what is law
+
+42:29.920 --> 42:55.660
+ pack? The linear algebra package and also known as B pack and MKL, the most known name.
+
+42:55.660 --> 43:06.740
+ So close. Does anyone want to elaborate on that or clarify a little?
+
+43:06.740 --> 43:13.420
+ Yeah so law pack is a low-level linear algebra library and it's using BLAST
+
+43:13.420 --> 43:19.240
+ which is kind of even lower level library for basic matrix computations. So
+
+43:19.240 --> 43:22.980
+ BLAST is gonna have things like this is how you do matrix vector multiplication,
+
+43:22.980 --> 43:26.880
+ this is how you do matrix matrix multiplication, and then law pack is a
+
+43:26.880 --> 43:35.380
+ layer above that and is kind of has you know these decompositions we've seen
+
+43:35.380 --> 43:42.540
+ like this is how you do SVD or QR and this is something that has been heavily
+
+43:42.540 --> 43:48.740
+ heavily optimized. And law pack I believe came out in the early 90s so let me
+
+43:48.740 --> 43:56.260
+ bring up the notebook just to make sure I get the facts right. Law pack has
+
+43:56.260 --> 44:01.500
+ kind of been optimized for each computer and so no libraries like numpy are
+
+44:01.500 --> 44:05.580
+ calling law pack and pretty much any scientific library in any language is
+
+44:05.580 --> 44:22.260
+ going to be calling law pack at a lower lower level. Just briefly bring that up.
+
+44:22.260 --> 44:51.740
+ Okay I'll come back to this. Sorry this is somewhere in in this
+
+44:51.740 --> 45:00.080
+ lesson. I have a little bit more detail about it. Oh you know what it's up in the
+
+45:00.080 --> 45:18.580
+ matrix computation section. Okay sorry about that I'll find that and show that
+
+45:18.580 --> 45:23.940
+ next time. But yeah law pack low-level library being called by pretty much all
+
+45:23.940 --> 45:31.300
+ scientific computing libraries. So yeah we were back here in the scipy source
+
+45:31.300 --> 45:38.260
+ code. It'll become important that kind of that taking one of these says law pack
+
+45:38.260 --> 45:51.740
+ drivers GLSD GLSY GLSS and it's gonna call them yeah down here it's kind of is
+
+45:51.740 --> 45:58.580
+ checking for the driver and then calling that from law pack. And so kind of the
+
+45:58.580 --> 46:03.860
+ information we have is that options and this shows up in the comment at the top
+
+46:03.860 --> 46:14.860
+ the options are GLSD GLSY and GLSS. The default is GLSD however GLSY can be
+
+46:14.860 --> 46:20.460
+ slightly faster. GLSS was used historically. It's slow but uses less
+
+46:20.460 --> 46:23.740
+ memory. And so this can be kind of helpful to read and this is something
+
+46:23.740 --> 46:28.660
+ that we could override if we wanted kind of still wanted to be using scipy's
+
+46:28.660 --> 46:33.500
+ least squares but wanted it to use a different method at this low level. And
+
+46:33.500 --> 46:37.660
+ so this is also kind of I think interesting to see that scipy has you
+
+46:37.660 --> 46:42.980
+ know at least two two main options. You know it's not using the same algorithm
+
+46:42.980 --> 46:49.540
+ necessarily all the time. And then just here I did not get into the details of
+
+46:49.540 --> 46:55.980
+ this of this at all. You can kind of just get like the very basic kind of oh this
+
+46:55.980 --> 47:00.860
+ is computes the minimum nor solution to a linear the square problem using the
+
+47:00.860 --> 47:05.660
+ SVD decomposition and a divide-and-conquer method. And so the key
+
+47:05.660 --> 47:08.980
+ thing here is I didn't want you to get into the details at all but I do want
+
+47:08.980 --> 47:14.540
+ you to feel comfortable looking at scipy source code and you know particularly at
+
+47:14.540 --> 47:19.140
+ least like reading the comments in there because they can be helpful. Yeah just to
+
+47:19.140 --> 47:21.780
+ show that there are these three different methods that could be
+
+47:21.780 --> 47:31.940
+ happening under the hood. And then I glossed over this but we saw that it was
+
+47:31.940 --> 47:37.140
+ you know had this if statement if is sparse call these methods if not call
+
+47:37.140 --> 47:41.780
+ these other ones. We're not going to dwell on the sparse one at all but I
+
+47:41.780 --> 47:45.900
+ wanted to say that scipy's and then this was happening at scikit-learn it was
+
+47:45.900 --> 47:53.100
+ calling scipy sparse if it's sparse, the scipy lin-alge normal one if it's not,
+
+47:53.100 --> 48:01.420
+ that it's using yet another method for the sparse ones. And so that's something
+
+48:01.420 --> 48:05.340
+ that's typically hidden from you when you're just using scikit-learn's linear
+
+48:05.340 --> 48:11.700
+ regression that these different things could be happening. So lin-alge dot least
+
+48:11.700 --> 48:19.740
+ square here I've tried calling it and overriding so passing in la pack driver
+
+48:19.740 --> 48:30.420
+ GLSD Y or S and comparing the times on those. And so I got that GLSY was
+
+48:30.420 --> 48:38.220
+ it's about twice as fast as GLSD and notice it defaults to GLSD so that could
+
+48:38.220 --> 48:42.500
+ you know in this case maybe you would want to override it and use GLSY but
+
+48:42.500 --> 48:48.440
+ it's only a 2x speed up. And I actually don't know what's going on here but it's
+
+48:48.440 --> 48:56.740
+ kind of interesting to me that the GLSD is slower than GLSS which is what it had
+
+48:56.740 --> 49:03.060
+ said is like the older version that's generally slow. And these things would
+
+49:03.060 --> 49:06.340
+ all depend on what problem you're doing so if you did this on a different
+
+49:06.340 --> 49:10.700
+ problem you might get that a different method was faster.
+
+49:15.780 --> 49:20.980
+ Alright so now we're gonna kind of step back so that was still using SciPy's
+
+49:20.980 --> 49:26.980
+ implementation. We'll step back and kind of remember the definition of the least
+
+49:26.980 --> 49:34.420
+ squares problem is we're wanting to minimize ax minus b and trying to find
+
+49:34.420 --> 49:41.020
+ the best best values for X to do that. Another way to think about this in
+
+49:41.020 --> 49:46.160
+ linear algebra is that we're interested in where vector b is closest to the
+
+49:46.160 --> 49:51.820
+ subspace spanned by a which is called the range of a. And kind of think of this
+
+49:51.820 --> 49:57.820
+ as the projection of b on to a because if you think about all possible vectors
+
+49:57.820 --> 50:05.620
+ x multiplying those by a give you the range of a you know any possible yeah
+
+50:05.620 --> 50:09.460
+ any vector that could be in the range and you're trying to find the one that's
+
+50:09.460 --> 50:20.620
+ closest to b. And so that that can be expressed as b minus so b minus ax must
+
+50:20.620 --> 50:25.740
+ be perpendicular to the subspace span by a that's kind of getting from b to ax
+
+50:25.740 --> 50:30.460
+ since it's a projection would be the the perpendicular and let me um maybe I
+
+50:30.460 --> 50:34.180
+ should go to the drawing pad for that.
+
+50:36.820 --> 50:41.140
+ Oh I actually wanted the other one.
+
+50:41.140 --> 51:07.420
+ So if we think of ax really we've got a plane where this is a times x for all
+
+51:07.420 --> 51:14.920
+ X's will give us some you know two-dimensional plane and then we've
+
+51:14.920 --> 51:36.220
+ got some so that was a bad angle some vector b we're trying to find the X to
+
+51:36.220 --> 51:40.260
+ minimize a X minus B.
+
+51:47.900 --> 51:54.980
+ And so that's the projection of B onto onto a X and that would yeah we could
+
+51:54.980 --> 52:05.380
+ write oh let's write this as a X hat is in that plane and so then this is where
+
+52:05.380 --> 52:16.460
+ so this line here you know is B minus ax hat and that must be perpendicular to a.
+
+52:16.460 --> 52:24.000
+ This is the whole plane and I'll show I'm gonna show another three blue one
+
+52:24.000 --> 52:28.100
+ brown video in a little while so this is kind of getting back to a more geometric
+
+52:28.100 --> 52:43.780
+ way of thinking about matrices and vectors. Any questions here? Okay so going
+
+52:43.780 --> 52:49.460
+ back to the notebook you know we end up with a transpose times B minus ax hat
+
+52:49.460 --> 52:58.020
+ must be zero and this is where the normal equations come from and this is
+
+52:58.020 --> 53:05.980
+ kind of the closed form solution for linear regression least squares problem.
+
+53:05.980 --> 53:12.740
+ And so we could we could do this I call this least squares naive and this is an
+
+53:12.740 --> 53:15.840
+ approach that you would not actually want to use in practice because you're
+
+53:15.840 --> 53:20.580
+ taking a matrix inverse which you generally want to really want to avoid
+
+53:20.580 --> 53:25.620
+ doing but I just kind of did this as as a starting point of this is something
+
+53:25.620 --> 53:31.500
+ that would work assuming I guess it would work assuming that a is not
+
+53:31.500 --> 53:34.320
+ something we're gonna end up dividing by a number close to zero to get its
+
+53:34.320 --> 53:54.740
+ inverse. Matthew and who has the microphone? Nice. Yeah so it's both it's
+
+53:54.740 --> 53:58.300
+ both computationally expensive and it can also be unstable because you end up
+
+53:58.300 --> 54:10.060
+ dividing by things. Yeah good question so here this was just kind of a first stab
+
+54:10.060 --> 54:15.980
+ at implementing something that would give us an answer for linear least
+
+54:15.980 --> 54:32.300
+ squares regression. Alright so then I'm coming off of that so then this these
+
+54:32.300 --> 54:37.700
+ are called the normal equations this equation we got above and really this is
+
+54:37.700 --> 54:42.060
+ that this equation has been rewritten and we're just taking a transpose B or
+
+54:42.060 --> 54:46.300
+ I guess we're taking a transpose ax to the other side so we have a transpose ax
+
+54:46.300 --> 55:00.220
+ equals a transpose B and and so if if a is full rank a transpose a is gonna give
+
+55:00.220 --> 55:06.660
+ us a if a is square well actually not even square if a is full rank we're
+
+55:06.660 --> 55:14.660
+ gonna get a square Hermitian positive definite matrix for a transpose a and
+
+55:14.660 --> 55:19.020
+ square Hermitian positive definite matrices have something called a Cholesky
+
+55:19.020 --> 55:24.500
+ decomposition and the Cholesky decomposition or Cholesky factorization
+
+55:24.500 --> 55:32.140
+ finds an upper triangular matrix R such that R transpose times R equals your
+
+55:32.140 --> 55:38.620
+ matrix and what would our so if R is upper triangular what would our
+
+55:38.620 --> 55:54.700
+ transpose be yes lower triangular that's correct not all questions I ask are hard
+
+55:54.700 --> 56:00.300
+ so so what we're doing so in this case we're looking at a transpose a we're
+
+56:00.300 --> 56:06.620
+ gonna take the Cholesky factorization and that'll give us back R such that a
+
+56:06.620 --> 56:16.260
+ transpose a is R transpose times R a transpose times a equals R transpose
+
+56:16.260 --> 56:27.180
+ times R here I've just pre computed a transpose a since I'm gonna be using it
+
+56:27.180 --> 56:34.700
+ a few times as well as a transpose B and then I'm gonna use sci-pies
+
+56:34.700 --> 56:40.980
+ implementation of the Cholesky factorization as a warning and numpy and
+
+56:40.980 --> 56:46.020
+ sci-pi default to different one of them returns the upper triangular matrix and
+
+56:46.020 --> 56:48.980
+ one returns the lower triangular matrix which I discovered the hard way I
+
+56:48.980 --> 56:52.860
+ didn't realize I was switching between numpy and sci-pi and was like using this
+
+56:52.860 --> 56:59.260
+ and other operations and getting different answers but yeah so we can and
+
+56:59.260 --> 57:01.620
+ so it's always good after you do this to kind of check that what you're doing
+
+57:01.620 --> 57:12.260
+ makes sense so I'm passing a transpose a in and actually let's even look at oh
+
+57:12.260 --> 57:30.540
+ okay that's difficult to see so remember an NP dot set print options is super
+
+57:30.540 --> 57:37.300
+ useful you can do suppress equals true to not show zeros in this format with an
+
+57:37.300 --> 57:44.660
+ exponential 0.00 yeah 0 0 which is not very readable and then you can also set
+
+57:44.660 --> 57:49.540
+ the number of digit digits you want to see although this is a matrix I guess is
+
+57:49.540 --> 57:54.820
+ still kind of too large to be that that viewable but I can believe that this
+
+57:54.820 --> 58:00.780
+ this looks like an upper triangular matrix that I've gotten back and then
+
+58:00.780 --> 58:08.180
+ I'm just confirming that a transpose a minus R dot transpose times R is giving
+
+58:08.180 --> 58:13.140
+ me something close to zero so a transpose a is approximately equal to R
+
+58:13.140 --> 58:23.940
+ dot transpose R and so then the way that the Cholesky factorization is useful in
+
+58:23.940 --> 58:30.500
+ solving the linear least squares problem is so we can plug it in now we have our
+
+58:30.500 --> 58:37.060
+ R instead of a then we have our transpose and here I'm calling our X
+
+58:37.060 --> 58:41.860
+ saying that that equals W you can see this last line setting that equals to a
+
+58:41.860 --> 58:48.660
+ transpose B and getting our X equals W so why is that why is this helpful right
+
+58:48.660 --> 58:52.300
+ like I've just kind of written this equation a few different ways why might
+
+58:52.300 --> 58:57.780
+ this be better than just sticking with our a transpose a X equals a transpose
+
+58:57.780 --> 59:20.860
+ B oh wait Matthew okay throw it so now it's much easier to solve the last
+
+59:20.860 --> 59:36.660
+ equation exactly exactly yeah so that's it solving linear systems of equations
+
+59:36.660 --> 59:40.540
+ for a triangular matrix is a lot easier because you just start with the last
+
+59:40.540 --> 59:45.140
+ entry you know divide by one thing then you plug into the second to last entry
+
+59:45.140 --> 59:51.140
+ and so on so it's much simpler than solving a linear system where you have a
+
+59:51.140 --> 59:56.940
+ non triangular matrix and so we've kind of just changed this into having to
+
+59:56.940 --> 1:00:04.860
+ solve two triangular systems of equations so we solve I guess we would
+
+1:00:04.860 --> 1:00:10.740
+ solve this one first to find W and then we solve the one on the last line to
+
+1:00:10.740 --> 1:00:18.220
+ find X which is our original answer this I think kind of illustrates some a lot
+
+1:00:18.220 --> 1:00:22.180
+ of numerical linear algebra is about getting these factorizations and often
+
+1:00:22.180 --> 1:00:24.900
+ it looks like okay you've just rewritten the problem you know you still have all
+
+1:00:24.900 --> 1:00:29.260
+ these factors but it's because of the properties of the matrices you factored
+
+1:00:29.260 --> 1:00:37.740
+ into you've made things easier for yourself in some way any questions about
+
+1:00:37.740 --> 1:00:41.220
+ this there are questions about why it's easier to solve a triangular system of
+
+1:00:41.220 --> 1:00:53.100
+ equations okay so yeah this is just kind of rewritten the least squares linear
+
+1:00:53.100 --> 1:01:00.260
+ regression problem so here kind of working our way working our way towards
+
+1:01:00.260 --> 1:01:08.900
+ X first we're going to solve the triangular system our transpose W equals
+
+1:01:08.900 --> 1:01:14.860
+ a transpose B which is what's happening in this line and so sci-fi Lenouge has a
+
+1:01:14.860 --> 1:01:19.260
+ solved triangular method even where you give it a triangular matrix and that has
+
+1:01:19.260 --> 1:01:24.700
+ a transpose argument so here we're letting it know this is our transpose
+
+1:01:24.700 --> 1:01:29.020
+ again we're kind of checking that our result is what we were hoping and that
+
+1:01:29.020 --> 1:01:35.580
+ our transpose times W minus a transpose B is close to zero so we've successfully
+
+1:01:35.580 --> 1:01:44.540
+ solved this third equation and then from here we solve triangular R with that W
+
+1:01:44.540 --> 1:01:50.260
+ on the right in order to get X which I called a coefficients Tolesky here and
+
+1:01:50.260 --> 1:01:56.420
+ we got that that works and so I can put this all together in a method and say
+
+1:01:56.420 --> 1:02:01.940
+ that solving least squares with the Cholesky decomposition takes in a and B
+
+1:02:01.940 --> 1:02:09.300
+ gets the the Cholesky decomposition of a transpose times a and then it solves
+
+1:02:09.300 --> 1:02:22.620
+ those two triangular systems and returns the returns the answer any questions
+
+1:02:22.620 --> 1:02:43.500
+ Kelsey and throw the microphone yeah that's it no that's a good question so I
+
+1:02:43.500 --> 1:02:50.300
+ think here I have to look this up that's probably the cost of calculating the
+
+1:02:50.300 --> 1:02:56.420
+ Cholesky decomposition and so I'll check on that with you
+
+1:03:06.420 --> 1:03:11.100
+ I think it's also to remember the the naive way you have this instability that
+
+1:03:11.100 --> 1:03:15.500
+ comes with getting the inverse so that's kind of less good in that regard yeah
+
+1:03:15.500 --> 1:03:29.700
+ I'll check about the time yes yeah I'm sure that it like this is small enough
+
+1:03:29.700 --> 1:03:36.020
+ that I think constant terms matter more so when you get to you know like really
+
+1:03:36.020 --> 1:03:40.380
+ huge matrices it does come about become more about like the highest order term
+
+1:03:40.380 --> 1:03:52.020
+ but yeah the size could matter correct so we'll come back to kind of a
+
+1:03:52.020 --> 1:03:55.180
+ comparison so I'm gonna kind of show you several different ways to do it and then
+
+1:03:55.180 --> 1:03:59.980
+ we'll like compare the different methods we got good questions any other
+
+1:03:59.980 --> 1:04:15.380
+ questions about this approach okay and then you know I think I brought this up
+
+1:04:15.380 --> 1:04:19.460
+ last week when I was looking at the history of Gaussian elimination but the
+
+1:04:19.460 --> 1:04:23.860
+ Cholesky decomposition is the one that Gauss first found that Cholesky got the
+
+1:04:23.860 --> 1:04:37.620
+ credit for oh yes hey you can always walk it to
+
+1:04:41.340 --> 1:04:49.300
+ yeah so um I see this right back up we actually get two different and he got
+
+1:04:49.300 --> 1:05:01.260
+ Indian norm we have different value here why is 1.13 why is 6.86 so what has
+
+1:05:01.260 --> 1:05:12.460
+ changed these results so these are so close to 0 that it doesn't like here I'm
+
+1:05:12.460 --> 1:05:15.780
+ mostly trying to confirm that this is a number close to 0 and I'm interested in
+
+1:05:15.780 --> 1:05:20.100
+ the exponent and wanting it to be you know 10 to the negative 14th is close to
+
+1:05:20.100 --> 1:05:25.260
+ 0 although I guess that is a question why aren't we getting exactly 0 if this
+
+1:05:25.260 --> 1:05:29.780
+ is a way to decompose and get the answer
+
+1:05:34.860 --> 1:05:40.940
+ all right I mean does anyone have a an answer to this on why we're not not
+
+1:05:40.940 --> 1:05:46.980
+ getting it but yeah because there's a so machine epsilon because we get rounding
+
+1:05:46.980 --> 1:05:51.060
+ errors and with floating-point numbers we're trying to you know represent these
+
+1:05:51.060 --> 1:05:55.940
+ continuous numbers with discrete values
+
+1:05:55.940 --> 1:06:13.900
+ and so when you bring up gradient descent are you talking about like a
+
+1:06:13.900 --> 1:06:18.620
+ stochastic gradient descent approach so stochastic I actually originally have
+
+1:06:18.620 --> 1:06:23.980
+ had stochastic gradient descent in this lesson with pi torch and it was actually
+
+1:06:23.980 --> 1:06:28.300
+ much slower than any of these linear algebra approaches and so I took it out
+
+1:06:28.300 --> 1:06:35.580
+ because it just didn't look reasonable compared to them a benefit so yeah STD
+
+1:06:35.580 --> 1:06:41.460
+ will often be slower than if you have you know kind of like a well-studied
+
+1:06:41.460 --> 1:06:46.500
+ method for your particular problem but a benefit of STD is that it's so general
+
+1:06:46.500 --> 1:06:50.980
+ and so if you have a problem where you don't have a closed form solution or you
+
+1:06:50.980 --> 1:06:55.140
+ know people haven't studied it to come up with this optimization method you can
+
+1:06:55.140 --> 1:07:01.540
+ use STD there so kind of the benefit of STD is yeah that it's so general and
+
+1:07:01.540 --> 1:07:08.020
+ it'll work on problems where we don't have closed form solutions Connor and
+
+1:07:08.020 --> 1:07:32.460
+ can you throw the microphone or pass the microphone yeah no and that's quite
+
+1:07:32.460 --> 1:07:37.340
+ possible to yeah that a certain size it might be worth it yeah and that's
+
+1:07:37.340 --> 1:07:44.620
+ important note I think with all of these of what algorithm is best can really
+
+1:07:44.620 --> 1:07:48.380
+ depend on your problem and we'll see that later and so different things like
+
+1:07:48.380 --> 1:07:52.220
+ both the size of your problem kind of properties around the stability of your
+
+1:07:52.220 --> 1:07:58.580
+ problem yeah we'll see later two methods that kind of are to two particular
+
+1:07:58.580 --> 1:08:04.540
+ matrices that don't work well for a particular method yeah so there's a lot
+
+1:08:04.540 --> 1:08:11.780
+ of variation with these these are good questions any other questions about
+
+1:08:11.780 --> 1:08:23.380
+ Cholesky factorization before we go on to our next next approach all right so
+
+1:08:23.380 --> 1:08:31.140
+ next up is the QR factorization and this again next week we will actually talk
+
+1:08:31.140 --> 1:08:35.740
+ about how to code a QR factorization we're still just using numpy's and
+
+1:08:35.740 --> 1:08:41.740
+ someone remind me what what the QR decomposition gives you
+
+1:08:41.740 --> 1:09:09.700
+ you know although you have the right words in there but I think Kelsey has it
+
+1:09:09.700 --> 1:09:27.100
+ has a guess I believe so if it's square they would be orthonormal be I guess for
+
+1:09:27.100 --> 1:09:33.900
+ the non-scar case images I would have to check yeah so Q is orthonormal R is
+
+1:09:33.900 --> 1:09:38.860
+ upper triangular thank you and where did where did we see the QR factorization
+
+1:09:38.860 --> 1:09:41.180
+ before
+
+1:09:50.420 --> 1:09:58.620
+ um I'm not sure that we saw it with NMF
+
+1:09:58.620 --> 1:10:07.940
+ yeah so inside of randomized SVD we saw it
+
+1:10:13.660 --> 1:10:18.900
+ okay so here so kind of getting into these equations and we got next week
+
+1:10:18.900 --> 1:10:24.540
+ we'll talk about how to code a QR factorization ourselves so ax equals B
+
+1:10:24.540 --> 1:10:33.340
+ we're going to get the QR factorization for a equals QR plug that in and then
+
+1:10:33.340 --> 1:10:39.940
+ say our X equal equals Q transpose B and why why was I able to go from Q on the
+
+1:10:39.940 --> 1:10:50.220
+ left side to a Q transpose on the right side yeah so a few people shouted this
+
+1:10:50.220 --> 1:10:55.740
+ out Q's orthonormal so multiplying by Q transpose we get the identity on the
+
+1:10:55.740 --> 1:10:59.460
+ left and that's also nice because you're not having to calculate an input inverse
+
+1:10:59.460 --> 1:11:04.180
+ you're just transposing the columns and then why is it nice to have our X equals
+
+1:11:04.180 --> 1:11:13.180
+ Q transpose B he grabbed the microphone
+
+1:11:13.180 --> 1:11:20.420
+ exactly yeah so now we have a linear system of equations with a triangular
+
+1:11:20.420 --> 1:11:29.860
+ matrix that'll be fast to solve so here we do QR equals using side pies QR
+
+1:11:29.860 --> 1:11:36.500
+ factorization and then we get a triangular system to solve we solve this
+
+1:11:36.500 --> 1:11:44.780
+ and all right we're getting the same air kind of that we've been getting
+
+1:11:47.860 --> 1:11:53.460
+ questions about this approach with the QR factorization
+
+1:11:53.460 --> 1:12:09.940
+ and why is this one even slower the question is why is this one slower
+
+1:12:09.940 --> 1:12:13.900
+ let's actually save the time in comparison ones for a moment but yeah
+
+1:12:13.900 --> 1:12:21.300
+ well we'll come back to that any other questions before we start our next
+
+1:12:21.300 --> 1:12:23.780
+ approach
+
+1:12:34.140 --> 1:12:40.620
+ okay so now yet another approach we're gonna look at SPD and so again we're
+
+1:12:40.620 --> 1:12:45.260
+ still trying to solve the same problem of a X equals B and finding the optimal
+
+1:12:45.260 --> 1:12:51.180
+ X now we're gonna use the singular value decomposition can someone remind us
+
+1:12:51.180 --> 1:12:55.660
+ what what the singular value decomposition is
+
+1:12:55.660 --> 1:13:19.860
+ you compose the matrix into a product of u sigma v transpose it contains a block
+
+1:13:19.860 --> 1:13:26.500
+ of a square matrix where the diagonals are exactly yeah so Sigma is a diagonal
+
+1:13:26.500 --> 1:13:32.040
+ matrix everything's zero except the diagonals and those are the singular
+
+1:13:32.040 --> 1:13:43.260
+ values and you and beer orthonormal so they talk about I didn't cover this in
+
+1:13:43.260 --> 1:13:49.380
+ class they talk about like a full SPD and also a reduced SPD and one of them
+
+1:13:49.380 --> 1:13:55.560
+ yeah and one of them it's not square but you're just adding a bunch of zeros to
+
+1:13:55.560 --> 1:14:04.060
+ get the dimensions to work out yeah and actually I guess I think for the reduced
+
+1:14:04.060 --> 1:14:11.820
+ one really it's just that you has orthonormal rows and B has orthonormal
+
+1:14:11.820 --> 1:14:17.320
+ columns and then for the full version you're like making those expanding them
+
+1:14:17.320 --> 1:14:33.780
+ so that they're full bases yes yeah I'll bring trepethin has a nice picture of
+
+1:14:33.780 --> 1:14:48.380
+ this yeah yeah I'll talk about that next time full versus reduced for SVD
+
+1:14:53.380 --> 1:15:01.980
+ okay yeah so that's the SVD which we've seen a few times before here we plug
+
+1:15:01.980 --> 1:15:07.140
+ that in for a and then actually similar to what we did before we can multiply
+
+1:15:07.140 --> 1:15:14.140
+ each side by you transpose since you transpose times use the identity because
+
+1:15:14.140 --> 1:15:21.860
+ you has orthonormal rows we get Sigma VX equals you transpose B then we have
+
+1:15:21.860 --> 1:15:36.620
+ Sigma W equals you transpose B X equals V transpose W and so this I actually
+
+1:15:36.620 --> 1:15:40.340
+ think you should kind of be seeing some common themes between these three
+
+1:15:40.340 --> 1:15:46.100
+ different approaches watch I guess first I should say what's nice about solving
+
+1:15:46.100 --> 1:16:02.940
+ Sigma W equals you transpose B so anyone else want to answer and so here we've
+
+1:16:02.940 --> 1:16:06.580
+ just said VX equals W and now we're going to solve Sigma W equals you
+
+1:16:06.580 --> 1:16:09.340
+ transpose B
+
+1:16:09.340 --> 1:16:11.340
+ you
+
+1:16:15.460 --> 1:16:28.940
+ Roger Tim can you pass the microphone exactly yeah so solving a diagonal system
+
+1:16:28.940 --> 1:16:33.540
+ of equations is even better than solving a triangular system because you just
+
+1:16:33.540 --> 1:16:38.940
+ have a single non-zero coefficient for each equation so you can just divide
+
+1:16:38.940 --> 1:16:52.020
+ through so that's very quick to solve and then we're left with well VX equals
+
+1:16:52.020 --> 1:17:04.740
+ W since V is orthonormal we can rewrite that X equals V transpose W and then
+
+1:17:04.740 --> 1:17:13.460
+ this is this is that in equation form so we're using psi pi's SVD here getting
+
+1:17:13.460 --> 1:17:24.580
+ back use Sigma and I called it VH in this case then I see for W notice I'm
+
+1:17:24.580 --> 1:17:32.900
+ just dividing by Sigma dividing you transpose B by Sigma and here I guess a
+
+1:17:32.900 --> 1:17:38.980
+ you transpose is possibly larger than I need so that's why I'm chopping off the
+
+1:17:38.980 --> 1:17:51.220
+ the end and then I'm returning VH transpose times W questions about this
+
+1:17:51.220 --> 1:18:02.380
+ approach and some people are noticing that this is much so slower we've gone
+
+1:18:02.380 --> 1:18:10.820
+ from microseconds to milliseconds which is a order of mag car thousand thousand
+
+1:18:10.820 --> 1:18:13.380
+ time difference
+
+1:18:13.380 --> 1:18:23.220
+ any questions or questions about the equations kind of how we we solved solve
+
+1:18:23.220 --> 1:18:25.500
+ this
+
+1:18:38.180 --> 1:18:41.940
+ hey and then he had another technique that I'm not going to get into detail at
+
+1:18:41.940 --> 1:18:46.180
+ all on but wanted to let you know that it's out there is that there's something
+
+1:18:46.180 --> 1:18:52.820
+ called the random sketching technique for linear regression which involves
+
+1:18:52.820 --> 1:19:00.180
+ using a random matrix and computing SA equals SB and then finding a solution to
+
+1:19:00.180 --> 1:19:06.540
+ the regression SA X equals SB so I just wanted to let you know that that exists
+
+1:19:06.540 --> 1:19:12.940
+ as an example of a randomized randomized approach and this would be where where
+
+1:19:12.940 --> 1:19:18.220
+ you had a very large A and B
+
+1:19:25.220 --> 1:19:32.180
+ okay so now I think you will like this part we're gonna do a timing comparison
+
+1:19:32.180 --> 1:19:36.300
+ and do it a little bit more formally so above we were just kind of printing out
+
+1:19:36.300 --> 1:19:42.580
+ what the times were for the diabetes data set what I'm going to do here is
+
+1:19:42.580 --> 1:19:49.780
+ randomly generate some data and M is going to be either a hundred a thousand
+
+1:19:49.780 --> 1:19:55.860
+ or ten thousand and it's going to be twenty a hundred or a thousand you can
+
+1:19:55.860 --> 1:20:02.780
+ see down here is where I generate the data randomly a has dimensions M by N
+
+1:20:02.780 --> 1:20:09.040
+ and I'm going to loop through all possible values of M and N and then
+
+1:20:09.040 --> 1:20:12.660
+ we're going to compare these different techniques so we've got the naive
+
+1:20:12.660 --> 1:20:17.780
+ solution with the normal equations the Cholesky factorization the QR
+
+1:20:17.780 --> 1:20:24.500
+ factorization SVD and then also sci-fi is least squares let me see if there's
+
+1:20:24.500 --> 1:20:31.100
+ anything else about the setup Oh in sci-fi is least squares it returns several
+
+1:20:31.100 --> 1:20:34.940
+ items but we just wanted the first one so that's why I've kind of wrapped it in
+
+1:20:34.940 --> 1:20:41.980
+ this other method and here I'm using so I've got my row names and then I have a
+
+1:20:41.980 --> 1:20:47.460
+ dictionary that converts the name kind of list what the method is that we've
+
+1:20:47.460 --> 1:20:56.900
+ defined for that who uh who in here has used pandas before pandas well yeah okay
+
+1:20:56.900 --> 1:21:00.700
+ so looks like everybody and I'm just using it here because the data frame is
+
+1:21:00.700 --> 1:21:06.620
+ kind of a nice way to to store a table of information and I'm using the multi
+
+1:21:06.620 --> 1:21:16.500
+ index which can be handy to have M and N so now I just have a nested for loop and
+
+1:21:16.500 --> 1:21:23.820
+ this says kind of formally for the linear least squares problem you want M
+
+1:21:23.820 --> 1:21:29.580
+ greater than or equal to N like you typically have more data points than you
+
+1:21:29.580 --> 1:21:34.660
+ have features so I'm just looking at those cases what I'm going to do is loop
+
+1:21:34.660 --> 1:21:40.700
+ through them randomly generate data of that size so with M rows and N columns
+
+1:21:40.700 --> 1:21:47.820
+ and then for each method I am going to get the function I'm going to use
+
+1:21:47.820 --> 1:21:53.140
+ pythons time it module to time it and what this will do is run the
+
+1:21:53.140 --> 1:21:58.500
+ decomposition five times and track the speed of each one and average them and
+
+1:21:58.500 --> 1:22:07.820
+ it's good to run it a few times just to kind of reduce variation some then for
+
+1:22:07.820 --> 1:22:13.500
+ the data frame I'm going to set the value of that kind of that method for
+
+1:22:13.500 --> 1:22:20.300
+ that row and column this is how long it took oh and then I'm also I'm interested
+
+1:22:20.300 --> 1:22:27.780
+ in the air not just the speed so I've got the coefficients back from this
+
+1:22:27.780 --> 1:22:35.440
+ would be and this is a little tricky so function is a string and so time it you
+
+1:22:35.440 --> 1:22:42.180
+ actually pass a string to here we're using locals to kind of look up the
+
+1:22:42.180 --> 1:22:49.580
+ actual variable with that name call that on a and B and then check what the air
+
+1:22:49.580 --> 1:22:56.180
+ is using our metrics coefficients and in this case for simplicity I decided just
+
+1:22:56.180 --> 1:23:02.660
+ to look at the L to air so that's what I'm storing in my DF air data frame so
+
+1:23:02.660 --> 1:23:06.800
+ I've got this DF data frame that's gonna hold the time DF air is gonna hold the
+
+1:23:06.800 --> 1:23:13.740
+ air and so I run that and that can be a little bit slow to run so I'm just gonna
+
+1:23:13.740 --> 1:23:18.900
+ use the results I have here since it's doing kind of all these matrix
+
+1:23:18.900 --> 1:23:23.740
+ decompositions and some of the matrix matrices are larger so let me see if
+
+1:23:23.740 --> 1:23:29.420
+ this will fit on the screen when it's larger
+
+1:23:32.780 --> 1:23:38.860
+ okay are you able to read this set this table all right we should put them both
+
+1:23:38.860 --> 1:23:49.180
+ up so the top table it's like perfectly fits top table is the time it takes and
+
+1:23:49.180 --> 1:23:54.180
+ the second table is the air it's been a moment just kind of looking at this and
+
+1:23:54.180 --> 1:24:19.420
+ tell me what you notice which methods are working best kind of in which cases
+
+1:24:24.180 --> 1:24:30.580
+ anyone want to share some observations okay and then microphones between Aaron
+
+1:24:30.580 --> 1:24:43.300
+ and Roger throw it to Connor like across the board in terms of timing it does
+
+1:24:43.300 --> 1:24:47.380
+ yeah yeah I know the Cholesky factorization does I thought surprisingly
+
+1:24:47.380 --> 1:24:53.900
+ well and these are there are much larger matrices out there that we could have
+
+1:24:53.900 --> 1:25:02.780
+ done this on yeah there are observations
+
+1:25:02.780 --> 1:25:26.740
+ I have to say I was I was personally surprised by how slow SVD is what do you
+
+1:25:26.740 --> 1:25:39.140
+ notice about the air yeah it's the same in all of these so that's reassuring so
+
+1:25:39.140 --> 1:25:43.700
+ here this problem is not not one or we're having to worry about kind of
+
+1:25:43.700 --> 1:26:02.940
+ stability with different different ones Matthew paper the microphone oh that's a
+
+1:26:02.940 --> 1:26:20.140
+ good question yeah I'm not sure about that holla think about that more good
+
+1:26:20.140 --> 1:26:28.580
+ question so here I just used random uniform oh you think yeah maybe it was
+
+1:26:28.580 --> 1:26:43.820
+ like an unlucky draw yeah it's random for each one okay and I also wanted to
+
+1:26:43.820 --> 1:26:51.420
+ kind of share this as a I guess I do want to highlight that mmm Cholesky is
+
+1:26:51.420 --> 1:27:00.820
+ fast yeah he's fast and a lot of these I want to highlight this is a technique
+
+1:27:00.820 --> 1:27:05.460
+ for comparing methods I think that this can be kind of nice to do this kind of
+
+1:27:05.460 --> 1:27:10.700
+ like looping through and getting getting data on how fast things are in a
+
+1:27:10.700 --> 1:27:16.340
+ systematic manner and it also I think makes it a lot easier to compare as
+
+1:27:16.340 --> 1:27:20.140
+ opposed to looking you know kind of having to scroll through like different
+
+1:27:20.140 --> 1:27:24.020
+ places in the notebook when we've just outputted one line at a time so I think
+
+1:27:24.020 --> 1:27:28.780
+ this is a good kind of good general purpose method for comparing comparing
+
+1:27:28.780 --> 1:27:31.140
+ methods
+
+1:27:40.980 --> 1:27:48.620
+ and then I just wanted to note there's also an l1 regression where you're using
+
+1:27:48.620 --> 1:27:52.940
+ the l1 norm for your your air instead but we're not going to go into detail on
+
+1:27:52.940 --> 1:28:06.940
+ that I'm going to take a moment to talk about conditioning and stability so
+
+1:28:06.940 --> 1:28:13.220
+ condition number is a measure of how small changes in the input affect the
+
+1:28:13.220 --> 1:28:17.900
+ output why would we care about what happens when you have small changes in
+
+1:28:17.900 --> 1:28:20.260
+ the input
+
+1:28:26.740 --> 1:28:29.740
+ Matthew
+
+1:28:36.220 --> 1:28:39.900
+ that's true I mean so there is when you're using real-world data yeah
+
+1:28:39.900 --> 1:28:43.580
+ there's gonna be this noisiness what's another reason that we're particularly
+
+1:28:43.580 --> 1:28:49.620
+ interested in numerical linear algebra in this question
+
+1:28:55.020 --> 1:28:58.020
+ Sam
+
+1:29:00.700 --> 1:29:11.900
+ so if you have something that is the thing that comes to mind is almost the
+
+1:29:11.900 --> 1:29:15.260
+ right answer to almost the right question
+
+1:29:30.260 --> 1:29:36.140
+ that that is true yeah and what's that what kind of what's the cause though why
+
+1:29:36.140 --> 1:29:39.820
+ we would be getting something that's just almost the right answer to almost
+
+1:29:39.820 --> 1:29:49.380
+ the right question as opposed to having always exactly the right answer exactly
+
+1:29:49.380 --> 1:29:53.260
+ because of floating-point errors so since with computers kind of having
+
+1:29:53.260 --> 1:29:59.620
+ machine epsilon and floating-point error and you're almost never having exactly
+
+1:29:59.620 --> 1:30:05.140
+ what you want there you know you have these tiny differences and it's
+
+1:30:05.140 --> 1:30:10.900
+ important to know how to small small differences affect the output and then as
+
+1:30:10.900 --> 1:30:14.420
+ Sam was getting at this can also kind of propagate through your problem if you're
+
+1:30:14.420 --> 1:30:18.620
+ doing lots of operations and you've got just a little bit of air each time that
+
+1:30:18.620 --> 1:30:30.020
+ could really add up so the relative condition number is defined as and this
+
+1:30:30.020 --> 1:30:35.380
+ is just looking at the change in the output divided by changing the input for
+
+1:30:35.380 --> 1:30:43.060
+ very tiny changes and then Trevathan I like that he put actual numbers on this
+
+1:30:43.060 --> 1:30:48.700
+ on page 91 says a problems well-conditioned if Kappa the condition
+
+1:30:48.700 --> 1:30:54.060
+ number is small such as 110 or a hundred and ill-conditioned if Kappa is large
+
+1:30:54.060 --> 1:31:02.140
+ such as and that's a lot tech air typo on my part such as 10 to the 6th or 10
+
+1:31:02.140 --> 1:31:12.620
+ to the 16th and then this is kind of just a technical definition conditioning
+
+1:31:12.620 --> 1:31:17.900
+ relates to the problem such as least squares where stability is what's used
+
+1:31:17.900 --> 1:31:26.620
+ to talk about the particular algorithm and so an example that we saw before was
+
+1:31:26.620 --> 1:31:35.020
+ computing eigenvalues here we have two matrices a is one a thousand zero one B
+
+1:31:35.020 --> 1:31:40.020
+ is one a thousand point zero zero one one so these are very close that they
+
+1:31:40.020 --> 1:31:45.260
+ only differ in the bottom left entry which is zero for a and point zero zero
+
+1:31:45.260 --> 1:31:52.180
+ one for B when we get the eigenvalues the eigenvalues for a are one and one
+
+1:31:52.180 --> 1:31:58.820
+ and the eigenvalues for B are two and then this is practically zero but one
+
+1:31:58.820 --> 1:32:03.420
+ one and two zero that's like a huge difference and this is something that
+
+1:32:03.420 --> 1:32:08.380
+ this isn't the computer's fault this is something about the problem of finding
+
+1:32:08.380 --> 1:32:14.300
+ an eigenvalue is that for you know relatively small change we're getting a
+
+1:32:14.300 --> 1:32:19.140
+ very different different answer
+
+1:32:24.260 --> 1:32:31.740
+ are there questions about this idea of conditioning or of whether our problem
+
+1:32:31.740 --> 1:32:41.660
+ is kind of well or ill-conditioned and then just even to kind of tie this back
+
+1:32:41.660 --> 1:32:48.580
+ into this definition up here the change in the solution you know here we went
+
+1:32:48.580 --> 1:32:54.300
+ from one to two and one to zero for our two answers over the change in X which
+
+1:32:54.300 --> 1:33:03.300
+ was 0.001 you know that would be like one divided by 0.001 a thousand and that
+
+1:33:03.300 --> 1:33:07.700
+ could actually get larger if we're doing smaller changes we're gonna have that
+
+1:33:07.700 --> 1:33:20.380
+ this is kind of a poorly conditioned problem Tim Oh Sam can you pass the
+
+1:33:20.380 --> 1:33:37.740
+ catch box to Tim okay thank you yeah yeah and that's like if you wanted to do
+
+1:33:37.740 --> 1:33:45.060
+ an even more scientific comparison you could probably you know randomly
+
+1:33:45.060 --> 1:33:49.700
+ generate several different matrices and average yeah yeah thank you Tim that's
+
+1:33:49.700 --> 1:34:11.460
+ helpful okay so then in talking about oh this is another law tech typo so the
+
+1:34:11.460 --> 1:34:17.140
+ product norm of a times norm of a inverse comes up a lot when you're like
+
+1:34:17.140 --> 1:34:23.140
+ it appears in several different theorems around conditioning of problems and so
+
+1:34:23.140 --> 1:34:27.740
+ it has its own name the condition number of a and so we've previously kind of
+
+1:34:27.740 --> 1:34:33.220
+ talked about problems being well conditioned here we're talking about a
+
+1:34:33.220 --> 1:34:42.740
+ matrix but the condition number of a relates to it shows up both in and I'm
+
+1:34:42.740 --> 1:34:47.820
+ not going to give the the full theorems because they kind of I think have more
+
+1:34:47.820 --> 1:34:53.740
+ technical details than I want to get into but computing B given a and X in a
+
+1:34:53.740 --> 1:35:01.420
+ X equals B or computing X given a and B and the condition number is related to
+
+1:35:01.420 --> 1:35:07.340
+ how well can well condition that problem is so this this quantity of norm of a
+
+1:35:07.340 --> 1:35:16.540
+ times norm of a inverse is something you'll see I think we're about at time
+
+1:35:16.540 --> 1:35:29.460
+ well we'll go over this kind of conditioning next time and then as a
+
+1:35:29.460 --> 1:35:34.140
+ reminder I think everyone knows this homework 2 was due today as well as well
+
+1:35:34.140 --> 1:35:38.300
+ as the draft of the blog post
+

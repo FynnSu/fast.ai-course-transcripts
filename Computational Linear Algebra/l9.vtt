@@ -1,0 +1,1823 @@
+WEBVTT
+
+00:00.000 --> 00:22.000
+ I'm gonna go ahead and get started. I wanted to make a few announcements. One is that I will not be here next week, so there will be no class on Tuesday, and then Thursday's the exam, and David will be here. David Juminski will be proctoring the exam, but I will have email, so you can still email me questions about anything.
+
+00:22.000 --> 00:35.000
+ Tuesday is when the final draft of the blog post is due, and also I've put up homework three, and it's just a single problem, but that's due Tuesday also.
+
+00:35.000 --> 00:47.000
+ And then I'm not going to have my normal office hours this Friday, but I could meet with you earlier in the day Friday, so if you want to meet on Friday or on Thursday afternoon, just let me know.
+
+00:47.000 --> 01:01.000
+ All right. Yeah, so I was going to follow up with, we had some loose ends from last time for lesson six that I've added, kind of added into the bottom of the notebook.
+
+01:01.000 --> 01:11.000
+ Just to remind you, lesson six was about different ways of calculating the linear regression least squares.
+
+01:11.000 --> 01:18.000
+ And so this is coming from a question Tim asked about kind of full versus reduced factorizations.
+
+01:18.000 --> 01:34.000
+ And I've kind of been skimming over this, but I really are hand waving and not wanting to get into the detail, but it's actually good to look at, and it helped me realize I had an error in the SVD code, which is why it was so slow, and so I'll show you that in a moment.
+
+01:34.000 --> 01:44.000
+ But the idea is there's both a full SVD and a reduced SVD, and they're both referred to as SVD, so it's not always clear.
+
+01:44.000 --> 01:50.000
+ And the idea is that with the full SVD, U is a square matrix.
+
+01:50.000 --> 02:04.000
+ And so for the kind of final, I guess, m minus n columns of U, you're just filling out what's needed for an orthonormal basis, but these are getting multiplied by all zeros.
+
+02:04.000 --> 02:09.000
+ So you've kind of also added several rows all of zero to the base of sigma.
+
+02:09.000 --> 02:22.000
+ So it doesn't, like you want these columns to be such that you're creating an orthonormal basis in U, but beyond that they actually don't have like a connection with your original data set.
+
+02:22.000 --> 02:34.000
+ So that's kind of what's going on with U, and the reduced form is you're just finding kind of the columns that you need to represent A.
+
+02:34.000 --> 02:42.000
+ And so notice both of these, you're getting your original matrix A back, since here you've kind of got these zeroing out.
+
+02:42.000 --> 02:49.000
+ The full SVD would be useful if you needed U to be a kind of square orthonormal matrix.
+
+02:49.000 --> 02:53.000
+ Are there questions about this?
+
+02:53.000 --> 02:58.000
+ Linda?
+
+02:58.000 --> 03:16.000
+ I don't think I get, so if the full SVD is not a square matrix, then how is it a singular, like on the diagonal it shows the importance factor?
+
+03:16.000 --> 03:22.000
+ And if it's not square, how does it show for the last part of it?
+
+03:22.000 --> 03:32.000
+ Okay, yeah, that's a great question. So the diagonal of sigma is what's giving you the importance, and so there's no importance corresponding to these vectors right here.
+
+03:32.000 --> 03:38.000
+ And that's because those vectors aren't even a part of A.
+
+03:38.000 --> 03:44.000
+ So their importance is like kind of like zero, you know, they show up zero amount in A.
+
+03:44.000 --> 03:49.000
+ So if they're not a part of A, where do they come from?
+
+03:49.000 --> 03:53.000
+ And so that comes from just trying to create an orthonormal basis.
+
+03:53.000 --> 04:00.000
+ And so there that's kind of like around the idea of like, oh, if you want you to be square and orthonormal,
+
+04:00.000 --> 04:07.000
+ you kind of need to come up with these additional columns, even though they're not a part of A.
+
+04:07.000 --> 04:11.000
+ That's a good question. Any other questions about this?
+
+04:11.000 --> 04:18.000
+ Tim and Linda, can you pass the microphone back?
+
+04:18.000 --> 04:26.000
+ So in class B, when you did the reduced SVD, the V star didn't have to be square either. It could have been rectangular.
+
+04:26.000 --> 04:32.000
+ So is that because you're dropping some of the non-important singular values out of sigma?
+
+04:32.000 --> 04:40.000
+ Oh, so for the, yeah, and so I should also note that the reduced SVD is different than the truncated SVD.
+
+04:40.000 --> 04:51.000
+ So yeah, for truncated SVD, what you would do, let me see if I can write on the screen.
+
+04:51.000 --> 04:59.000
+ OK, I didn't sync it. The idea with reduced SVD, let's use the mouse, is you're kind of, sorry,
+
+04:59.000 --> 05:05.000
+ truncated SVD is you're cutting off this kind of right hand side here.
+
+05:05.000 --> 05:10.000
+ Or no, you would be cutting off the bottom.
+
+05:10.000 --> 05:15.000
+ Well, yeah, you want to cut off rows of V.
+
+05:15.000 --> 05:21.000
+ Yeah. Yeah. And so then you have to cut off the bottom few rows of V. And so that's when you end up with the rectangular V.
+
+05:21.000 --> 05:26.000
+ And that would also cut off some more columns of U, right? Yes, exactly.
+
+05:26.000 --> 05:32.000
+ And you cut off more columns of U. But in reduced SVD, V star remains square.
+
+05:32.000 --> 05:37.000
+ Yes. Yes. Good question.
+
+05:37.000 --> 05:44.000
+ Are there questions about this?
+
+05:44.000 --> 05:52.000
+ OK, so doing this, I thought to check on SVD, and it turns out the default is to do the full SVD.
+
+05:52.000 --> 06:02.000
+ And so I'll let you guess. Which one of these do you think is faster to calculate? The full or reduced?
+
+06:02.000 --> 06:09.000
+ People are laughing. But yeah, so the reduced is faster to calculate. And so above in my least squares linear regression,
+
+06:09.000 --> 06:15.000
+ I was calculating the full. So let me go back to SVD.
+
+06:15.000 --> 06:20.000
+ So what you need to do is use the full matrices equals false parameter.
+
+06:20.000 --> 06:27.000
+ And so this is here in the least squares SVD.
+
+06:27.000 --> 06:31.000
+ And then that takes out and I should have known this. I was like slicing off the first end.
+
+06:31.000 --> 06:44.000
+ So I should have known like I'm calculating too many. The fact that I'm having to throw these away.
+
+06:44.000 --> 06:50.000
+ So then I reran all the timing. And SVD is a lot more reasonable now.
+
+06:50.000 --> 06:58.000
+ So let me show you. So here, this is this first table. Is this a good size?
+
+06:58.000 --> 07:05.000
+ For the maybe one bigger. No, that's too big to fit.
+
+07:05.000 --> 07:13.000
+ The SVD is still, for most of these, a bit a little bit slower than the others.
+
+07:13.000 --> 07:20.000
+ Here, though, you'll notice SVD is slightly faster than QR in the case that's a thousand by 20.
+
+07:20.000 --> 07:26.000
+ We've got 0.019 compared to 0.018 for SVD.
+
+07:26.000 --> 07:38.000
+ And again, just to kind of summarize, this is a bunch of different methods for finding the least squares linear regression being applied to the same set of matrices that were randomly generated.
+
+07:38.000 --> 07:44.000
+ And we went through in a loop and randomly generated matrices of different sizes, solved the problem.
+
+07:44.000 --> 07:53.000
+ It's five different ways and saw how the time and the error compared.
+
+07:53.000 --> 08:10.000
+ Let's see if anything else stands out as particularly noteworthy. Yeah, so this puts SVD in a much, much more reasonable speed range.
+
+08:10.000 --> 08:26.000
+ Are there questions or kind of general questions on this comparison? We're about to go into some specific examples where we get worse error rates for some of the algorithms.
+
+08:26.000 --> 08:50.000
+ So overall, what seems to be the fastest?
+
+08:50.000 --> 08:59.000
+ This might depend on the size.
+
+08:59.000 --> 09:03.000
+ Can you pass the microphone forward?
+
+09:03.000 --> 09:09.000
+ Did you say it, Linda?
+
+09:09.000 --> 09:22.000
+ Yeah, Telesky is the fastest for most of them. Correct. Any other observations about this?
+
+09:22.000 --> 09:37.000
+ OK, let's go back. Oh, and then while we're talking about full versus reduced, I wanted to say that QR also has full and reduced versions.
+
+09:37.000 --> 09:40.000
+ And so it's a very similar idea.
+
+09:40.000 --> 09:49.000
+ If you've got a rectangular A and the reduced version, you're just getting a rectangular Q and a square R, which is upper, upper triangular.
+
+09:49.000 --> 09:56.000
+ And then for the full version, you're adding additional columns on to Q to make an orthonormal basis.
+
+09:56.000 --> 10:00.000
+ And then you're adding rows of zeros to R. So those are going to cancel out.
+
+10:00.000 --> 10:16.000
+ So these columns of Q are not actually part of A. But they're nice if you wanted a square matrix that was orthonormal.
+
+10:16.000 --> 10:34.000
+ OK, so I wanted to address, so kind of comparing these algorithms, if we just look at speed, Telesky seems really good in a lot, and then also taking the matrix inverse seemed to be pretty fast. And I think we were getting that it had the same error as everything else.
+
+10:34.000 --> 10:36.000
+ Let me confirm.
+
+10:36.000 --> 10:43.000
+ Yeah, we were getting the same error as everything else. But in practice, you never want to do this. And so I wanted to talk more about why that is.
+
+10:43.000 --> 10:54.000
+ And that's because matrix inversion is unstable. And so here we're going to look at a specific example called a Hilbert matrix.
+
+10:54.000 --> 11:03.000
+ And let me actually start by doing a smaller one just so you can see what it looks like.
+
+11:03.000 --> 11:14.000
+ So the Hilbert matrix is basically kind of these fractions. You can see you've got one, a half, a third, a fourth, a fifth is how the matrix is constructed.
+
+11:14.000 --> 11:23.000
+ And it's known to have a poor condition number.
+
+11:23.000 --> 11:33.000
+ So here I'm just using NumPy's lin-alg.inverse method. So I've created this Hilbert matrix that's 14 by 14.
+
+11:33.000 --> 11:52.000
+ Run that again. I invert it. And then ideally, A times A inverse minus the identity. What would you expect that to give you?
+
+11:52.000 --> 12:02.000
+ Say it louder. Zero. Yes. So you'd expect it to give you zero. I take the norm of that and I'm getting five, which is a bad sign.
+
+12:02.000 --> 12:09.000
+ And so let's see. And we can even look at A times A inverse here. And you can see this is not very close to zero.
+
+12:09.000 --> 12:15.000
+ Many of these decimals have numbers kind of in the tenths place.
+
+12:15.000 --> 12:23.000
+ This even has a negative. Oh, wow. This even has a two. Yeah. So this is quite far from zero.
+
+12:23.000 --> 12:29.000
+ So I think this is kind of a nice illustration and this is not even a huge matrix and it's 14 by 14.
+
+12:29.000 --> 12:43.000
+ And we're using NumPy's inverse and we are not getting back to the identity with that.
+
+12:43.000 --> 12:48.000
+ And we can also check. So I mentioned last time there's something called the condition number of a matrix.
+
+12:48.000 --> 13:01.000
+ And actually, does anyone remember what the formula for the condition number is?
+
+13:01.000 --> 13:16.000
+ OK, I'll pull that up. It's the norm of A times the norm of A inverse. And larger condition numbers are bad. So you want the condition number to be smaller.
+
+13:16.000 --> 13:24.000
+ So that's kind of the formal definition in general. But for a matrix, here it is.
+
+13:24.000 --> 13:32.000
+ Norm of A times norm of A inverse. And it's something that it shows up all the time in kind of different theorems around conditioning.
+
+13:32.000 --> 13:39.000
+ And so it's useful to have it as a quantity. And Linda, can you pass the microphone to Tim?
+
+13:39.000 --> 14:03.000
+ Is that defined only for square matrices? Is that only defined for square matrices?
+
+14:03.000 --> 14:09.000
+ Yeah, I'll look that up and get back to you because there is something called the pseudo inverse, but I don't know if that's...
+
+14:09.000 --> 14:17.000
+ I think you're typically talking about square matrices with it. But yeah, that's a good question.
+
+14:17.000 --> 14:35.000
+ Yeah, and so if we look at the condition number of A, it's 10 to the 17th magnitude, which is a really bad sign that it's so large.
+
+14:35.000 --> 14:50.000
+ And so that's the primary reason that you don't want to calculate a matrix inverse. And there are a few other issues, I thought I wrote them down, that can come up.
+
+14:50.000 --> 14:56.000
+ One is if you have a sparse matrix in particular, when you calculate the inverse, it stops being sparse.
+
+14:56.000 --> 15:06.000
+ And so memory wise, that could be really bad, particularly if you had a matrix that was large enough that you can't store the non sparse version.
+
+15:06.000 --> 15:11.000
+ Calculating its inverse is kind of making this really huge matrix.
+
+15:11.000 --> 15:20.000
+ But I think the primary thing is the instability.
+
+15:20.000 --> 15:27.000
+ So this is a little bit of a cheat.
+
+15:27.000 --> 15:33.000
+ Let me confirm. So I'm still on this Hilbert matrix. And so I run all of the options.
+
+15:33.000 --> 15:39.000
+ Well, you'll notice I run all the options except Cholesky. And so we didn't focus on this last time.
+
+15:39.000 --> 15:53.000
+ So this is a difficult question, but does anyone have a guess of why, maybe why we can't use Cholesky here?
+
+15:53.000 --> 16:10.000
+ Okay, I just. Oh, Matthew. And can you pass the microphone? Because it's unstable like you said. No, so that's matrix inversion is unstable. It doesn't require the matrix inversion. No.
+
+16:10.000 --> 16:28.000
+ So, yeah, Cholesky entails coming up with the, you're coming up with a triangular matrix, which times its transpose equals A transpose A.
+
+16:28.000 --> 16:40.000
+ This I just briefly mentioned. The Cholesky factorization is only guaranteed to exist if the matrix is positive definite.
+
+16:40.000 --> 16:49.000
+ And so this matrix actually is not positive definite. So that's a down, significant downside to Cholesky is that even though it's really fast, you can't use it in all cases.
+
+16:49.000 --> 16:56.000
+ And so we can't use it here.
+
+16:56.000 --> 17:05.000
+ So I had to take it out. I mean, you can try running it and you get an error basically that there's a negative singular value.
+
+17:05.000 --> 17:14.000
+ If you attempt to do it. So here we've got this huge error for.
+
+17:14.000 --> 17:19.000
+ I don't know why I have this twice.
+
+17:19.000 --> 17:29.000
+ Yeah, we've got this big error for taking the inverse, which is not surprising.
+
+17:29.000 --> 17:41.000
+ Speed wise, so QR factorization, SVD and SciPy's implementation are all fairly similar, but SVD was actually fastest.
+
+17:41.000 --> 17:44.000
+ Although I have to confess, I ran this a few times and I don't think that was consistently the case,
+
+17:44.000 --> 17:49.000
+ but I wanted to save it because I was having trouble finding a case where SVD was the best.
+
+17:49.000 --> 17:57.000
+ But here, really, I mean, they're so close that there's not like a clear winner.
+
+17:57.000 --> 18:06.000
+ But yeah, this illustrates kind of you definitely don't want to be taking the inverse and you can't take Cholesky.
+
+18:06.000 --> 18:14.000
+ Oh, and can you throw the microphone, Matthew?
+
+18:14.000 --> 18:27.000
+ So any reason that after inversion that the matrix is going to just get more dense?
+
+18:27.000 --> 18:33.000
+ I guess it's like, I mean, there's nothing that guarantees that you would have zeros in other places.
+
+18:33.000 --> 18:42.000
+ You kind of think like the process for taking inversion is it's like doing Gaussian elimination.
+
+18:42.000 --> 18:49.000
+ Only instead of having like a single column, you have like the identity matrix is one way to calculate the inverse.
+
+18:49.000 --> 19:02.000
+ And so there you're kind of basically like adding and dividing things to every location as you go through and zero out your original matrix.
+
+19:02.000 --> 19:17.000
+ But yes, you're kind of like putting values in where you had zeros when you do that Gaussian elimination.
+
+19:17.000 --> 19:33.000
+ Yes, I want to talk a little bit about runtime, and this is not exactly big O because I've included constants here and, you know, with big O notation you are...
+
+19:33.000 --> 19:40.000
+ I mean, I don't even know if it's OK for me to call this runtime, but this is kind of normally you drop the constants.
+
+19:40.000 --> 19:50.000
+ But I just wanted to show them because here most things are n cubed, and so it kind of matters what the constant is.
+
+19:50.000 --> 19:55.000
+ So Cholesky is one third n cubed.
+
+19:55.000 --> 19:59.000
+ And so that's a reason that it's kind of faster than these others.
+
+19:59.000 --> 20:09.000
+ So QR is kind of a formula involving powers of third order terms.
+
+20:09.000 --> 20:19.000
+ And then something else to highlight is that matrix multiplication is n cubed and solving a triangular system is n squared.
+
+20:19.000 --> 20:43.000
+ And so if you'll remember, this kind of goes through with the Cholesky factorization, what you end up with is... actually maybe I'll go back up to how I had it written.
+
+20:43.000 --> 20:54.000
+ OK, here's the Cholesky factorization.
+
+20:54.000 --> 21:01.000
+ So here our process was we take A transpose A, X equals A transpose B.
+
+21:01.000 --> 21:05.000
+ So we are having to do a matrix multiplication to get this A transpose A.
+
+21:05.000 --> 21:12.000
+ Then we do the Cholesky factorization and get R transpose R, where R is upper triangular.
+
+21:12.000 --> 21:17.000
+ And then we're solving R transpose W equals the right hand side.
+
+21:17.000 --> 21:22.000
+ And the reason that's nice is that's a triangular system because R is triangular.
+
+21:22.000 --> 21:29.000
+ And how can you solve a triangular system?
+
+21:29.000 --> 21:37.000
+ Anyone I haven't heard from today?
+
+21:37.000 --> 21:43.000
+ OK, yeah. Can you throw the microphone to Vincent?
+
+21:43.000 --> 21:49.000
+ Yes, back substitution. Exactly. So bottom row, you only have a single entry.
+
+21:49.000 --> 21:53.000
+ Actually, this is R transpose, so really it would be the top row in this case.
+
+21:53.000 --> 21:59.000
+ So you can just divide through and get that value, plug that into the next equation, which only has two variables,
+
+21:59.000 --> 22:03.000
+ plug it in, solve for the other one, and so on. And so that's n squared.
+
+22:03.000 --> 22:18.000
+ So that's a quicker way of doing this. Whereas with the kind of naive approach, even when you get, let me find it.
+
+22:18.000 --> 22:22.000
+ Even once you get this inverse, you still have to do a matrix multiplication.
+
+22:22.000 --> 22:26.000
+ So you're doing A transpose A, calculating the inverse, which takes n cubed.
+
+22:26.000 --> 22:31.000
+ And then you're multiplying that by A transpose, which is another matrix multiplication.
+
+22:31.000 --> 22:43.000
+ So that's slow. So really, kind of what I wanted to highlight here is that matrix multiplication is n cubed and solving a triangular system is n squared.
+
+22:43.000 --> 22:58.000
+ Triangular system is n squared.
+
+22:58.000 --> 23:07.000
+ So yeah, and I found these from slides. This was actually from the convex optimization course I linked to a few notebooks ago.
+
+23:07.000 --> 23:13.000
+ They had like a numerical linear algebra background lesson.
+
+23:13.000 --> 23:21.000
+ And so this is just showing why Cholesky's fast.
+
+23:21.000 --> 23:29.000
+ So here I'm looking at another very specific type of matrix called the Vandermonde matrix.
+
+23:29.000 --> 23:35.000
+ And this is coming from an example in Trevathan.
+
+23:35.000 --> 23:41.000
+ And so Trevathan tells us that kind of if we normalize by this,
+
+23:41.000 --> 23:48.000
+ he's calculated the kind of true solution on a very high precision computer and has that it should be one.
+
+23:48.000 --> 23:55.000
+ And here, so we're creating this matrix by taking powers of t. So we have kind of evenly spaced points between zero and one.
+
+23:55.000 --> 24:02.000
+ And then we're taking different powers of them.
+
+24:02.000 --> 24:13.000
+ And then doing e to the sine of four times that.
+
+24:13.000 --> 24:22.000
+ And so we can check that using QR, we're getting 10 to the negative seventh, which isn't perfect, but is reasonable.
+
+24:22.000 --> 24:30.000
+ This is another condition number of to the power of 17, which is bad news.
+
+24:30.000 --> 24:38.000
+ So we run it for the four. And again, Cholesky doesn't work on this one because it's not positive definite.
+
+24:38.000 --> 24:47.000
+ And then here we'll see again, there's a big error for the naive approach where we take the inverse.
+
+24:47.000 --> 24:56.000
+ And then time wise, QR is a bit a bit faster. Well, really, the naive approach is the fastest, but just very wrong.
+
+24:56.000 --> 25:04.000
+ But then QR factorization is the fastest of the ones that are correct.
+
+25:04.000 --> 25:13.000
+ Any questions?
+
+25:13.000 --> 25:24.000
+ OK. And then one more example, and this is a little bit redundant.
+
+25:24.000 --> 25:27.000
+ This is with a low rank matrix.
+
+25:27.000 --> 25:34.000
+ So really, I've just kind of created a set of rows and then I've stacked them on top of each other.
+
+25:34.000 --> 25:47.000
+ So there's a huge amount of redundancy in this matrix. And running that, we get a large amount of error for the naive solution.
+
+25:47.000 --> 25:51.000
+ And then we do have more error than we've had previously for the others.
+
+25:51.000 --> 26:03.000
+ And SVD is noticeably worse than QR in this case, although SVD is quicker.
+
+26:03.000 --> 26:17.000
+ Yeah, so I guess kind of in summary, Cholesky is typically fastest when it works, but Cholesky can only be used on symmetric positive definite matrices.
+
+26:17.000 --> 26:28.000
+ And then also Cholesky is, well, I guess we weren't really able to do it, but it's unstable for matrices with high condition numbers or low rank.
+
+26:28.000 --> 26:37.000
+ So linear regression via QR has been recommended by numerical analysts as the standard method for years.
+
+26:37.000 --> 26:50.000
+ Trevathan describes it as good for daily use. And Trevathan says that there are problems where SVD is more stable, although I was not able to recreate that.
+
+26:50.000 --> 27:12.000
+ But my hope with this lesson was to kind of get to see what's going on underneath the hood with linear regression and least squares, and also to see that there are different approaches for it and depending on your problem, there might be some solution or some approaches better than others.
+
+27:12.000 --> 27:24.000
+ Questions?
+
+27:24.000 --> 27:43.000
+ OK, in that case, we're going to start on notebook 7.
+
+27:43.000 --> 27:51.000
+ Page rank with eigendecompositions.
+
+27:51.000 --> 27:55.000
+ So new start, new topic.
+
+27:55.000 --> 28:03.000
+ I wanted to introduce two tools that are just useful in general, and we're going to use them today, but you can use them for a lot of problems.
+
+28:03.000 --> 28:09.000
+ One is a library called psutil, which lets you check your memory usage.
+
+28:09.000 --> 28:15.000
+ And here we're using a larger data set than we've used before, so this can be nice to have.
+
+28:15.000 --> 28:22.000
+ So you'd have to pip install this and then import it.
+
+28:22.000 --> 28:31.000
+ Here we're kind of getting the process ID, the process memory info.
+
+28:31.000 --> 28:55.000
+ And then I've written a helper method, memory usage, that just returns the...
+
+28:55.000 --> 29:07.000
+ So RSS memory stands for resident set size memory, and so we're kind of just returning that memory divided by the total memory to get the memory usage.
+
+29:07.000 --> 29:14.000
+ So this could be a nice thing to monitor if you're having trouble with running out of memory.
+
+29:14.000 --> 29:28.000
+ And then tqdm is a kind of nice library that gives you progress bars, and so this can be good if you are running a for loop with things that are slow.
+
+29:28.000 --> 29:34.000
+ It gives you like a more visual appearance of how you're going, and so this is just a simple example.
+
+29:34.000 --> 29:41.000
+ I'm using sleep to make this a slow for loop.
+
+29:41.000 --> 29:45.000
+ I'm running it and I kind of don't see anything until it's finished.
+
+29:45.000 --> 29:52.000
+ To use tqdm, you just wrap that around whatever you're iterating over.
+
+29:52.000 --> 29:58.000
+ So here we've wrapped range 10 with tqdm.
+
+29:58.000 --> 30:10.000
+ Now running the exact same loop, you see we get this progress bar that's updating as you go.
+
+30:10.000 --> 30:29.000
+ So to get started, can someone remind us what the SVD is?
+
+30:29.000 --> 30:34.000
+ Matthew and Vincent, can you throw the mic?
+
+30:34.000 --> 30:40.000
+ Yes, singular value decomposition. And what does it give you?
+
+30:40.000 --> 30:59.000
+ Yes.
+
+30:59.000 --> 31:07.000
+ Right, yeah, and that's actually kind of getting to the next question of what are some applications of SVD. So yeah, topic modeling was one of them.
+
+31:07.000 --> 31:11.000
+ Yeah, so you're getting U, which is...
+
+31:11.000 --> 31:20.000
+ So in the full version, U and V are both orthonormal square matrices. In the reduced version, U has orthonormal columns.
+
+31:20.000 --> 31:40.000
+ Yeah, so Matthew got us started. What are some other applications of SVD?
+
+31:40.000 --> 31:46.000
+ Roger?
+
+31:46.000 --> 31:48.000
+ PCA?
+
+31:48.000 --> 31:56.000
+ Yes.
+
+31:56.000 --> 32:05.000
+ Yeah, so PCA is SVD. And what are we doing to get the low rank approximation?
+
+32:05.000 --> 32:25.000
+ Exactly, yeah. So this is also called truncated SVD, where we kind of drop off part of them and just take the first few. Exactly. Other applications?
+
+32:25.000 --> 32:35.000
+ There's one we spent an entire week on.
+
+32:35.000 --> 32:53.000
+ Yeah, background removal. So we got pretty good results just using SVD, and then we used the robust PCA, our primary component pursuit, and that used SVD as a step and kind of iteratively did multiple SVDs.
+
+32:53.000 --> 33:03.000
+ And then just now we saw SVD as a way to calculate the least squares linear regression.
+
+33:03.000 --> 33:08.000
+ Yeah, so hopefully you're convinced that SVD is useful and shows up lots of places.
+
+33:08.000 --> 33:23.000
+ I'm kind of a little bit off topic, but I'm doing a workshop this afternoon on word embeddings, such as Word2Vec, which is like a library of word embeddings. And so I was looking at the problem of bias in Word2Vec.
+
+33:23.000 --> 33:41.000
+ So word embeddings give you these analogies, which can be really great, like Spain is to Madrid, as Italy is to Rome, but they also have been found to have kind of biased analogies, such as father is to doctor, as mother is to nurse, or man is to computer programmer, as woman is to homemaker.
+
+33:41.000 --> 33:56.000
+ And so there's been work done around how can you kind of remove this bias. And so I was reading a paper on it and they used SVD as part of their de-biasing process. So I thought that was pretty neat. I was like, oh, this is a relevant application of SVD.
+
+33:56.000 --> 34:00.000
+ So just wanted to highlight that.
+
+34:00.000 --> 34:20.000
+ So a few different ways to think about SVD are data compression. So this comes up with the PCA or when you're dropping many of your kind of lower singular values, the less informative parts, you're getting something that fits in a smaller space.
+
+34:20.000 --> 34:33.000
+ Another related way to think about it is SVD trades a large number of features for a smaller set of better features. And I think that's kind of what we saw with topic modeling.
+
+34:33.000 --> 34:44.000
+ You could have a feature for each word, or we could get the smaller set of features that are kind of groups of words that have related topics.
+
+34:44.000 --> 34:54.000
+ And then I think this is kind of neat, but it's all matrices are actually diagonal if you change the bases on the domain and range.
+
+34:54.000 --> 35:23.000
+ And so this might be a good time. I was going to show the three blue, one brown change of basis video. Let me do that now.
+
+35:23.000 --> 35:38.000
+ Can everyone hear or does that need to be louder?
+
+35:38.000 --> 35:59.000
+ From its tail to its tip involves moving three units to the right and two units up.
+
+35:59.000 --> 36:13.000
+ If I have a vector sitting here in 2D space, we have a standard way to describe it with coordinates. In this case, the vector has coordinates 3, 2, which means going from its tail to its tip involves moving three units to the right and two units up.
+
+36:13.000 --> 36:35.000
+ Now, the more linear algebra-oriented way to describe coordinates is to think of each of these numbers as a scalar, a thing that stretches or squishes vectors. You think of that first coordinate as scaling i hat, the vector with length 1 pointing to the right, while the second coordinate scales j hat, the vector with length 1 pointing straight up.
+
+36:35.000 --> 36:48.000
+ The tip-to-tail sum of those two scaled vectors is what the coordinates are meant to describe. You can think of these two special vectors as encapsulating all of the implicit assumptions of our coordinate system.
+
+36:48.000 --> 37:03.000
+ The fact that the first number indicates rightward motion, that the second one indicates upward motion, exactly how far a unit of distance is, all of that is tied up in the choice of i hat and j hat as the vectors which are scalar coordinates are meant to actually scale.
+
+37:03.000 --> 37:15.000
+ Any way to translate between vectors and set of numbers is called a coordinate system, and the two special vectors, i hat and j hat, are called the basis vectors of our standard coordinate system.
+
+37:15.000 --> 37:29.000
+ What I'd like to talk about here is the idea of using a different set of basis vectors. For example, let's say you have a friend, Jennifer, who uses a different set of basis vectors, which I'll call b1 and b2.
+
+37:29.000 --> 37:37.000
+ Her first basis vector, b1, points up and to the right a little bit, and her second vector, b2, points left and up.
+
+37:37.000 --> 37:46.000
+ Now take another look at that vector that I showed earlier, the one that you and I would describe using the coordinates 3,2, using our basis vectors i hat and j hat.
+
+37:46.000 --> 38:06.000
+ Jennifer would actually describe this vector with the coordinates 5 thirds and 1 third. What this means is that the particular way to get to that vector using her two basis vectors is to scale b1 by 5 thirds, scale b2 by 1 third, then add them both together.
+
+38:06.000 --> 38:11.000
+ In a little bit, I'll show you how you could have figured out those two numbers, 5 thirds and 1 third.
+
+38:11.000 --> 38:23.000
+ In general, whenever Jennifer uses coordinates to describe a vector, she thinks of her first coordinate as scaling b1, the second coordinate as scaling b2, and she adds the results.
+
+38:23.000 --> 38:30.000
+ What she gets will typically be completely different from the vector that you and I would think of as having those coordinates.
+
+38:30.000 --> 38:45.000
+ To be a little more precise about the setup here, her first basis vector, b1, is something that we would describe with the coordinates 2,1, and her second basis vector, b2, is something that we would describe as negative 1,1.
+
+38:45.000 --> 38:52.000
+ But it's important to realize from her perspective in her system, those vectors have coordinates 1,0 and 0,1.
+
+38:52.000 --> 38:58.000
+ They are what define the meaning of the coordinates 1,0 and 0,1 in her world.
+
+38:58.000 --> 39:08.000
+ So, in effect, we're speaking different languages. We're all looking at the same vectors in space, but Jennifer uses different words and numbers to describe them.
+
+39:08.000 --> 39:12.000
+ Let me say a quick word about how I'm representing things here.
+
+39:12.000 --> 39:16.000
+ When I animate 2D space, I typically use this square grid.
+
+39:16.000 --> 39:23.000
+ But that grid is just a construct, a way to visualize our coordinate system, and so it depends on our choice of basis.
+
+39:23.000 --> 39:27.000
+ Space itself has no intrinsic grid.
+
+39:27.000 --> 39:39.000
+ Jennifer might draw her own grid, which would be an equally made up construct meant as nothing more than a visual tool to help follow the meaning of her coordinates.
+
+39:39.000 --> 39:45.000
+ Her origin, though, would actually line up with ours, since everybody agrees on what the coordinates 0,0 should mean.
+
+39:45.000 --> 39:49.000
+ It's the thing that you get when you scale any vector by 0.
+
+39:49.000 --> 39:57.000
+ But the direction of her axes and the spacing of her grid lines will be different, depending on her choice of basis vectors.
+
+39:57.000 --> 40:04.000
+ So, after all this is set up, a pretty natural question to ask is how we translate between coordinate systems.
+
+40:04.000 --> 40:12.000
+ If, for example, Jennifer describes a vector with coordinates negative 1,2, what would that be in our coordinate system?
+
+40:12.000 --> 40:15.000
+ How do you translate from her language to ours?
+
+40:15.000 --> 40:25.000
+ Well, what our coordinates are saying is that this vector is negative 1 times b1 plus 2 times b2.
+
+40:25.000 --> 40:35.000
+ And from our perspective, b1 has coordinates 2,1, and b2 has coordinates negative 1,1.
+
+40:35.000 --> 40:43.000
+ So we can actually compute negative 1 times b1 plus 2 times b2 as they're represented in our coordinate system.
+
+40:43.000 --> 40:49.000
+ And working this out, you get a vector with coordinates negative 4,1.
+
+40:49.000 --> 40:54.000
+ So that's how we would describe the vector that she thinks of as negative 1,2.
+
+40:54.000 --> 41:04.000
+ This process here of scaling each of her basis vectors by the corresponding coordinates of some vector, then adding them together, might feel somewhat familiar.
+
+41:04.000 --> 41:11.000
+ It's matrix-vector multiplication, with a matrix whose columns represent Jennifer's basis vectors in our language.
+
+41:11.000 --> 41:17.000
+ In fact, once you understand matrix-vector multiplication as applying a certain linear transformation,
+
+41:17.000 --> 41:21.000
+ say by watching what I view to be the most important video in this series, chapter 3,
+
+41:21.000 --> 41:25.000
+ there's a pretty intuitive way to think about what's going on here.
+
+41:25.000 --> 41:34.000
+ A matrix whose columns represent Jennifer's basis vectors can be thought of as a transformation that moves our basis vectors, i-hat and j-hat,
+
+41:34.000 --> 41:44.000
+ the things we think of when we say 1,0 and 0,1, to Jennifer's basis vectors, the things she thinks of when she says 1,0 and 0,1.
+
+41:44.000 --> 41:54.000
+ To show how this works, let's walk through what it would mean to take the vector that we think of as having coordinates negative 1,2 and applying that transformation.
+
+41:54.000 --> 42:03.000
+ Before the linear transformation, we're thinking of this vector as a certain linear combination of our basis vectors, negative 1 times i-hat plus 2 times j-hat.
+
+42:03.000 --> 42:12.000
+ And the key feature of a linear transformation is that the resulting vector will be that same linear combination but of the new basis vectors,
+
+42:12.000 --> 42:19.000
+ negative 1 times the place where i-hat lands plus 2 times the place where j-hat lands.
+
+42:19.000 --> 42:30.000
+ So what this matrix does is transform our misconception of what Jennifer means into the actual vector that she's referring to.
+
+42:30.000 --> 42:34.000
+ I remember that when I was first learning this, it always felt kind of backwards to me.
+
+42:34.000 --> 42:47.000
+ Geometrically, this matrix transforms our grid into Jennifer's grid, but numerically, it's translating a vector described in her language to our language.
+
+42:47.000 --> 42:52.000
+ What made it finally click for me was thinking about how it takes our misconception of what Jennifer means,
+
+42:52.000 --> 43:01.000
+ the vector we get using the same coordinates but in our system, then transforms it into the vector that she really meant.
+
+43:01.000 --> 43:04.000
+ What about going the other way around?
+
+43:04.000 --> 43:09.000
+ In the example I used earlier this video, when I had the vector with coordinates 3,2 in our system,
+
+43:09.000 --> 43:18.000
+ how did I compute that it would have coordinates 5 thirds and 1 third in Jennifer's system?
+
+43:18.000 --> 43:29.000
+ You start with that change of basis matrix that translates Jennifer's language into ours, then you take its inverse.
+
+43:29.000 --> 43:36.000
+ Remember, the inverse of a transformation is a new transformation that corresponds to playing that first one backwards.
+
+43:36.000 --> 43:44.000
+ In practice, especially when you're working in more than two dimensions, you'd use a computer to compute the matrix that actually represents this inverse.
+
+43:44.000 --> 43:57.000
+ In this case, the inverse of the change of basis matrix that has Jennifer's basis as its columns ends up working out to have columns 1 third, negative 1 third, and 1 third, 2 thirds.
+
+43:57.000 --> 44:13.000
+ So for example, to see what the vector 3,2 looks like in Jennifer's system, we multiply this inverse change of basis matrix by the vector 3,2, which works out to be 5 thirds, 1 third.
+
+44:13.000 --> 44:21.000
+ So that, in a nutshell, is how to translate the description of individual vectors back and forth between coordinate systems.
+
+44:21.000 --> 44:32.000
+ The matrix whose columns represent Jennifer's basis vectors but written in our coordinates translates vectors from her language into our language.
+
+44:32.000 --> 44:37.000
+ And the inverse matrix does the opposite.
+
+44:37.000 --> 44:41.000
+ But vectors aren't the only thing that we describe using coordinates.
+
+44:41.000 --> 44:52.000
+ For this next part, it's important that you're all comfortable representing transformations with matrices and that you know how matrix multiplication corresponds to composing successive transformations.
+
+44:52.000 --> 44:59.000
+ Definitely pause and take a look at chapters 3 and 4 if any of that feels uneasy.
+
+44:59.000 --> 45:04.000
+ Consider some linear transformation, like a 90-degree counterclockwise rotation.
+
+45:04.000 --> 45:11.000
+ When you and I represent this with a matrix, we follow where the basis vectors i-hat and j-hat each go.
+
+45:11.000 --> 45:18.000
+ i-hat ends up at the spot with coordinates 0,1, and j-hat ends up at the spot with coordinates negative 1,0.
+
+45:18.000 --> 45:22.000
+ So those coordinates become the columns of our matrix.
+
+45:22.000 --> 45:36.000
+ But this representation is heavily tied up in our choice of basis vectors, from the fact that we're following i-hat and j-hat in the first place to the fact that we're recording their landing spots in our own coordinate system.
+
+45:36.000 --> 45:46.000
+ How would Jennifer describe this same 90-degree rotation of space?
+
+45:46.000 --> 45:53.000
+ You might be tempted to just translate the columns of our rotation matrix into Jennifer's language, but that's not quite right.
+
+45:53.000 --> 46:06.000
+ Those columns represent where our basis vectors i-hat and j-hat go, but the matrix that Jennifer wants should represent where her basis vectors land, and it needs to describe those landing spots in her language.
+
+46:06.000 --> 46:09.000
+ Here's a common way to think of how this is done.
+
+46:09.000 --> 46:12.000
+ Start with any vector written in Jennifer's language.
+
+46:12.000 --> 46:25.000
+ Rather than trying to follow what happens to it in terms of her language, first we're going to translate it into our language using the change of basis matrix, the one whose columns represent her basis vectors in our language.
+
+46:25.000 --> 46:29.000
+ This gives us the same vector, but now written in our language.
+
+46:29.000 --> 46:34.000
+ Then, apply the transformation matrix to what you get by multiplying it on the left.
+
+46:34.000 --> 46:39.000
+ This tells us where that vector lands, but still in our language.
+
+46:39.000 --> 46:49.000
+ So as a last step, apply the inverse change of basis matrix, multiplied on the left as usual, to get the transformed vector, but now in Jennifer's language.
+
+46:49.000 --> 46:59.000
+ Since we can do this with any vector written in her language, first applying the change of basis, then the transformation, then the inverse change of basis,
+
+46:59.000 --> 47:05.000
+ that composition of three matrices gives us the transformation matrix in Jennifer's language.
+
+47:05.000 --> 47:12.000
+ It takes in a vector of her language and spits out the transformed version of that vector in her language.
+
+47:12.000 --> 47:21.000
+ For this specific example, when Jennifer's basis vectors look like 2, 1 and negative 1, 1 in our language, and when the transformation is a 90 degree rotation,
+
+47:21.000 --> 47:30.000
+ the product of these three matrices, if you work through it, has columns one-third, five-thirds, and negative two-thirds, negative one-third.
+
+47:30.000 --> 47:45.000
+ So if Jennifer multiplies that matrix by the coordinates of a vector in her system, it will return the 90 degree rotated version of that vector expressed in her coordinate system.
+
+47:45.000 --> 47:53.000
+ In general, whenever you see an expression like A inverse times M times A, it suggests a mathematical sort of empathy.
+
+47:53.000 --> 48:02.000
+ That middle matrix represents a transformation of some kind as you see it, and the outer two matrices represent the empathy, the shift in perspective.
+
+48:02.000 --> 48:08.000
+ And the full matrix product represents that same transformation, but as someone else sees it.
+
+48:08.000 --> 48:17.000
+ For those of you wondering why we care about alternate coordinate systems, the next video on eigenvectors and eigenvalues will give a really important example of this.
+
+48:17.000 --> 48:24.000
+ See you then.
+
+48:24.000 --> 48:32.000
+ Alright, so I really like that analogy of change of basis being like translating between languages.
+
+48:32.000 --> 48:41.000
+ And the idea of kind of like empathy with multiplying by change of basis and inverse to change the basis back.
+
+48:41.000 --> 48:51.000
+ And so we'll be using those ideas a bit. We're not going to watch the eigen decomposition video in here, but you might want to watch that at home if you're interested.
+
+48:51.000 --> 48:59.000
+ I think this is a good time to take a break. It's 1155, so let's meet back in eight minutes, like at 1203.
+
+48:59.000 --> 49:05.000
+ And if you have questions about the video, maybe write them down and then we can talk about them when we meet back.
+
+49:05.000 --> 49:09.000
+ Thanks.
+
+49:09.000 --> 49:13.000
+ So yeah, we just saw the video on change of basis.
+
+49:13.000 --> 49:19.000
+ Yeah, I really like the analogy about translating, translating between languages as alike that it showed.
+
+49:19.000 --> 49:26.000
+ Again, we've talked about how you can think of matrix multiplication is taking a linear combination of the columns.
+
+49:26.000 --> 49:31.000
+ And that's what was going on with kind of the original basis.
+
+49:31.000 --> 49:45.000
+ We're going to start with the Jennifer's basis and then we're taking coefficients to translate into that. Were there any questions about the video?
+
+49:45.000 --> 49:48.000
+ Okay.
+
+49:48.000 --> 50:01.000
+ So highlight. So this is coming back. We had this statement. All matrices are diagonal if you use change of bases. And so that's kind of what's going on with this U sigma V.
+
+50:01.000 --> 50:11.000
+ We can think of that as a change of basis to get into a space where you've got a diagonal matrix.
+
+50:11.000 --> 50:24.000
+ And this, I regret that I didn't put a picture of this in here, maybe I'll do this next time. A lot of times with PCA this shows up, you'll kind of have the picture of, you know, like what the principal axes are.
+
+50:24.000 --> 50:33.000
+ And you can think of that as kind of the basis vectors of this new basis that better represents your data set.
+
+50:33.000 --> 50:40.000
+ Yeah, so we've been talking about SVD in terms of matrices.
+
+50:40.000 --> 50:53.000
+ But we can also think of it in terms of the individual vectors. And so if we think of SVD as giving us the vectors Vj and Uj,
+
+50:53.000 --> 51:00.000
+ then we could have A times vector V equals sigma times vector U.
+
+51:00.000 --> 51:08.000
+ And I kind of am showing the answers here, but my question was going to be does this remind you of anything?
+
+51:08.000 --> 51:14.000
+ And the answer is eigendecomposition.
+
+51:14.000 --> 51:32.000
+ And just to remind you, if it's been a while since you've seen eigendecomposition, if I define it here.
+
+51:32.000 --> 51:45.000
+ Does anyone remember what the definition of an eigenvector, an eigenvalue is? Brad, and can Roger throw the microphone?
+
+51:45.000 --> 51:59.000
+ For a given matrix A, an eigenvector is a vector that when transformed by A is just a scaled,
+
+51:59.000 --> 52:06.000
+ that vector is a scaled by a value lambda, which is the eigenvalue. Exactly.
+
+52:06.000 --> 52:13.000
+ So transforming V by A, which is like doing A times V is just scaling V.
+
+52:13.000 --> 52:19.000
+ So it's equal to lambda times V. And so that's the definition of eigenvectors and eigenvalues.
+
+52:19.000 --> 52:29.000
+ And so hopefully this looks somewhat similar to what we were talking about with A times V equals sigma times U.
+
+52:29.000 --> 52:37.000
+ Kind of the key difference here is that V and U don't have to be equal. So those could be different values.
+
+52:37.000 --> 52:51.000
+ But otherwise we're talking about when is matrix multiplication by a vector like scaling a vector?
+
+52:51.000 --> 53:02.000
+ So going back here, and I won't go into great detail about it, but SVD is a generalization of eigendecompositions.
+
+53:02.000 --> 53:08.000
+ So not all matrices have eigenvalues, but all matrices have singular values.
+
+53:08.000 --> 53:15.000
+ And we could probably guess that SVD was more general by the fact that U and V don't have to be the same vector.
+
+53:15.000 --> 53:28.000
+ So we're going to switch from talking about SVD to talking about how to find the eigenvalues, which is a kind of very closely related problem.
+
+53:28.000 --> 53:34.000
+ So everything we say about eigendecomposition, remember that it's relevant to SVD.
+
+53:34.000 --> 53:40.000
+ And we've just seen this list of applications of SVD kind of throughout this course.
+
+53:40.000 --> 53:48.000
+ And here I link to several other kind of resources for more information about SVD.
+
+53:48.000 --> 53:59.000
+ So the best classical methods for computing the SVD are all variants on methods for computing eigenvalues.
+
+53:59.000 --> 54:02.000
+ And eigendecompositions are useful on their own as well.
+
+54:02.000 --> 54:07.000
+ So a few practical applications of eigendecompositions.
+
+54:07.000 --> 54:20.000
+ One is rapid matrix powers.
+
+54:20.000 --> 54:37.000
+ Rapid matrix powers. And so the idea is that if you knew that A was equal to V times lambda times V inverse,
+
+54:37.000 --> 54:58.000
+ here V is the eigenvectors, lambda is the eigenvalues. What would be true of lambda as a matrix? What property does this matrix have?
+
+54:58.000 --> 55:03.000
+ Do you want to grab the microphone?
+
+55:03.000 --> 55:08.000
+ Exactly, yeah. Lambda has to be diagonal.
+
+55:08.000 --> 55:21.000
+ And that's kind of this idea of going back and forth between, you know, we can write eigenvectors and eigenvalues individually as vectors, you know, kind of what I had here.
+
+55:21.000 --> 55:37.000
+ Or we could kind of put all the eigenvectors together and say, really this is A times a matrix V where the columns are the different eigenvectors equals, oh, accept.
+
+55:37.000 --> 55:42.000
+ To make that work, you have to make lambda into a matrix.
+
+55:42.000 --> 55:50.000
+ And what that matrix is, is just diagonal with the little lambdas along the diagonal.
+
+55:50.000 --> 55:59.000
+ Questions about getting between these. And so here this would, often these would have a subscript. So if I say these are all sub i, then we're putting those together.
+
+55:59.000 --> 56:03.000
+ Actually, let me write it out.
+
+56:03.000 --> 56:07.000
+ I'm going to say everyone's been very quiet today, so it's hard for me to read.
+
+56:07.000 --> 56:24.000
+ So if you want me to go slower, quicker. But you could think of this as A times V1, V2, V3, and so on.
+
+56:24.000 --> 56:37.000
+ Equals lambda one, lambda two, one down, slide over and down to lambda n.
+
+56:37.000 --> 56:45.000
+ Times V1, V2, up to Vn.
+
+56:45.000 --> 56:57.000
+ This is kind of a way to consolidate all those individual equations for the different Vi and the different lambda i into matrices.
+
+56:57.000 --> 57:10.000
+ And then the idea with the rapid matrix powers is, you know, suppose we're interested in taking A to some power k.
+
+57:10.000 --> 57:16.000
+ Doing that the naive way would be doing A times A, multiplying that by A, multiplying that by A.
+
+57:16.000 --> 57:29.000
+ And what's the run time for matrix multiplication?
+
+57:29.000 --> 57:34.000
+ Tim, do you want to throw the microphone to Sam?
+
+57:34.000 --> 57:41.000
+ Yes, exactly. It's n cubed, which is really slow. So another way we could think about this.
+
+57:41.000 --> 57:52.000
+ So now we've got A equals.
+
+57:52.000 --> 57:59.000
+ Did I write this backwards?
+
+57:59.000 --> 58:10.000
+ I'm sorry about this.
+
+58:10.000 --> 58:16.000
+ AV and then this side is V lambda. Yeah, I think that's correct.
+
+58:16.000 --> 58:24.000
+ Thank you.
+
+58:24.000 --> 58:40.000
+ Yeah, and the reason why that's true is because we want to be taking multiples of...
+
+58:40.000 --> 58:52.000
+ Yeah, we're interested in the columns V on this side.
+
+58:52.000 --> 59:01.000
+ And so writing it like this.
+
+59:01.000 --> 59:09.000
+ What this gives us is basically taking the first column, multiplying that by our matrix V is just going to give us lambda one, B one.
+
+59:09.000 --> 59:16.000
+ Then we're doing lambda two times B two and so on.
+
+59:16.000 --> 59:24.000
+ Sorry about that confusion. This should be AV times V lambda.
+
+59:24.000 --> 59:35.000
+ Which then can be rewritten as A equals V lambda V inverse.
+
+59:35.000 --> 59:49.000
+ So then going back to our problem of wanting the kth power, we can do A equals V lambda V inverse to the kth power.
+
+59:49.000 --> 59:59.000
+ Any ideas about how this could be reduced?
+
+59:59.000 --> 1:00:11.000
+ Tim and Sam, can you throw the microphone back to Tim?
+
+1:00:11.000 --> 1:00:15.000
+ Exactly.
+
+1:00:15.000 --> 1:00:29.000
+ So if you were to write these out a bunch of times, as Tim said, you end up with V lambda V inverse times V lambda V inverse times V lambda and so on.
+
+1:00:29.000 --> 1:00:43.000
+ And this V inverse times V and V inverse times V are going to cancel out however many entries you have and you end up with V lambda to the k V inverse.
+
+1:00:43.000 --> 1:00:50.000
+ And why is it okay that we have lambda to the k?
+
+1:00:50.000 --> 1:00:52.000
+ Matthew?
+
+1:00:52.000 --> 1:00:57.000
+ And do you want to throw the?
+
+1:00:57.000 --> 1:00:59.000
+ It's diagonal so it's really easy to take the kth power.
+
+1:00:59.000 --> 1:01:13.000
+ Exactly, yeah. So since it's diagonal, taking the kth power is not a big deal at all. So this is a much more efficient way to compute the kth power of A.
+
+1:01:13.000 --> 1:01:20.000
+ This is one application of eigenvectors.
+
+1:01:20.000 --> 1:01:29.000
+ You can also use them to find the nth Fibonacci number, which is kind of neat.
+
+1:01:29.000 --> 1:01:34.000
+ I'll just briefly show this one.
+
+1:01:34.000 --> 1:01:54.000
+ But basically, you can think of getting the Fibonacci numbers is going taking this matrix 1, 1 and 1, 0 and multiplying that by 1, 0 and then kind of continuing to do that to get the, you know, this is giving you on the top row the sum of the previous two things you have.
+
+1:01:54.000 --> 1:02:01.000
+ If you enter the previous two here and then apply what we just saw with taking nth powers.
+
+1:02:01.000 --> 1:02:14.000
+ It's kind of a fun application.
+
+1:02:14.000 --> 1:02:32.000
+ And then we're not going to get into this in this class, but the behavior of ODEs is often if you're interested in the long term behavior of ODEs, what you'll end up needing to do is finding the eigendecomposition and then Markov chains, which we will kind of be seeing today.
+
+1:02:32.000 --> 1:02:45.000
+ Yeah, so we watched the three blue, one brown video. Gilbert Strang, who's written a kind of classic linear algebra textbook, had a nice quote, eigenvalues are a way to see into the heart of a matrix.
+
+1:02:45.000 --> 1:02:57.000
+ All the difficulties of matrices are swept away, but there's something, you know, really a kind of fundamental about a matrix that's expressed in its eigenvalues.
+
+1:02:57.000 --> 1:03:07.000
+ And then just some vocabulary that you might come across is Hermitian, and that means the matrix is equal to its conjugate transpose.
+
+1:03:07.000 --> 1:03:16.000
+ In the case where you're dealing with real values, that's just saying that it's the same as being symmetric, it's equal to its transpose.
+
+1:03:16.000 --> 1:03:22.000
+ This is only if you have complex values, then you'd be flipping the sign on the complex values.
+
+1:03:22.000 --> 1:03:30.000
+ But so for our purposes, when you hear Hermitian, you can think symmetric.
+
+1:03:30.000 --> 1:03:43.000
+ And then two useful theorems are if A is symmetric, then the eigenvalues of A are real and A equals Q lambda Q transpose.
+
+1:03:43.000 --> 1:03:56.000
+ So that's really handy that here Q is, its inverse is its transpose.
+
+1:03:56.000 --> 1:04:02.000
+ And then if A is triangular, its eigenvalues are equal to its diagonal entries.
+
+1:04:02.000 --> 1:04:13.000
+ This is a little bit of a spoiler, but if you are interested in the eigenvalues of a matrix, it would probably be nice to have it in triangular form.
+
+1:04:13.000 --> 1:04:20.000
+ Because then you can just get them from the diagonal.
+
+1:04:20.000 --> 1:04:26.000
+ So today we're going to start with the power method, which finds just one eigenvector.
+
+1:04:26.000 --> 1:04:38.000
+ And that's the basis for page rank. And there's a paper, I really like the title of this, the $25 billion eigenvector, the linear algebra behind Google.
+
+1:04:38.000 --> 1:04:44.000
+ Yeah, so this is a kind of very real world application of an eigenvector being important.
+
+1:04:44.000 --> 1:04:51.000
+ And so we're going to be using a data set from DBpedia, which I think is a really neat resource.
+
+1:04:51.000 --> 1:05:03.000
+ But they've kind of compiled a bunch of Wikipedia data, as well as a lot of different kind of classifications and categories of it.
+
+1:05:03.000 --> 1:05:10.000
+ And they have it in a bunch of different languages, and it's all kind of freely available.
+
+1:05:10.000 --> 1:05:16.000
+ And so the data set we'll be using is kind of showing which pages link to which other pages.
+
+1:05:16.000 --> 1:05:28.000
+ And so we'll be doing, so kind of the basic idea behind the original page rank algorithm for Google search was that pages that a bunch of other pages link to must be more important.
+
+1:05:28.000 --> 1:05:31.000
+ Kind of that so many people are linking to that page.
+
+1:05:31.000 --> 1:05:43.000
+ And prior to that, like the very early kind of like Yahoo pages had editors that like hand went out and selected links to be listed.
+
+1:05:43.000 --> 1:05:50.000
+ And so this was kind of a big change to have an algorithm do it and kind of tell you how important different pages are.
+
+1:05:50.000 --> 1:06:00.000
+ And so what we'll be doing is using this Wikipedia data of what pages are linking to what pages to kind of see what the most important pages are based on links.
+
+1:06:00.000 --> 1:06:14.000
+ And I guess the other piece of that is you're normalizing for, you know, if a page links to 100 other pages, it's less special that they're kind of linking to each of those pages than if a page only links to two other pages.
+
+1:06:14.000 --> 1:06:19.000
+ And that kind of carries more weight.
+
+1:06:19.000 --> 1:06:31.000
+ So yeah, here, this is just a little information about the full DBP data set has 38 million labels, abstracts in 125 different languages, 25 million links to images.
+
+1:06:31.000 --> 1:06:39.000
+ So this is, I think, something to keep in mind for future projects.
+
+1:06:39.000 --> 1:06:53.000
+ And so I sent a Slack message this weekend, this can be kind of slow to download, so you might want to wait till after class if you haven't done it already.
+
+1:06:53.000 --> 1:07:02.000
+ So here, this is just kind of opening the data.
+
+1:07:02.000 --> 1:07:09.000
+ So what we're going to do is construct a graph adjacency matrix about which pages point to which.
+
+1:07:09.000 --> 1:07:21.000
+ And so this is a kind of very simple example of if you just had four pages, if A is pointing to B, C, and D, we could represent that here in the first column.
+
+1:07:21.000 --> 1:07:27.000
+ This is a little bit confusing. A is a matrix here, up here it's the first node.
+
+1:07:27.000 --> 1:07:34.000
+ We're putting ones to indicate the first node points to the second, third, and fourth nodes.
+
+1:07:34.000 --> 1:07:39.000
+ Then B only points to C. So the second node is only pointing to the third node.
+
+1:07:39.000 --> 1:07:46.000
+ You can see in the second row of this matrix that there's just a one in the third spot, but nowhere else.
+
+1:07:46.000 --> 1:07:50.000
+ So that one represents B's pointing to C.
+
+1:07:50.000 --> 1:08:00.000
+ Down here, C is just pointing to A. So you can see that we have a one in the first spot saying C is pointing to A, C doesn't point to anything else.
+
+1:08:00.000 --> 1:08:07.000
+ And then D just points to C. So in the third spot, we've got a one.
+
+1:08:07.000 --> 1:08:12.000
+ So this is a directed graph, so the order definitely matters.
+
+1:08:12.000 --> 1:08:15.000
+ It's not symmetric.
+
+1:08:15.000 --> 1:08:24.000
+ Are there questions about this representation?
+
+1:08:24.000 --> 1:08:37.000
+ Okay, so taking the power A squared will tell you how many ways there are to get from one page to another page in two steps.
+
+1:08:37.000 --> 1:08:47.000
+ And actually, I found these notes, which I liked, and they use the example of airlines traveling.
+
+1:08:47.000 --> 1:09:00.000
+ So they just have this kind of smaller graph, I guess in Massachusetts, between, you know, which towns can you fly between.
+
+1:09:00.000 --> 1:09:12.000
+ They represent that as a matrix with these zeros and ones.
+
+1:09:12.000 --> 1:09:23.000
+ And then they kind of take the power and say, okay, by taking the second power, we see there's one two-step sequence from C to F.
+
+1:09:23.000 --> 1:09:27.000
+ So that shows up in A, B, C.
+
+1:09:27.000 --> 1:09:34.000
+ We've got a one here. There's one way to just with two legs of your journey to get from C to F.
+
+1:09:34.000 --> 1:09:38.000
+ There are five three-step sequences between C and F.
+
+1:09:38.000 --> 1:09:44.000
+ So coming over here, yeah, so C is the third row, F is the sixth column, and we've got five.
+
+1:09:44.000 --> 1:09:47.000
+ This is for M cubed.
+
+1:09:47.000 --> 1:10:04.000
+ Other questions about this? This would show up in logistics problems.
+
+1:10:04.000 --> 1:10:21.000
+ All right, so the format of our data is it's kind of in files in these lists, and so we have both the redirects and the links, and we need to use both. And the redirects are just to kind of figure out which page is redirecting to other ones.
+
+1:10:21.000 --> 1:10:35.000
+ And so the first one is kind of the source page that it's telling you it's a redirect or a link, and then the third argument is telling you the destination page it's pointing to.
+
+1:10:35.000 --> 1:10:54.000
+ So this is just some kind of data processing to read in the lines, to split them.
+
+1:10:54.000 --> 1:11:02.000
+ The redirects we're putting into this dictionary.
+
+1:11:02.000 --> 1:11:09.000
+ I want to kind of come down, I think it's more interesting to kind of look at what we've created.
+
+1:11:09.000 --> 1:11:24.000
+ So we have something called index map, and I've just, an index map is a dictionary, but to see what's in it, I'm just kind of popping off a random element from it.
+
+1:11:24.000 --> 1:11:33.000
+ And in general, you don't want to do this because I think that that alters your dictionary, but I just wanted to kind of, it's always important to be able to see what your data is like.
+
+1:11:33.000 --> 1:11:41.000
+ And I think it's more informative to see how our process data looks than to go through each step of the processing.
+
+1:11:41.000 --> 1:11:54.000
+ But here it says 1940 Cincinnati Redstein issue relates to this index 9991173.
+
+1:11:54.000 --> 1:12:13.000
+ So then we've got two lists of source and destination, and those are just, they're listed the same length, and their list of indices, and so they're kind of telling you, you know, the seventh spot in source is the index of which page is a source pointing to the seventh spot in destination.
+
+1:12:13.000 --> 1:12:25.000
+ So this is a very inefficient way to be working with these lists, and I'm doing this to kind of illustrate what they represent, but this isn't how you would actually be using them.
+
+1:12:25.000 --> 1:12:43.000
+ So okay, I know Cincinnati Redstein issue is 9991173, where does that even show up in the source list? It just shows up at index 119077649.
+
+1:12:43.000 --> 1:13:02.000
+ And so then I can look that up in the destination, and I get 9991050. So we have, I guess, two different types of indices going on. It's the indices being used by the index map, and then the
+
+1:13:02.000 --> 1:13:07.000
+ indices of source and destination, which just correspond to each other.
+
+1:13:07.000 --> 1:13:18.000
+ All this to say, then we look up 9991050 and find out that that is page W711-2.
+
+1:13:18.000 --> 1:13:25.000
+ I just want to say, I actually tried popping like several elements off to see if I could find something more,
+
+1:13:25.000 --> 1:13:40.000
+ maybe more interesting, but some of them were like for pages that have been deleted because I think the DBpedia data set is not super current. Wikipedia gets changed a lot, so this is actually the best I could do.
+
+1:13:40.000 --> 1:13:55.000
+ I went to Wikipedia and I looked up Cincinnati Redstein issue, and it redirected me to W711-2. So that's showing that our data is representing what we want, and we can get information from it.
+
+1:13:55.000 --> 1:14:05.000
+ Although it does involve this kind of, you know, like having to search for where does the index appear in source, and then what does that correspond to in destination.
+
+1:14:05.000 --> 1:14:20.000
+ And this is all talking about a pack of baseball cards, if you are wondering. And we can even open this link in a new tab.
+
+1:14:20.000 --> 1:14:34.000
+ And it says, you know, W711-2 is also known as the 1940 Cincinnati Reds team issue, which is a baseball card set.
+
+1:14:34.000 --> 1:14:50.000
+ And we'll take a look at it just to see some of the things that show up about baseball, Cincinnati Reds, Detroit Tigers, and then there are a bunch of names of players in here.
+
+1:14:50.000 --> 1:15:05.000
+ So let me just say that kind of one more time how this is working. Index map is a mapping between names of Wikipedia pages and a number representing them, and then we can look for those numbers in the source or destination list.
+
+1:15:05.000 --> 1:15:21.000
+ And then the source and destination lists kind of need to be paired together because things show up, you know, like the third entry of the source list is pointing to the third entry of the destination list.
+
+1:15:21.000 --> 1:15:31.000
+ So are there questions about this?
+
+1:15:31.000 --> 1:15:48.000
+ Okay, so now I'm interested in, so 9991050 is this W711-2 page, which represents this pack of baseball cards, and I want to know where that shows up in the source.
+
+1:15:48.000 --> 1:16:17.000
+ So kind of what pages is the source pointing at? And I get back, let me check if this is, I get 47, so there are a lot that's saying that this Wikipedia page has 47 outgoing links on it, which seems very plausible to me.
+
+1:16:17.000 --> 1:16:35.000
+ And then now I look those up in my index map to see what pages they correspond to. And so that's what I have here, and they correspond to baseball, Ohio, Cincinnati, Flash Thompson, 1940, 1938, Lonnie Frey, Cincinnati Reds, Ernie Lombardi.
+
+1:16:35.000 --> 1:16:52.000
+ So this seems correct, like our data is what we think it is. We've got the information that this W7 page is linking to all these other baseball related pages and names of the players.
+
+1:16:52.000 --> 1:17:10.000
+ I just had a screen capture of that. So any questions about that, kind of that aspect of the data processing?
+
+1:17:10.000 --> 1:17:35.000
+ Okay, so then now we're going to use sparse.coo to create a sparse matrix, and then we're going to convert it to CSR. So two questions. First, what are COO and CSR?
+
+1:17:35.000 --> 1:17:42.000
+ And Matthew has the microphone if someone wants to call C.
+
+1:17:42.000 --> 1:17:45.000
+ I think COO is the coordinate representation.
+
+1:17:45.000 --> 1:17:51.000
+ Exactly.
+
+1:17:51.000 --> 1:18:08.000
+ So these are two different sparse representations. And so why would we create it with COO and then convert it in the next line?
+
+1:18:08.000 --> 1:18:25.000
+ Kelsey? Exactly, yeah. So COO I think kind of makes the most sense logically, because with CSR we have to do that kind of counting of, we keep track of a row pointer.
+
+1:18:25.000 --> 1:18:38.000
+ And so how many values are in each row, when do we need to update our row pointer, which would be kind of a pain to do by hand. And there's efficient conversion between the different types.
+
+1:18:38.000 --> 1:18:44.000
+ But COO, it's very natural to say this is our data and we want to do it by destination comma source.
+
+1:18:44.000 --> 1:18:50.000
+ So this is our rows are going to be the destinations, the columns are the sources.
+
+1:18:50.000 --> 1:18:58.000
+ Put that into a sparse matrix and then convert it to CSR. And I wanted to highlight this.
+
+1:18:58.000 --> 1:19:07.000
+ So this is the page that we've seen several times explaining kind of about the different sparse formats.
+
+1:19:07.000 --> 1:19:23.000
+ And it points out over here at the bottom, advantage of CSR method over the coordinate wise method is that, so the number of operations to perform matrix vector multiplication are the same for the two.
+
+1:19:23.000 --> 1:19:31.000
+ However, the number of memory accesses is reduced by a factor of two in the CSR method.
+
+1:19:31.000 --> 1:19:41.000
+ So that's, and this is a nice example of, you know, if you were just thinking about big O, it's going to be the same in terms of operations.
+
+1:19:41.000 --> 1:19:51.000
+ However, this idea of memory access being something that matters and can be, can slow us down, CSR is a lot better.
+
+1:19:51.000 --> 1:20:02.000
+ Questions about that?
+
+1:20:02.000 --> 1:20:19.000
+ Okay, and so we'll be doing, not surprisingly, some matrix vector multiplications and so it's going to be faster to use CSR and that will have fewer memory accesses.
+
+1:20:19.000 --> 1:20:26.000
+ And then I highly recommend if you're doing this at home, all this processing and creating your matrix can be a bit slow.
+
+1:20:26.000 --> 1:20:34.000
+ And so when you get to this point, it's a good idea to save your matrix and you can use Pickle, which is a Python library for kind of compressing things.
+
+1:20:34.000 --> 1:20:50.000
+ And then that way if you want to come back to this later, you're not having to recreate your matrix every single time you're using this notebook. This is something I recommend in general for any sort of data project where it's slow to compute the data.
+
+1:20:50.000 --> 1:20:58.000
+ So here we save our index map and our data matrix X.
+
+1:20:58.000 --> 1:21:09.000
+ And we can check here, X is a, this is quite a large matrix, about close to 12 million by 12 million sparse matrix.
+
+1:21:09.000 --> 1:21:12.000
+ And then it's nice that it tells us this.
+
+1:21:12.000 --> 1:21:31.000
+ So it was, was I asked by a fact or? Oh, okay. Yeah. Thank you. 120 million by 120 million matrix. And then it's got 94 million non-zero entries.
+
+1:21:31.000 --> 1:21:41.000
+ Which is a lot less than 120 million squared. So we're saving a lot of space.
+
+1:21:41.000 --> 1:21:49.000
+ Any questions about the setup?
+
+1:21:49.000 --> 1:21:55.000
+ Okay, so now we're going into the power method. This is going to be how we're calculating our eigenvector.
+
+1:21:55.000 --> 1:22:14.000
+ And again, our idea is that if, you know, if we were just looking at Wikipedia as kind of like a stand in for the Internet, we're trying to find like what the most important pages are.
+
+1:22:14.000 --> 1:22:18.000
+ Actually, I'm going to skip this part.
+
+1:22:18.000 --> 1:22:23.000
+ Well, so this is
+
+1:22:23.000 --> 1:22:28.000
+ similar to what we talked about below with the matrix powers.
+
+1:22:28.000 --> 1:22:38.000
+ But the idea is that a matrix, so a matrix is diagonalizable if it has n linearly independent eigenvectors, v1 through vn.
+
+1:22:38.000 --> 1:22:45.000
+ And then any, any vector can be expressed as a linear combination of the eigenvectors.
+
+1:22:45.000 --> 1:22:56.000
+ And that's really handy because when we're looking at the matrix times a vector, having how it's expressed as an eigenvector,
+
+1:22:56.000 --> 1:23:11.000
+ or expressed in terms of the eigenvectors, lets us just multiply them by the eigenvalue instead of having to do a matrix multiplication.
+
+1:23:11.000 --> 1:23:17.000
+ And let me even say I want to
+
+1:23:17.000 --> 1:23:40.000
+ I want to write that one out.
+
+1:23:40.000 --> 1:23:46.000
+ So let me start on a new page. So if any vector w
+
+1:23:46.000 --> 1:23:53.000
+ can be written as a linear combination for some scalars, call them Cj,
+
+1:23:53.000 --> 1:23:59.000
+ of the eigenvectors vj, and that's because the v form, the eigenvectors form a basis for your space.
+
+1:23:59.000 --> 1:24:03.000
+ And when you want to do a w,
+
+1:24:03.000 --> 1:24:13.000
+ it's just like A, times this linear combination.
+
+1:24:13.000 --> 1:24:23.000
+ You can pull this A inside. Remember C is just a scalar, so we can pull the matrix into that.
+
+1:24:23.000 --> 1:24:35.000
+ And then how can I rewrite this?
+
+1:24:35.000 --> 1:25:04.000
+ The hint is that the vectors v are eigenvectors of A.
+
+1:25:04.000 --> 1:25:16.000
+ So can we just substitute A vj with lambda j vj?
+
+1:25:16.000 --> 1:25:21.000
+ Exactly. Yes.
+
+1:25:21.000 --> 1:25:26.000
+ And this is just kind of the definition of what it means to be an eigenvector,
+
+1:25:26.000 --> 1:25:30.000
+ is that instead of having to multiply by a matrix, you can just multiply by a scalar.
+
+1:25:30.000 --> 1:25:39.000
+ And so this is really nice because there is nothing special about w here.
+
+1:25:39.000 --> 1:25:44.000
+ W was any vector and it was being represented as a linear combination of the eigenvectors.
+
+1:25:44.000 --> 1:25:49.000
+ And so we're kind of saying, oh, for any vector, you don't actually have to do the matrix multiplication.
+
+1:25:49.000 --> 1:26:00.000
+ You can just use the eigenvalues, kind of multiplying by the basis.
+
+1:26:00.000 --> 1:26:07.000
+ Questions about this?
+
+1:26:07.000 --> 1:26:22.000
+ And so something to keep in mind is that if you were taking powers of A, this, and I'm not going to write it all out, but this basically becomes the eigenvalue to a power.
+
+1:26:22.000 --> 1:26:34.000
+ So that's significant what the eigenvalues are.
+
+1:26:34.000 --> 1:26:50.000
+ And so with our adjacency graph of the connections between the different web pages, this is also basically kind of like if you normalized it,
+
+1:26:50.000 --> 1:26:56.000
+ it would be like the Markov chain, you know, like probabilities of going from one page to another.
+
+1:26:56.000 --> 1:27:03.000
+ So you can think if someone was randomly surfing the web and just happened to click on different links, where would they end up?
+
+1:27:03.000 --> 1:27:07.000
+ You can kind of get that behavior from A.
+
+1:27:07.000 --> 1:27:14.000
+ And so you're thinking about these kind of repeated powers of, you know, someone's kind of on the internet or on Wikipedia.
+
+1:27:14.000 --> 1:27:22.000
+ And if they're just like randomly clicking links, you know, over time, kind of what are the most important pages or what pages are they going to go to most often?
+
+1:27:22.000 --> 1:27:40.000
+ And so that's why we'll be kind of talking about powers of A because you're kind of going from page to page again and again.
+
+1:27:40.000 --> 1:27:50.000
+ So we're going to normalize our matrix, and this is necessary in terms of thinking about probabilities also.
+
+1:27:50.000 --> 1:27:56.000
+ Yeah, this keeps it as we take these huge powers from getting too large.
+
+1:27:56.000 --> 1:28:08.000
+ And you can do that using NumPy's sum method over a particular axis.
+
+1:28:08.000 --> 1:28:14.000
+ Yeah, so down here we have the power method.
+
+1:28:14.000 --> 1:28:27.000
+ What we'll do is kind of use our data, then we're going to want to get the kind of the indices.
+
+1:28:27.000 --> 1:28:37.000
+ So A.indices will give us the indices that are non-zero, and we want to select those to sum up.
+
+1:28:37.000 --> 1:28:50.000
+ So we kind of going back to if we just had, you know, that small four by four graph with the zeros and ones, we're interested in the non-zero entries.
+
+1:28:50.000 --> 1:28:59.000
+ I would want to, you know, if we had three non-zero entries, one, one, one, we would want to change that to one third, one third, one third for that row.
+
+1:28:59.000 --> 1:29:11.000
+ We'll take scores is a vector of ones of length n times the square root of A dot sum divided by n squared.
+
+1:29:11.000 --> 1:29:23.000
+ And this is just kind of an initial guess that people are or that the pages kind of all have equal importance.
+
+1:29:23.000 --> 1:29:36.000
+ And then we do eight times scores, get the norm, normalize, and continue iterating eight times scores again and so on.
+
+1:29:36.000 --> 1:29:49.000
+ And so what this is doing is you can also kind of think of it as, you know, if you have a thousand people on Wikipedia randomly clicking links, you know, you're seeing where they go step after step.
+
+1:29:49.000 --> 1:30:02.000
+ If you did this with enough people for a long enough time, you would find this kind of distribution of like, okay, more people are on this page and not many people are on these pages.
+
+1:30:02.000 --> 1:30:05.000
+ Yeah, so this is kind of the idea behind the power method.
+
+1:30:05.000 --> 1:30:22.000
+ Why do you think we're normalizing the score on each iteration? And the score is just kind of the percent of people on the different pages.
+
+1:30:22.000 --> 1:30:27.000
+ Matthew and Roger has the mic.
+
+1:30:27.000 --> 1:30:42.000
+ Great catch and throw.
+
+1:30:42.000 --> 1:31:00.000
+ So that, this is a little bit confusing, we actually normalize twice, so we kind of, that's what we're doing up here is trying to like normalize the counts by row. And then down here, I called it scores because it's kind of like the importance of the different pages.
+
+1:31:00.000 --> 1:31:06.000
+ But you could also think of that as like the percent of people on each page.
+
+1:31:06.000 --> 1:31:29.000
+ So kind of the question I was asking was, why are we normalizing the scores here?
+
+1:31:29.000 --> 1:31:38.000
+ Yes, yeah. So the issue that could arise was the values could get way too small and under flow to zero.
+
+1:31:38.000 --> 1:32:00.000
+ Or we could also have problems with the values getting way too big if we don't normalize and exploding. So that's why kind of whenever it's good, whenever you're doing an iterative process where you're multiplying every time, it's really good to think about normalizing because you don't want things to be exploding or vanishing.
+
+1:32:00.000 --> 1:32:21.000
+ And so then here we can check like what are the scores we get. Here we've done it for 10 iterations.
+
+1:32:21.000 --> 1:32:37.000
+ And the top pages are living people, year of birth missing, United States, United Kingdom, race and ethnicity in the United States, census, France.
+
+1:32:37.000 --> 1:32:42.000
+ And so what this is is these are the pages that have kind of the most links pointing to them.
+
+1:32:42.000 --> 1:32:57.000
+ And this is actually not as interesting as it would be if we were using like the whole internet or something, right? Because here, all people have a link pointing to the living people category on Wikipedia.
+
+1:32:57.000 --> 1:33:07.000
+ So that's why that's a super, seen as a super popular page, because there would be a ton of links pointing to that for any entry of a person.
+
+1:33:07.000 --> 1:33:19.000
+ And then year of birth missing. It seems reasonable that actually, a lot of people probably don't have their year of birth listed on Wikipedia, and that those pages all point to this year of birth missing page.
+
+1:33:19.000 --> 1:33:38.000
+ So this, this makes sense as a like, okay, these are pages that I think a ton of links could be pointing to. So in that sense, they're important, but it's not the same sense that you would probably get with the broader internet of like, hey, this is a really popular page.
+
+1:33:38.000 --> 1:33:46.000
+ Linda, can you throw the microphone?
+
+1:33:46.000 --> 1:34:05.000
+ So in the score, so like 3.5 answer, and the score is from low to high, and then you show X score, does it mean that Germany is most like, brought up?
+
+1:34:05.000 --> 1:34:17.000
+ So this is, this is confusing. What I'm outputting here is actually the norm, and that was just to kind of keep track of how the norm is, is changing.
+
+1:34:17.000 --> 1:34:28.000
+ And then also one question for the algorithm is that what is like the third one?
+
+1:34:28.000 --> 1:34:49.000
+ And so this is what's kind of turning all those ones into fractions of kind of percent. So, you know, before we had like, you know, A links to B, C, and D, and we want to convert those to one third, one third, one third, because that's your probability of going to each page.
+
+1:34:49.000 --> 1:35:17.000
+ Yeah, just actually to answer Linda's, oh, I was going to see if I could display the last, the last 10.
+
+1:35:17.000 --> 1:35:39.000
+ I'll modify that for next time and we can see, yeah, like what the least important or least linked to pages are, because that might be fun.
+
+1:35:39.000 --> 1:35:58.000
+ Other questions about this?
+
+1:35:58.000 --> 1:36:13.000
+ So I have, I have some notes, and these are more just if you are interested in this field or terms you might hear if you kind of do more reading about it.
+
+1:36:13.000 --> 1:36:28.000
+ There's something called Krylov subspaces, and those are kind of the spaces spanned by A times B, A squared times B, A cubed times B, A to the fourth times B.
+
+1:36:28.000 --> 1:36:44.000
+ And so I just wanted to highlight that we're, we're kind of getting that here, or we are getting that here by taking powers of A each time we go through this for loop.
+
+1:36:44.000 --> 1:37:00.000
+ The other thing to note, and we'll see this when we get to the QR algorithm, is that the convergence rate of this method is the ratio of the largest eigenvalue to the second largest eigenvalue, so that could be good or bad depending on what the eigenvalues are.
+
+1:37:00.000 --> 1:37:14.000
+ And there's something called adding shifts, basically where you're kind of subtracting off one of the eigenvalues to move it over, which speeds up the convergence, and then you add that value back on once it's, once it's converged.
+
+1:37:14.000 --> 1:37:25.000
+ And this technique of shifts or deflation show up in a kind of number of numerical linear algebra algorithms.
+
+1:37:25.000 --> 1:37:34.000
+ And so we're not going to get into great detail about them here, but just to be aware also that, so deflation can be used to find eigenvalues other than the greatest one.
+
+1:37:34.000 --> 1:37:48.000
+ So here, you know, we were just finding the most, the largest eigenvalue, the most significant eigenvector, but there are ways that this method could be modified to find others.
+
+1:37:48.000 --> 1:38:00.000
+ Matthew? Pass the microphone.
+
+1:38:00.000 --> 1:38:19.000
+ So intuitively, that's just how, kind of like how many iterations you're having to do to get to a reasonable answer. So you can think of that. In a lot of cases, that would be like how your error is decreasing with each iteration.
+
+1:38:19.000 --> 1:38:30.000
+ So there's always a fraction between you and one.
+
+1:38:30.000 --> 1:38:47.000
+ I'll look into how it's formally defined. It's kind of often talked about in this more intuitive way, but yeah, I'll look at the formal definition of that.
+
+1:38:47.000 --> 1:38:56.000
+ Are there questions?
+
+1:38:56.000 --> 1:39:00.000
+ Okay, and then we're about at the end of class.
+
+1:39:00.000 --> 1:39:20.000
+ And I hope for next time, I do want to cover the QR algorithm. I think that we won't finish all of this lesson seven notebook, because we've run out of time a bit with the course and I want to, I want to cover stuff in the lesson eight notebook.
+
+1:39:20.000 --> 1:39:36.000
+ So we'll see a little bit more here and the notebook will be up if you're interested in this topic and want to go further, but we won't. I think it's very unlikely that we would cover the Arnoldi iteration at this point, just given time.
+
+1:39:36.000 --> 1:39:47.000
+ So definitely be sure to make sure you've downloaded the lesson eight notebook before next time. And we will do a little bit more with the lesson seven notebook.
+
+1:39:47.000 --> 1:39:58.000
+ All right. Thank you.
+

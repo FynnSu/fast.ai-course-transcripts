@@ -1,0 +1,2546 @@
+WEBVTT
+
+00:00.000 --> 00:04.040
+ We'll be starting with Notebook 2.
+
+00:04.040 --> 00:08.800
+ Sorry, I'm getting over a cold.
+
+00:08.800 --> 00:15.360
+ Topic Modeling with NMF and SVD.
+
+00:15.360 --> 00:27.440
+ Okay, so I briefly showed this diagram last time of works of Shakespeare.
+
+00:27.440 --> 00:32.880
+ There's different plays going across the top of this matrix, and then the rows are different
+
+00:32.880 --> 00:34.840
+ vocabulary words.
+
+00:34.840 --> 00:39.680
+ And this is a way that you can represent a body of work in a single matrix.
+
+00:39.680 --> 00:44.880
+ And this is a type of bag of words approach, because we're not looking at any of the syntax
+
+00:44.880 --> 00:49.760
+ or the structure of the sentences, we're really just interested in the frequency of the words
+
+00:49.760 --> 00:52.200
+ that show up with them.
+
+00:52.200 --> 00:57.080
+ And so today we'll be talking about two different ways to decompose this into a tall, thin
+
+00:57.080 --> 01:00.760
+ matrix times a wide, short matrix.
+
+01:00.760 --> 01:05.820
+ And something I want to emphasize is the reason that we like kind of matrix, or one reason
+
+01:05.820 --> 01:11.400
+ we like matrix decompositions is that the matrices we're decomposing into have special
+
+01:11.400 --> 01:16.180
+ properties that are helpful.
+
+01:16.180 --> 01:22.440
+ So I wanted to start kind of just hypothetically thinking about an extreme case where suppose
+
+01:22.440 --> 01:27.160
+ you wanted to reconstruct a matrix just using an outer product of two vectors.
+
+01:27.160 --> 01:34.160
+ So let me switch over to that, okay.
+
+01:34.160 --> 01:48.440
+ So if you had kind of your words are still the rows, the documents are the columns, and
+
+01:48.440 --> 01:51.840
+ as motivation you could think of just doing this outer product of two vectors.
+
+01:51.840 --> 01:58.800
+ This is not going to be a very good reconstruction, so actually I should put that as a very approximate.
+
+01:58.800 --> 02:06.800
+ But the best you could do with this would be to have kind of this first vector be kind
+
+02:06.800 --> 02:15.220
+ of the relative frequencies of each vocabulary word compared to out of the total word count,
+
+02:15.220 --> 02:20.640
+ and then this could be the words per document.
+
+02:20.640 --> 02:27.120
+ And so this would really just kind of reconstruct a very average version.
+
+02:27.120 --> 02:31.960
+ If you wanted to kind of extend this to the next simplest case, that would be to let this
+
+02:31.960 --> 02:36.240
+ be two columns and this one be two rows.
+
+02:36.240 --> 02:42.520
+ And if you did that, what you would kind of be wanting to do is have your documents in
+
+02:42.520 --> 02:47.860
+ two different clusters, and so you could be capturing the relative frequency of words
+
+02:47.860 --> 02:54.680
+ for documents in one cluster with that first, you know, tall skinny matrix and the relative
+
+02:54.680 --> 02:58.920
+ kind of words per document with the two.
+
+02:58.920 --> 03:04.000
+ So this is just kind of some motivation of kind of thinking about these very simple cases.
+
+03:04.000 --> 03:16.320
+ Yeah, so today will be, oh and actually I wanted to show, so here I've just gotten my
+
+03:16.320 --> 03:20.640
+ import statements, and again let me know if you have any problems getting your imports
+
+03:20.640 --> 03:24.440
+ working or Jupyter notebook running properly.
+
+03:24.440 --> 03:28.000
+ I wanted to highlight, so I've linked to a few different resources that I thought were
+
+03:28.000 --> 03:29.000
+ helpful.
+
+03:29.000 --> 03:33.120
+ I particularly, I almost used it in this class, but didn't.
+
+03:33.120 --> 03:39.080
+ And there's this really nice, it's called text analysis for the humanities and social
+
+03:39.080 --> 03:44.060
+ sciences.
+
+03:44.060 --> 03:49.760
+ And it's a pretty lengthy tutorial that kind of walks through using French and British
+
+03:49.760 --> 03:50.760
+ literature.
+
+03:50.760 --> 03:55.680
+ So it's got Victor Hugo and Jane Austen doing a word analysis, and they use some different
+
+03:55.680 --> 03:56.680
+ techniques.
+
+03:56.680 --> 04:03.040
+ But if this is a topic that interests you, you might want to check that out.
+
+04:03.040 --> 04:06.120
+ Okay.
+
+04:06.120 --> 04:09.120
+ So we'll be using a built-in data set from scikit-learn today.
+
+04:09.120 --> 04:14.240
+ I mentioned last time scikit-learn has a lot of different built-in data sets.
+
+04:14.240 --> 04:16.680
+ And this is newsgroups.
+
+04:16.680 --> 04:20.440
+ So newsgroups, this is kind of before the World Wide Web took off.
+
+04:20.440 --> 04:25.680
+ These were kind of discussion boards and they're still in existence where people are talking
+
+04:25.680 --> 04:26.760
+ about different topics.
+
+04:26.760 --> 04:30.840
+ So you can kind of think of this as similar to something like Reddit where you have people
+
+04:30.840 --> 04:35.520
+ posting within different categories.
+
+04:35.520 --> 04:40.680
+ And so we're using this kind of functionality from scikit-learn to fetch the newsgroups
+
+04:40.680 --> 04:41.680
+ data.
+
+04:41.680 --> 04:46.120
+ And you can pass a parameter to say which categories you want.
+
+04:46.120 --> 04:49.320
+ Today we're just going to look at four categories to keep it simpler.
+
+04:49.320 --> 04:53.640
+ And something to note is we're getting the categories because it'll be helpful for us.
+
+04:53.640 --> 05:00.160
+ But what we're doing is unstructured, or sorry, unsupervised machine learning.
+
+05:00.160 --> 05:03.120
+ And so we're not actually using the categories.
+
+05:03.120 --> 05:06.800
+ We're kind of going to be thinking about, like, have we clustered these into topics
+
+05:06.800 --> 05:07.800
+ that make sense?
+
+05:07.800 --> 05:11.520
+ And we'll check with the categories to confirm that.
+
+05:11.520 --> 05:16.180
+ So whenever you get data, it's great to just check what the dimension of it is.
+
+05:16.180 --> 05:19.300
+ So here that's 2,034.
+
+05:19.300 --> 05:22.520
+ So that's how many kind of separate posts we have.
+
+05:22.520 --> 05:24.460
+ We'll just look at a few of them.
+
+05:24.460 --> 05:30.280
+ So the categories, and I want you to guess which category each post is from.
+
+05:30.280 --> 05:37.160
+ The choices are atheism, miscellaneous religion, computer graphics, or space.
+
+05:37.160 --> 05:40.040
+ So let's look at this first one.
+
+05:40.040 --> 05:44.560
+ I've noticed that if you only save a model with all your mapping planes carefully positioned
+
+05:44.560 --> 05:51.160
+ to a.3 DS file, which category do you think this is from?
+
+05:51.160 --> 05:55.160
+ Someone say it louder.
+
+05:55.160 --> 05:58.880
+ Yes, from graphics.
+
+05:58.880 --> 06:04.400
+ And this next one says, it's talking about Koresh, was a deranged fanatic who thought
+
+06:04.400 --> 06:10.240
+ it was necessary to take a whole bunch of folks with him, mentions Jim Jones.
+
+06:10.240 --> 06:13.120
+ Which category do you think this is?
+
+06:13.120 --> 06:15.120
+ Anyone?
+
+06:15.120 --> 06:27.120
+ So this could be atheism or it could be religion, and we'll see some overlap between those.
+
+06:27.120 --> 06:36.080
+ Next one, I actually had to look this up.
+
+06:36.080 --> 06:43.040
+ It's talking about Perry Jove's, which is, turns out, a point in the orbit of a satellite
+
+06:43.040 --> 06:44.040
+ of Jupiter.
+
+06:44.040 --> 06:47.080
+ So what might that be?
+
+06:47.080 --> 06:48.080
+ Space exactly.
+
+06:48.080 --> 06:53.520
+ And so that's always kind of good to just see like, okay, this is what the data looks
+
+06:53.520 --> 06:54.520
+ like.
+
+06:54.520 --> 06:58.520
+ So we'll see, like we're seeing some kind of like numbers and things, not all the words
+
+06:58.520 --> 07:03.680
+ are going to be helpful to us.
+
+07:03.680 --> 07:11.500
+ So here we can check, the target is giving us the label.
+
+07:11.500 --> 07:16.960
+ And then scikit-learn, so kind of if we wanted to make that matrix with all the word frequencies,
+
+07:16.960 --> 07:21.880
+ we could write something ourselves, which would be a bit tedious to get those word frequencies.
+
+07:21.880 --> 07:26.200
+ Scikit-learn has a feature extraction, count vectorizer, that does that.
+
+07:26.200 --> 07:28.800
+ So we'll just use their count vectorizer.
+
+07:28.800 --> 07:30.760
+ So that's what's happening.
+
+07:30.760 --> 07:38.280
+ This input cell, count vectorizer, and we're passing in stop words to say that we don't
+
+07:38.280 --> 07:43.400
+ want to, don't want to include those, since they don't contain information.
+
+07:43.400 --> 07:54.440
+ But oh, and stop words are, you know, where it's like, is, the, a, that don't have much
+
+07:54.440 --> 08:03.640
+ meaning, or don't really have much like kind of category or subject meaning.
+
+08:03.640 --> 08:09.000
+ And so note, after we do this, we check our, so we kind of get our vectorizer, and we're
+
+08:09.000 --> 08:15.160
+ doing a vectorizer fit transform, we pass the news groups, the training data, and then
+
+08:15.160 --> 08:17.040
+ we're converting this to dense.
+
+08:17.040 --> 08:22.080
+ And last time I talked about sparse versus dense matrices, we'll go into more detail
+
+08:22.080 --> 08:26.160
+ on that in the future, but what scikit-learn is returning is sparse, and we're gonna make
+
+08:26.160 --> 08:30.040
+ it dense, because that's easier for what we're doing today.
+
+08:30.040 --> 08:34.720
+ Now we can check the shape, and so we've still got 2,000 documents, and then it looks like
+
+08:34.720 --> 08:39.160
+ we have 26,000 vocabulary words.
+
+08:39.160 --> 08:44.300
+ Oh, that's a good question.
+
+08:44.300 --> 08:46.800
+ I don't think we have any guarantees on what order it's in.
+
+08:46.800 --> 08:49.820
+ Oh, actually, never mind.
+
+08:49.820 --> 08:58.120
+ When you get, so there's a vocab dot, or sorry, vectorizer dot feature names, and down here
+
+08:58.120 --> 09:02.000
+ I'm putting that into an array, and they are alphabetical.
+
+09:02.000 --> 09:31.880
+ Let me actually pull up the, oh, thank you, that's what I wanted to illustrate.
+
+09:31.880 --> 09:38.280
+ Here I've, was inside the parentheses for count vectorizer, hit shift tab several times,
+
+09:38.280 --> 09:43.160
+ and it will get, show you kind of what the parameters and the doc string kind of documentation
+
+09:43.160 --> 09:47.580
+ about it is.
+
+09:47.580 --> 09:49.960
+ And there are a lot of, a lot of features that we weren't using.
+
+09:49.960 --> 10:00.440
+ So you could remove accents, do some sort of pre-processing, but yeah, that's a good
+
+10:00.440 --> 10:03.960
+ way to kind of find out more about your methods.
+
+10:03.960 --> 10:13.280
+ So yeah, down here I kind of use vectorizer, get feature names, put those into vocab, and
+
+10:13.280 --> 10:18.680
+ then looking at the vocab, it's alphabetical, and so here's a section in the C's of some
+
+10:18.680 --> 10:21.320
+ of the words that show up.
+
+10:21.320 --> 10:24.320
+ Any questions so far?
+
+10:24.320 --> 10:40.040
+ Do you want to stem words so that, you know, they both meet, so that you can use the feature
+
+10:40.040 --> 10:41.040
+ space?
+
+10:41.040 --> 10:43.000
+ For example, we have councils and councils, they're pretty much the same thing.
+
+10:43.000 --> 10:44.000
+ That's a great suggestion.
+
+10:44.000 --> 10:51.640
+ Yeah, so this is kind of a lazy approach where we have not, not stemmed the words, and stemming
+
+10:51.640 --> 10:55.960
+ refers to kind of taking different variations of the same word and putting them all in the
+
+10:55.960 --> 10:56.960
+ same thing.
+
+10:56.960 --> 11:01.760
+ So that's something like, and then the word walk, you would take walking and walked and
+
+11:01.760 --> 11:08.280
+ walks and kind of classify all those under walk, and we're not doing that here, but that
+
+11:08.280 --> 11:12.840
+ would be a completely legitimate thing to do.
+
+11:12.840 --> 11:25.160
+ Okay, so first up, we're going to use singular value decomposition, and actually I'm curious,
+
+11:25.160 --> 11:28.400
+ have you covered SVD in previous courses?
+
+11:28.400 --> 11:34.240
+ What context did you see it in?
+
+11:34.240 --> 11:35.240
+ Image compression.
+
+11:35.240 --> 11:36.240
+ Okay, great.
+
+11:36.240 --> 11:41.000
+ That's a great application of this.
+
+11:41.000 --> 11:46.360
+ So Gilbert Strain has written a classic linear algebra textbook, so that SVD is not nearly
+
+11:46.360 --> 11:49.840
+ as famous as it should be.
+
+11:49.840 --> 11:54.360
+ And so here kind of the key thing with our decomposition is we're saying that we want
+
+11:54.360 --> 12:01.340
+ the matrices we're decomposing into to be orthogonal, and the motivation behind that
+
+12:01.340 --> 12:05.900
+ is that we're thinking that words that are frequently in one topic are probably less
+
+12:05.900 --> 12:10.220
+ likely to be in other topics, otherwise they wouldn't be a good thing to kind of define
+
+12:10.220 --> 12:15.720
+ that topic of what makes that topic unique or different from the others.
+
+12:15.720 --> 12:17.360
+ And so that's a great question.
+
+12:17.360 --> 12:18.360
+ What's orthogonal?
+
+12:18.360 --> 12:26.200
+ That said, any two, so if you have a collection of vectors, any two vectors that are different,
+
+12:26.200 --> 12:32.840
+ dot product is zero, the vector with itself, oh so orthonormal means that the dot product
+
+12:32.840 --> 12:39.000
+ with itself is one, and that the dot product with other vectors is zero.
+
+12:39.000 --> 12:44.000
+ And a little bit confusing when you talk about matrices being orthogonal, that means that
+
+12:44.000 --> 12:49.800
+ their columns and rows are orthonormal.
+
+12:49.800 --> 12:55.220
+ So this is a great, a nice diagram from a Facebook blog post that we're going to refer
+
+12:55.220 --> 13:02.880
+ back to later, but so here they're talking about the words being the rows and then having
+
+13:02.880 --> 13:10.600
+ hashtags as columns, and there these are frequencies of how often a word shows up in a post with
+
+13:10.600 --> 13:14.520
+ that particular hashtag also in the post.
+
+13:14.520 --> 13:23.360
+ And then U is the kind of first matrix you're getting, and the columns of U are orthogonal
+
+13:23.360 --> 13:31.480
+ to each other, and then we've got this kind of middle diagonal matrix that the white part
+
+13:31.480 --> 13:36.520
+ is all zeros, it only has values along the diagonal which is blue, and that's giving
+
+13:36.520 --> 13:38.380
+ you the relative importance.
+
+13:38.380 --> 13:43.020
+ So kind of those values are called the singular values and tell you relative importance.
+
+13:43.020 --> 13:51.400
+ And then the pink matrix on the right there, the rows are all orthonormal to one another.
+
+13:51.400 --> 13:52.400
+ The rows are, yes.
+
+13:52.400 --> 13:58.960
+ Oh sorry, the rows are orthonormal.
+
+13:58.960 --> 14:04.120
+ Something to note about SVD is that it's an exact decomposition when you're doing full
+
+14:04.120 --> 14:13.560
+ SVD, and so that means you can completely recover your matrix, and that this is, well
+
+14:13.560 --> 14:19.920
+ so in this case if R was equal to N, and so it's the same dimensions, this would be an
+
+14:19.920 --> 14:23.000
+ equal sign.
+
+14:23.000 --> 14:32.800
+ So SVD is very widely used, and we're gonna see this, see SVD in multiple of the lessons
+
+14:32.800 --> 14:36.360
+ in this course, but we're using it today for semantic analysis.
+
+14:36.360 --> 14:40.480
+ It's also used in collaborative filtering and recommendations.
+
+14:40.480 --> 14:46.640
+ The winners of the Netflix prize were all kind of more complicated variations of SVD.
+
+14:46.640 --> 14:51.880
+ Data compression, which you've seen, it can calculate the more Penrose pseudo inverse.
+
+14:51.880 --> 14:56.120
+ So this is for matrices that don't have a true inverse, there's a kind of the pseudo
+
+14:56.120 --> 15:01.800
+ inverse and you use SVD to find it, and then principal component analysis, which we'll
+
+15:01.800 --> 15:02.800
+ also see.
+
+15:02.800 --> 15:03.800
+ Yes.
+
+15:03.800 --> 15:14.160
+ What does orthogonal mean like intuitively, and why is that useful for this example?
+
+15:14.160 --> 15:15.160
+ Good question.
+
+15:15.160 --> 15:23.280
+ So what orthogonal means intuitively is that you're capturing very different information,
+
+15:23.280 --> 15:30.400
+ very different directions, and so if you were thinking about directions, it's like perpendicular.
+
+15:30.400 --> 15:34.480
+ You're not even having stuff that's somewhat in the same direction, but capturing very
+
+15:34.480 --> 15:35.800
+ different.
+
+15:35.800 --> 15:43.000
+ So in this context of thinking about topics or categories, we want very different topics
+
+15:43.000 --> 15:47.860
+ and kind of finding what makes this different from everything else.
+
+15:47.860 --> 15:54.520
+ And if you think of the kind of math definition of this dot product going to zero, it's that
+
+15:54.520 --> 15:57.280
+ everything has canceled out.
+
+15:57.280 --> 16:03.140
+ But thank you, Jeremy.
+
+16:03.140 --> 16:13.120
+ So now I've, oh and this should show using percent time to time what I'm doing, in Jupyter
+
+16:13.120 --> 16:19.400
+ these are called magics when you have a percent or double percent, and this is really handy
+
+16:19.400 --> 16:23.720
+ and we'll use this some more to kind of get comparisons of how long things are taking.
+
+16:23.720 --> 16:24.720
+ Yes.
+
+16:24.720 --> 16:36.640
+ And so the question was, is it possible just to set it once and have it throughout the
+
+16:36.640 --> 16:37.640
+ notebook?
+
+16:37.640 --> 16:39.640
+ I don't know of a way to do that.
+
+16:39.640 --> 16:40.640
+ Cool.
+
+16:40.640 --> 16:41.640
+ Okay.
+
+16:41.640 --> 16:42.640
+ Neat.
+
+16:42.640 --> 16:55.120
+ So now I wanted to ask you, so we're using, and this is from SciPy's, Linal, JSPD.
+
+16:55.120 --> 16:58.440
+ We get U, S, and VH back.
+
+16:58.440 --> 17:02.640
+ Just take a moment to confirm that this is the decomposition of the input.
+
+17:02.640 --> 17:05.840
+ So it's always good to kind of check that you're getting what you think.
+
+17:05.840 --> 17:20.880
+ So this should be something that you type in.
+
+17:20.880 --> 17:44.800
+ No we don't, it'll depend what you're doing.
+
+17:44.800 --> 17:50.440
+ And this, I'm trying to remember, it's gonna be later on that we're using the fact that
+
+17:50.440 --> 18:07.960
+ we convert it to dense, but a lot of a lot of operations can be done sparsely.
+
+18:07.960 --> 18:23.800
+ Sure, and I'll, there's a future lesson, let me exit full screen, there's a future lesson
+
+18:23.800 --> 18:32.080
+ where I'll give more detail on exactly the SciPy sparse types, but just in general with
+
+18:32.080 --> 18:37.080
+ a sparse matrix, so you can kind of think of a dense matrix like an Excel spreadsheet
+
+18:37.080 --> 18:41.920
+ where you have a square for every space in the matrix and you're, you know, putting in
+
+18:41.920 --> 18:42.920
+ the value.
+
+18:42.920 --> 18:47.320
+ If it's zero, you're storing a zero there, and you kind of have that block of memory.
+
+18:47.320 --> 18:51.680
+ For a sparse one, you only store the non-zero values.
+
+18:51.680 --> 18:59.280
+ So there, it could conceivably just kind of be this list of you're gonna need to have,
+
+18:59.280 --> 19:04.040
+ you know, the row and coordinate, because then to keep track of where it is, actually
+
+19:04.040 --> 19:23.480
+ let me show the picture again, yeah, so this is what a sparse matrix looks like.
+
+19:23.480 --> 19:29.000
+ You have all these zeros, and so what you could do, let me try this writing on the screen,
+
+19:29.000 --> 19:46.840
+ oh, I don't want this one, okay, okay, great, so what I was gonna do is say, so this is
+
+19:46.840 --> 19:53.480
+ kind of showing the, the dense storage because you wrote out all these zeros again and again.
+
+19:53.480 --> 19:59.600
+ Instead you could just be like, okay, it places zero, coordinate zero, zero, I have a one,
+
+19:59.600 --> 20:06.880
+ a coordinate one, one, I have a one, a coordinate two, two, I have a half, and so on, and kind
+
+20:06.880 --> 20:10.000
+ of construct that list, and that would be sparse storage.
+
+20:10.000 --> 20:15.440
+ We'll give more details around that.
+
+20:15.440 --> 20:25.880
+ Okay, so do you guys have your answer for confirming the decomposition, and what did
+
+20:25.880 --> 20:26.880
+ you do?
+
+20:26.880 --> 20:46.800
+ Okay, so S was being stored as an NP array, I couldn't get it to convert into a matrix,
+
+20:46.800 --> 21:03.120
+ so what I did was, I did U times S, and then at BH, and that was basically the right side
+
+21:03.120 --> 21:14.120
+ being multiplied, and then I did vectors.2dense, subtract that, and I just summed all the way
+
+21:14.120 --> 21:15.120
+ through.
+
+21:15.120 --> 21:16.120
+ Oh, okay.
+
+21:16.120 --> 21:17.120
+ So that's one approach.
+
+21:17.120 --> 21:18.120
+ Did anyone do anything else?
+
+21:18.120 --> 21:29.120
+ Okay, I'll say what I did, so I used, NumPy has a method called np.diag that will, so
+
+21:29.120 --> 21:49.480
+ I found that you had kind of done a vector matrix product, yeah, to get the same thing.
+
+21:49.480 --> 21:57.000
+ Diag is handy, it takes in a vector and makes a square matrices with those as the values.
+
+21:57.000 --> 22:01.840
+ Actually, it's a little bit confusing, diag can go in both directions.
+
+22:01.840 --> 22:07.880
+ If you give it a vector, it returns a matrix, if you give it a matrix, it'll return a vector
+
+22:07.880 --> 22:14.040
+ of what was on the diagonal, and that's kind of a shortcut.
+
+22:14.040 --> 22:24.320
+ Oh, okay, and so the question was about at, and this is in Python 3, at is matrix multiplication,
+
+22:24.320 --> 22:33.360
+ and we talked briefly last time about how you can have both Python 2 and Python 3 installed
+
+22:33.360 --> 22:34.360
+ on your computer.
+
+22:34.360 --> 22:39.680
+ I definitely recommend switching to Python 3, or for this class, or in general I recommend
+
+22:39.680 --> 22:45.800
+ Python 3, but you don't have to and it's fine to do this course in Python 2, and if I was
+
+22:45.800 --> 23:03.560
+ in Python 2, I would use np.matmall, which is matrix multiplication, from, oh, np.dot,
+
+23:03.560 --> 23:19.880
+ that's kind of cool, but also kind of annoying, it does a lot of magic, so it tends to, regardless
+
+23:19.880 --> 23:40.600
+ of what you're doing, it tends to make a lot of noise, so sometimes that's good, but sometimes
+
+23:40.600 --> 23:41.600
+ it's like you have a bug and you can barely realize because it took something, but in
+
+23:41.600 --> 23:42.600
+ this case, they'll do the same thing with two matrices.
+
+23:42.600 --> 23:43.600
+ And then actually, oh, yes?
+
+23:43.600 --> 23:44.600
+ Could you also use np.op for it?
+
+23:44.600 --> 23:45.600
+ Yes.
+
+23:45.600 --> 23:56.800
+ Yeah, let me do that, and I actually, normally I prefer np.allclose, so I'm kind of surprised
+
+23:56.800 --> 24:25.920
+ that I did this subtraction here, let me do that too, oh, okay, well I will look into
+
+24:25.920 --> 24:34.040
+ this later, did you use allclose on, I might have changed these variables lower down and
+
+24:34.040 --> 24:39.440
+ be getting something different, so, okay, great, yeah, no, I like np.allclose.
+
+24:39.440 --> 24:45.840
+ And that's checking, it takes matrices and checks that all the, each element is similar.
+
+24:45.840 --> 24:47.880
+ Great.
+
+24:47.880 --> 24:48.880
+ Any questions?
+
+24:48.880 --> 25:05.000
+ I thought these, I mean, so I actually haven't been running this as I go through, oh, but,
+
+25:05.000 --> 25:13.480
+ because my vectors have been converted to dense.
+
+25:13.480 --> 25:19.800
+ I would prefer to keep going, I think that this is an artifact of, that I haven't been
+
+25:19.800 --> 25:20.800
+ running the previous ones.
+
+25:20.800 --> 25:21.800
+ Yes?
+
+25:21.800 --> 25:43.640
+ So what is the function into the linear, whatever the norm, that norm is?
+
+25:43.640 --> 25:44.640
+ That's a good question.
+
+25:44.640 --> 25:49.920
+ So that, so norms in general give you kind of the distance between two things is a way
+
+25:49.920 --> 25:53.000
+ of thinking of it.
+
+25:53.000 --> 25:59.000
+ And this I would believe would default to the L2 norm, but that's a way, what?
+
+25:59.000 --> 26:00.000
+ The Frobenius norm.
+
+26:00.000 --> 26:01.000
+ The Frobenius norm, okay.
+
+26:01.000 --> 26:06.120
+ And you can always pass an argument, but so what that's doing is we're taking the difference
+
+26:06.120 --> 26:10.280
+ and that would be a matrix of things that are close to zero, but I just wanted to see
+
+26:10.280 --> 26:17.120
+ a single number, so I used the norm to kind of get that down to a single number.
+
+26:17.120 --> 26:20.960
+ The norms you can think of as size, typically.
+
+26:20.960 --> 26:21.960
+ Yes?
+
+26:21.960 --> 26:31.440
+ Yeah, so you're kind of squaring each element and adding them all together for the Frobenius
+
+26:31.440 --> 26:33.440
+ norm.
+
+26:33.440 --> 26:43.600
+ Okay, next up, I want you to confirm that U and V are orthonormal, so just take a moment
+
+26:43.600 --> 26:51.680
+ to write in some code that does that.
+
+26:51.680 --> 27:06.020
+ So that's something I do.
+
+27:06.020 --> 27:12.960
+ This depends on how people define it, but a lot of definitions of SVD distinguish that
+
+27:12.960 --> 27:19.980
+ you're actually getting back the transpose of V as opposed to V itself.
+
+27:19.980 --> 27:23.920
+ You can ignore that, but you will kind of see this difference about what people define
+
+27:23.920 --> 27:28.420
+ as V versus V transpose.
+
+27:28.420 --> 27:32.760
+ And the H stands for Hermitian, which is kind of the equivalent to transpose when you have
+
+27:32.760 --> 27:49.080
+ complex numbers, but we'll be sticking with real numbers in here.
+
+27:49.080 --> 28:17.080
+ Okay, next up, I want you to confirm that U and V are orthonormal, so just take a moment
+
+28:17.080 --> 28:45.080
+ to write in some code that does that.
+
+28:45.080 --> 29:13.080
+ Okay, raise your hand if you want a little bit more time.
+
+29:13.080 --> 29:29.080
+ Raise your hand if you have the answer.
+
+29:29.080 --> 29:38.200
+ And I should be clear, when I say U and V are orthonormal, I don't mean to each other.
+
+29:38.200 --> 29:45.000
+ I mean that the columns of U are orthonormal to the other columns, and the rows of V are
+
+29:45.000 --> 29:54.520
+ orthonormal to the other rows.
+
+29:54.520 --> 30:14.440
+ All right, does someone want to share their answer, what they did?
+
+30:14.440 --> 30:20.440
+ Okay, thank you.
+
+30:20.440 --> 30:50.400
+ So what you can do is multiply them by their transpose and then compare them to the identity
+
+30:50.400 --> 31:02.280
+ and the reason this works is multiplying U by U transpose is multiplying, and actually
+
+31:02.280 --> 31:22.760
+ one of these I guess I have backwards, join each column, but the kind of multiplies each
+
+31:22.760 --> 31:29.480
+ column of U, yeah, so taking the transpose you get the rows by the columns, that's kind
+
+31:29.480 --> 31:35.920
+ of column of U by column of U with V, you're getting row of V by row of V.
+
+31:35.920 --> 31:43.040
+ And then when they're kind of the same row by itself, that's the diagonal of the identity,
+
+31:43.040 --> 31:47.480
+ that's why you're getting ones, different kind of two different vectors, those are the
+
+31:47.480 --> 31:49.480
+ off diagonals, the zeros.
+
+31:49.480 --> 31:56.640
+ Are there questions about that?
+
+31:56.640 --> 32:02.000
+ And actually let me draw that briefly.
+
+32:02.000 --> 32:17.360
+ The idea is, so if this was U, you've got these columns, this is U transpose.
+
+32:17.360 --> 32:23.120
+ When you multiply those together, you'll kind of end up taking this vector times this vector
+
+32:23.120 --> 32:30.320
+ and so on, and so that should be one, doing this two different ones, that's going to give
+
+32:30.320 --> 32:36.240
+ you zero and so on.
+
+32:36.240 --> 32:48.480
+ All right, and so now I've kind of confirmed that we got what we expected with the SVD.
+
+32:48.480 --> 32:54.080
+ We can look at the singular values, and remember that these are giving us kind of this measure
+
+32:54.080 --> 33:02.880
+ of importance, and notice that it drops off very quickly, so kind of there are some pretty
+
+33:02.880 --> 33:08.920
+ high values for importance here with the first few singular values, and then it really drops
+
+33:08.920 --> 33:09.920
+ off.
+
+33:09.920 --> 33:15.720
+ And it's hard to know exactly kind of what these numbers correspond to, but it's helpful
+
+33:15.720 --> 33:22.480
+ to see the relative importance, and the vector S of singular values is always ordered, so
+
+33:22.480 --> 33:28.080
+ you kind of have the biggest values first.
+
+33:28.080 --> 33:36.440
+ And I think this will be easier when we see the topics, but we can pass in, and so remember
+
+33:36.440 --> 33:46.040
+ we're doing, going back to the picture, U times S times V, and kind of larger ones are
+
+33:46.040 --> 33:52.800
+ saying like, okay these columns of U and these rows of V are more important or make up a
+
+33:52.800 --> 33:58.800
+ bigger component of our original matrix.
+
+33:58.800 --> 34:02.200
+ They contribute more, yeah, to the original matrix.
+
+34:02.200 --> 34:07.160
+ So we have this little helper method, show topics, and we're gonna pass in our matrix
+
+34:07.160 --> 34:13.720
+ V, and then it's gonna look up the words that correspond to the values.
+
+34:13.720 --> 34:18.360
+ So remember our vocabulary words were in alphabetical order.
+
+34:18.360 --> 34:26.800
+ This is basically gonna find, okay, the largest values showed up in, you know, these particular
+
+34:26.800 --> 34:31.760
+ columns which corresponded to these vocabulary words.
+
+34:31.760 --> 34:44.000
+ And so we get VH, so we're looking at, sorry, the first five columns of VH and the top eight
+
+34:44.000 --> 34:45.400
+ topic words.
+
+34:45.400 --> 34:55.240
+ So something to notice is, one, this first topic is very weird, so we'll ignore that
+
+34:55.240 --> 35:02.000
+ for a moment and look at the other ones, but so we have a topic that is largely represented
+
+35:02.000 --> 35:09.760
+ by the words JPEG, GIF, file, color, quality, image, format, thinking back to our categories.
+
+35:09.760 --> 35:12.840
+ Which category might that correspond to?
+
+35:12.840 --> 35:16.240
+ Right, computer graphics.
+
+35:16.240 --> 35:25.040
+ The next one is graphics, edu, pub, mail, ray, FTP.
+
+35:25.040 --> 35:28.400
+ And so, any guesses?
+
+35:28.400 --> 35:32.200
+ Yeah, I think that's also computer graphics.
+
+35:32.200 --> 35:39.600
+ And so notice that they're kind of different, possibly different subgroups within a topic.
+
+35:39.600 --> 35:49.040
+ But then Jesus, God, Matthew, people, atheist, atheism, and this is possibly either religion
+
+35:49.040 --> 35:51.920
+ or atheism.
+
+35:51.920 --> 35:54.080
+ And then another one on graphics.
+
+35:54.080 --> 35:57.040
+ So yeah, graphics is well represented.
+
+35:57.040 --> 36:05.200
+ Actually, let me try taking ten topics to see if we can get some more.
+
+36:05.200 --> 36:11.480
+ Okay, here's a space one, space, NASA, lunar, Mars probe, moon, mission.
+
+36:11.480 --> 36:20.540
+ So there are some space ones in there too.
+
+36:20.540 --> 36:27.640
+ So yeah, we got topics that matched with the kind of clusters that we would expect, even
+
+36:27.640 --> 36:29.480
+ though we had never passed the categories in.
+
+36:29.480 --> 36:30.480
+ Any questions?
+
+36:30.480 --> 36:31.480
+ Yes.
+
+36:31.480 --> 36:56.600
+ Could you specify, like, what each column of U is actually, like what column of U is?
+
+36:56.600 --> 36:57.600
+ Yeah.
+
+36:57.600 --> 36:58.600
+ The situation is what V is, like the row of V. I think the row of VH will be the topics,
+
+36:58.600 --> 36:59.600
+ right?
+
+36:59.600 --> 37:00.600
+ Right, yeah.
+
+37:00.600 --> 37:07.980
+ So the columns of U correspond to the particular post.
+
+37:07.980 --> 37:14.280
+ So we could use that if we wanted to look at a particular post and see, okay, how much
+
+37:14.280 --> 37:17.860
+ of each topic shows up in that post.
+
+37:17.860 --> 37:23.720
+ So from the beginning, kind of when we read somebody asking a question about computer
+
+37:23.720 --> 37:26.800
+ graphics, we could look back and see.
+
+37:26.800 --> 37:32.160
+ And so this is, these are sometimes called embeddings, but U is kind of giving us like,
+
+37:32.160 --> 37:38.680
+ okay, these are how the individual posts were embedded and into the kind of what the topics
+
+37:38.680 --> 37:49.560
+ and then V is giving us and these are how the words kind of correspond to those topics.
+
+37:49.560 --> 37:50.560
+ Yeah, I'll try.
+
+37:50.560 --> 37:51.560
+ That's a good question.
+
+37:51.560 --> 37:52.560
+ I'll try writing a method.
+
+37:52.560 --> 37:57.300
+ I don't want to do it on the fly, but what you would have to do is kind of pick off the
+
+37:57.300 --> 38:04.440
+ largest entries and then yeah, look up which really you would want to tie it back to the
+
+38:04.440 --> 38:06.440
+ words eventually.
+
+38:06.440 --> 38:13.440
+ So I think then kind of look up, yeah, which topics are biggest and then what words are
+
+38:13.440 --> 38:16.960
+ in those topics.
+
+38:16.960 --> 38:19.960
+ Any other questions?
+
+38:19.960 --> 38:22.960
+ Okay.
+
+38:22.960 --> 38:40.960
+ So in your picture, R is the number of topics.
+
+38:40.960 --> 38:42.960
+ Yes.
+
+38:42.960 --> 38:48.960
+ Number of documents by number of topics and then the next one is number of topics by number
+
+38:48.960 --> 38:50.000
+ of topics.
+
+38:50.000 --> 38:57.520
+ Right now our R is equal to N, but Jeremy was just pointing out that this matrix is
+
+38:57.520 --> 39:05.800
+ estimated.
+
+39:05.800 --> 39:13.360
+ So the blue matrix is words are the rows, hashtags are the columns, the purple matrix
+
+39:13.360 --> 39:23.360
+ words are the rows, the columns are, what, oh sorry, I thought I said, okay, purple matrix
+
+39:23.360 --> 39:32.800
+ words are the rows, the columns are the topics, the pink matrix V, the rows are the topics,
+
+39:32.800 --> 39:43.340
+ the columns are the hashtags, oh sorry, I see what you're saying, sorry, Facebook example
+
+39:43.340 --> 39:47.320
+ was different, by hashtag I mean document.
+
+39:47.320 --> 39:54.880
+ Okay, so let me say it one time with documents.
+
+39:54.880 --> 39:55.880
+ Sorry about that.
+
+39:55.880 --> 40:06.920
+ Okay, purple is words by topics, pink is topics by post.
+
+40:06.920 --> 40:22.800
+ Okay, don't worry, so we're actually going to return to SVD more later in this lesson,
+
+40:22.800 --> 40:28.200
+ but we're going to kind of take a break from SVD and look at NMF and so I think it'll be
+
+40:28.200 --> 40:36.520
+ good to revisit SVD later, so there'll be more chance to ask questions about SVD.
+
+40:36.520 --> 40:46.120
+ So NMF stands for non-negative matrix factorization and some motivation, we can look at decomposition
+
+40:46.120 --> 40:54.320
+ of some faces and here kind of the red pixels are showing negative values on the faces.
+
+40:54.320 --> 41:01.000
+ So we kind of have found almost the topic equivalent of face, you know, like what are
+
+41:01.000 --> 41:04.760
+ different components of the face, but how do we interpret this?
+
+41:04.760 --> 41:09.000
+ Like what does it mean to have a negative part of your face, you know, that you can
+
+41:09.000 --> 41:12.280
+ like add these together to form faces?
+
+41:12.280 --> 41:18.000
+ And so this is the motivation for NMF, that with a lot of data sets having something negative
+
+41:18.000 --> 41:26.160
+ doesn't really make sense and is hard to interpret.
+
+41:26.160 --> 41:32.600
+ And notice in SVD it was completely possible to have negative values.
+
+41:32.600 --> 41:37.600
+ So here we're kind of swapping out before like the key thing with SVD is this orthogonality,
+
+41:37.600 --> 41:42.640
+ you know, it is assuming that things are orthogonal to each other, now we're gonna have the key
+
+41:42.640 --> 41:47.140
+ thing kind of be we want everything to be non-negative.
+
+41:47.140 --> 41:53.360
+ So NMF is a factorization of a, and your original data set should be non-negative if you're
+
+41:53.360 --> 41:57.120
+ using this, otherwise you won't be able to construct it.
+
+41:57.120 --> 42:00.800
+ Also if you have negatives in your original data set, the negatives probably make sense
+
+42:00.800 --> 42:03.000
+ in that context.
+
+42:03.000 --> 42:09.320
+ So we're just factoring into two matrices here, W and H, and we want each entry in W
+
+42:09.320 --> 42:12.900
+ and H to be non-negative.
+
+42:12.900 --> 42:19.360
+ And so for this face, face idea here if each column of our original matrix was an actual
+
+42:19.360 --> 42:26.580
+ person's face, what we would be capturing would be a matrix of different facial features
+
+42:26.580 --> 42:34.400
+ and then the relative importance of each of those features in a particular image.
+
+42:34.400 --> 42:46.480
+ And I believe you saw the eigenfaces data set in Yanet's machine learning class.
+
+42:46.480 --> 42:50.160
+ So NMF is a hard problem.
+
+42:50.160 --> 42:55.800
+ One is that it's kind of under constraint so you could find different answers and typically
+
+42:55.800 --> 42:58.600
+ you'll add kind of additional constraints.
+
+42:58.600 --> 43:03.140
+ There's also it's NP-hard.
+
+43:03.140 --> 43:07.400
+ So coming back to the problem that we're looking at today with topic modeling.
+
+43:07.400 --> 43:12.020
+ So we have our original matrix again, words by documents.
+
+43:12.020 --> 43:20.560
+ And here that'll get decomposed into matrix W that is words, words for the rows by topics
+
+43:20.560 --> 43:25.360
+ as the columns and then topics importance indicators.
+
+43:25.360 --> 43:32.360
+ So here topics would be the rows and their importance would be the columns.
+
+43:32.360 --> 43:33.360
+ Question?
+
+43:33.360 --> 44:02.880
+ So I mean here you're breaking the words and document to approximate topics and then you
+
+44:02.880 --> 44:13.000
+ would be able to do the same thing and then you would be able to do the same thing, right?
+
+44:13.000 --> 44:17.840
+ So this is an alternative to what we saw with SVD and I'll talk about some of the pros and
+
+44:17.840 --> 44:21.800
+ cons of NMF versus SVD later on.
+
+44:21.800 --> 44:24.880
+ But I would say they're both valid approaches.
+
+44:24.880 --> 44:29.880
+ Yeah, I just wanted you to kind of see a different way of tackling the problem.
+
+44:29.880 --> 44:52.560
+ Oh right, and that's a kind of a common way of interpreting what they mean, yeah.
+
+44:52.560 --> 44:58.120
+ And here also with all of these there's not a clear answer of what the number of topics
+
+44:58.120 --> 45:00.360
+ should be.
+
+45:00.360 --> 45:04.800
+ You know, even something with our data set where we like knew we were bringing in these
+
+45:04.800 --> 45:09.880
+ four categories, you know, we've seen that they're kind of multiple subtopics within
+
+45:09.880 --> 45:10.880
+ computer graphics.
+
+45:10.880 --> 45:14.400
+ There's also some overlap between religion and atheism.
+
+45:14.400 --> 45:19.320
+ So it's often not going to be clear even kind of what the quote best dimension to use would
+
+45:19.320 --> 45:33.480
+ be for the number of topics you're looking for.
+
+45:33.480 --> 45:40.160
+ Right yeah, so for each for each document it's the relative importance of each topic.
+
+45:40.160 --> 45:49.560
+ And you can think of that because when you multiply W and H together for a particular
+
+45:49.560 --> 45:56.920
+ document you are kind of taking a linear combination of the topics and you want to know what the
+
+45:56.920 --> 46:03.920
+ coefficient is.
+
+46:03.920 --> 46:11.080
+ So scikit-learn has a built-in NMF that we'll use first and that's in the scikit-learn decomposition
+
+46:11.080 --> 46:18.760
+ module which we imported above and so kind of as I mentioned we're telling it how many
+
+46:18.760 --> 46:24.760
+ components we want so that's kind of a decision we're having to make.
+
+46:24.760 --> 46:33.960
+ It returns that when we do kind of our classifier dot fit transform that will return the W and
+
+46:33.960 --> 46:42.760
+ then we can get H just kind of stored in this components on our classifier.
+
+46:42.760 --> 46:47.680
+ Yes and this is non-exact meaning we're not going to get in most cases we're not going
+
+46:47.680 --> 46:50.120
+ to get our original matrix back perfectly.
+
+46:50.120 --> 47:00.280
+ We're getting something as close as close as we can and that's a good question.
+
+47:00.280 --> 47:09.420
+ We will we will head into that in a moment of yeah different ways to do this.
+
+47:09.420 --> 47:21.640
+ So here we can check we can check do our topics make sense again looking from the second matrix
+
+47:21.640 --> 47:30.640
+ H and yes they seem to be fitting with what we know our categories are so JPEG image GIF
+
+47:30.640 --> 47:35.760
+ file color very reasonable computer graphics topic.
+
+47:35.760 --> 47:48.120
+ The third one is space launch satellite NASA commercial reasonable space topic okay.
+
+47:48.120 --> 47:59.160
+ I have a section on topic frequency inverse document frequency but term frequency inverse
+
+47:59.160 --> 48:04.680
+ document frequency.
+
+48:04.680 --> 48:10.240
+ I'm not gonna go super in-depth into this this is something that's highly are not highly
+
+48:10.240 --> 48:14.400
+ but often comes up as a way to kind of normalize your inputs.
+
+48:14.400 --> 48:20.440
+ I tried it though with what I was doing and didn't see a significant difference for this
+
+48:20.440 --> 48:27.400
+ particular data set and these decompositions but I think it's good to be aware of it.
+
+48:27.400 --> 48:33.480
+ So here we kind of want to take into account how often a term appears in a document how
+
+48:33.480 --> 48:39.040
+ long the document it is and also how common or rare the term is.
+
+48:39.040 --> 48:43.600
+ So when kind of so far we've just been dealing with these raw frequencies which don't really
+
+48:43.600 --> 48:48.040
+ take into account any of that.
+
+48:48.040 --> 48:55.560
+ And so what TF-IDF does instead is it's got this term TF which is the number of occurrences
+
+48:55.560 --> 48:59.880
+ of a term in document over the number of words in a document.
+
+48:59.880 --> 49:05.820
+ So if a document is super long we're basically kind of giving relative less weight as opposed
+
+49:05.820 --> 49:10.640
+ to before we would have just had a lot of high frequencies showing up.
+
+49:10.640 --> 49:15.360
+ And then the IDF term takes the log of the number of documents divided by the number
+
+49:15.360 --> 49:21.820
+ of documents with the term T in it and that's a measure of how common or rare a word is.
+
+49:21.820 --> 49:29.600
+ So if a word only shows up in very few documents it's pretty rare and probably has more significance.
+
+49:29.600 --> 49:41.720
+ So yeah we won't go too much into this but I wanted to let you know that it exists.
+
+49:41.720 --> 49:48.680
+ And then I guess we'll break soon and we'll just kind of say non-negative matrix factorization.
+
+49:48.680 --> 49:52.720
+ In summary the benefits are it's fast and easy to use.
+
+49:52.720 --> 49:56.400
+ The downsides are it took years of research and expertise to create.
+
+49:56.400 --> 50:00.680
+ So this is a version to kind of get back to the question about stochastic gradient descent,
+
+50:00.680 --> 50:05.640
+ a version that was not using stochastic gradient descent but that is a lot more specific and
+
+50:05.640 --> 50:14.960
+ optimized to NMF and so it's great but the the people that created it had to have a lot
+
+50:14.960 --> 50:18.280
+ of kind of expertise and knowledge to do so.
+
+50:18.280 --> 50:23.880
+ So we'll look at kind of some alternative ways to calculate NMF ourselves when we come
+
+50:23.880 --> 50:28.600
+ back but let's break and meet back at 1207.
+
+50:28.600 --> 50:35.000
+ Alright we're gonna look at kind of return to non-negative matrix factorization.
+
+50:35.000 --> 50:42.680
+ So before we were using scikit-learn's implementation which is very specific to the problem of non-negative
+
+50:42.680 --> 50:50.520
+ matrix factorization and we're gonna try writing our own in NumPy and we're gonna use stochastic
+
+50:50.520 --> 50:57.440
+ gradient descent which is a lot more general.
+
+50:57.440 --> 51:02.480
+ So first I'm going to introduce that just kind of the or remind you of the basic idea
+
+51:02.480 --> 51:08.600
+ of standard gradient descent which is you choose some weights to start and then you
+
+51:08.600 --> 51:14.440
+ have a loop that uses your weights to calculate a prediction, calculates the derivative of
+
+51:14.440 --> 51:20.520
+ the loss and the loss is the also known as the error function or the cost but that's
+
+51:20.520 --> 51:25.840
+ what you're trying to minimize and then you update the weights and you kind of keep going
+
+51:25.840 --> 51:31.120
+ through this loop to do that and you get better and better weights.
+
+51:31.120 --> 51:35.680
+ And the key here is that we're trying to decrease our loss and the derivative is giving us the
+
+51:35.680 --> 51:39.680
+ direction of steepest descent for our loss.
+
+51:39.680 --> 51:51.640
+ And so for this I'm going to use the gradient descent, oh yes, I'm gonna use an Excel notebook
+
+51:51.640 --> 52:00.440
+ and this is something Jeremy originally developed for the deep learning course and it's um I
+
+52:00.440 --> 52:07.620
+ think it's very helpful and it's good and I think many many programmers can be kind
+
+52:07.620 --> 52:11.880
+ of snobby about Excel but Excel is really visual and it's kind of a good way to see
+
+52:11.880 --> 52:12.880
+ things.
+
+52:12.880 --> 52:24.680
+ So I'm just gonna kind of walk through gradient descent in here, oh sorry I misspoke I'm gonna
+
+52:24.680 --> 52:32.280
+ do an IPython notebook the Excel is for stochastic gradient descent which we'll get to next.
+
+52:32.280 --> 52:36.440
+ This is also from the deep learning course and so this notebook is called gradient descent
+
+52:36.440 --> 52:43.320
+ intro it should also be on github in the class repository.
+
+52:43.320 --> 52:50.320
+ So here we've got a method for a line that takes in a b and x and returns a times x plus
+
+52:50.320 --> 52:52.000
+ b.
+
+52:52.000 --> 52:57.000
+ We're gonna choose our slope and intercept.
+
+52:57.000 --> 53:02.280
+ This is what typically you don't know so we're gonna kind of choose these to make a fake
+
+53:02.280 --> 53:07.840
+ data set and then this will let us check kind of how good our method is if we can get back
+
+53:07.840 --> 53:08.840
+ to them.
+
+53:08.840 --> 53:14.240
+ But in the real world you don't know what the quote true a and b are and that's what
+
+53:14.240 --> 53:16.920
+ you're trying to figure out.
+
+53:16.920 --> 53:26.800
+ So here we generate 30 random data points so we've got this array x 30 points y is just
+
+53:26.800 --> 53:34.360
+ a times x plus b and we can plot them they're perfectly aligned which is what we would expect
+
+53:34.360 --> 53:40.000
+ since we use the line line method to create them.
+
+53:40.000 --> 53:45.840
+ And then here we have a few methods and SSE stands for sum of squared errors so that will
+
+53:45.840 --> 53:52.440
+ take a kind of true y and our predicted y subtract them and square it and sum it up.
+
+53:52.440 --> 53:59.680
+ That's gonna be our loss here so loss method just calls the sum of squared errors and then
+
+53:59.680 --> 54:06.160
+ we can get the average loss over so we have a bunch of points by taking the square root
+
+54:06.160 --> 54:12.240
+ of the loss divided by the number of points that there were.
+
+54:12.240 --> 54:30.480
+ So let's start off guessing negative one and one.
+
+54:30.480 --> 54:34.400
+ So our loss is 8.9 so we're not doing great to start.
+
+54:34.400 --> 54:38.640
+ We'll choose what's called a learning rate so 0.01 is where we're starting that's something
+
+54:38.640 --> 54:44.040
+ though that you'll typically adjust as you're going and then each time we update what we'll
+
+54:44.040 --> 54:52.240
+ do is kind of make predictions using our guess for A and our guess for B.
+
+54:52.240 --> 54:58.000
+ We know what the derivative of the loss is since this is a line or sorry some this is
+
+54:58.000 --> 55:02.560
+ the derivative of sum of squared errors so we're using that derivative and then we're
+
+55:02.560 --> 55:06.480
+ updating our guesses A and B.
+
+55:06.480 --> 55:12.480
+ And this is really neat this is an animation that shows kind of what's happening and this
+
+55:12.480 --> 55:19.360
+ is a bit stop this so we're kind of starting down here when we've guessed one on one and
+
+55:19.360 --> 55:26.040
+ one for our A and B which is not a very close approximation at all and we can see as it
+
+55:26.040 --> 55:35.440
+ runs so here inside of animate we just have a for loop that's calling our update method
+
+55:35.440 --> 55:44.720
+ from up here UPD and so we can see that the line gets closer and closer until it's a really
+
+55:44.720 --> 55:46.040
+ accurate guess.
+
+55:46.040 --> 55:49.680
+ Are there any questions about this?
+
+55:49.680 --> 55:55.520
+ Oh down here?
+
+55:55.520 --> 56:05.360
+ Yeah so the derivative is giving the direction of steepest descent so we want to subtract
+
+56:05.360 --> 56:13.120
+ that from our guess and the reason we use a learning rate is if this is a large number
+
+56:13.120 --> 56:18.320
+ we could end up kind of jumping back and forth from the true answer and so it's kind of better
+
+56:18.320 --> 56:23.040
+ to take smaller steps and so the learning rate is basically the kind of the step size
+
+56:23.040 --> 56:29.040
+ of like okay the derivative gives us the direction we want to go in and learning rate is telling
+
+56:29.040 --> 56:33.880
+ us how big a step to take in that direction.
+
+56:33.880 --> 56:37.360
+ Any questions?
+
+56:37.360 --> 56:52.440
+ Okay so this is standard gradient descent there was oops nothing stochastic about that
+
+56:52.440 --> 56:59.040
+ and so the idea with SGD is so with standard gradient descent we evaluated the loss on
+
+56:59.040 --> 57:04.720
+ all of our data in that example we only had 30 data points so it was very quick and in
+
+57:04.720 --> 57:10.360
+ the most problems you'll use you have way too way too much data and it's really slow
+
+57:10.360 --> 57:15.480
+ to evaluate the loss on every single point and it's also kind of unnecessary particularly
+
+57:15.480 --> 57:20.800
+ when you're far away from the true answer to do that much of an evaluation and so stochastic
+
+57:20.800 --> 57:25.360
+ gradient descent is the idea of evaluating the loss function on just a small sample of
+
+57:25.360 --> 57:31.680
+ the data and that's typically called a mini batch and that's why it's stochastic because
+
+57:31.680 --> 57:38.480
+ depending kind of which batch you choose to or mini batch you calculate your loss on you'll
+
+57:38.480 --> 57:43.700
+ get different answers but it turns out that kind of an aggregate because this is part
+
+57:43.700 --> 57:50.680
+ of a loop it's good enough and you get a huge huge improvement in speed and so this is what
+
+57:50.680 --> 57:59.320
+ I was going to show inside the excel spreadsheet and this one will start in a very similar
+
+57:59.320 --> 58:06.680
+ way so we're just and this excel spreadsheet is also available in the github repository
+
+58:06.680 --> 58:12.480
+ and there are tools like open office that you can kind of look at the spreadsheet without
+
+58:12.480 --> 58:19.040
+ having excel so we've just chosen kind of an a and b to generate our data from and this
+
+58:19.040 --> 58:23.680
+ is helpful because it lets us see how good our answer is but this is kind of the part
+
+58:23.680 --> 58:30.440
+ where you would typically have a real data set so we've got our data and then the basic
+
+58:30.440 --> 58:37.600
+ sgd we're going to make some guesses for what the intercept and slope are here's this learning
+
+58:37.600 --> 58:44.000
+ rate which is what we're going to multiply by to figure out how big a step to take our
+
+58:44.000 --> 58:50.760
+ data has been copied in and here are many batches of size one so we're going to just
+
+58:50.760 --> 59:00.160
+ calculate what the derivative of the losses so here's our prediction here's the air and
+
+59:00.160 --> 59:05.600
+ then we calculate the derivative of the air just at that single point and then update
+
+59:05.600 --> 59:28.960
+ a and b for that and so we can see this actually might want to increase the learning rate this
+
+59:28.960 --> 59:38.920
+ is going pretty slow so the the air is getting smaller oh no that's horrible okay i won't
+
+59:38.920 --> 59:46.240
+ do this on i won't i won't improvise this right now but you can adjust the learning
+
+59:46.240 --> 59:50.920
+ rate to take some smaller bigger steps if you take too big a step and this is what can
+
+59:50.920 --> 59:57.640
+ happen to you and you shoot off in the wrong direction but there are questions about stochastic
+
+59:57.640 --> 1:00:05.600
+ gradient descent and then this notebook includes a bunch of other optimization techniques we
+
+1:00:05.600 --> 1:00:10.000
+ won't be covering them in this class but they might be of interest to you if you're interested
+
+1:00:10.000 --> 1:00:11.000
+ in optimization
+
+1:00:11.000 --> 1:00:28.600
+ on the spreadsheet you don't need to use the macros or the buttons it's all within the
+
+1:00:28.600 --> 1:00:51.520
+ macro so as jeremy was kind of saying what this does is it takes the new a and b down
+
+1:00:51.520 --> 1:00:59.920
+ from the very bottom and is that what the macro does and then puts them i guess back
+
+1:00:59.920 --> 1:01:07.800
+ up here for for intercept and slope yeah so you can see that's kind of picking off the
+
+1:01:07.800 --> 1:01:24.200
+ and so it's a stochastic gradient descent is a really really general approach and it's
+
+1:01:24.200 --> 1:01:28.840
+ something that you can apply to a lot of different problems anytime you have a derivative for
+
+1:01:28.840 --> 1:01:34.000
+ your loss and in fact you actually don't even need to have a formula form for it so i think
+
+1:01:34.000 --> 1:01:43.600
+ it's something that's really useful useful to know and i've linked to a few few resources
+
+1:01:43.600 --> 1:01:53.040
+ including the SGD lecture from Andrew Ng's Coursera class from the fastai wiki this is
+
+1:01:53.040 --> 1:02:01.160
+ kind of a nice blog post on a variety of optimization algorithms but so applying that to our specific
+
+1:02:01.160 --> 1:02:10.720
+ problem of nmf and we're trying to decompose v into the product of two matrices where all
+
+1:02:10.720 --> 1:02:19.880
+ their entries are non-negative so we're minimizing the Frobenius norm of v minus wh we want to
+
+1:02:19.880 --> 1:02:23.960
+ get that as close to zero as possible because that would be in the wh is a good approximation
+
+1:02:23.960 --> 1:02:32.720
+ of v and then we really want w and h greater than or equal to zero so in order to use SGD
+
+1:02:32.720 --> 1:02:38.360
+ we need to know the gradient of the loss function and here we've looked that up and are just
+
+1:02:38.360 --> 1:02:44.040
+ going to kind of use it this is also something you could calculate if you like multi-variable
+
+1:02:44.040 --> 1:02:55.300
+ derivatives multi-variable calculus so we've got kind of our vectors from before this is
+
+1:02:55.300 --> 1:03:08.200
+ still again the same matrix with the the words as rows and the columns or documents down
+
+1:03:08.200 --> 1:03:19.880
+ here we define the gradients it takes in m w and h and it returns the gradient
+
+1:03:19.880 --> 1:03:27.300
+ and so here we have the this is the gradient from w and then we also have this penalty
+
+1:03:27.300 --> 1:03:37.240
+ term and the penalty is going to be and this is for w or kind of for each of our matrices
+
+1:03:37.240 --> 1:03:41.980
+ the penalty is to penalize the matrices when they're negative so we need a way to kind
+
+1:03:41.980 --> 1:03:48.000
+ of force force the algorithm to go towards positive values for w and h so we want to
+
+1:03:48.000 --> 1:03:54.120
+ have a penalty when w and h are negative and that's what's happening here so we call penalty
+
+1:03:54.120 --> 1:03:59.920
+ which has got this and p dot where if the matrix is greater than we're going to choose
+
+1:03:59.920 --> 1:04:05.880
+ mu is very close to zero if the matrix is greater than mu there's zero penalty we're
+
+1:04:05.880 --> 1:04:12.440
+ happy because it's positive however if it's negative or super close to zero we're assigning
+
+1:04:12.440 --> 1:04:22.560
+ this penalty and then we update w and h by calculating their gradients which includes
+
+1:04:22.560 --> 1:04:28.440
+ the penalty and then just just like what happened in the kind of simple version with the line
+
+1:04:28.440 --> 1:04:37.240
+ in the notebook we do the learning rate which is our step size times the gradient and this
+
+1:04:37.240 --> 1:04:44.240
+ report method this is just so that we can get a sense of how we're doing as we go along
+
+1:04:44.240 --> 1:04:52.520
+ so the first term is showing m minus w times h so just kind of seeing how far apart they
+
+1:04:52.520 --> 1:04:57.740
+ are you know is w h a good approximation of m then we're going to look at the minimum
+
+1:04:57.740 --> 1:05:01.920
+ of w and the minimum of h that's something where I don't know if we got like negative
+
+1:05:01.920 --> 1:05:08.640
+ a thousand that would be a really bad sign ideally those would be zero and then also
+
+1:05:08.640 --> 1:05:13.720
+ the sum of how many of the terms are less than zero any questions so far about these
+
+1:05:13.720 --> 1:05:32.800
+ methods we're defining sure yeah so the because we kind of have so we have two separate things
+
+1:05:32.800 --> 1:05:39.440
+ we're trying to do one we want w times h to be really close to m a good approximation
+
+1:05:39.440 --> 1:05:45.640
+ and the second is we want w and h to be positive so we have these two separate goals and taking
+
+1:05:45.640 --> 1:05:54.680
+ the derivative of the loss will help us get w times h close to m because that's kind of
+
+1:05:54.680 --> 1:05:59.280
+ the particular derivative we've we've calculated and so that's what's going on with this kind
+
+1:05:59.280 --> 1:06:06.080
+ of this first part so that's that for w this is that for h then to deal with wanting w
+
+1:06:06.080 --> 1:06:13.740
+ and h to be greater than zero here we're deciding okay we're gonna have this penalty that is
+
+1:06:13.740 --> 1:06:17.920
+ equal to zero if they're positive because we're happy so no penalty and that's what
+
+1:06:17.920 --> 1:06:26.280
+ NP dot where does NP dot where kind of takes a truth true or false statement if it's true
+
+1:06:26.280 --> 1:06:33.380
+ it uses the first value so if w is greater than or equal to this tiny number that's close
+
+1:06:33.380 --> 1:06:42.080
+ to zero we go with the first value zero there's no penalty however if w is less than you the
+
+1:06:42.080 --> 1:06:53.480
+ penalty is going to be larger for the further away that M is from you
+
+1:06:53.480 --> 1:07:20.940
+ yeah and you can think about like another way to think about it is there's not a clear
+
+1:07:20.940 --> 1:07:28.120
+ or obvious way to take a derivative from okay we want these things to be greater than zero
+
+1:07:28.120 --> 1:07:35.480
+ whereas for having this m close to w times h it's much easier to be like okay this is
+
+1:07:35.480 --> 1:08:05.020
+ how far away they are we can take a derivative of that that's a good question so here
+
+1:08:05.020 --> 1:08:16.660
+ um this will be negative what we're doing with our w and h is we're doing w minus equals
+
+1:08:16.660 --> 1:08:24.600
+ dw so that would come back as so this is being returned in the grads method we have like
+
+1:08:24.600 --> 1:08:38.480
+ minus and negative is positive but that's a good point this the issue is we could flip
+
+1:08:38.480 --> 1:08:43.220
+ the signs on everything but then you would also have to flip the signs on the derivative
+
+1:08:43.220 --> 1:08:53.280
+ here yeah but the minus and negative it basically means the further the more negative it is
+
+1:08:53.280 --> 1:09:11.020
+ the bigger a positive number you add to w okay these are great questions thanks everyone
+
+1:09:11.020 --> 1:09:19.220
+ yeah so now to kind of start it we need to choose random values for w and h so we'll
+
+1:09:19.220 --> 1:09:25.420
+ just use kind of a random normal to get back matrices of the size that we want and then
+
+1:09:25.420 --> 1:09:30.740
+ we're taking the absolute value of that because we should at least start with non-zero mate
+
+1:09:30.740 --> 1:09:45.240
+ or non-negative matrices and so we'll just kind of check the initial and as a reminder
+
+1:09:45.240 --> 1:09:49.100
+ this report and this is just a few values that we thought it would be interesting to
+
+1:09:49.100 --> 1:09:54.740
+ kind of monitor as we go along to see how we're doing so this is how far away m and
+
+1:09:54.740 --> 1:10:02.340
+ w h are is the first one the second is the minimum of w the minimum of h and then the
+
+1:10:02.340 --> 1:10:11.820
+ sum of their negative terms oh the count of notes oh okay great um count of their negative
+
+1:10:11.820 --> 1:10:19.020
+ terms thank you so then we run update which just calculates the gradients updates them
+
+1:10:19.020 --> 1:10:31.740
+ once and we can check the the air has improved a little bit so this is slightly smaller forty
+
+1:10:31.740 --> 1:10:38.900
+ four point four one nine now as opposed to forty four point four three nine before and
+
+1:10:38.900 --> 1:10:45.100
+ here we have introduced some negatives into w and h and if we run this and I'm actually
+
+1:10:45.100 --> 1:11:02.620
+ gonna do this for fewer okay so one as this runs you'll notice it's a little bit slow
+
+1:11:02.620 --> 1:11:08.260
+ so we see that the product w h is getting closer to our matrix m that's the first column
+
+1:11:08.260 --> 1:11:17.460
+ is going down here the negative terms actually kind of seem like they're saying about the
+
+1:11:17.460 --> 1:11:27.380
+ same I didn't do that many iterations anything the count is going up so kind of a key thing
+
+1:11:27.380 --> 1:11:33.780
+ here to notice that this is really slow and I ran this for longer and it continued to
+
+1:11:33.780 --> 1:11:39.340
+ be very slow and there's also a lot of parameter fiddling because like right now looking at
+
+1:11:39.340 --> 1:11:45.740
+ this I'm thinking I would probably want to increase the penalty on negative values just
+
+1:11:45.740 --> 1:11:51.260
+ because you know these counts seem really high and like they're not going down particularly
+
+1:11:51.260 --> 1:11:56.380
+ well I guess H is much bigger bigger than W but so we have like a lot of different parameters
+
+1:11:56.380 --> 1:12:03.260
+ so even though we have this generic method that mostly seems headed in the right direction
+
+1:12:03.260 --> 1:12:14.900
+ and it does have some some shortcomings sorry about that all right so one way we could speed
+
+1:12:14.900 --> 1:12:25.140
+ this up is to use PyTorch PyTorch is a Python framework for dynamic neural networks with
+
+1:12:25.140 --> 1:12:32.060
+ GPU acceleration I was just released in January and many of the core contributors are on Facebook's
+
+1:12:32.060 --> 1:12:38.220
+ AI team and it's used it's used at Facebook as well as many other companies Twitter is
+
+1:12:38.220 --> 1:12:44.900
+ using it but it actually has two purposes so kind of in addition to being a deep learn
+
+1:12:44.900 --> 1:12:50.300
+ and I think it's a really excellent deep learning framework it's also a replacement for numpy
+
+1:12:50.300 --> 1:12:58.500
+ that uses the GPU and a lot of the right now it has less functionality than numpy just
+
+1:12:58.500 --> 1:13:02.300
+ because it's so new but a lot of people are actively working on it and the methods it
+
+1:13:02.300 --> 1:13:12.860
+ has are very similar to what numpy has so I have a link so we'll kind of just be using
+
+1:13:12.860 --> 1:13:15.680
+ it in this lesson that's a thing I really wanted to expose you to and it's something
+
+1:13:15.680 --> 1:13:20.940
+ that you if you want you can use for your project you could try to implement something
+
+1:13:20.940 --> 1:13:26.580
+ else in PyTorch because I think it's a really really nice framework and I have a few links
+
+1:13:26.580 --> 1:13:34.900
+ to find out more so you do not have to have to be using a GPU for this course that's fine
+
+1:13:34.900 --> 1:13:41.520
+ you will not get the speed up of running stuff on a GPU just in the code below here whenever
+
+1:13:41.520 --> 1:13:51.340
+ you see a dot CUDA you'll need to delete that if you don't have a GPU oh and so if you're
+
+1:13:51.340 --> 1:13:59.620
+ interested in getting a GPU well one so the MCN program has a box with a few GPUs that
+
+1:13:59.620 --> 1:14:06.940
+ people can share and then something else that's great is AWS instances and you can watch this
+
+1:14:06.940 --> 1:14:11.460
+ setup lesson this was from the deep learning course that kind of walks through how to request
+
+1:14:11.460 --> 1:14:20.280
+ p2 from AWS and what that does is it's you know letting you spin up a kind of computer
+
+1:14:20.280 --> 1:14:27.460
+ in the cloud that has a has GPU capabilities yeah and definitely feel free to ask if you
+
+1:14:27.460 --> 1:14:35.960
+ want kind of more help or advice about that but this is a kind of thinking about this
+
+1:14:35.960 --> 1:14:42.060
+ course of like the general goal of making matrix computations faster using a GPU is
+
+1:14:42.060 --> 1:14:53.860
+ a great way to do that and so I mean we'll see in a moment although do you have a ballpark
+
+1:14:53.860 --> 1:15:03.740
+ you want to throw out oh yes significantly faster so we have to do some imports from
+
+1:15:03.740 --> 1:15:13.840
+ um I guess also so pytorch is in it's a Python library but it's torch is a Lua library that's
+
+1:15:13.840 --> 1:15:19.860
+ been used in computer graphics for years so it's even though pytorch is newly released
+
+1:15:19.860 --> 1:15:25.060
+ it's kind of coming from this really well developed library that grew up around computer
+
+1:15:25.060 --> 1:15:30.840
+ graphics which have to do very fast matrix computations we're also like really all indebted
+
+1:15:30.840 --> 1:15:41.060
+ to the video gaming industry for kind of keeping GPU technology advancing so much so something
+
+1:15:41.060 --> 1:15:53.140
+ you'll notice with with pytorch is well I'll come back to this so in pytorch you have tensors
+
+1:15:53.140 --> 1:15:57.940
+ and variables and they kind of have the same API meaning you can do the same things to
+
+1:15:57.940 --> 1:16:03.780
+ them however variables from remember or keep track of how they were created which will
+
+1:16:03.780 --> 1:16:12.440
+ be necessary later on we'll find out about that so we've just converted our vectors to
+
+1:16:12.440 --> 1:16:21.500
+ dense V then we're casting them so V as type NP dot float 32 and putting that into a torch
+
+1:16:21.500 --> 1:16:27.560
+ tensor remember a tensor is just kind of a generalization of a matrix and so we had to
+
+1:16:27.560 --> 1:16:31.400
+ specify our type and this is something that you'll see with a lot of these options to
+
+1:16:31.400 --> 1:16:41.820
+ speed things up and they need to know you to know the type so here we kind of redefine
+
+1:16:41.820 --> 1:16:47.500
+ the methods that we had above and you'll notice that they're fairly similar I'm a key thing
+
+1:16:47.500 --> 1:16:55.340
+ that's different we have these dot mm for matrix multiply so now this W dot mm H that's
+
+1:16:55.340 --> 1:17:08.420
+ just doing W times H let me see what other differences jump out at torch clamp is a method
+
+1:17:08.420 --> 1:17:15.900
+ that takes a value and then we'll cut it off with a kind of minimum or and or maximum that
+
+1:17:15.900 --> 1:17:22.060
+ you feed in so here we want M minus mu but we're cutting it off at zero because if M
+
+1:17:22.060 --> 1:17:27.540
+ is large and positive we're happy or not even it doesn't have to be large if M is positive
+
+1:17:27.540 --> 1:17:32.620
+ and bigger than you we don't want any penalty so that max zero will take effect and there's
+
+1:17:32.620 --> 1:17:44.900
+ zero penalty so this is handling that penalty from before here that dot sub underscore that
+
+1:17:44.900 --> 1:17:57.420
+ subtraction and it's a minus equal subtraction from the original and this you don't have
+
+1:17:57.420 --> 1:18:03.700
+ to understand all the syntactic details of pi torch but I wanted you to get a general
+
+1:18:03.700 --> 1:18:13.900
+ general feel for what's going on so we need to kind of declare our float tensors and said
+
+1:18:13.900 --> 1:18:19.900
+ this last time but a float is basically a decimal as opposed to an integer when we talk
+
+1:18:19.900 --> 1:18:30.460
+ about data types again this is in a little bit of a different order but we're doing the
+
+1:18:30.460 --> 1:18:38.100
+ same thing W is being initialized with a normal random variable and then we're doing dot apps
+
+1:18:38.100 --> 1:18:41.940
+ to do the absolute at the end but that's kind of just saying the order that these happen
+
+1:18:41.940 --> 1:18:55.620
+ in take the absolute value yes great thank you
+
+1:18:55.620 --> 1:19:20.540
+ so now you can see this is going much faster than before and the one above I actually probably
+
+1:19:20.540 --> 1:19:31.980
+ should have run for yeah so this one each loop was only 10 I only did 50 total and that
+
+1:19:31.980 --> 1:19:39.460
+ felt kind of slow now each loop is a hundred and we're doing a thousand and that was thousand
+
+1:19:39.460 --> 1:19:46.320
+ iterations that was much quicker and so you see that these have improved you still are
+
+1:19:46.320 --> 1:19:49.920
+ going to need to do some more but we're able to kind of get through a lot of iterations
+
+1:19:49.920 --> 1:20:00.620
+ much quicker any question but oh this is as good as I guess I thought we got better then
+
+1:20:00.620 --> 1:20:08.180
+ here are the topic topics that we found so objective morality values moral subjective
+
+1:20:08.180 --> 1:20:18.800
+ science absolute claim I guess that maybe that's that's atheism God Jesus Bible believe
+
+1:20:18.800 --> 1:20:27.260
+ atheism Christian perhaps religion miscellaneous space NASA launch shuttle orbit lunar moon
+
+1:20:27.260 --> 1:20:30.460
+ is a good space one so these are some nice topics
+
+1:20:30.460 --> 1:20:53.340
+ so Jeremy was referencing what we got from the built-in so these are the topics from
+
+1:20:53.340 --> 1:20:58.620
+ the built-in and again since this is an unsupervised learning problem we don't have an absolute
+
+1:20:58.620 --> 1:21:05.360
+ measure of like these are what great topics are we're just kind of using our intuition
+
+1:21:05.360 --> 1:21:16.540
+ about looking at them well I mean that's giving you how good your approximation is yeah so
+
+1:21:16.540 --> 1:21:29.660
+ these are these are good topics okay so in that version or actually I should ask are
+
+1:21:29.660 --> 1:21:43.480
+ there any other questions about this version yes you can still use it but you're not getting
+
+1:21:43.480 --> 1:21:50.780
+ the speed up so there's less less reason to all right I mean you could still question
+
+1:21:50.780 --> 1:21:56.840
+ of deep learning aside if you're using it as a numpy alternative kind of the main motivation
+
+1:21:56.840 --> 1:22:11.320
+ for that is the GPU speed up but it will still work yes also when you're using pie torch
+
+1:22:11.320 --> 1:22:16.320
+ if you do have a GPU you need to be sure to use dot CUDA otherwise pi torch will not put
+
+1:22:16.320 --> 1:22:20.760
+ your stuff on the GPU which is what you want to get the speed up so you have to tell it
+
+1:22:20.760 --> 1:22:32.480
+ to do that and you will have to install pi torch and to be able to do this but anaconda
+
+1:22:32.480 --> 1:22:41.360
+ but yeah I recommend using anaconda okay so in this version note so this was very similar
+
+1:22:41.360 --> 1:22:49.960
+ to what we just did in what we had done in numpy from scratch we still had to know what
+
+1:22:49.960 --> 1:22:56.680
+ the gradients were and this can really be a pain particularly if you have a more complicated
+
+1:22:56.680 --> 1:23:02.540
+ method having to calculate the derivative and so pytorch has something really handy
+
+1:23:02.540 --> 1:23:13.620
+ called autograd and autograd will do automatic differentiation so if you give it give it
+
+1:23:13.620 --> 1:23:19.280
+ a method it it finds the derivative for you and so this is great because you can use it
+
+1:23:19.280 --> 1:23:23.820
+ on stuff where you don't even know what the derivative is and so the approach that I'm
+
+1:23:23.820 --> 1:23:30.200
+ about to show would work for I think almost any optimization problem and so here we're
+
+1:23:30.200 --> 1:23:36.840
+ going to have to use variables for this and with so again kind of the variable has the
+
+1:23:36.840 --> 1:23:43.160
+ same API as a tensor but it's got this memory of how it's how it's created which is then
+
+1:23:43.160 --> 1:23:48.340
+ can be used to automatically calculate the derivative and you'll want to pass requires
+
+1:23:48.340 --> 1:24:00.260
+ grad equals true and so you're saying this this needs a gradient so here we create calling
+
+1:24:00.260 --> 1:24:10.540
+ them now pw and pH and so then down here with our methods notice we no longer have a grads
+
+1:24:10.540 --> 1:24:21.120
+ method because we're not having to give it a formula for the gradient we do still want
+
+1:24:21.120 --> 1:24:35.060
+ a penalty term so that's kind of taking our matrix and checking that it's less than zero
+
+1:24:35.060 --> 1:24:45.040
+ or sorry if it's if it's less than zero we're taking its value otherwise the value is zero
+
+1:24:45.040 --> 1:24:51.660
+ or yeah we're maxing it at zero and then in this case we ended up squaring that to add
+
+1:24:51.660 --> 1:24:58.340
+ and I we probably should have done this in the methods above to add a greater penalty
+
+1:24:58.340 --> 1:25:02.440
+ because you would see above we were still kind of getting a lot more negative numbers
+
+1:25:02.440 --> 1:25:15.200
+ than we would like yeah you can have more complicated formulas without the downside
+
+1:25:15.200 --> 1:25:31.700
+ of knowing that you'll need their their gradient let's see so report is basically the same
+
+1:25:31.700 --> 1:25:37.500
+ again again we're having to use the dot CUDA to tell PyTorch put this on the GPU and then
+
+1:25:37.500 --> 1:25:43.940
+ here we're going to use an optimizer so this is we're kind of telling it this is how I
+
+1:25:43.940 --> 1:25:52.740
+ want you to optimize things and Adam is I think from a few years ago it's a relative
+
+1:25:52.740 --> 1:25:57.500
+ it's a modern optimizer as opposed to you know SGD which has had this more classic classic
+
+1:25:57.500 --> 1:26:05.380
+ technique give a learning rate we can still get our report and so so this um this code
+
+1:26:05.380 --> 1:26:09.020
+ here this for loop is really useful this is something that you could use with a lot of
+
+1:26:09.020 --> 1:26:17.340
+ different problems we just up pytorch requires you to set your gradients to zero kind of
+
+1:26:17.340 --> 1:26:22.660
+ manually with your optimizer so our optimizer we're saying the gradients are zero they calculate
+
+1:26:22.660 --> 1:26:33.180
+ the loss and this is a pytorch method backward and kind of taking a backwards that calculates
+
+1:26:33.180 --> 1:26:44.660
+ your gradient so it's kind of like we actually this kind of surprises me because so we're
+
+1:26:44.660 --> 1:26:55.860
+ doing our optimizer step I would think you would want backwards afterwards no so l equals
+
+1:26:55.860 --> 1:27:06.860
+ loss calculates the value of the loss l is now a variable which is remembered how this
+
+1:27:06.860 --> 1:27:18.060
+ actually multiplies the weights and just to mention Adam actually is a type of SGD so
+
+1:27:18.060 --> 1:27:27.580
+ yeah Adam is stochastic but it's a much fancier version and there is a version of Adam in
+
+1:27:27.580 --> 1:27:32.660
+ that excel spreadsheet if you wanted to look at the details and again we're going to print
+
+1:27:32.660 --> 1:27:43.120
+ out the report every every hundred steps the other thing we're doing is every hundred steps
+
+1:27:43.120 --> 1:27:47.540
+ we're decreasing our learning rate this is called learning rate annealing but you see
+
+1:27:47.540 --> 1:27:53.220
+ inside this nested loop we're doing learning rate times equals 90% so it's getting a little
+
+1:27:53.220 --> 1:28:10.300
+ bit smaller each each hundred steps and so again yeah you want to calculate what your
+
+1:28:10.300 --> 1:28:17.620
+ loss is get the gradients and then use that to take a step but note that these backward
+
+1:28:17.620 --> 1:28:29.020
+ and step are kind of built-in methods you're getting from pytorch we can check and we still
+
+1:28:29.020 --> 1:28:38.580
+ have great topics so space NASA shuttle launch orbit lunar moon data well we do have this
+
+1:28:38.580 --> 1:29:04.300
+ one one random topic that we've been seeing we saw with the SVD as well yes so with with
+
+1:29:04.300 --> 1:29:11.820
+ so the idea of decreasing it as you go is that you're getting kind of as you get more
+
+1:29:11.820 --> 1:29:16.220
+ in the neighborhood of where you want to be you want to take smaller steps so you don't
+
+1:29:16.220 --> 1:29:22.560
+ overstep where you're going with stochastic gradient descent remember that your your directions
+
+1:29:22.560 --> 1:29:28.220
+ are less accurate since you've just used a subset of your data so there's kind of more
+
+1:29:28.220 --> 1:29:33.700
+ of a risk of overstepping in the wrong direction and it's okay that you know you're you're
+
+1:29:33.700 --> 1:29:46.060
+ always going in slightly wrong direction but it's close enough yes learning rate annealing
+
+1:29:46.060 --> 1:30:02.060
+ clear the page I was just gonna show that like if this was the true direction of that
+
+1:30:02.060 --> 1:30:08.940
+ you want it to be going in with stochastic gradient descent kind of what you're doing
+
+1:30:08.940 --> 1:30:14.440
+ is you're going close to to that direction but you're kind of zigzagging a bit around
+
+1:30:14.440 --> 1:30:18.980
+ and so you probably want your zigzags to get like a little bit kind of tighter here the
+
+1:30:18.980 --> 1:30:42.380
+ end as you start getting close to your goal so now I want to kind of compare some of the
+
+1:30:42.380 --> 1:30:48.160
+ approaches we've taken to talk about or first are there any other questions on on pie torch
+
+1:30:48.160 --> 1:31:01.340
+ or kind of what we've done with this automatic differentiation okay so using psych hits like
+
+1:31:01.340 --> 1:31:07.940
+ it learns built-in and a math and that was fast we didn't have to deal with tuning parameters
+
+1:31:07.940 --> 1:31:12.860
+ which was nice so you know these later ones there was this question of do we need to adjust
+
+1:31:12.860 --> 1:31:16.420
+ our learning rate do we need to adjust kind of how much of a penalty you were putting
+
+1:31:16.420 --> 1:31:23.540
+ on the the negatives but it used a lot of academic research kind of the people that
+
+1:31:23.540 --> 1:31:33.740
+ implemented it and this is interesting this is from another library that is specifically
+
+1:31:33.740 --> 1:31:41.780
+ a live Python library for non-negative matrix factorization but it's really kind of neat
+
+1:31:41.780 --> 1:31:48.060
+ they show a list of like variations on NMF and like relative research and there's this
+
+1:31:48.060 --> 1:31:54.460
+ is still an area where a lot of research is happening and there's a lot going on and so
+
+1:31:54.460 --> 1:31:58.020
+ unless you want to specialize in NMF this may be more detailed than you would want to
+
+1:31:58.020 --> 1:32:07.360
+ go into to be able to build something like this using pie torch and STD it was nice that
+
+1:32:07.360 --> 1:32:15.900
+ it was much quicker to implement we didn't have to be kind of particular experts on NMF
+
+1:32:15.900 --> 1:32:23.260
+ the parameters were kind of fiddly and it was also not as fast as scikit-learns built-in
+
+1:32:23.260 --> 1:32:40.740
+ one but we did see that kind of going from numpy this should say numpy was slow enough
+
+1:32:40.740 --> 1:32:47.340
+ that we wanted to switch to pytorch to get the improve improvement on the GPU questions
+
+1:32:47.340 --> 1:33:00.620
+ about this oh yes actually hold on a moment
+
+1:33:31.860 --> 1:33:34.380
+ the gradient
+
+1:33:34.380 --> 1:33:37.860
+ good question
+
+1:33:37.860 --> 1:33:57.540
+ oh I'll start the next section although we'll have to yeah we'll revisit this next time
+
+1:33:57.540 --> 1:34:07.100
+ yeah so that was that that was NMF now we're going to return to SVD so we saw that something
+
+1:34:07.100 --> 1:34:11.340
+ that we were doing an NMF that we weren't doing before with SVG is we were choosing
+
+1:34:11.340 --> 1:34:18.820
+ D kind of a number of topics that we wanted and so going back to these matrices so we
+
+1:34:18.820 --> 1:34:35.500
+ had this matrix that is words by documents and actually let me go back up to the NMF
+
+1:34:35.500 --> 1:34:51.220
+ picture that is up here okay this picture so words by documents then we're getting a
+
+1:34:51.220 --> 1:34:58.900
+ matrix that's words by topics and then this is topics by the importance indicators for
+
+1:34:58.900 --> 1:35:03.900
+ each document so it's basically topics by document and we were getting to choose how
+
+1:35:03.900 --> 1:35:13.140
+ many topics there were and so we can get that with SVD as well and it's called truncated
+
+1:35:13.140 --> 1:35:21.980
+ SVD so instead of getting this exact decomposition we could just choose okay I'm gonna have r
+
+1:35:21.980 --> 1:35:31.980
+ smaller than n and that's the number of topics that I'm interested in and remember that the
+
+1:35:31.980 --> 1:35:37.560
+ singular values which are the diagonal values in this matrix Sigma in the middle that those
+
+1:35:37.560 --> 1:35:43.780
+ are ordered from largest to smallest and the larger ones kind of are contributing a lot
+
+1:35:43.780 --> 1:35:50.660
+ more to this reconstruction of a so we're gonna keep the larger ones and this is called
+
+1:35:50.660 --> 1:35:59.940
+ truncated SVD and then I also went at this picture I've taken is from from this blog
+
+1:35:59.940 --> 1:36:07.580
+ post on the Facebook research page on fast randomized SVD and we're gonna be talking
+
+1:36:07.580 --> 1:36:16.060
+ about some of the ideas in it below but I encourage you to check that out so some of
+
+1:36:16.060 --> 1:36:25.060
+ the shortcomings for classical algorithms our matrices are really large data is often
+
+1:36:25.060 --> 1:36:32.100
+ missing or slightly inaccurate and why spend extra our computational resources when kind
+
+1:36:32.100 --> 1:36:37.500
+ of if you're you know if your data was not that precise to begin with you don't need
+
+1:36:37.500 --> 1:36:48.420
+ an exact solution because it's not a you know you have these errors in your input data transfer
+
+1:36:48.420 --> 1:36:54.240
+ now plays a major role in the time of algorithms so we talked about this last time that traditionally
+
+1:36:54.240 --> 1:37:00.560
+ this idea of computational complexity or big O has been how speed is measured and it's
+
+1:37:00.560 --> 1:37:05.860
+ still definitely an important concept but in practice a lot of time is spent taking
+
+1:37:05.860 --> 1:37:13.860
+ things kind of from from disk or even from RAM into into your cache or registers and
+
+1:37:13.860 --> 1:37:19.180
+ you really want to take advantage of that and so techniques that require fewer fewer
+
+1:37:19.180 --> 1:37:24.900
+ passes over the data can be substantially faster even if they technically have more
+
+1:37:24.900 --> 1:37:34.900
+ steps in them we also want to be able to take advantage of GPUs and then a lot of the methods
+
+1:37:34.900 --> 1:37:40.860
+ that are used on sparse or structured matrices are unstable and we'll kind of be getting
+
+1:37:40.860 --> 1:37:49.140
+ to prylov subspace methods later but the computational cost ends up being kind of more about what
+
+1:37:49.140 --> 1:37:55.260
+ you're doing to stabilize your algorithm as opposed to kind of the actual algorithm you're
+
+1:37:55.260 --> 1:38:04.660
+ doing itself and these have shown a highlight a paper that we will be seeing a fair amount
+
+1:38:04.660 --> 1:38:13.540
+ of and that is a really nice paper is Halco finding structure with random randomness and
+
+1:38:13.540 --> 1:38:36.660
+ it's about kind of using probabilistic techniques yes that's a good question this is more so
+
+1:38:36.660 --> 1:38:47.060
+ it's this particular family of methods crylov subspace methods which are really useful well
+
+1:38:47.060 --> 1:38:56.460
+ I guess okay so there are issues of when sparse things are kind of becoming dense I think
+
+1:38:56.460 --> 1:39:01.460
+ this is less about the sparsity and kind of more about the methods that are being used
+
+1:39:01.460 --> 1:39:07.140
+ to introduce this instability and we'll see examples of crylov subspace methods later
+
+1:39:07.140 --> 1:39:12.820
+ but yeah it's not it's not so much having to convert between and actually working well
+
+1:39:12.820 --> 1:39:17.540
+ depending what you're doing working with sparse there are kind of like implementations that
+
+1:39:17.540 --> 1:39:23.820
+ handle sparse data format very efficiently so it's not it's not a problem to be storing
+
+1:39:23.820 --> 1:39:35.700
+ things sparsely yeah so I just want to kind of introduce this idea of randomized algorithms
+
+1:39:35.700 --> 1:39:43.020
+ maybe is they're kind of more stable their performance guarantees don't don't depend
+
+1:39:43.020 --> 1:39:50.900
+ on kind of these matrix properties so the spectral the spectral properties of a matrix
+
+1:39:50.900 --> 1:39:58.220
+ are kind of based on what the singular values are and then a lot of matrix vector products
+
+1:39:58.220 --> 1:40:06.140
+ can be done in parallel and so we're about at time I'll come back to these ideas on Tuesday
+
+1:40:06.140 --> 1:40:18.380
+ and so we will be using a randomized algorithm to calculate the truncated SVD more efficiently
+
+1:40:18.380 --> 1:40:23.980
+ okay great thank you
+

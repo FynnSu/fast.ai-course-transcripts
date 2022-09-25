@@ -1,0 +1,3026 @@
+WEBVTT
+
+00:00.000 --> 00:11.840
+ All right, I'm going to go ahead and get started and I wanted to announce first that I just
+
+00:11.840 --> 00:19.920
+ put in Slack a link to a mid-course feedback survey and this is just for me and it's anonymous
+
+00:19.920 --> 00:23.200
+ but it's kind of helpful for me to kind of get feedback about how things are going and
+
+00:23.200 --> 00:25.940
+ if there are things that it would be helpful to adjust.
+
+00:25.940 --> 00:29.440
+ So please try to fill that out today.
+
+00:29.440 --> 00:34.120
+ And also if you're just auditing the course, I'm still interested in your feedback so fill
+
+00:34.120 --> 00:35.120
+ it out as well.
+
+00:35.120 --> 00:41.120
+ Yeah, so I was going to start with some review.
+
+00:41.120 --> 00:47.700
+ We're going to talk about the robust PCA algorithm we saw last time and kind of look at a little
+
+00:47.700 --> 00:50.840
+ bit of some different information about it from how we covered it before.
+
+00:50.840 --> 00:56.400
+ I wanted to start with just a reminder, what is the SVD?
+
+00:56.400 --> 01:02.040
+ Do you have a microphone?
+
+01:02.040 --> 01:03.040
+ Anyone?
+
+01:03.040 --> 01:04.040
+ SVD?
+
+01:04.040 --> 01:05.040
+ Single value, singular value decomposition.
+
+01:05.040 --> 01:06.040
+ Yes.
+
+01:06.040 --> 01:23.040
+ It's just a perfect decomposition of a matrix and the singular value, maybe that is a diagonal
+
+01:23.040 --> 01:24.040
+ matrix.
+
+01:24.040 --> 01:29.400
+ And what can you say about the U and V matrices?
+
+01:29.400 --> 01:36.280
+ Well, I think they can represent different things but it's like topic over word.
+
+01:36.280 --> 01:38.280
+ That's true for topic modeling, yeah.
+
+01:38.280 --> 01:44.040
+ Was it the left singular and the right singular components of it?
+
+01:44.040 --> 01:46.040
+ Yes, those are those names.
+
+01:46.040 --> 01:49.480
+ I was looking for one other property, although everything you've said is true.
+
+01:49.480 --> 01:51.480
+ They were orthogonal?
+
+01:51.480 --> 01:52.480
+ Yes, yeah.
+
+01:52.480 --> 01:53.480
+ Okay.
+
+01:53.480 --> 02:11.600
+ And what is the truncated SVD?
+
+02:11.600 --> 02:12.600
+ Truncated SVD.
+
+02:12.600 --> 02:17.200
+ How do you get from the full SVD to the truncated SVD?
+
+02:17.200 --> 02:19.440
+ Brad?
+
+02:19.440 --> 02:25.200
+ And be sure to hold the microphone close to your mouth.
+
+02:25.200 --> 02:26.200
+ Sure.
+
+02:26.200 --> 02:36.240
+ So, a truncated SVD is simply, at least I think it's a lower rank approximation.
+
+02:36.240 --> 02:41.440
+ And I think that in the context of what we were talking about last class, we're talking
+
+02:41.440 --> 02:53.680
+ about a sort of random, I'm trying to think of the exact terminology, but using a smaller
+
+02:53.680 --> 02:58.280
+ matrix and then factorizing that?
+
+02:58.280 --> 02:59.280
+ Yes.
+
+02:59.280 --> 03:00.280
+ Right.
+
+03:00.280 --> 03:03.720
+ And then, or it could be something like a lower rank approximation or something like
+
+03:03.720 --> 03:04.720
+ that.
+
+03:04.720 --> 03:05.720
+ Yeah, yeah.
+
+03:05.720 --> 03:08.840
+ So typically, you'll think of the truncated SVD as kind of taking the full SVD and chopping
+
+03:08.840 --> 03:16.880
+ off however many kind of singular values, slash columns of U, slash rows of V to get
+
+03:16.880 --> 03:19.720
+ something smaller, which is good for data compression.
+
+03:19.720 --> 03:24.500
+ And then Brad brought up last time we were looking at this randomized approximation where
+
+03:24.500 --> 03:31.400
+ we were kind of taking a different version of the same matrix by getting a random projection
+
+03:31.400 --> 03:36.800
+ and it had fewer columns, but the same, or approximately the same column space.
+
+03:36.800 --> 03:42.760
+ And then taking the full SVD of that smaller matrix and letting that be kind of the truncated
+
+03:42.760 --> 03:44.000
+ SVD of the full matrix.
+
+03:44.000 --> 03:49.520
+ One thought is worth mentioning that the particular randomized approach Rachel taught isn't the
+
+03:49.520 --> 03:51.520
+ only way to calculate truncated SVD.
+
+03:51.520 --> 03:56.240
+ So if you just did a full SVD and literally threw away a bunch of the last columns and
+
+03:56.240 --> 03:57.240
+ rows, that's still truncated SVD.
+
+03:57.240 --> 03:58.240
+ It's just an inefficient way to do it.
+
+03:58.240 --> 04:06.760
+ There are other ways to calculate it, so the randomized approach is our way, but very good
+
+04:06.760 --> 04:09.880
+ at calculating the truncated SVD.
+
+04:09.880 --> 04:10.880
+ Yeah.
+
+04:10.880 --> 04:11.880
+ Yeah.
+
+04:11.880 --> 04:17.120
+ Oh, actually Brad's got another question or comment.
+
+04:17.120 --> 04:22.520
+ So I know last week I sort of mentioned that in the approach where you actually calculate
+
+04:22.520 --> 04:32.480
+ the full SVD and then you chop off the last n or so smallest singular values, I know that
+
+04:32.480 --> 04:37.560
+ that is the best low rank approximation.
+
+04:37.560 --> 04:44.840
+ How well does the random approximation compare to that?
+
+04:44.840 --> 04:48.080
+ I know that obviously that's not an efficient way of doing it because you have to do the
+
+04:48.080 --> 04:53.200
+ whole thing to start with, but the point of the random is that you don't have to do the
+
+04:53.200 --> 04:54.200
+ whole thing.
+
+04:54.200 --> 04:55.200
+ Right.
+
+04:55.200 --> 05:01.720
+ So is there any sort of intuition of how well that does, how good of a job that does approximating?
+
+05:01.720 --> 05:05.560
+ I think in general it does a very good job.
+
+05:05.560 --> 05:09.200
+ I'd have to look back at the paper, because I think the paper does give guarantees on
+
+05:09.200 --> 05:10.760
+ how good it is.
+
+05:10.760 --> 05:16.800
+ There's actually a parameter, you can choose how good it is, which is that thing where
+
+05:16.800 --> 05:21.080
+ you add more components than you need.
+
+05:21.080 --> 05:24.720
+ I was kind of referring to that as buffer, but we have a different name for it.
+
+05:24.720 --> 05:29.840
+ Like you say, I want 5, but you actually calculate it with 15 and then get rid of the last 10.
+
+05:29.840 --> 05:32.960
+ So if you made that parameter big enough that it was the whole thing, it's perfect.
+
+05:32.960 --> 05:39.560
+ If you make it so small that it's 0, it's perfect, so you can pick.
+
+05:39.560 --> 05:47.320
+ But even with 10 extra, it's 10 to the negative, something really small.
+
+05:47.320 --> 05:54.080
+ The paper recommends either 10 or 15 when you're doing this in practice.
+
+05:54.080 --> 06:00.960
+ Okay, one more, oh wait, Jeremy, throw the microphone back please.
+
+06:00.960 --> 06:04.800
+ And so just one last thing about the buffer.
+
+06:04.800 --> 06:09.640
+ So is the intuition behind that, like if you only want the top 5 and you have these extra
+
+06:09.640 --> 06:20.600
+ vectors, is that sort of like a place to dump what you don't, like if you only took 5, then
+
+06:20.600 --> 06:25.760
+ you're kind of squeezing all the bad stuff into sort of the ones that you want.
+
+06:25.760 --> 06:33.760
+ Whereas if you have a buffer, it's like if you want to have the best 5, you need somewhere
+
+06:33.760 --> 06:38.320
+ to put the not good stuff.
+
+06:38.320 --> 06:41.400
+ I'm kind of talking really vaguely, sort of get what I'm saying.
+
+06:41.400 --> 06:49.120
+ I think I would say that, actually I got a full screen, what that number is referring
+
+06:49.120 --> 06:58.400
+ to is how many columns you're taking in your randomized approximation of the column space.
+
+06:58.400 --> 07:03.560
+ Jeremy, how do I exit full screen mode in Minimoji?
+
+07:03.560 --> 07:22.640
+ Well, I want to get a new sheet here.
+
+07:22.640 --> 07:29.120
+ What those numbers are referring to is, so like if, you know, this is like your wide
+
+07:29.120 --> 07:37.000
+ matrix A that's too big to decompose, you're kind of deciding, okay, how many columns do
+
+07:37.000 --> 07:39.440
+ I want to get over here?
+
+07:39.440 --> 07:42.920
+ I see it as more kind of guaranteeing, like your goal is that you want the column space
+
+07:42.920 --> 07:48.720
+ of A and the column space of B to be the same thing, but kind of by adding some extra ones
+
+07:48.720 --> 07:55.640
+ on, I think that's kind of a more reassurance of like, okay, I'm really hitting this much
+
+07:55.640 --> 08:03.160
+ of the column space of A. Because it's, I guess it's like you kind of just need that,
+
+08:03.160 --> 08:08.120
+ need those column spaces to be the same up to however many singular values you're trying
+
+08:08.120 --> 08:09.120
+ to get.
+
+08:09.120 --> 08:10.120
+ Right.
+
+08:10.120 --> 08:16.640
+ And then I guess what I was wondering is, are those top say five, if you want say the
+
+08:16.640 --> 08:22.920
+ most important ones, then you necessarily need that buffer to sort of put the less important
+
+08:22.920 --> 08:23.920
+ stuff, right?
+
+08:23.920 --> 08:27.520
+ Whereas if you just have the five, then all the less important stuff is going to be kind
+
+08:27.520 --> 08:30.040
+ of forced to be within that top five.
+
+08:30.040 --> 08:34.080
+ Is that your way to think about it?
+
+08:34.080 --> 08:36.640
+ So there is this element of randomness still.
+
+08:36.640 --> 08:41.640
+ And so I think some of it's like if you were just getting five, if you knew that they were
+
+08:41.640 --> 08:44.120
+ truly the best, I think you would be okay.
+
+08:44.120 --> 08:49.600
+ But because it's random, you're kind of taking some extra, but you're right.
+
+08:49.600 --> 08:58.880
+ Like it is having a, or Tim, did you have a, like a bunch of, I don't know, M&M's, like
+
+08:58.880 --> 09:02.000
+ the best tasting ones are like at the top left hand corner.
+
+09:02.000 --> 09:07.360
+ And you know, like there's five best tasting ones, but you can't just like pick five from
+
+09:07.360 --> 09:08.360
+ the top left corner.
+
+09:08.360 --> 09:12.080
+ You kind of pick like a handful more and then that increases the chance of you having the
+
+09:12.080 --> 09:14.440
+ best five and that kind of handful.
+
+09:14.440 --> 09:16.080
+ That's what the buff, that's how I saw the buff.
+
+09:16.080 --> 09:17.080
+ Yeah.
+
+09:17.080 --> 09:18.080
+ I like that.
+
+09:18.080 --> 09:19.080
+ I like that analogy.
+
+09:19.080 --> 09:23.400
+ Because you pick a little bit more so that you have the higher chance of having the best
+
+09:23.400 --> 09:24.400
+ in that handful.
+
+09:24.400 --> 09:25.400
+ Yes.
+
+09:25.400 --> 09:26.400
+ Yeah.
+
+09:26.400 --> 09:27.400
+ That's good.
+
+09:27.400 --> 09:28.400
+ Thank you.
+
+09:28.400 --> 09:29.400
+ Sam?
+
+09:29.400 --> 09:38.440
+ Do you think we can go over what's happening when we multiply by a random matrix?
+
+09:38.440 --> 09:43.960
+ Can we see why it's useful and like the different kind of contexts we can use it?
+
+09:43.960 --> 09:46.960
+ Because you guys mentioned that it's useful all over the place.
+
+09:46.960 --> 09:47.960
+ Sure.
+
+09:47.960 --> 09:50.240
+ I was kind of thinking of like different applications of that.
+
+09:50.240 --> 09:52.240
+ What does it do, first of all?
+
+09:52.240 --> 09:55.240
+ What does it do and then why do it?
+
+09:55.240 --> 09:59.840
+ I kind of get it, but I'd like to know a little more.
+
+09:59.840 --> 10:00.840
+ Okay.
+
+10:00.840 --> 10:04.360
+ Yeah, that might be something I'll return to next time.
+
+10:04.360 --> 10:06.640
+ Let me write that down.
+
+10:06.640 --> 10:17.520
+ Yeah, I want to think about if there's maybe like a good way we can visualize that as it's
+
+10:17.520 --> 10:20.280
+ happening or something.
+
+10:20.280 --> 10:31.840
+ So kind of more detail on what is a randomized projection, where else is it used.
+
+10:31.840 --> 10:39.200
+ One key idea we mentioned is this idea that when you multiply by a random matrix, the
+
+10:39.200 --> 10:43.640
+ result in columns, as long as there aren't too many, you're likely to be independent
+
+10:43.640 --> 10:50.440
+ of each other, so you're likely to get orthogonal columns, which is kind of a good starting
+
+10:50.440 --> 10:54.000
+ point for thinking about why it helps.
+
+10:54.000 --> 10:59.280
+ Yeah, and that kind of plays into the idea of like by taking a buffer you're getting
+
+10:59.280 --> 11:06.120
+ even more orthogonal columns, and so you are covering kind of more of your space.
+
+11:06.120 --> 11:07.840
+ Sam, again?
+
+11:07.840 --> 11:15.000
+ I guess the part in particular that I don't understand is when we multiply by the random
+
+11:15.000 --> 11:20.560
+ columns, we're transforming the matrix, and if the columns and rows all correspond to
+
+11:20.560 --> 11:27.080
+ like one particular feature for each one of our users, for instance, then when we transform
+
+11:27.080 --> 11:34.320
+ it by multiplying by a bunch of random columns, at what point do we have to transform it back
+
+11:34.320 --> 11:42.640
+ so that we have, so we actually have, like, So yeah, so the transforming it back is what
+
+11:42.640 --> 11:48.400
+ happens if you'll remember we like take the SVD on the smaller matrix and then we multiply
+
+11:48.400 --> 11:53.480
+ by Q again, which I can't remember if it's Q or Q transpose, to kind of that's what transforms
+
+11:53.480 --> 12:01.960
+ it back since Q is orthonormal, it's its own inverse, and so that's kind of the transformation
+
+12:01.960 --> 12:02.960
+ back.
+
+12:02.960 --> 12:08.320
+ I don't remember that part, I can look through it.
+
+12:08.320 --> 12:09.320
+ Okay.
+
+12:09.320 --> 12:10.320
+ Great.
+
+12:10.320 --> 12:18.640
+ So I think we've thoroughly hit the first three questions about SVD and truncated SVD,
+
+12:18.640 --> 12:22.960
+ are there any other questions about it?
+
+12:22.960 --> 12:33.200
+ Okay, and then I think something that I definitely wanted to say more clearly than I did last
+
+12:33.200 --> 12:42.960
+ time is that classical PCA is finding the best rank K estimate L of M, so minimizing
+
+12:42.960 --> 12:50.080
+ the norm of M minus L where L has rank K, and as Brad said, truncated SVD is giving
+
+12:50.080 --> 12:54.700
+ you the best classical PCA.
+
+12:54.700 --> 13:02.480
+ So that's the kind of best rank K estimate L is going to be if you did the SVD on M,
+
+13:02.480 --> 13:07.400
+ your full matrix, and then cut off however many columns you needed.
+
+13:07.400 --> 13:09.520
+ That's what gives you the best estimate.
+
+13:09.520 --> 13:14.200
+ Is that under the Frobenius norm?
+
+13:14.200 --> 13:15.200
+ Yes.
+
+13:15.200 --> 13:18.280
+ Oh, that was under the Frobenius norm.
+
+13:18.280 --> 13:24.520
+ And the Frobenius norm is where you're just squaring each of your elements element-wise
+
+13:24.520 --> 13:30.880
+ and summing them.
+
+13:30.880 --> 13:38.200
+ And this, yeah, kind of as we said before, you could get the truncated SVD by doing the
+
+13:38.200 --> 13:43.680
+ full SVD and then throwing away the values you don't need, although that's slow.
+
+13:43.680 --> 13:49.520
+ And so we saw the randomized approximation as an accurate substitute for that to kind
+
+13:49.520 --> 13:51.520
+ of do it more quickly.
+
+13:51.520 --> 13:54.440
+ So that's a classical PCA.
+
+13:54.440 --> 13:59.320
+ Does anyone remember what robust PCA is?
+
+13:59.320 --> 14:11.240
+ I'll give you a hint.
+
+14:11.240 --> 14:17.840
+ We added in another matrix, so instead of decomposing just to be L, a single matrix,
+
+14:17.840 --> 14:23.520
+ we decomposed it to be L plus another type of matrix.
+
+14:23.520 --> 14:25.520
+ Sam?
+
+14:25.520 --> 14:34.960
+ We're decomposing it into a dense sparse, which makes it more robust to outliers.
+
+14:34.960 --> 14:37.320
+ Yeah, so we're getting a sparse one now.
+
+14:37.320 --> 14:41.120
+ And so it's a low-rank matrix plus a sparse matrix.
+
+14:41.120 --> 14:53.400
+ And I wanted to kind of highlight with, previously when we were looking at this background removal
+
+14:53.400 --> 15:10.120
+ problem, we started off just doing the randomized SVD or just doing an SVD to get the background.
+
+15:10.120 --> 15:15.080
+ And there we're really just trying to find this low-rank matrix, and that's the background.
+
+15:15.080 --> 15:19.600
+ The difference with when we go to robust PCA is now we're trying to find the low-rank matrix
+
+15:19.600 --> 15:24.920
+ and the sparse matrix, and so we're actually kind of actively looking for what is the foreground.
+
+15:24.920 --> 15:29.560
+ So initially kind of when we just did SVD, we were like just looking for the background
+
+15:29.560 --> 15:34.320
+ and then we were like, okay, whatever's left over must be foreground, whereas robust PCA
+
+15:34.320 --> 15:38.480
+ we're taking this very different approach of, okay, we're actively looking for both
+
+15:38.480 --> 15:43.440
+ the background, which is low-rank, and the foreground, which is sparse.
+
+15:43.440 --> 15:58.600
+ And then what are some, what are, so we, oh, Tim?
+
+15:58.600 --> 16:02.600
+ How does it actually do that decomposition into L plus S, like how do you actually do
+
+16:02.600 --> 16:03.600
+ the decomposition?
+
+16:03.600 --> 16:04.600
+ Okay, so we'll talk about that.
+
+16:04.600 --> 16:05.600
+ That's a good question in a moment.
+
+16:05.600 --> 16:13.960
+ And that, I'm going to kind of just highlight some key parts of the algorithm that's kind
+
+16:13.960 --> 16:18.120
+ of part of, it's an alternating Lagrange method.
+
+16:18.120 --> 16:22.320
+ And so we're not going to get into like the details of, all the details of the optimization,
+
+16:22.320 --> 16:27.400
+ but yeah, I will go over kind of three, what I think three key parts of the algorithm are.
+
+16:27.400 --> 16:30.960
+ Yeah, good question.
+
+16:30.960 --> 16:38.600
+ Jeremy, at the top of the microphone fell off.
+
+16:38.600 --> 16:42.360
+ So what are some other applications that we saw?
+
+16:42.360 --> 16:51.820
+ So we did the background removal, yeah, facial recognition, and in particular we were seeing
+
+16:51.820 --> 16:54.260
+ faces where there was a lot of noise.
+
+16:54.260 --> 17:00.400
+ So at any time that your data is corrupted with noise, particularly large amounts of
+
+17:00.400 --> 17:01.400
+ noise.
+
+17:01.400 --> 17:08.320
+ So one of the weaknesses of PCA, classical PCA is classical PCA can handle noise that's
+
+17:08.320 --> 17:13.520
+ small everywhere, but it's very brittle if there's even just like a few entries that
+
+17:13.520 --> 17:16.480
+ are way off and have a huge amount of noise.
+
+17:16.480 --> 17:19.880
+ And so robust PCA is good at handling that.
+
+17:19.880 --> 17:27.120
+ And in that case, the low ranked data is kind of your, I guess, real data or accurate data
+
+17:27.120 --> 17:31.120
+ and the sparse data is your noise, but those values can be anything.
+
+17:31.120 --> 17:37.800
+ So when you have grossly corrupted data, which often happens, kind of particularly with online
+
+17:37.800 --> 17:44.240
+ interactions, robust PCA is useful.
+
+17:44.240 --> 17:45.240
+ Any other applications?
+
+17:45.240 --> 17:46.240
+ Tim?
+
+17:46.240 --> 17:47.600
+ All right, hold on a moment.
+
+17:47.600 --> 17:56.640
+ Why would we not use robust PCA, like in what case would we just not, like why would we
+
+17:56.640 --> 17:57.640
+ want to use classical PCA?
+
+17:57.640 --> 17:58.640
+ It seems robust PCA is better.
+
+17:58.640 --> 17:59.640
+ That's true.
+
+17:59.640 --> 18:03.120
+ I mean, I guess the downside to robust PCA is that it is a little bit slower.
+
+18:03.120 --> 18:05.120
+ But yeah, it is.
+
+18:05.120 --> 18:06.120
+ Is it much slower?
+
+18:06.120 --> 18:09.760
+ Like are there cases where it would just be much slower than classical PCA?
+
+18:09.760 --> 18:10.760
+ Well, actually I'll say two.
+
+18:10.760 --> 18:11.760
+ So it's slower.
+
+18:11.760 --> 18:14.280
+ It's also more finicky to train.
+
+18:14.280 --> 18:18.560
+ Like I felt like there were more kind of parameters to tune when programming it.
+
+18:18.560 --> 18:24.120
+ The name robust PCA kind of makes it seem like you have to tune less.
+
+18:24.120 --> 18:25.120
+ That's true.
+
+18:25.120 --> 18:26.120
+ Yeah.
+
+18:26.120 --> 18:35.240
+ And maybe that's like once you have it working, like some of this was like trying to get it
+
+18:35.240 --> 18:39.240
+ working from the papers, but there was kind of like a parameter I had to change.
+
+18:39.240 --> 18:45.200
+ I probably feel like, do you think it's slower?
+
+18:45.200 --> 18:53.000
+ Because it's kind of using this randomization, it's another argument of maybe we always should
+
+18:53.000 --> 18:54.000
+ use this.
+
+18:54.000 --> 18:55.000
+ Yeah.
+
+18:55.000 --> 19:01.080
+ It's kind of hard to find a good working version and you did a lot of work to get it to work
+
+19:01.080 --> 19:02.080
+ properly.
+
+19:02.080 --> 19:03.080
+ Now it does.
+
+19:03.080 --> 19:05.080
+ Maybe this is the best place to start.
+
+19:05.080 --> 19:11.680
+ Yeah, I think I would still, just because SVD is so easy to run when you're using someone
+
+19:11.680 --> 19:16.720
+ else's implementation, I think I would probably run SVD on your problem just to make sure
+
+19:16.720 --> 19:18.680
+ I want something better.
+
+19:18.680 --> 19:25.640
+ But yeah, I mean, robust PCA has a lot of advantages and there are a lot of places it's
+
+19:25.640 --> 19:26.640
+ applicable.
+
+19:26.640 --> 19:27.640
+ Right.
+
+19:27.640 --> 19:28.640
+ It's not like robust versus classical PCA.
+
+19:28.640 --> 19:29.640
+ Oh, yeah.
+
+19:29.640 --> 19:32.640
+ Why would anyone use classical PCA?
+
+19:32.640 --> 19:41.800
+ I mean, since like classical PCA though is kind of a very basic SVD, that is something,
+
+19:41.800 --> 19:47.120
+ I think I was even with the background removal problem and you shouldn't do this, but I actually
+
+19:47.120 --> 19:51.920
+ did the robust PCA first and then was like, oh, let me see how I do on randomized SVD.
+
+19:51.920 --> 19:55.560
+ And then was like, oh, randomized SVD was actually better than I expected.
+
+19:55.560 --> 20:03.360
+ So that's up here, like this is what I was getting from, yeah, just like the randomized
+
+20:03.360 --> 20:05.200
+ SVD, which is like a single line.
+
+20:05.200 --> 20:12.080
+ But yeah, like I do think robust PCA is a great algorithm to use.
+
+20:12.080 --> 20:13.080
+ Yeah.
+
+20:13.080 --> 20:15.080
+ Good question.
+
+20:15.080 --> 20:22.240
+ All right, yeah, let me maybe go back through some of the steps of the algorithm now.
+
+20:22.240 --> 20:26.680
+ I'm going to kind of display some different information than I did last time, so hopefully
+
+20:26.680 --> 20:28.880
+ that'll be helpful to get a different perspective.
+
+20:28.880 --> 20:37.840
+ But yeah, just to remind you, so at the top we had kind of first went through kind of
+
+20:37.840 --> 20:42.040
+ how, like what does our data even mean, how we're setting it up, you know, and turning
+
+20:42.040 --> 20:49.000
+ this video into a single matrix where each column is one point in time.
+
+20:49.000 --> 20:53.120
+ You know, we've kind of unwrapped the pixels to just make a straight column from each point
+
+20:53.120 --> 20:54.920
+ in time.
+
+20:54.920 --> 21:01.880
+ And we tried it with a rank, here's a rank one approximation just using a randomized
+
+21:01.880 --> 21:06.360
+ SVD.
+
+21:06.360 --> 21:18.040
+ And then we introduced the idea of robust PCA, we saw the faces.
+
+21:18.040 --> 21:23.200
+ And then, yeah, I'll just show this again, this is, if you are really interested in optimization,
+
+21:23.200 --> 21:28.200
+ these are Jupyter notebooks from Steven Boyd, who's at Stanford, has a convex optimization
+
+21:28.200 --> 21:41.480
+ short course, which looks really interesting.
+
+21:41.480 --> 21:47.040
+ When I tried to read Steven Boyd's book and watch his Stanford class, I found it kind
+
+21:47.040 --> 21:48.040
+ of inaccessible.
+
+21:48.040 --> 22:09.640
+ Okay, so this, and actually I guess before I get into the heart of the algorithm, I wanted
+
+22:09.640 --> 22:19.000
+ to say, so the authors kind of define what they call a shrinkage method, and what that
+
+22:19.000 --> 22:26.120
+ is, is basically they take any singular values that are less than tau and round them down
+
+22:26.120 --> 22:27.120
+ to zero.
+
+22:27.120 --> 22:30.920
+ And so you can think of that as another way of truncating your matrix, it's like kind
+
+22:30.920 --> 22:33.800
+ of just ignoring the small singular values.
+
+22:33.800 --> 22:35.360
+ So this shrinkage method will show up.
+
+22:35.360 --> 22:38.680
+ I've got a question for you, you better find that Steven Boyd notebook.
+
+22:38.680 --> 22:44.880
+ Oh, there's links to it in here, it's, let me find the section, so right above robust
+
+22:44.880 --> 23:02.800
+ PCA, I have something that says if you want to learn more of the theory, which is.
+
+23:02.800 --> 23:06.720
+ And some of these, I think I've mentioned this before, but I'm using, Jupyter notebooks
+
+23:06.720 --> 23:13.040
+ has some extensions, and I'm using one that has the section folding, which is really handy.
+
+23:13.040 --> 23:18.840
+ Oh, collapsible headings is what they're called for being able to fold these up and down.
+
+23:18.840 --> 23:21.720
+ So that's definitely something you need to kind of install that to get it, but it makes
+
+23:21.720 --> 23:28.140
+ it much easier, then you can kind of like open and close sections and navigate around
+
+23:28.140 --> 23:29.140
+ pretty easily.
+
+23:29.140 --> 23:41.320
+ And actually, let me just show maybe this high level of the algorithm this bigger.
+
+23:41.320 --> 23:47.320
+ So what we're doing for our low rank approximation is taking, so here they called this D, curly
+
+23:47.320 --> 23:54.360
+ D singular value thresholding, but that's basically where you just take the SVD, do
+
+23:54.360 --> 23:58.960
+ the shrinkage operation on the singular values, so throw away the ones that are too little,
+
+23:58.960 --> 24:02.800
+ multiply back together to reconstruct your matrix, and that's the approximation for
+
+24:02.800 --> 24:05.760
+ the low rank matrix.
+
+24:05.760 --> 24:12.200
+ The approximation for the sparse matrix is to take the, kind of just do the shrinkage
+
+24:12.200 --> 24:16.640
+ operator of throwing away the small singular values.
+
+24:16.640 --> 24:22.240
+ And this is the, sorry, I should say the alternating aspect is to estimate the low rank one, you're
+
+24:22.240 --> 24:26.880
+ taking your full matrix minus the sparse one, kind of minus this error that you're keeping
+
+24:26.880 --> 24:32.760
+ track of, and then you kind of alternate back to, okay, let's estimate the sparse one, that's
+
+24:32.760 --> 24:37.060
+ the full rank matrix minus the low rank one, and you're kind of going back and forth between
+
+24:37.060 --> 24:43.200
+ let me estimate the low rank one using the sparse one, and vice versa, let me estimate
+
+24:43.200 --> 24:48.660
+ the sparse one using the low rank one.
+
+24:48.660 --> 24:54.400
+ And so kind of how that looks in the code, so this PCP, which stands for principal component
+
+24:54.400 --> 25:00.440
+ pursuit, and I should say principal component pursuit is just one algorithm for robust PCA,
+
+25:00.440 --> 25:04.440
+ so robust PCA is kind of referring to this decomposition we want and their different
+
+25:04.440 --> 25:11.320
+ algorithms to get there, and in this class we're using principal component pursuit.
+
+25:11.320 --> 25:18.120
+ Kind of the heart of it is we've got this for loop, and so then I picked off a few of
+
+25:18.120 --> 25:22.600
+ key things and added comments, and this has been updated on GitHub, but I said here, you
+
+25:22.600 --> 25:29.480
+ know, we're updating our estimate of the sparse matrix by shrinking slash truncating the original,
+
+25:29.480 --> 25:34.440
+ sorry, the original minus the low rank, so we're getting kind of the difference between
+
+25:34.440 --> 25:40.080
+ that, and remember we're going for original equals low rank plus sparse, so whenever we
+
+25:40.080 --> 25:44.640
+ do original minus low rank, that should be sparse.
+
+25:44.640 --> 25:51.640
+ Then we update our estimate of the low rank matrix by doing the truncated SVD and reconstructing
+
+25:51.640 --> 25:58.120
+ it, and then something that kind of makes this more intricate is we don't actually want
+
+25:58.120 --> 26:04.320
+ to calculate the full SVD, so we need to say how many, so we're using a randomized SVD,
+
+26:04.320 --> 26:08.680
+ but with randomized SVD we need to say how many singular values we want, so we're giving
+
+26:08.680 --> 26:16.720
+ it a rank that we're interested in, and here that's called SV, and so SV is something that
+
+26:16.720 --> 26:21.760
+ we're going to update each time, because note it would be, if we try to remember the dimensions
+
+26:21.760 --> 26:29.320
+ of this matrix, I believe it was 4,800 by 11,300, we don't want to do the full rank
+
+26:29.320 --> 26:35.240
+ for that, that would be a lot of values, so we're just going to do some of those, and
+
+26:35.240 --> 26:41.720
+ the way it kind of tells how many to do is, so after you truncate, so when you're kind
+
+26:41.720 --> 26:47.840
+ of dropping all the values that are less than, in this case it's one over mu, we're throwing
+
+26:47.840 --> 26:54.920
+ away, if we find that we're getting more values than we need and are throwing away a lot of
+
+26:54.920 --> 27:01.120
+ them because they're so small, then we just increase by one how many singular values we're
+
+27:01.120 --> 27:06.000
+ getting, because we're basically doing fine, we're getting plenty since we're having to
+
+27:06.000 --> 27:10.240
+ throw a bunch of them away, however if we're keeping all of them, that's a sign that we're
+
+27:10.240 --> 27:15.080
+ not getting enough singular values, because they're all large enough, and so there might
+
+27:15.080 --> 27:18.960
+ be more of a kind of large magnitude that we're not finding.
+
+27:18.960 --> 27:28.400
+ So in that case we add 20% of the smaller dimension, which in this case is 240, to SV,
+
+27:28.400 --> 27:32.780
+ and I think this, actually let me show this now, so I added some print statements that
+
+27:32.780 --> 27:40.800
+ I didn't have last time to kind of say what rank it's using each time, so here when we
+
+27:40.800 --> 27:49.560
+ use the algorithm, it actually starts with just calculating rank one, and then that was
+
+27:49.560 --> 27:56.920
+ not enough, so we add 240, so that's 20% of the smaller dimension, which is 4800, so next
+
+27:56.920 --> 28:11.380
+ time we've got rank 241, and we do that, and this drops down to 49, oh I think that's,
+
+28:11.380 --> 28:16.280
+ so what it's resetting to is how many values you kept, so we did that and it only kept
+
+28:16.280 --> 28:31.800
+ 49 of the values, although then, oh we kept 48 and added one, okay and then that time
+
+28:31.800 --> 28:38.400
+ that wasn't, kind of wasn't enough, so we're going to add the 20% again, which is, and
+
+28:38.400 --> 28:41.680
+ keep in mind each time we're doing this we're doing it on a slightly different matrix, you
+
+28:41.680 --> 28:46.920
+ know, because we've been alternating back and forth, updating our estimates for LNS,
+
+28:46.920 --> 28:52.760
+ so then we add 240 again to get to 289, and this whole time it's keeping track of this
+
+28:52.760 --> 29:00.600
+ error, add another 240 and then our error is low enough and so the algorithm halts,
+
+29:00.600 --> 29:07.880
+ but that's kind of a, gives a little different perspective, and let me go back to the algorithm
+
+29:07.880 --> 29:12.200
+ because there's just a third piece, so we've got this aspect of, you know, we're updating
+
+29:12.200 --> 29:17.720
+ how many singular values we want to calculate each time, and then here's where we're calculating
+
+29:17.720 --> 29:24.800
+ the residual, so looking at X, which was our original matrix, minus our low rank matrix,
+
+29:24.800 --> 29:30.180
+ minus our sparse matrix, and so that's everything that hasn't been factored into either the
+
+29:30.180 --> 29:35.040
+ low rank or sparse matrix yet.
+
+29:35.040 --> 29:39.920
+ And I also wanted to show, so this time, and this has been updated on GitHub as well, I
+
+29:39.920 --> 29:46.360
+ made an examples list where I, at each step, and I just kind of randomly chose, I'm going
+
+29:46.360 --> 29:53.520
+ to keep track of the picture from column 140, which is just a particular point in time,
+
+29:53.520 --> 30:00.960
+ this is something that you wouldn't, what, row 140 because I've transposed, so there's
+
+30:00.960 --> 30:09.080
+ a kind of check up here on the shape, and you, yeah, if M is less than N, then you transpose
+
+30:09.080 --> 30:15.280
+ it, so yeah, but in the kind of pictures I showed before, it's column 140, so I'm just
+
+30:15.280 --> 30:17.400
+ kind of keeping track of one point in time.
+
+30:17.400 --> 30:21.560
+ This is something that makes it slower to kind of keep track of this list, but I just
+
+30:21.560 --> 30:25.860
+ did that to get some visual output of how things are changing, and I think that can
+
+30:25.860 --> 30:30.560
+ be a nice way of kind of seeing how it's working, and this shows up here.
+
+30:30.560 --> 30:38.760
+ So now, actually, when I ran the algorithm, I got back my examples, and so you can see
+
+30:38.760 --> 30:43.200
+ during the first iter-, or, at the end of the first iteration, this matrix on the left
+
+30:43.200 --> 30:49.280
+ is the sparse matrix, it's not very good, it's just a black square, so I think it's
+
+30:49.280 --> 30:54.640
+ maybe everything zero, and here's our matrix on the right, which is already pretty good
+
+30:54.640 --> 30:58.980
+ because we've done an SVD, and so that's picking out the low rank part, but we really want
+
+30:58.980 --> 31:02.640
+ to get the people as well, and so you can see next step, we're kind of starting to get
+
+31:02.640 --> 31:12.600
+ some people, and then they're coming, coming more into view, and I actually don't see a
+
+31:12.600 --> 31:17.720
+ huge amount of difference between the, the fourth and fifth iterations here, but I thought
+
+31:17.720 --> 31:23.680
+ this was kind of nice to see at the end of each iteration, what is the low rank one look
+
+31:23.680 --> 31:26.280
+ like, and what does the sparse one look like.
+
+31:26.280 --> 31:35.240
+ And we kind of talked before about how finding the sparse one, I think, is more difficult
+
+31:35.240 --> 31:43.080
+ than the low rank one, just in that, or actually, no, that's, that's not true, I was going to
+
+31:43.080 --> 31:52.520
+ say with the, the people, I guess the sparse one, kind of as long as you have figures there,
+
+31:52.520 --> 31:57.840
+ maybe you're not worried about all the edges, disregard, but so yeah, this is what happens
+
+31:57.840 --> 32:00.240
+ kind of after each iteration.
+
+32:00.240 --> 32:01.240
+ Any questions?
+
+32:01.240 --> 32:02.240
+ Kelsey?
+
+32:02.240 --> 32:03.240
+ How unique is the solution to this?
+
+32:03.240 --> 32:04.240
+ Like, so in this case, maybe there's like a pretty clear local maximum.
+
+32:04.240 --> 32:05.240
+ Yeah.
+
+32:05.240 --> 32:23.920
+ If you have a situation where it's like less well represented by decomposition, does where
+
+32:23.920 --> 32:24.920
+ you start affect where you end up?
+
+32:24.920 --> 32:25.920
+ That's a good question.
+
+32:25.920 --> 32:27.240
+ So there are some additional constraints on this problem.
+
+32:27.240 --> 32:32.640
+ So like in general, you have to say that, or kind of this algorithm is forcing the low
+
+32:32.640 --> 32:42.400
+ rank matrix to not also be sparse, I believe, like if you had a, yeah, if you had a low
+
+32:42.400 --> 32:48.040
+ rank matrix that was also sparse, then it's kind of not, so the general statement I gave
+
+32:48.040 --> 32:52.900
+ you of robust PCA is actually not fully, or is not uniquely defined, like there could
+
+32:52.900 --> 32:58.160
+ be several different decompositions, but I think most algorithms kind of make additional
+
+32:58.160 --> 33:05.600
+ assumptions to kind of constrain it further.
+
+33:05.600 --> 33:13.360
+ But what happens if I were to give it like an image that didn't have, say a video where
+
+33:13.360 --> 33:17.360
+ the background was changing constantly or something like that?
+
+33:17.360 --> 33:21.360
+ Would you potentially end up with an unstable decomposition or something like that?
+
+33:21.360 --> 33:22.360
+ Yeah.
+
+33:22.360 --> 33:23.360
+ I mean, I don't know that that would even converge.
+
+33:23.360 --> 33:33.040
+ Would it be more like on a map where you could possibly come up with any different solutions?
+
+33:33.040 --> 33:37.040
+ I mean, I guess like the example of a video with the background changing to me sounds
+
+33:37.040 --> 33:41.640
+ like there might be no solution in that, like, I don't know that that could be represented
+
+33:41.640 --> 33:48.160
+ as a low rank matrix plus a sparse matrix.
+
+33:48.160 --> 33:53.000
+ The other factor you have is how much of a penalty, so there's kind of like a parameter
+
+33:53.000 --> 33:58.640
+ of kind of how much you want to penalize the low rank error versus the sparse error of
+
+33:58.640 --> 34:01.880
+ those two matrices being off, and I think if that was adjusted that could give you a
+
+34:01.880 --> 34:06.580
+ different, you know, like different results of like how bad, kind of having your sparse
+
+34:06.580 --> 34:12.680
+ matrix not be fully sparses versus your low rank matrix not being fully low rank.
+
+34:12.680 --> 34:16.840
+ I don't know if this makes sense, but I was just wondering like if it wasn't like constantly
+
+34:16.840 --> 34:21.240
+ changing but more like in the real world you'd have more like switching scenes from time
+
+34:21.240 --> 34:27.920
+ to time, would you end up with something where the low rank matrix is like a row for each
+
+34:27.920 --> 34:31.440
+ scene, you know, and then the kind of thing that's multiplying by something on you at
+
+34:31.440 --> 34:36.440
+ each time point, how much it represents that scene, would that work?
+
+34:36.440 --> 34:41.840
+ I mean, obviously you could try it, I'm just trying to think if it makes sense, I'm sure
+
+34:41.840 --> 34:42.840
+ if we...
+
+34:42.840 --> 34:43.840
+ Yeah, that seems...
+
+34:43.840 --> 34:44.840
+ They're almost like topics.
+
+34:44.840 --> 34:48.040
+ Yeah, no, that does seem possible to me.
+
+34:48.040 --> 34:53.200
+ Because we figured out we could recreate the original matrix if it didn't change the background
+
+34:53.200 --> 34:54.200
+ with just a single...
+
+34:54.200 --> 34:55.200
+ With rank one, yeah.
+
+34:55.200 --> 34:59.240
+ Yeah, no, that does sound like it would work.
+
+34:59.240 --> 35:05.840
+ I would love for you all to try running this code on different videos to see what you get.
+
+35:05.840 --> 35:11.680
+ I suspect one where it's gradually panning might not work at all, but again, interesting
+
+35:11.680 --> 35:12.680
+ to try.
+
+35:12.680 --> 35:13.680
+ Yeah.
+
+35:13.680 --> 35:20.080
+ Yeah, these are good questions.
+
+35:20.080 --> 35:21.080
+ Any other questions?
+
+35:21.080 --> 35:24.760
+ And again, we're not going into all the details of this algorithm, I just want you to kind
+
+35:24.760 --> 35:29.180
+ of have a high level idea of kind of what we're doing with the alternating between getting
+
+35:29.180 --> 35:36.560
+ the low rank and the sparse and with adjusting the number of singular values we're calculating
+
+35:36.560 --> 35:40.760
+ for the low rank one kind of based on are we getting lots of little ones that we can
+
+35:40.760 --> 35:44.120
+ throw away or are all of them meaningful?
+
+35:44.120 --> 35:45.120
+ Yes.
+
+35:45.120 --> 35:50.600
+ Yeah, just a quick question.
+
+35:50.600 --> 36:10.680
+ So in terms of being grossly corrupted, how do you best define that being corrected?
+
+36:10.680 --> 36:17.040
+ So, I mean, I would think of that as, I mean, you would have to set some sort of parameter,
+
+36:17.040 --> 36:23.120
+ like I don't know if your error is less than tau, that small error, but I think of that
+
+36:23.120 --> 36:27.160
+ as kind of something with where there are entries that are just completely wrong.
+
+36:27.160 --> 36:30.680
+ It's not so much that they're close, but they're just off.
+
+36:30.680 --> 36:37.200
+ For example, in this image, right, when we try to separate the background with the people,
+
+36:37.200 --> 36:40.800
+ so in this case, how do you define the images being corrupted?
+
+36:40.800 --> 36:43.520
+ Oh, so this image is not corrupted, yeah, that's a good question.
+
+36:43.520 --> 36:53.600
+ So this image is very high quality, but the ones we saw above, let me go back up, okay,
+
+36:53.600 --> 37:00.160
+ so these facial ones are grossly corrupted, so kind of like when you have the, yeah, like
+
+37:00.160 --> 37:05.720
+ the pixels where it's like, you know, a lot of these white pixels are like just not even
+
+37:05.720 --> 37:08.000
+ close to being the right color.
+
+37:08.000 --> 37:09.000
+ They're damaged somehow.
+
+37:09.000 --> 37:10.000
+ Right, got it.
+
+37:10.000 --> 37:14.440
+ Yeah, and Netflix talked about having this problem, and so I would assume with Netflix
+
+37:14.440 --> 37:20.680
+ that's where the, I don't know, someone has put in a movie rating that's just wrong.
+
+37:20.680 --> 37:27.280
+ It's not how they felt about the movie, and perhaps, you know, they made a mistake or
+
+37:27.280 --> 37:32.040
+ accidentally entered it or, you know, weren't trying to enter what they did.
+
+37:32.040 --> 37:40.240
+ Yeah, and so it's kind of important to note here, so this problem with the faces is different
+
+37:40.240 --> 37:46.240
+ from, and I mean this does, the original dataset here was showing pictures of the faces lit
+
+37:46.240 --> 37:49.920
+ up from different angles, so you did have kind of the same face many times with different
+
+37:49.920 --> 37:55.560
+ lighting sequences, but it's really different in that like kind of the faces, the low-rank
+
+37:55.560 --> 38:00.840
+ part, which was the background, and then the sparse component is these pixels that are
+
+38:00.840 --> 38:02.680
+ completely wrong.
+
+38:02.680 --> 38:06.600
+ And so here, you know, we're only interested in the sparse component so we can get rid
+
+38:06.600 --> 38:07.600
+ of it.
+
+38:07.600 --> 38:10.900
+ You know, it's not like with the background removal where it's like, oh, we're interested
+
+38:10.900 --> 38:13.660
+ in the people which are sparse, whereas here it's just like, okay, we want to know how
+
+38:13.660 --> 38:20.400
+ to get rid of this sparse wrong stuff.
+
+38:20.400 --> 38:25.200
+ And then I also wanted to highlight again, I think I have it on here, with topic modeling
+
+38:25.200 --> 38:31.840
+ we could have used robust PCA, so we just used, you know, SVD or NMF on topic modeling
+
+38:31.840 --> 38:39.080
+ in the first week, but here the low-rank part could be common words that are in all documents,
+
+38:39.080 --> 38:43.860
+ and then the sparse part could be a few keywords from each document that kind of make that
+
+38:43.860 --> 38:45.760
+ document different from the others.
+
+38:45.760 --> 38:52.820
+ And I would actually, kind of going back to Tim's question of like, isn't robust PCA always
+
+38:52.820 --> 38:58.700
+ going to be better, yeah, I would be really curious to see some topic modeling done with
+
+38:58.700 --> 39:02.920
+ this, because it does sound really promising to me to kind of have kind of like the sparse
+
+39:02.920 --> 39:11.240
+ words defining a document.
+
+39:11.240 --> 39:15.440
+ Any other questions?
+
+39:15.440 --> 39:24.720
+ Okay, so we're going to move on to the LU decomposition, let me just make sure I've
+
+39:24.720 --> 39:27.080
+ done all the results.
+
+39:27.080 --> 39:37.400
+ Yeah, so just again, here are, and I wrote a little kind of helper method plot images
+
+39:37.400 --> 39:42.240
+ where you can enter your original matrix, the sparse and low-rank ones you got back,
+
+39:42.240 --> 39:46.160
+ and then just however many points in time you want to see, since I think it's kind
+
+39:46.160 --> 39:51.460
+ of most helpful to see, you know, them lined up next to each other from this is at time
+
+39:51.460 --> 40:00.040
+ zero or kind of whatever corresponded to the zeroth column at a hundred and at a thousand.
+
+40:00.040 --> 40:05.400
+ Yeah, let's start on LU decomposition.
+
+40:05.400 --> 40:12.840
+ So above, we had used Facebook PCA, which is a randomized SVD, and then in the previous
+
+40:12.840 --> 40:19.360
+ lesson we had kind of written our own randomized rangefinder, which was basically just a less
+
+40:19.360 --> 40:25.080
+ robust version of scikit-learn's one, or I mean it did less error checking, so both
+
+40:25.080 --> 40:31.760
+ of those use LU factorization, and so we're going to go into kind of how to do an LU factorization
+
+40:31.760 --> 40:35.920
+ since we've kind of used some methods that use it.
+
+40:35.920 --> 40:41.680
+ LU factorization factors a matrix into the product of a lower triangular matrix, that's
+
+40:41.680 --> 40:47.800
+ the L, and an upper triangular matrix, which is the U.
+
+40:47.800 --> 40:59.640
+ Then I wanted to check who remembers Gaussian elimination, and then who wants more review
+
+40:59.640 --> 41:01.960
+ on Gaussian elimination.
+
+41:01.960 --> 41:08.360
+ Okay, so let me, I'm going to go through one example, and we can even, if you want to see
+
+41:08.360 --> 41:12.080
+ a second example, let me know, because I know it may have been a very long time since you've
+
+41:12.080 --> 41:19.560
+ done Gaussian elimination, depending on when you took linear algebra last.
+
+41:19.560 --> 41:29.480
+ Okay, so ignore the LU down here.
+
+41:29.480 --> 41:34.560
+ We're just going to be, that'll come up in a moment, but we're just going to take this
+
+41:34.560 --> 41:40.440
+ matrix A and want to do a Gaussian elimination on it.
+
+41:40.440 --> 41:46.920
+ Actually, does anyone remember, so what's kind of the first thing you do with Gaussian
+
+41:46.920 --> 41:49.280
+ elimination?
+
+41:49.280 --> 42:07.840
+ Like, you're trying to reduce it to, yeah, well, I mean, there are a lot of different
+
+42:07.840 --> 42:09.040
+ ways to talk about it.
+
+42:09.040 --> 42:13.760
+ I was just going to say you kind of want to get rid of everything beneath one, turn those
+
+42:13.760 --> 42:21.120
+ all into zeros first, although, yeah, like long range, I think you're doing other stuff.
+
+42:21.120 --> 42:25.600
+ And this reminds me of, I think it was Trevathan that says at some point, like, so much of
+
+42:25.600 --> 42:31.760
+ numerical linear algebra is just like inserting zeros into matrices, but here you kind of
+
+42:31.760 --> 42:38.120
+ want to take this first row, and we want to get rid of the three in the second row, so
+
+42:38.120 --> 42:44.900
+ we can, and down here, I'm going to put a matrix.
+
+42:44.900 --> 42:48.840
+ So this matrix in the bottom corner, this is not something you would have done typically
+
+42:48.840 --> 42:52.480
+ in numerical linear algebra, but we're going to keep track of what we multiply by.
+
+42:52.480 --> 43:01.160
+ But here, I'm going to kind of multiply this first row by three and subtract it to zero
+
+43:01.160 --> 43:02.920
+ this guy out.
+
+43:02.920 --> 43:11.520
+ So first row is not going to change one, negative two, negative two, negative three.
+
+43:11.520 --> 43:15.840
+ And our goal is to make that zero, and so we did that, yeah, we did that by multiplying
+
+43:15.840 --> 43:26.160
+ by three and subtracting, so that makes the top one would become negative six, subtract
+
+43:26.160 --> 43:36.120
+ that, so negative nine plus six is negative three, negative six and zero, oh, positive
+
+43:36.120 --> 43:43.760
+ six is actually zero minus negative six, and then times three, those are going to cancel
+
+43:43.760 --> 43:47.960
+ out because we ended up with negative nine minus negative nine.
+
+43:47.960 --> 43:53.480
+ So that's kind of step one of Gaussian elimination.
+
+43:53.480 --> 43:55.960
+ Questions about that?
+
+43:55.960 --> 43:56.960
+ And initially-
+
+43:56.960 --> 44:01.960
+ Why do we, so just to warn you, Gaussian elimination is a thing that made me never want to say
+
+44:01.960 --> 44:02.960
+ linear algebra.
+
+44:02.960 --> 44:08.960
+ It didn't come back to it for like 20 years, so I'm very lazy on this, but like why is
+
+44:08.960 --> 44:13.880
+ it that we're allowed to like subtract rows from other rows, like what are we doing?
+
+44:13.880 --> 44:14.880
+ That's a good question.
+
+44:14.880 --> 44:23.200
+ So really, let me see if I, is there a way to add more space on top, Jeremy?
+
+44:23.200 --> 44:32.320
+ Well, I wanted to be able to write more, but okay.
+
+44:32.320 --> 44:36.920
+ So really what we're, often where these problems come up is when you're solving a system of
+
+44:36.920 --> 44:45.800
+ equations, and so you might have, I don't know, maybe this was one x minus two y minus
+
+44:45.800 --> 44:54.120
+ two z minus three w, and then we weren't dealing with a vector b, but often you would have
+
+44:54.120 --> 44:58.760
+ some value over here, like I don't know, maybe this is five, and then you have another equation
+
+44:58.760 --> 45:09.960
+ that's three x minus nine y, no z term, minus nine w equals 10 or something.
+
+45:09.960 --> 45:13.960
+ And so one way to solve these, if you're just kind of thinking about them as systems of
+
+45:13.960 --> 45:22.600
+ equations, is you could multiply the first equation by negative three and add those together.
+
+45:22.600 --> 45:27.280
+ Because think, you know, if you had a solution to this, you know, values for x, y, z, and
+
+45:27.280 --> 45:39.560
+ w, multiplying both sides by negative three, you know, that equation's still going to hold.
+
+45:39.560 --> 45:43.400
+ You multiply by negative three on both sides, and then you can add those together as kind
+
+45:43.400 --> 45:46.260
+ of a legitimate thing to do as well.
+
+45:46.260 --> 45:56.360
+ And that's even kind of, I think, like a more intuitive, like if I gave you, let me go to
+
+45:56.360 --> 46:04.160
+ a place of the page that I don't think we'll need, you know, if I gave you some problem
+
+46:04.160 --> 46:14.080
+ and we're like, solve, actually, this might be too easy, okay, because you'd plug in the
+
+46:14.080 --> 46:17.960
+ x, but you could also think of that as like, oh, you know, like, let me multiply each side
+
+46:17.960 --> 46:22.720
+ by three and subtract those, and then I'll get the equation just in terms of y.
+
+46:22.720 --> 46:28.300
+ So that's where this kind of idea of multiplying by rows by things and adding or subtracting
+
+46:28.300 --> 46:29.300
+ them.
+
+46:29.300 --> 46:30.300
+ Is that helpful, Jeremy?
+
+46:30.300 --> 46:34.840
+ Yeah, I think so.
+
+46:34.840 --> 46:41.400
+ I guess I'm still trying to make the connection to solving equations versus, like, is that
+
+46:41.400 --> 46:48.240
+ equivalent to any decomposition or just this particular decomposition, or why can we, why
+
+46:48.240 --> 46:52.560
+ is the fact that we can do this in simultaneous equations mean we can do this in matrices?
+
+46:52.560 --> 46:57.600
+ Well, so the matrix is just representing the system of equations.
+
+46:57.600 --> 46:58.600
+ And so...
+
+46:58.600 --> 47:07.640
+ In this particular case, if we were to write the first line as 1x minus 2y minus 2z minus
+
+47:07.640 --> 47:14.800
+ 3w, and what kind of the broader problem is you might be interested in solving Ax equals
+
+47:14.800 --> 47:19.400
+ b, and you might be interested in solving that for a lot of different values of b, and
+
+47:19.400 --> 47:24.120
+ you wouldn't want to have to kind of go through and solve it separately each time, and so
+
+47:24.120 --> 47:29.520
+ finding this, this is kind of getting ahead, but finding a factorization of a is going
+
+47:29.520 --> 47:34.760
+ to let us then have a quick way of solving it for a bunch of different b's.
+
+47:34.760 --> 47:39.240
+ We kind of just factor a once, and then we could solve it for a bunch of b's.
+
+47:39.240 --> 47:42.960
+ So this idea of thinking about the system of equations is specific to the idea of finding
+
+47:42.960 --> 47:43.960
+ a factorization.
+
+47:43.960 --> 47:47.320
+ That's where we can use this technique.
+
+47:47.320 --> 47:49.320
+ Yes, yeah.
+
+47:49.320 --> 47:55.080
+ So something, kind of to spoil the punchline, is we're going to see that Gaussian elimination
+
+47:55.080 --> 47:59.960
+ is very closely linked to LU factorization, and they're actually kind of even talked about
+
+47:59.960 --> 48:02.160
+ almost like interchangeably.
+
+48:02.160 --> 48:07.160
+ So this kind of process, even though kind of in a linear algebra class you're usually
+
+48:07.160 --> 48:11.240
+ not seeing that it's giving you a decomposition, it's the same method.
+
+48:11.240 --> 48:21.040
+ Yeah, so going back to the decomposition, the first column with zeros beneath the diagonal.
+
+48:21.040 --> 48:31.560
+ So we've gotten rid of this 3 by multiplying, oops, multiplying the top row by 3 and subtracting.
+
+48:31.560 --> 48:42.600
+ How can we get rid of this negative 1?
+
+48:42.600 --> 48:44.600
+ Can I say it louder?
+
+48:44.600 --> 48:49.520
+ Yeah, so add the two columns together, or two rows, sorry, the first and third rows.
+
+48:49.520 --> 48:50.560
+ We add those together.
+
+48:50.560 --> 49:00.000
+ This is a zero, and I should note that adding is actually, yes, it's like multiplying by
+
+49:00.000 --> 49:05.600
+ negative 1 and subtracting, which seems like a more roundabout way to talk about it, but
+
+49:05.600 --> 49:09.320
+ we're going to put a negative 1 down here to keep track of how we got rid, how we got
+
+49:09.320 --> 49:11.200
+ this entry to zero.
+
+49:11.200 --> 49:17.240
+ So yeah, add those, go to zero there, which is nice.
+
+49:17.240 --> 49:21.000
+ This becomes 2, and this becomes 4.
+
+49:21.000 --> 49:28.200
+ And then for the last one, we can multiply by 3, or think of it as multiplying by negative
+
+49:28.200 --> 49:30.260
+ 3 and subtracting.
+
+49:30.260 --> 49:37.040
+ So let's put a negative 3 here to keep track of, and then here this, oops, this becomes
+
+49:37.040 --> 49:53.440
+ zero, negative 3, negative 2, this will become zero, or does that, yeah.
+
+49:53.440 --> 50:04.160
+ Oh, negative 12, so I reversed my signs, thanks.
+
+50:04.160 --> 50:15.200
+ And then this one is 20, thanks.
+
+50:15.200 --> 50:27.600
+ Okay, so then the next step is we want to fill up, oh, did I write down the last, yeah.
+
+50:27.600 --> 50:31.140
+ Now we want to make everything below negative 3 have a zero.
+
+50:31.140 --> 50:40.560
+ And so it's nice the, oops, row 3 has already been done for us, so I'll just put a zero
+
+50:40.560 --> 50:41.560
+ here.
+
+50:41.560 --> 50:48.960
+ I don't have to do anything.
+
+50:48.960 --> 50:51.840
+ And again, the top row is not going to be changing.
+
+50:51.840 --> 50:59.160
+ The second row is not going to be changing.
+
+50:59.160 --> 51:01.920
+ Actually neither is the third row, so we're really just working on the last row at this
+
+51:01.920 --> 51:09.000
+ point, so negative 3.
+
+51:09.000 --> 51:14.520
+ And note that the reason, okay, so now that we're trying to get rid of this negative 12,
+
+51:14.520 --> 51:19.120
+ we're going to use the second row, because we don't want to flip this zero back, the
+
+51:19.120 --> 51:24.020
+ one in the corner, flip it back into being something that's non-zero.
+
+51:24.020 --> 51:30.120
+ So we use the negative 3, so multiply that row by 4, and subtract.
+
+51:30.120 --> 51:38.280
+ So let's keep track of that 4, we'll write it down here, we used a 4.
+
+51:38.280 --> 51:50.160
+ That becomes zero, this becomes negative 4, and this one stays negative 7.
+
+51:50.160 --> 51:56.680
+ This is totally reminding me of why I hated Gaussian elimination.
+
+51:56.680 --> 52:00.040
+ Let's never do this again.
+
+52:00.040 --> 52:05.580
+ The good news is, once we get familiar with it, then we can get a computer to do it.
+
+52:05.580 --> 52:10.440
+ So that's the benefit of learning the LU decomposition, is we're going to get a computer to do this
+
+52:10.440 --> 52:12.240
+ for us in the future.
+
+52:12.240 --> 52:14.480
+ But I did want you to remember what the process was.
+
+52:14.480 --> 52:19.520
+ Half the final assessment will be doing this by hand.
+
+52:19.520 --> 52:34.080
+ Okay, so now we're getting rid of this negative 4 that's right here.
+
+52:34.080 --> 52:38.700
+ So the good news is we've got the top three rows are in good shape in terms of moving
+
+52:38.700 --> 52:50.080
+ to our upper triangular matrix that we want in Gaussian elimination.
+
+52:50.080 --> 52:57.280
+ So really we just need to multiply the third row by 2, or I guess negative 2, and subtract.
+
+52:57.280 --> 53:02.680
+ So let's put a negative 2 in here, keep track of that.
+
+53:02.680 --> 53:12.000
+ And then, yeah, this becomes zero, I've got negative 7 plus 8 is 1.
+
+53:12.000 --> 53:18.040
+ And so we're done with our Gaussian elimination.
+
+53:18.040 --> 53:22.120
+ Sometimes at this point, actually I think this is where you would stop.
+
+53:22.120 --> 53:32.440
+ And then, amazingly, the matrix here is actually what I had written right here.
+
+53:32.440 --> 53:38.120
+ And so it's going to turn out that A is equal to L times U.
+
+53:38.120 --> 53:44.480
+ So we're keeping track of what we were having to multiply each row by to add and cancel
+
+53:44.480 --> 53:45.480
+ out the other row.
+
+53:45.480 --> 53:52.720
+ We're just going to fill in ones along the diagonal, and then kind of zeros everywhere
+
+53:52.720 --> 53:54.720
+ else.
+
+53:54.720 --> 54:01.120
+ But yeah, this is L, so kind of keeping track of those coefficients, and what we got from
+
+54:01.120 --> 54:03.160
+ our Gaussian elimination was U.
+
+54:03.160 --> 54:08.720
+ First let me ask, are there any questions just kind of about the process of Gaussian
+
+54:08.720 --> 54:09.720
+ elimination?
+
+54:09.720 --> 54:16.440
+ And I checked, and Khan Academy has kind of several videos on this if you did want to
+
+54:16.440 --> 54:20.440
+ watch more Gaussian elimination, Jeremy.
+
+54:20.440 --> 54:21.440
+ Linda?
+
+54:21.440 --> 54:31.280
+ So the Gaussian elimination is the process to calculate the L and the U?
+
+54:31.280 --> 54:32.280
+ Yes.
+
+54:32.280 --> 54:33.280
+ Yeah.
+
+54:33.280 --> 54:37.160
+ And sometimes like trevithin I think almost kind of uses LU, like LU decomposition and
+
+54:37.160 --> 54:39.160
+ Gaussian elimination interchangeably.
+
+54:39.160 --> 54:40.160
+ Matthew?
+
+54:40.160 --> 54:48.400
+ Why is it called Gaussian?
+
+54:48.400 --> 54:50.400
+ Gauss was...
+
+54:50.400 --> 54:51.400
+ Gauss discovered it.
+
+54:51.400 --> 54:54.000
+ I feel like other people might have simultaneously discovered it.
+
+54:54.000 --> 54:55.000
+ I'm not sure.
+
+54:55.000 --> 54:57.000
+ I'll look up the history on this.
+
+54:57.000 --> 54:59.520
+ The linear algebra is that old?
+
+54:59.520 --> 55:00.520
+ Yes, yeah.
+
+55:00.520 --> 55:06.320
+ Yeah, and I think like this question of solving linear systems of equations is one that shows
+
+55:06.320 --> 55:08.320
+ up a lot and is useful.
+
+55:08.320 --> 55:13.400
+ Yeah, that's a good question.
+
+55:13.400 --> 55:18.040
+ Yeah, other questions?
+
+55:18.040 --> 55:19.040
+ Vincent?
+
+55:19.040 --> 55:20.040
+ Yeah.
+
+55:20.040 --> 55:31.800
+ When we're calculating like the values in L, like I can get behind the lower diagonal
+
+55:31.800 --> 55:39.040
+ values, but then the diagonal being one, it's like we did one of row one to row one, and
+
+55:39.040 --> 55:44.800
+ we did one of row two to row two, and that doesn't like fit with the numbers, so I'm
+
+55:44.800 --> 55:51.760
+ like curious about the intuition behind that.
+
+55:51.760 --> 55:53.960
+ Let me think about that one.
+
+55:53.960 --> 55:56.120
+ Yeah, that's a good question.
+
+55:56.120 --> 56:02.760
+ It's just so that when you multiply L times U, you don't zero out or anything, so like
+
+56:02.760 --> 56:07.760
+ probably like killing the first row or whatever.
+
+56:07.760 --> 56:08.760
+ Right.
+
+56:08.760 --> 56:13.560
+ Now let me check, let me just check the time.
+
+56:13.560 --> 56:18.360
+ Okay, so this would be a good time to stop for a break, so let's meet back in seven minutes
+
+56:18.360 --> 56:31.200
+ at 12.08 or 12.09, and if you're bored, this is a good time to take the mid-course survey.
+
+56:31.200 --> 56:33.200
+ The link is in Slack.
+
+56:33.200 --> 56:34.200
+ Thanks.
+
+56:34.200 --> 56:41.960
+ All right, let's get started again.
+
+56:41.960 --> 56:58.320
+ Okay, so we left off by doing the LU decomposition, and we had this matrix A, and we got L and
+
+56:58.320 --> 56:59.320
+ U here.
+
+56:59.320 --> 57:06.520
+ I'm going to say, and Trephathan goes into more detail about this, but you can think
+
+57:06.520 --> 57:13.240
+ about Gaussian elimination as kind of being this series of multiplying by matrices where
+
+57:13.240 --> 57:18.080
+ each matrix is kind of just doing like one of the operations and kind of putting those
+
+57:18.080 --> 57:27.440
+ together to get your final decomposition, but as Jeremy pointed out, Gaussian elimination
+
+57:27.440 --> 57:33.000
+ is a bit tedious to do by hand, so we want to automate that and have a computer do that
+
+57:33.000 --> 57:34.800
+ for us.
+
+57:34.800 --> 57:44.200
+ So this is the basic LU decomposition, so that's where you think about each operation
+
+57:44.200 --> 57:48.640
+ you do as a single matrix, multiplication.
+
+57:48.640 --> 57:57.800
+ So here the product of all of those would end up giving you, maybe in this case, the
+
+57:57.800 --> 57:58.800
+ inverse of L.
+
+57:58.800 --> 58:04.840
+ If you want to talk about this later, feel free to leave it for now, but why is this
+
+58:04.840 --> 58:08.840
+ decomposition interesting other than the fact that it appears in something you've seen already,
+
+58:08.840 --> 58:12.160
+ or is it basically just useful as a component of other algorithms?
+
+58:12.160 --> 58:17.120
+ It's useful on its own for the use case I mentioned before, if you're solving a linear
+
+58:17.120 --> 58:22.840
+ system of equations multiple times, there are other ways to do that as well, but it's
+
+58:22.840 --> 58:26.600
+ one way of solving a linear system of equations, particularly when you're going to do it for
+
+58:26.600 --> 58:31.680
+ multiple vectors b on your right hand side of the equation.
+
+58:31.680 --> 58:39.280
+ It's helpful to store these, because that'll speed up getting your x's kind of once you
+
+58:39.280 --> 58:40.280
+ have the L and U.
+
+58:40.280 --> 58:50.680
+ Yeah, so I wanted to go through how, kind of how we have the computer doing this.
+
+58:50.680 --> 58:57.640
+ So we're making a copy of A that's going to be our U, and then remember U is what, actually
+
+58:57.640 --> 59:07.040
+ I should probably go back to this, U is what we ended up with at the end of our Gaussian
+
+59:07.040 --> 59:08.780
+ elimination.
+
+59:08.780 --> 59:15.640
+ So we're going to kind of be starting off with A, we copy that into U, and then are
+
+59:15.640 --> 59:19.000
+ going through these steps to get it in this form.
+
+59:19.000 --> 59:33.400
+ And then L is where we're going to store kind of what we're multiplying by.
+
+59:33.400 --> 59:42.580
+ So what we do is loop through K, and then, so K is in range n minus 1, since we don't
+
+59:42.580 --> 59:51.240
+ need to do anything to the first row, J, or sorry, to the last column, J is going through
+
+59:51.240 --> 59:56.380
+ K plus 1 to n, so that's kind of how when we're working on a particular row we need
+
+59:56.380 --> 59:59.480
+ to do everything beneath it.
+
+59:59.480 --> 1:00:07.960
+ And we'll set Ljk equals the ratio of Ujk to Ukk, so that's kind of seeing how, you
+
+1:00:07.960 --> 1:00:14.040
+ know, whatever spot we're at compares to the diagonal, which is Ukk, and then we subtract
+
+1:00:14.040 --> 1:00:34.040
+ off that times Uk comma to Kn is giving us the Kth row, kind of the remaining columns.
+
+1:00:34.040 --> 1:00:40.040
+ So this is just the process that we did before, kind of put into code.
+
+1:00:40.040 --> 1:00:45.400
+ And then we return L and U at the end.
+
+1:00:45.400 --> 1:00:46.720
+ There are questions about this?
+
+1:00:46.720 --> 1:01:00.680
+ And actually maybe it would be helpful, let me add a step, this might be too much, but
+
+1:01:00.680 --> 1:01:12.000
+ I'm going to try printing L and U each time.
+
+1:01:12.000 --> 1:01:35.680
+ I may not be connected to the kernel, let me check, okay so run this, oh this is not
+
+1:01:35.680 --> 1:01:45.660
+ aligned well, but you can, actually let me just print U, because that will be more interesting,
+
+1:01:45.660 --> 1:01:51.280
+ U will give us kind of the matrix A that we were reducing with the Gaussian elimination.
+
+1:01:51.280 --> 1:02:01.400
+ And so you can see here, first we're introducing a zero here, and then a zero beneath it, and
+
+1:02:01.400 --> 1:02:11.160
+ then at the third inner loop we've completely zeroed out the columns, the spaces in the
+
+1:02:11.160 --> 1:02:12.160
+ first column.
+
+1:02:12.160 --> 1:02:18.280
+ Then we go into the next one and we start zeroing out everything below the diagonal
+
+1:02:18.280 --> 1:02:20.760
+ in the second column, and so on.
+
+1:02:20.760 --> 1:02:21.760
+ Any questions?
+
+1:02:21.760 --> 1:02:37.080
+ I don't recall, but this algorithm looks slow, like we're having to do a separate operation
+
+1:02:37.080 --> 1:02:41.840
+ for everyone at the diagonal, so that's already n by m, and then each time you're having to
+
+1:02:41.840 --> 1:02:44.120
+ do it on a whole row.
+
+1:02:44.120 --> 1:02:51.440
+ That's right here, so the big O for this is 2 times 1 third n cubed.
+
+1:02:51.440 --> 1:02:58.520
+ So what you can think of it is it's kind of like a pyramid, the amount of work it's having
+
+1:02:58.520 --> 1:03:08.720
+ to do, in that you've got your outer loop, which is approximately n iterations, but then
+
+1:03:08.720 --> 1:03:14.300
+ you're just going from that point up to n, so that's kind of like forming a triangle,
+
+1:03:14.300 --> 1:03:24.160
+ and then within each of those you're just doing work on the kind of entries from k to
+
+1:03:24.160 --> 1:03:25.160
+ n.
+
+1:03:25.160 --> 1:03:31.600
+ And everything's dependent on everything else, so this doesn't look very paralyzable at all.
+
+1:03:31.600 --> 1:03:32.600
+ That's true, yeah.
+
+1:03:32.600 --> 1:03:42.520
+ I'll make a note to think about ways to speed it up, because now I am curious.
+
+1:03:42.520 --> 1:03:45.680
+ We're going to go in a different direction today, Jeremy, which is kind of thinking more
+
+1:03:45.680 --> 1:03:54.080
+ about the stability of this, but yeah, speed is interesting too, but yeah, so that's how
+
+1:03:54.080 --> 1:04:03.400
+ we get kind of the big O of n cubed, and the 1 third n cubed is coming from this idea of
+
+1:04:03.400 --> 1:04:08.560
+ kind of like, yeah, it's pyramid-like, how much work you're having to do on each row,
+
+1:04:08.560 --> 1:04:12.640
+ and typically with big O you don't talk about the coefficients, but I have them in there
+
+1:04:12.640 --> 1:04:13.640
+ just in case.
+
+1:04:13.640 --> 1:04:19.360
+ So yeah, but before we get to that, I just wanted to highlight that the LU factorization
+
+1:04:19.360 --> 1:04:21.340
+ is useful.
+
+1:04:21.340 --> 1:04:32.440
+ Solving ax equals b becomes lux equals b, then you can solve ly equals b and ux equals
+
+1:04:32.440 --> 1:04:38.300
+ y, and what might be nice about solving, so solving kind of steps two and three, those
+
+1:04:38.300 --> 1:04:41.320
+ are both triangular systems.
+
+1:04:41.320 --> 1:04:45.840
+ Can anyone say why those would be a better thing to solve than your full system?
+
+1:04:45.840 --> 1:04:46.840
+ Kelsey?
+
+1:04:46.840 --> 1:04:56.920
+ Because you could sort of even like backwards substitute, just do one equation at a time.
+
+1:04:56.920 --> 1:04:57.920
+ Exactly, yeah.
+
+1:04:57.920 --> 1:05:03.060
+ So kind of take like the tip of your triangle where you just have one variable, solve that
+
+1:05:03.060 --> 1:05:07.380
+ one, back substitute that into the equation that just has two variables and so on.
+
+1:05:07.380 --> 1:05:12.800
+ So it is always nice when you can get stuff into a triangular system.
+
+1:05:12.800 --> 1:05:19.980
+ As for the question of memory, so above we created two new matrices, L and U, however
+
+1:05:19.980 --> 1:05:25.680
+ they can actually be stored in matrix A by overwriting the original matrix, and remember
+
+1:05:25.680 --> 1:05:31.360
+ with L, since the diagonal is always ones, you don't actually have to explicitly store
+
+1:05:31.360 --> 1:05:32.860
+ that.
+
+1:05:32.860 --> 1:05:38.440
+ And so this is called doing something in place, and it's a really common technique in numerical
+
+1:05:38.440 --> 1:05:40.440
+ linear algebra.
+
+1:05:40.440 --> 1:05:45.640
+ If you ever wanted to use A again in the future, you wouldn't want to do that because you are
+
+1:05:45.640 --> 1:05:50.880
+ you know writing over it, but one of the homework questions, and I'll probably put this homework
+
+1:05:50.880 --> 1:05:59.400
+ up on, I might put it up this afternoon or Thursday, it won't be due till next Thursday,
+
+1:05:59.400 --> 1:06:04.160
+ actually like a week from Thursday, is to modify LU to do the algorithm in place instead
+
+1:06:04.160 --> 1:06:06.960
+ of kind of creating this separate L and U.
+
+1:06:06.960 --> 1:06:13.320
+ Yeah, any questions about kind of worker memory for LU decomposition?
+
+1:06:13.320 --> 1:06:24.720
+ Okay, so now we're going to consider another matrix A, which is 10 to the negative 20th,
+
+1:06:24.720 --> 1:06:30.560
+ 1, 1, and 1.
+
+1:06:30.560 --> 1:06:36.020
+ Actually I want you to take a moment just on paper to use Gaussian elimination to calculate
+
+1:06:36.020 --> 1:06:59.440
+ L and U.
+
+1:06:59.440 --> 1:07:16.320
+ Okay, thank you.
+
+1:08:46.320 --> 1:09:11.520
+ Raise your hand if you want a little bit more time.
+
+1:09:16.320 --> 1:09:17.520
+ Raise your hand if you're ready now.
+
+1:09:17.520 --> 1:09:45.520
+ Okay, I'll give you another minute.
+
+1:09:58.880 --> 1:10:01.120
+ All right, does someone want to say what they got for Al?
+
+1:10:01.120 --> 1:10:19.360
+ Okay, Vincent, Jeremy.
+
+1:10:19.360 --> 1:10:26.080
+ So row by row, I've got 1, 0, and 10 to the 20th, 1?
+
+1:10:26.080 --> 1:10:37.040
+ Yes, excellent, and then this.
+
+1:10:37.040 --> 1:10:46.560
+ Yeah, so 1, 0, 10 to the 20th, 1, and then u is 10 to the negative 20th, 1, 0, 1 minus 10 to the 20th,
+
+1:10:46.560 --> 1:10:57.840
+ which would be approximately negative 10 to the 20th since that's so much bigger than 1.
+
+1:10:57.840 --> 1:11:06.880
+ And so if we enter these as matrices, I'm going to call them L1 and U1, here they are.
+
+1:11:11.280 --> 1:11:13.520
+ Actually, first I should ask, are there questions about getting this
+
+1:11:13.520 --> 1:11:18.320
+ Gaussian elimination or the LU for A?
+
+1:11:20.880 --> 1:11:24.080
+ And you're probably feeling a little bit nervous because we had this 10 to the
+
+1:11:24.960 --> 1:11:28.160
+ 20th and 10 to the negative 20th, which is really different from 1.
+
+1:11:28.160 --> 1:11:30.080
+ So we might run into some problems.
+
+1:11:33.360 --> 1:11:37.280
+ So we do an LU decomposition on A, and this is using the LU that was written above,
+
+1:11:38.400 --> 1:11:40.000
+ so kind of just our own implementation.
+
+1:11:40.000 --> 1:11:43.040
+ And what we get is, is about right.
+
+1:11:53.040 --> 1:11:55.840
+ Oh, I redefined everything, I shouldn't have done that.
+
+1:11:55.840 --> 1:12:02.320
+ Okay, sorry, hold on a moment.
+
+1:12:02.320 --> 1:12:13.280
+ Okay, got A being what we want, so we can check.
+
+1:12:13.280 --> 1:12:17.440
+ L1 is close to L2, so remember L1 is the one we calculated by hand.
+
+1:12:17.440 --> 1:12:23.120
+ L2 is the one we got from our algorithm, or got from our implementation of LU.
+
+1:12:23.920 --> 1:12:26.080
+ U1 is close to U2, so that's good.
+
+1:12:26.080 --> 1:12:33.200
+ And now if we check that L2 times U2 is close to A, we get false.
+
+1:12:33.200 --> 1:12:33.840
+ It's not.
+
+1:12:35.280 --> 1:12:41.360
+ So this is kind of interesting that like each component, L and U, was close to the answer,
+
+1:12:41.920 --> 1:12:45.680
+ but L times U is not close to A.
+
+1:12:47.840 --> 1:12:50.320
+ And so this is an example.
+
+1:12:50.320 --> 1:12:55.760
+ So the LU factorization is stable, but it's not backward stable.
+
+1:12:57.600 --> 1:13:01.040
+ And I'm going to kind of define what those mean in a moment,
+
+1:13:01.040 --> 1:13:04.640
+ but I think it's helpful to kind of keep this picture in mind.
+
+1:13:08.240 --> 1:13:14.800
+ So an algorithm f-hat for a problem f, so you'll think of f-hat as kind of,
+
+1:13:16.480 --> 1:13:18.240
+ yeah, kind of like how you're implementing this,
+
+1:13:18.240 --> 1:13:21.200
+ whereas, you know, f is like the true problem you're interested in.
+
+1:13:21.200 --> 1:13:28.640
+ And we say it's stable if for every x, f-hat of x minus f of y,
+
+1:13:29.520 --> 1:13:35.440
+ norm of that over the norm of f of y is less than machine epsilon,
+
+1:13:36.800 --> 1:13:42.640
+ where y minus x over x is order of machine epsilon.
+
+1:13:42.640 --> 1:13:46.720
+ And so the way Trevathan says this I really like is that a stable algorithm
+
+1:13:46.720 --> 1:13:50.240
+ gives nearly the right answer to nearly the right question.
+
+1:13:50.800 --> 1:13:54.960
+ And so kind of translating that here, so x is kind of the right question
+
+1:13:54.960 --> 1:13:58.960
+ that we're truly interested in, and we're just saying that there's some y
+
+1:13:58.960 --> 1:14:00.240
+ that's close to that.
+
+1:14:00.240 --> 1:14:03.200
+ So we've got, you know, nearly the right questions, that's y.
+
+1:14:03.200 --> 1:14:07.440
+ It's, you know, it's almost x, where this is how we're defining almost.
+
+1:14:08.720 --> 1:14:15.120
+ And then the right answer is f, but we're just getting nearly the right answer,
+
+1:14:15.120 --> 1:14:23.440
+ which is f-hat, so the right answer to nearly the right question.
+
+1:14:23.440 --> 1:14:40.000
+ So f-hat is like the thing you've written, and f is like some theoretical real version,
+
+1:14:40.000 --> 1:14:42.480
+ and then what's the difference between x and y?
+
+1:14:42.480 --> 1:14:46.000
+ So x is the true problem you're interested in,
+
+1:14:46.000 --> 1:14:48.160
+ and y is the problem close to that.
+
+1:14:49.920 --> 1:14:50.320
+ So like-
+
+1:14:50.320 --> 1:14:55.200
+ Why is it f-hat of the true problem minus f of the not true problem?
+
+1:14:55.200 --> 1:14:59.600
+ That's a good question, and that's because we're saying that the-
+
+1:15:02.960 --> 1:15:07.040
+ you're getting nearly the right answer to nearly the right question.
+
+1:15:07.040 --> 1:15:13.360
+ So here, x would be-
+
+1:15:15.360 --> 1:15:19.360
+ I feel like it's helpful to kind of like unpack his statement in reverse order,
+
+1:15:19.360 --> 1:15:24.080
+ but like nearly the right question is y.
+
+1:15:24.080 --> 1:15:27.360
+ So x is the right question, nearly the right question is y.
+
+1:15:29.440 --> 1:15:31.760
+ The right answer is f, so we're looking at-
+
+1:15:31.760 --> 1:15:35.680
+ the right answer to nearly the right question would be f of y.
+
+1:15:36.480 --> 1:15:41.040
+ So again, like what was truly the correct answer to your representation y,
+
+1:15:41.040 --> 1:15:44.240
+ that's not quite the true question x, but it's close.
+
+1:15:44.240 --> 1:15:46.640
+ That's what's giving you the f of y.
+
+1:15:48.560 --> 1:15:52.960
+ But then we're just saying you're getting something that's close to that.
+
+1:15:56.720 --> 1:15:58.320
+ Don't wait for me to understand.
+
+1:15:58.320 --> 1:15:58.820
+ Okay.
+
+1:15:58.820 --> 1:16:03.220
+ It's- I liked- I liked this interpretation because I think it's-
+
+1:16:03.220 --> 1:16:06.180
+ I mean, this is like a math definition of stability,
+
+1:16:06.180 --> 1:16:11.460
+ and I appreciated him kind of giving a way to like think about it in more colloquial terms.
+
+1:16:13.060 --> 1:16:16.580
+ But yeah, it's okay if you don't- don't fully get it.
+
+1:16:18.020 --> 1:16:21.780
+ Yeah, it's kind of thinking about like how we formalize these ideas of stability,
+
+1:16:21.780 --> 1:16:24.740
+ that we have like a general notion to of, you know, like we want the-
+
+1:16:24.740 --> 1:16:29.540
+ the answer to be close to what we want, but kind of how do you formalize that.
+
+1:16:32.900 --> 1:16:37.620
+ So fortunately, backward stability is actually simpler than stability,
+
+1:16:39.060 --> 1:16:40.340
+ and it's also stronger.
+
+1:16:40.340 --> 1:16:44.340
+ So that means that anything that's backward stable will be stable,
+
+1:16:44.340 --> 1:16:47.940
+ but not the reverse, as we just saw with the LU factorization,
+
+1:16:47.940 --> 1:16:50.900
+ because that's stable but not backwards stable.
+
+1:16:50.900 --> 1:16:59.540
+ And so an algorithm f-hat, or problem f, is backward stable if for each x there's a y close
+
+1:16:59.540 --> 1:17:08.180
+ to it, such that f-hat of x equals f of y, and so Trevathan says that's a backward stable algorithm
+
+1:17:08.180 --> 1:17:11.780
+ gives exactly the right answer to nearly the right question.
+
+1:17:12.900 --> 1:17:14.500
+ So that's why we're taking
+
+1:17:14.500 --> 1:17:21.460
+ yeah, f-hat of x equals f of y.
+
+1:17:23.460 --> 1:17:24.660
+ And so, um,
+
+1:17:24.660 --> 1:17:41.380
+ yeah. Well, we'll probably talk about this more next time.
+
+1:17:41.380 --> 1:17:45.380
+ So now let's look at the matrix 1, 1, 10 to the negative 20th, 1.
+
+1:17:45.380 --> 1:18:00.580
+ We'll call that a-hat, and I want you to take another moment and use Gaussian elimination
+
+1:18:00.580 --> 1:18:08.100
+ to calculate what L and U are for this matrix a-hat, which is similar but not identical to our
+
+1:18:08.100 --> 1:18:19.140
+ a from before.
+
+1:19:47.540 --> 1:19:49.300
+ All right, and who needs more time?
+
+1:19:49.300 --> 1:20:06.340
+ All right, does anyone want to say what they got for L?
+
+1:20:11.300 --> 1:20:12.020
+ Okay, Kelsey?
+
+1:20:12.020 --> 1:20:19.700
+ Thank you.
+
+1:20:31.540 --> 1:20:37.380
+ So before it was, um, uh, yeah, before it was 10 to the 20th, now it's 10 to the negative 20th.
+
+1:20:37.380 --> 1:20:41.140
+ Oh, right, sorry.
+
+1:20:41.140 --> 1:20:43.780
+ Yeah, which, yeah, is subtle.
+
+1:20:46.260 --> 1:20:52.900
+ Yeah, and then before we had 1 minus 10 to the 20th in our U, and it's 1 minus 10 to the negative
+
+1:20:52.900 --> 1:20:58.020
+ 20th. But yeah, so how was, um, well actually I guess first I should show the punchline,
+
+1:20:58.020 --> 1:21:07.060
+ which is that we take our L, U, D composition of A and check if it's, um, if A is all close to L and U,
+
+1:21:07.060 --> 1:21:14.980
+ and this time it is. So that's, that's an improvement. Vincent? Jeremy, can you throw the microphone?
+
+1:21:17.380 --> 1:21:19.540
+ Shouldn't the top row in U still be 1 and 1?
+
+1:21:19.540 --> 1:21:27.140
+ Um, let me check. Yes, it should be. Thank you.
+
+1:21:33.860 --> 1:21:34.180
+ Catch.
+
+1:21:37.620 --> 1:21:41.540
+ Okay, and so then, um, how does A compare to A hat?
+
+1:21:41.540 --> 1:21:59.460
+ Look back at A. Okay, so Tim is doing the gesture to indicate that two rows were switched.
+
+1:22:00.980 --> 1:22:08.260
+ So really this A hat was just like A, but we switched the rows. And so this is, um, and first
+
+1:22:08.260 --> 1:22:14.020
+ I want to say like switching the rows, um, if you think about this so often, you know, uh, each row
+
+1:22:14.020 --> 1:22:18.820
+ in a matrix might be a different, um, data point. Switching the rows should be totally fine if those
+
+1:22:18.820 --> 1:22:23.780
+ are different data points. If, um, you know, like different samples and some, like, measurements
+
+1:22:23.780 --> 1:22:29.220
+ you've taken. If these were systems of equations, switching the rows is fine. And actually no matter
+
+1:22:29.220 --> 1:22:34.740
+ what because you can, uh, um, think of this as just multiplying by a permutation matrix P.
+
+1:22:34.740 --> 1:22:45.540
+ So here we did 0, 1, 1, 0 is P. Multiply that by our A to get A hat. Um, apply Gaussian elimination
+
+1:22:45.540 --> 1:22:50.340
+ to P times A. And it actually turns out that it's okay to kind of permute them because at the end
+
+1:22:50.340 --> 1:22:58.180
+ you could permute them back to, um, what you had originally. And so this is what, um, pivoting is.
+
+1:22:58.180 --> 1:23:06.100
+ Um, is to, yeah, switch the rows around. And basically, and this is called partial pivoting,
+
+1:23:06.100 --> 1:23:12.100
+ and that's where at each step you want to choose the largest value in column K and move that row
+
+1:23:12.100 --> 1:23:18.740
+ to be, um, row K. Because the, the problem we were getting into before was when we were dividing by
+
+1:23:18.740 --> 1:23:23.940
+ a really small number, uh, which we don't want to do. And so kind of choosing a large number,
+
+1:23:23.940 --> 1:23:31.780
+ um, is going to be more stable. Yeah, and so that's going to be a homework problem of kind of
+
+1:23:31.780 --> 1:23:34.740
+ adding partial pivoting to the LU factorization.
+
+1:23:39.940 --> 1:23:42.180
+ And then we can see here, uh, this is just going through,
+
+1:23:44.260 --> 1:23:52.420
+ this is the, no this is a different A than we had before. Um, you'll get back, uh, kind of LU and
+
+1:23:52.420 --> 1:23:56.980
+ then a matrix of what your pivot, or your permutation matrix P. So that's letting you
+
+1:23:56.980 --> 1:24:03.620
+ know how you permuted the rows. And then you can check that the, this is an example from Trevathon.
+
+1:24:04.420 --> 1:24:08.900
+ We get the, the same answers. Um, there is something called complete pivoting which
+
+1:24:08.900 --> 1:24:14.980
+ permutes the rows and the columns. Um, we're not going to get into that into detail. Um, it's,
+
+1:24:14.980 --> 1:24:20.100
+ it's so time consuming that it's rarely used in practice. I think it's basically never used in
+
+1:24:20.100 --> 1:24:32.420
+ practice. Any questions about pivoting? Why would you want to permute the columns?
+
+1:24:33.220 --> 1:24:39.060
+ Um, so permuting the columns, you can actually kind of run into the the same issue of, um,
+
+1:24:43.540 --> 1:24:47.620
+ yeah, I guess having like numbers that are too small. And so by like permuting the columns,
+
+1:24:47.620 --> 1:24:50.820
+ you're able to get the, the largest value which is going to be more stable
+
+1:24:51.700 --> 1:24:54.580
+ in a particular place. But yeah, it's just a lot to keep track of.
+
+1:24:54.580 --> 1:24:58.020
+ So this is more for something that's used, like this is more for making
+
+1:24:58.020 --> 1:25:01.940
+ the computations more accurate. It's not like something we would do.
+
+1:25:04.900 --> 1:25:09.140
+ I guess like all of this is to make the, make our actual like computer algorithm
+
+1:25:09.140 --> 1:25:13.540
+ return a more accurate answer or is it like analytical? Is there an analytical reason for
+
+1:25:13.540 --> 1:25:22.260
+ doing this? Um, I mean, so I guess, yeah, so it's, yeah, it's to get your computer to return a more
+
+1:25:22.260 --> 1:25:26.340
+ accurate and like part of what was going on with this, you know, example where the 10 to the
+
+1:25:26.340 --> 1:25:31.140
+ negative 20th failed. I mean, that's less than machine epsilon, but it's something that like,
+
+1:25:31.140 --> 1:25:36.660
+ you know, that's causing us to get something that's not even close as a result. I will,
+
+1:25:36.660 --> 1:25:41.540
+ I guess, kind of jump to the punch line perhaps, which is that even with partial pivoting,
+
+1:25:41.540 --> 1:25:47.060
+ it's going to turn out that this algorithm is technically not stable.
+
+1:25:48.740 --> 1:25:49.860
+ Complete pivoting is?
+
+1:25:50.500 --> 1:25:56.500
+ Yes. Well, actually, let me confirm that. I think that it is. I'll look it up and confirm.
+
+1:25:57.460 --> 1:26:06.580
+ The issue with partial pivoting is that the matrices that would, so it's easy,
+
+1:26:06.580 --> 1:26:12.900
+ we'll see it in a moment, we're going to construct a matrix that is unstable. However,
+
+1:26:13.620 --> 1:26:19.220
+ those matrices are so rare in kind of nature or in practice that you don't actually get them.
+
+1:26:20.660 --> 1:26:24.900
+ Yeah, good questions. Yeah, and I'll confirm about a complete pivoting,
+
+1:26:24.900 --> 1:26:35.780
+ which yeah, I believe is stable, but too slow to actually use.
+
+1:26:38.820 --> 1:26:45.140
+ So now we're going to look at a system of equations of this form. So here we've got a
+
+1:26:45.140 --> 1:26:52.340
+ matrix where we've got ones on the diagonal, ones in the last column, negative ones below the
+
+1:26:52.340 --> 1:26:59.220
+ diagonal, and we're saying that times x equals this matrix of ones with a two in the second to
+
+1:26:59.220 --> 1:27:05.700
+ last entry. And so this is a very kind of particular type of matrix that we've constructed
+
+1:27:05.700 --> 1:27:12.420
+ here. And so I wrote a function, makeMatrix, that will generate that for any size n to kind of have
+
+1:27:12.420 --> 1:27:22.420
+ this form. And it's just, yeah, setting the last column to ones, starting off with the identity,
+
+1:27:22.420 --> 1:27:26.500
+ setting the last columns to ones, and then setting everything below the diagonal to negative one.
+
+1:27:27.460 --> 1:27:31.060
+ We're making this vector over here, which is going to be all ones except a two
+
+1:27:31.060 --> 1:27:43.940
+ in the negative second position. I was going to have you do Gaussian elimination on the
+
+1:27:43.940 --> 1:27:49.220
+ five by five system, but you might be. I see heads shaking, yeah. Let's not do that also in
+
+1:27:49.220 --> 1:27:55.060
+ the interest of time, and you may have had enough Gaussian elimination. No, it wasn't just you.
+
+1:27:55.060 --> 1:28:02.340
+ Enough Gaussian elimination practice. No, this is this is why we have computers. But here we're
+
+1:28:02.340 --> 1:28:11.060
+ going to use the scipy.lenouge has an LU solve, and into that, actually let me pull up the,
+
+1:28:11.060 --> 1:28:23.900
+ whoops, pull this up, you're going to pass a matrix and then the vector that you're trying
+
+1:28:23.900 --> 1:28:29.780
+ to, you know, this is going to solve ax equals b, and you're giving it a and b, and it'll return x
+
+1:28:29.780 --> 1:28:41.900
+ for you. And so I'm running this for matrices of size 10, 20, 30, 40, 50, 60 to see what happens.
+
+1:28:41.900 --> 1:28:48.660
+ And then I'm going to plot what the the last five values in the solution are. Keep in mind,
+
+1:28:48.660 --> 1:28:54.300
+ since the system is getting bigger, you know, the first one has 10, and then 20, 30, 40, 50, 60,
+
+1:28:54.300 --> 1:28:58.700
+ but to have a way to compare them. And here we're printing them out, and if you look at the last
+
+1:28:58.700 --> 1:29:03.780
+ five values, you might notice, okay, the last value for the first one, the 10 by 10 system,
+
+1:29:03.780 --> 1:29:10.380
+ is pretty close to one, and we've got something pretty close to a half, negative a fourth,
+
+1:29:10.380 --> 1:29:20.580
+ negative an eighth. You might see a pattern, and that seems to continue. Okay, one, this is in
+
+1:29:20.580 --> 1:29:27.180
+ scientific notations. You kind of have to pay attention. Okay, this is really 0.5, negative 0.25,
+
+1:29:27.180 --> 1:29:36.460
+ negative 0.125. So we've got this pattern for 10, 20, 30, 40, and so on. And then notice what happens
+
+1:29:36.460 --> 1:29:44.300
+ when we get to 60, our answer. So this should kind of raise a flag for you that it seems to not be in
+
+1:29:44.300 --> 1:29:52.620
+ keeping with where we were. And so here where I've plotted them, it's a little bit hard to maybe see
+
+1:29:52.620 --> 1:29:58.780
+ because you basically, so I've made these dashed lines of different colors, and basically these
+
+1:29:58.780 --> 1:30:07.140
+ are completely on top of each other. So this like thick multi-color line, that's the solution for
+
+1:30:07.140 --> 1:30:15.340
+ the last five rows for 10, 20, 30, 40, 50, and then we jump to this when we hit 60. So do they
+
+1:30:15.340 --> 1:30:40.380
+ all want to say what they think is happening when n equals 60? Any guesses? And actually I'll give
+
+1:30:40.380 --> 1:31:10.340
+ you a hint. Let me find it. Actually okay, I'll just, so I had written
+
+1:31:10.340 --> 1:31:15.540
+ out the Gaussian elimination. I won't make you go through it, but what you end up with for this
+
+1:31:15.540 --> 1:31:34.540
+ system is, this is the 5x5 version. This is your U, so kind of all zeros in there. You've got a
+
+1:31:34.540 --> 1:31:40.980
+ diagonal of ones, and then the last column, this is kind of pathological, it's doubled, you know,
+
+1:31:40.980 --> 1:31:45.620
+ in every entry from what we were doing because we had all those ones. And then we're saying,
+
+1:31:45.620 --> 1:31:56.460
+ oh that's equal, and so over here something very similar was happening, 1, 2, 4, and then 9 and 17,
+
+1:31:56.460 --> 1:32:01.740
+ and those are off a little bit since we had that two entry amongst our ones, otherwise it would
+
+1:32:01.740 --> 1:32:07.660
+ have been kind of perfectly their doubling. Actually just first questions on what I've shown.
+
+1:32:07.660 --> 1:32:12.940
+ So I just took the 5x5 of that system, I did Gaussian elimination at home, wrote it out,
+
+1:32:12.940 --> 1:32:19.620
+ and this is what you get. And now if we were gonna go back and backwards solve that, and I
+
+1:32:19.620 --> 1:32:25.620
+ haven't written all the zeros in over here, but these would all be zeros. So let me make,
+
+1:32:25.620 --> 1:32:30.500
+ so often when people write that they'll kind of just have like a big zero to show, like okay,
+
+1:32:30.500 --> 1:32:36.860
+ those are all zeros in there, where it doesn't say otherwise. Actually this is a good time to
+
+1:32:36.860 --> 1:32:41.980
+ point out U is a sparse matrix in this case, it has lots of zeros. So if we were going to start
+
+1:32:41.980 --> 1:32:51.020
+ solving this now, you know, we'd start with the last row, 16 times X sub 5 equals 17, and we're
+
+1:32:51.020 --> 1:32:57.460
+ gonna divide through by 16. So now any kind of guesses, maybe what was going on when we hit n
+
+1:32:57.460 --> 1:33:19.980
+ equals 60? Sam? I guess 2 to the, the value at the bottom right of our upper triangular is going to
+
+1:33:19.980 --> 1:33:37.460
+ be 2 to the 60. Yes. The plus 1 is lost, so it's just going to be 60 plus 60. Exactly, yeah, yeah. So we've gotten so large that we're kind of going to lose that distinction of having, and I
+
+1:33:37.460 --> 1:33:43.740
+ think, I think it might be 2 to the 59, but yeah, exact idea of kind of, yeah, like you've got 2 to
+
+1:33:43.740 --> 1:33:48.940
+ this huge exponent, and so then that can't keep track of this like little plus 1, it kind of
+
+1:33:48.940 --> 1:33:55.900
+ overflows, and so we're getting, getting the wrong answer. And so this is a, you know, this case where
+
+1:33:55.900 --> 1:34:04.780
+ Gaussian elimination or LU factorization, even with partial pivoting fails, and I think there,
+
+1:34:04.780 --> 1:34:12.100
+ yes, there if we had had complete pivoting and we're pivoting on our columns, or you know,
+
+1:34:12.100 --> 1:34:17.540
+ permuting our columns in addition to our rows, we wouldn't get this giant number that had added
+
+1:34:17.540 --> 1:34:24.580
+ up to 2 to the 60th, and so that would have solved this, but since this case basically never arises,
+
+1:34:24.580 --> 1:34:31.220
+ and complete pivoting is so slow, we don't use it in practice. And here this is kind of saying
+
+1:34:31.220 --> 1:34:44.500
+ that in math more formally that it has this idea of a growth factor, rho, which is the maximum u
+
+1:34:44.500 --> 1:35:00.500
+ value over the maximum a value, and that in, that times machine epsilon is part of the kind of error
+
+1:35:00.500 --> 1:35:07.740
+ that you can see, and so yeah, it's a bad thing when rho is huge. But yeah, to get back to Tim's
+
+1:35:07.740 --> 1:35:11.420
+ earlier question, question, complete pivoting would have solved that because we would have
+
+1:35:11.420 --> 1:35:24.060
+ been making those big numbers while we were pivoting on. And so LU, because many numerical
+
+1:35:24.060 --> 1:35:30.020
+ linear algebra classes kind of teach LU first, although Trevathan kind of points out that it's
+
+1:35:30.020 --> 1:35:36.020
+ not, it's not a typical case even though it's, you know, a very widely used algorithm, but this idea
+
+1:35:36.020 --> 1:35:46.460
+ that kind of Gaussian elimination with partial pivoting, so this is a quote from Trevathan, is
+
+1:35:46.460 --> 1:35:53.100
+ utterly stable in practice. In 50 years of computing, no matrix problems that excite an
+
+1:35:53.100 --> 1:35:59.700
+ explosive instability are known to have arisen under natural circumstances, even though, you know,
+
+1:35:59.700 --> 1:36:08.620
+ we saw one today that was very contrived. So it's, yeah, I think it is kind of interesting, and it's
+
+1:36:08.620 --> 1:36:18.180
+ also something that it's, the definition for stability, it's okay that we have rho, rho in
+
+1:36:18.180 --> 1:36:26.020
+ there, but however, you know, if, yeah, if rho is huge, then this kind of breaks down. Any questions
+
+1:36:26.020 --> 1:36:46.340
+ about this? So actually you say that when we have n equals 60, this lin-alk.au solve doesn't give
+
+1:36:46.340 --> 1:36:52.820
+ us the proper answer, right? Right. Yeah, but if we don't do this LU factor and we just try to solve
+
+1:36:52.820 --> 1:36:59.020
+ it on matrix and vector, it still gives the proper answer. So why would we care about this LU
+
+1:36:59.020 --> 1:37:06.180
+ factorization? Sorry, if you just try to solve it, how it gives the proper... Yeah, so if we just do
+
+1:37:06.180 --> 1:37:14.180
+ like lin-alk.solve without LU and we don't apply this LU factorization, it gives us the proper answer.
+
+1:37:14.180 --> 1:37:31.460
+ That's a good question. So it looks like that this authorization just doesn't agree. Wait, did someone
+
+1:37:31.460 --> 1:37:55.220
+ else? Tim? Oh, no. Okay. Oh, yes, that's a good, good suggestion. Trying to take this out. Space or
+
+1:37:55.220 --> 1:38:22.420
+ no space. This is something,
+
+1:38:22.420 --> 1:38:40.200
+ what? This is a good question. I will answer this next time. I want to look into more what
+
+1:38:40.200 --> 1:38:53.940
+ scipy-lin-alk.solve is calling. You can see from the docs at the end it says it's calling lap-pack,
+
+1:38:53.940 --> 1:38:59.820
+ which Rachel mentioned earlier. I mean it also says that it's called, oh, those are just for the
+
+1:38:59.820 --> 1:39:21.500
+ Hermitian symmetric. Okay, so let me check that. So this is how you would look up lap-pack, the
+
+1:39:21.500 --> 1:39:29.300
+ name of a particular method. I want to look into that more because I would have guessed that they
+
+1:39:29.300 --> 1:39:35.420
+ were using LU solver. Actually, can you try it just real quick with a higher power, like do like
+
+1:39:35.420 --> 1:39:43.140
+ n equals 80 or something? Oh, it also factorizes it into a permutation matrix. Yeah, but typically
+
+1:39:43.140 --> 1:39:54.940
+ that's just a partial permutation matrix. Oh, and it also calculates the condition number. Oh, so
+
+1:39:54.940 --> 1:40:02.980
+ it computes it with error balance. It uses iterative refinement, so it does more than... Okay, yeah,
+
+1:40:02.980 --> 1:40:13.020
+ because I feel very certain that it's not doing complete pivoting because that's really slow. Okay,
+
+1:40:13.020 --> 1:40:17.860
+ yeah, so this is doing something much fancier. Iterative refinement is applied to improve the
+
+1:40:17.860 --> 1:40:25.460
+ computed solution matrix. Yeah, that's a really interesting find that that is working here. And
+
+1:40:25.460 --> 1:40:33.060
+ this is often the advantage of using LAPAC, something that's been really, really well
+
+1:40:33.060 --> 1:40:41.980
+ optimized. So we're at time, but I'll return to this question next time. And I think that's
+
+1:40:41.980 --> 1:40:52.900
+ um, otherwise most of what I had to say about LU, yeah, LU factorization. And this is covered
+
+1:40:52.900 --> 1:41:15.500
+ in chapters 20 to 22 of Trevathan.
+

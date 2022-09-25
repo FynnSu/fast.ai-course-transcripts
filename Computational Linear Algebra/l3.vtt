@@ -1,0 +1,2066 @@
+WEBVTT
+
+00:00.000 --> 00:09.780
+ Okay I'm gonna go ahead and get started. I wanted to announce that Friday I'm
+
+00:09.780 --> 00:13.580
+ gonna be out of town and that's normally when I have office hours, but I'll be
+
+00:13.580 --> 00:16.320
+ around the other days so feel free to contact me if you want to set up another
+
+00:16.320 --> 00:22.700
+ time. Yes. And I wanted to start with a little bit of review today just because
+
+00:22.700 --> 00:27.780
+ I know we covered a lot of material last week. And so I want to start with a
+
+00:27.780 --> 00:34.740
+ matrix vector product and kind of a different perspective on them. So this
+
+00:34.740 --> 00:41.440
+ got a matrix A times a vector X. You can think of the matrix in terms of its
+
+00:41.440 --> 00:57.620
+ columns. Okay so here columns are A1 through AN. We're multiplying by X. And
+
+00:57.620 --> 01:05.940
+ this could be written as, and actually let me write out, X is a vector so it's
+
+01:05.940 --> 01:20.500
+ got entries X1 through XN. This could be written as X1 times A1, the column, plus X2
+
+01:20.500 --> 01:32.580
+ times A2 and so on up to the scalar XN times the column AN. And so this is a
+
+01:32.580 --> 01:37.340
+ linear combination of the columns of A. And this is a kind of different
+
+01:37.340 --> 01:41.580
+ perspective on matrix vector multiplication than you see usually in a
+
+01:41.580 --> 01:45.140
+ first linear algebra class because there you often talk about A being this
+
+01:45.140 --> 01:50.780
+ transformation of X. Whereas here you can kind of think of X as acting on A.
+
+01:50.780 --> 01:54.060
+ X is saying how we're gonna take a linear combination of the columns of A.
+
+01:54.060 --> 02:01.060
+ So this is a pretty helpful perspective for numerical linear algebra. Any
+
+02:01.060 --> 02:08.580
+ questions? And I think this might seem simple but it's surprisingly powerful
+
+02:08.580 --> 02:13.660
+ this idea of kind of taking linear combinations of the columns of A. And so
+
+02:13.660 --> 02:22.780
+ if you move on to thinking about matrix-matrix multiplication, again you
+
+02:22.780 --> 02:33.980
+ can think about A as being a collection of columns, B is also a collection of
+
+02:33.980 --> 02:48.100
+ columns, and then here we can write the product as the first column is B, or
+
+02:48.100 --> 02:59.180
+ actually keep the order the same. The first column is the matrix A times B1. So
+
+02:59.180 --> 03:03.660
+ you're still taking a linear combination of the columns of A and you're using the
+
+03:03.660 --> 03:08.140
+ coefficients in the column B1 as your coefficients and that gives you one
+
+03:08.140 --> 03:15.380
+ column of your result. And then so on. A times B2 is the second column of the
+
+03:15.380 --> 03:25.200
+ result. On up to A times BK is the last column. So matrix-matrix multiplication
+
+03:25.200 --> 03:30.700
+ could be thought of as just doing several kind of linear combinations of
+
+03:30.700 --> 03:38.240
+ columns of A with different coefficients. And we'll see this, so we're going to, we
+
+03:38.240 --> 03:40.460
+ covered a lot of material last week, so we're going to start with a bit of a
+
+03:40.460 --> 03:44.460
+ review, but we'll kind of see SVD and NMF from a different perspective. I think
+
+03:44.460 --> 03:53.420
+ this will be helpful to keep in mind there. No, so here the capital A is the
+
+03:53.420 --> 03:59.580
+ whole matrix and the lowercase a is a single column. And so, and we could even,
+
+03:59.580 --> 04:03.980
+ actually this might be nice to see, kind of write this out like a single column
+
+04:03.980 --> 04:21.300
+ here is still, so this might get too long, but it's basically V11 times the
+
+04:21.300 --> 04:32.820
+ column A1 plus V12, or actually put the row first, V21 times the column
+
+04:32.820 --> 04:44.740
+ A2. You've got this whole sum just to give you a single column AB1, the first
+
+04:44.740 --> 04:51.540
+ column of your results. And so this, yeah, this perspective of thinking of
+
+04:51.540 --> 05:09.220
+ matrices in terms of kind of collections of columns will come up a lot. Do you
+
+05:09.220 --> 05:12.620
+ have anything in particular about linear combinations, Jeremy, that you wanted to
+
+05:12.620 --> 05:36.380
+ say? I was just thinking this is something I only came to kind of recently, like the idea that rather than going across the rows and down the columns, it's like a linear combination of columns, but in data science the way you're showing comes up much more, like it's kind of statistical, you know, like linear regression is just a weighted sum of columns. I just think this is super helpful.
+
+05:36.380 --> 05:43.420
+ Thank you. Yeah, and to note, like in data science, often the A1, each column would
+
+05:43.420 --> 05:45.980
+ stand for a different one of your variables or a different one of your
+
+05:45.980 --> 05:53.500
+ features, and that's one reason it's nice to think of them as a unit. Yeah, we'll
+
+05:53.500 --> 05:59.780
+ come back to linear combinations again. I'm going to show the three blue, one
+
+05:59.780 --> 06:04.420
+ brown video, but probably, I was thinking a different week. Maybe next week we'll
+
+06:04.420 --> 06:10.780
+ come to that. It's also kind of this notation of being able to switch
+
+06:10.780 --> 06:15.740
+ between matrices and columns and individual entries gives you a lot
+
+06:15.740 --> 06:19.020
+ of flexibility because it can be easier and kind of more concise to talk about,
+
+06:19.020 --> 06:22.140
+ like, okay, we're taking a linear combination of the columns as opposed to
+
+06:22.140 --> 06:35.260
+ having to think of it as all the separate entries. Okay, and so I remember
+
+06:35.260 --> 06:40.940
+ we talked about putting matrices together, which is mostly through matrix
+
+06:40.940 --> 06:45.100
+ multiplication, also through matrix addition, matrix vector multiplication,
+
+06:45.100 --> 06:51.860
+ talk about pulling matrices apart, matrix decomposition, and what makes matrix
+
+06:51.860 --> 06:56.140
+ decompositions meaningful are kind of what properties are in the decomposed
+
+06:56.140 --> 07:00.740
+ matrices. It's typically kind of having it decomposed into something that's
+
+07:00.740 --> 07:06.780
+ orthonormal or non-negative, then it's giving you kind of a new perspective or
+
+07:06.780 --> 07:14.180
+ more information. And now I'm going to ask you some questions. Do you remember what
+
+07:14.180 --> 07:19.860
+ the four considerations we talked about for algorithms are? And you can just
+
+07:19.860 --> 07:29.780
+ say one at a time, so if you remember any one of the four. That's a good one here.
+
+07:29.780 --> 07:33.540
+ Toss the catch box.
+
+07:33.540 --> 07:52.420
+ Memory? Like with algorithms, you worry about efficiency, but you also take
+
+07:52.420 --> 07:55.620
+ into consideration how much memory you take up when you write efficient
+
+07:55.620 --> 07:59.540
+ algorithms. So there's a trade-off at times, so we have to consider how much
+
+07:59.540 --> 08:10.060
+ space you have to work with. Does anyone remember a particular consideration with
+
+08:10.060 --> 08:17.580
+ storing matrices in memory? So we discussed how we want to keep our
+
+08:17.580 --> 08:22.140
+ matrices in a cache, potentially like when we're performing operations, so it
+
+08:22.140 --> 08:28.420
+ doesn't, so like our computation doesn't read from, have to read from disk and
+
+08:28.420 --> 08:35.580
+ perform our computation slow. So our algorithms should favor like saving
+
+08:35.580 --> 08:40.420
+ towards like reading from like an L3 cache or something like that.
+
+08:40.420 --> 08:48.380
+ Yeah, that's a very important one. That's about both memory and speed. This idea of something that's really slow is when we're
+
+08:48.380 --> 08:52.500
+ having to take matrices in and out of our fast types of memory. Does anyone
+
+08:52.500 --> 08:59.340
+ remember the fancy vocabulary word for that issue that Connor described? Okay, I
+
+08:59.340 --> 09:16.460
+ heard it, does anyone want to say it? Is it locality? Yeah, so in here we've kind of gone from memory to speed because
+
+09:16.460 --> 09:22.340
+ locality relates to both, but again classified it as under a speed issue. Does anyone
+
+09:22.340 --> 09:26.300
+ want to say any of the other, well actually I guess to finish up memory, something else
+
+09:26.300 --> 09:30.620
+ that comes up is the idea of sparse versus dense matrices, and do you want to
+
+09:30.620 --> 09:39.340
+ store all your entries or just kind of store, okay these are the nonzero ones. So
+
+09:39.340 --> 09:56.020
+ what else comes up under speed as a consideration? Okay, parallelization? Yes, yeah, do you want to say more about that? So this is the idea that you
+
+09:56.020 --> 09:59.820
+ have a process where it doesn't have to be serial, you could like compute parts
+
+09:59.820 --> 10:09.660
+ of the result all at the same time and combine them together. Exactly. Anything else under speed?
+
+10:15.540 --> 10:23.260
+ Okay. You want to avoid redundant computation when you go through? Yes. So I guess they fall under the
+
+10:23.260 --> 10:31.260
+ efficiency umbrella. Something that came up in the highlight video is that
+
+10:31.260 --> 10:35.780
+ sometimes you have these trade-offs of like redundant computation could allow
+
+10:35.780 --> 10:40.860
+ you to, I don't know, better parallelize or have to do fewer memory transfers. But yeah, in
+
+10:40.860 --> 10:44.860
+ general, avoiding it is good.
+
+10:44.860 --> 10:52.820
+ Okay, I'll go ahead and say one. Vectorization is another one I was
+
+10:52.820 --> 10:56.980
+ thinking of, and that's when you can have a single instruction acting on multiple
+
+10:56.980 --> 11:03.580
+ data, so SMPTE, and that's typically handled for you by lower-level libraries.
+
+11:03.580 --> 11:09.500
+ So we briefly learned about BLAST and LaPAC, but they would be handling that.
+
+11:09.500 --> 11:15.180
+ And so that's different than parallelization. Often in parallelization you have
+
+11:15.180 --> 11:22.220
+ different cores doing the same work on different parts of your data.
+
+11:22.220 --> 11:26.180
+ Let me check, I have a list.
+
+11:31.340 --> 11:35.620
+ Okay, so I just kind of mentioned there, with parallelization, this idea of
+
+11:35.620 --> 11:40.780
+ scaling to multiple cores. There's one other issue I mentioned with speed
+
+11:40.780 --> 11:48.020
+ that's actually a pretty classic consideration around speed. Yes, I'm going to give you the
+
+11:48.020 --> 11:54.300
+ microphone for that. Runtime complexity. Exactly, yes.
+
+11:57.540 --> 12:04.420
+ Okay, so I think we've hit speed pretty thoroughly. So we talked about memory use, speed, scalability, and
+
+12:04.420 --> 12:10.500
+ parallelization, and then there's a fourth big area that's important to us with our algorithms.
+
+12:16.500 --> 12:22.500
+ Accuracy? Exactly, and can you say any of the categories under accuracy?
+
+12:22.500 --> 12:27.620
+ I cannot. Okay, that's fine, accuracy is important.
+
+12:27.620 --> 12:36.020
+ Approximate algorithms versus algorithms that have taken a very long time, but give you the exact answer.
+
+12:36.020 --> 12:39.540
+ Exactly, yeah, that's an important one.
+
+12:39.540 --> 12:44.900
+ Yeah, doing something that might be slightly less accurate, but much faster.
+
+12:44.900 --> 12:49.540
+ And then what's another reason why sometimes approximate algorithms are appealing?
+
+12:49.540 --> 13:10.740
+ Yes, so if we can't solve it, so NP-hard problems are ones where, kind of for large problems,
+
+13:10.740 --> 13:15.940
+ that's no reasonable speed, no solution with a reasonable speed has been found.
+
+13:15.940 --> 13:23.460
+ Something else I was thinking of is often your input data may be inaccurate, or not that precise, or have errors in it,
+
+13:23.460 --> 13:30.260
+ and so having a highly accurate algorithm is kind of a waste then, because it's not going to be that precise
+
+13:30.260 --> 13:41.380
+ given the quality of your data. Also, approximate algorithms, the randomness, they tend to require
+
+13:41.380 --> 13:46.420
+ randomness, and the randomness often results in a better generalizability.
+
+13:46.420 --> 13:53.940
+ Oh yes, yeah, so it's a way to avoid overfitting. You can kind of think of it as an automatic regularization technique.
+
+13:53.940 --> 14:14.980
+ Any other kind of categories underneath accuracy? We talked about approximate algorithms. Any ideas?
+
+14:25.140 --> 14:32.660
+ By setting up the tolerance not too tiny, very small, so set up a stopping point or the tolerance level.
+
+14:32.660 --> 14:37.140
+ Yeah, the number of those will let you do that.
+
+14:37.140 --> 14:42.420
+ And a kind of a related issue where this often comes up is floating point arithmetic,
+
+14:42.420 --> 14:46.820
+ and so that's this idea, or kind of the system that computers have for storing numbers.
+
+14:46.820 --> 14:55.460
+ And so math is infinite, it's continuous, and computers are finite and discrete, kind of by nature.
+
+14:55.460 --> 15:00.340
+ And so floating point arithmetic is the standard of how computers store numbers,
+
+15:00.340 --> 15:04.980
+ and it kind of means that numbers aren't continuous, there are gaps between them.
+
+15:04.980 --> 15:11.460
+ Does anyone remember what the gap that is half of the distance between one and the next closest number is?
+
+15:11.460 --> 15:21.460
+ Machine epsilon? 2 to the negative 53, I think.
+
+15:21.460 --> 15:29.460
+ So machine epsilon, that's a kind of term that comes up a fair amount, so you can't get more accurate than that,
+
+15:29.460 --> 15:35.460
+ since that's this gap that computers can't capture. Jeremy?
+
+15:35.460 --> 15:41.460
+ Did you want to mention why it's not necessarily 2 to the negative 53?
+
+15:41.460 --> 15:53.460
+ Oh, so the implementation may vary by computer, although IEEE does have standards that it kind of recommends for most,
+
+15:53.460 --> 15:55.460
+ and most computers are following those standards.
+
+15:55.460 --> 16:07.460
+ But yeah, a lot of these things do end up becoming more implementation dependent to the specific computer.
+
+16:07.460 --> 16:13.460
+ And then one other big area of accuracy that we'll be talking about more later in the course.
+
+16:13.460 --> 16:21.460
+ I'll give you a hint. We saw the eigenvalues, we saw a specific problem where we just changed the input a little bit,
+
+16:21.460 --> 16:33.460
+ and the eigenvalues went from being, I think, 1 and 1 to 0 and 2, which is a huge change in the solution of the eigenvalue problem.
+
+16:33.460 --> 16:37.460
+ Does anyone remember what that's called?
+
+16:37.460 --> 16:39.460
+ Yeah.
+
+16:39.460 --> 16:41.460
+ Stability?
+
+16:41.460 --> 16:47.460
+ Yeah, that's actually conditioning and stability, and those terms are sometimes used interchangeably.
+
+16:47.460 --> 16:56.460
+ One refers to the problem and one refers to the algorithm, and that's an issue that we'll return to more as the course goes on.
+
+16:56.460 --> 16:58.460
+ So yeah, I think that was a good review.
+
+16:58.460 --> 17:06.460
+ Definitely kind of stay mindful of those concepts since we'll see them show up in different places.
+
+17:06.460 --> 17:29.460
+ Okay, thanks.
+
+17:29.460 --> 17:36.460
+ Okay, so I wanted to return to NMF and SBD but from a very different perspective.
+
+17:36.460 --> 17:43.460
+ So I have an Excel notebook, and I've uploaded this to GitHub. It's called Britlet.
+
+17:43.460 --> 17:48.460
+ And here all the calculations, I actually did them in a Jupyter notebook with Python,
+
+17:48.460 --> 17:56.460
+ but I want to use this as a way to really visualize the matrices to kind of get a different perspective on what's going on.
+
+17:56.460 --> 18:03.460
+ Let me make this larger.
+
+18:03.460 --> 18:06.460
+ Okay, great.
+
+18:06.460 --> 18:16.460
+ And also at any time if you're having trouble hearing me or having trouble seeing something on the screen, please let me know so I can adjust.
+
+18:16.460 --> 18:27.460
+ So here on the left are 27 works of kind of classic British literature. They're all written by the author's last name followed by the beginning of the title.
+
+18:27.460 --> 18:37.460
+ So some of these I recognize. The second is Jane Austen's Pride and Prejudice, Sense and Sensibility, Vanity Fair.
+
+18:37.460 --> 18:45.460
+ And then along the top are different vocabulary words that showed up in the books.
+
+18:45.460 --> 18:56.460
+ So last time we talked some about a count matrix, which would have the counts of how many times the words showed up in each work.
+
+18:56.460 --> 19:06.460
+ And this is a TF-IDF. Does anyone remember the concept behind TF-IDF?
+
+19:06.460 --> 19:10.460
+ We kind of went over it pretty quickly.
+
+19:10.460 --> 19:23.460
+ Is that a hand? Oh no, sorry. Okay, so that stands for term frequency inverse document frequency, and it's basically a way to normalize term document matrix.
+
+19:23.460 --> 19:35.460
+ It takes into account that some words are super common and show up all the time. It also takes into account the length of the documents themselves.
+
+19:35.460 --> 19:44.460
+ And so this, if we hadn't been using it, these numbers here would be integers. Since we are, this is just kind of a normalized equivalent,
+
+19:44.460 --> 19:48.460
+ which is taking those things into account. And actually I did this both ways.
+
+19:48.460 --> 19:57.460
+ And when I did it on the counts, I ended up with a lot more of words like like or his kind of taking more prominence.
+
+19:57.460 --> 20:04.460
+ So I thought it was a little bit more interesting here to kind of give more attention to, really this kind of gave more attention to the proper names.
+
+20:04.460 --> 20:12.460
+ But to take a kind of look at, actually here's a good one, the name Phineas is zero for most of these.
+
+20:12.460 --> 20:18.460
+ It's the largest for a book titled Phineas. So that fits with what we would expect.
+
+20:18.460 --> 20:27.460
+ Another one we can check is Cathy Linton is the protagonist of Wuthering Heights.
+
+20:27.460 --> 20:37.460
+ And so you'll see Linton shows up in a few books, but it's much bigger. Are you all able to see the numbers OK?
+
+20:37.460 --> 20:47.460
+ So Linton is point four for Wuthering Heights and then zero for most point zero zero one point zero zero zero four and some.
+
+20:47.460 --> 20:56.460
+ So this seems reasonable of what we would get. And so this is kind of when we were talking about representing a class of documents as a matrix.
+
+20:56.460 --> 21:04.460
+ This is what we were doing. And we don't have any information about the syntax. It's really just about kind of the word frequencies in these different documents.
+
+21:04.460 --> 21:14.460
+ So I thought this was nice to be able to visualize it. Any questions just about this representation?
+
+21:14.460 --> 21:21.460
+ OK, so let's go to SVD.
+
+21:21.460 --> 21:27.460
+ So here with SVD, we've gotten the U matrix back, which is so again, we have 27 documents.
+
+21:27.460 --> 21:45.460
+ It's a 27 by 10 in this case. And can anyone tell me what properties this matrix U has?
+
+21:45.460 --> 21:53.460
+ The columns are orthonormal. Exactly. Thank you. And so we can check that in Excel. So I come down here.
+
+21:53.460 --> 21:59.460
+ And so I looked at the correlation between the columns of U.
+
+21:59.460 --> 22:14.460
+ So here, if you can see this, this is doing the sum product, which is basically what Excel calls the dot product of B2 to B28, which is this column in blue with itself.
+
+22:14.460 --> 22:21.460
+ And we got one. And then here we're doing it with that column to the column next to it.
+
+22:21.460 --> 22:29.460
+ And we get something 10 to the negative 16th, which is practically zero. And kind of ditto as we scroll over.
+
+22:29.460 --> 22:34.460
+ And when you click on the formula in Excel, it highlights which terms are being used.
+
+22:34.460 --> 22:42.460
+ So the dot product of these two arrays, 10 to the negative 16th, close to zero.
+
+22:42.460 --> 22:51.460
+ So this fits with what we would expect for you having orthonormal columns. And then Kelsey said it was orthonormal.
+
+22:51.460 --> 22:59.460
+ This is true if we were to have 27 columns, then the rows would also be orthonormal with each other.
+
+22:59.460 --> 23:07.460
+ Here they're not since I've kind of chopped it off at 10, just to save space.
+
+23:07.460 --> 23:17.460
+ So that's U. Next we have a matrix S. And what's special about S?
+
+23:17.460 --> 23:20.460
+ You can just shout it out.
+
+23:20.460 --> 23:27.460
+ It's diagonal, yes. So S is not the most exciting, but it's nice. It's simple. It's diagonal.
+
+23:27.460 --> 23:33.460
+ It's also ordered such that the largest value is first and they're in descending order.
+
+23:33.460 --> 23:39.460
+ And S kind of intuitively gives us a notion of importance.
+
+23:39.460 --> 23:47.460
+ Here it's also what allows us to kind of get, since orthonormal matrices, you know, we're getting these dot products of zero or one,
+
+23:47.460 --> 23:54.460
+ since our original matrix could have any values. And we would see this even more if we had done the one of the raw counts.
+
+23:54.460 --> 23:59.460
+ In order to kind of get some magnitude back in there, we need to be able to multiply by numbers bigger than one.
+
+23:59.460 --> 24:05.460
+ And S is letting us do that. So this is S.
+
+24:05.460 --> 24:13.460
+ And then this is V. And V might remind you of U in that it's rows are orthonormal here.
+
+24:13.460 --> 24:17.460
+ And so you can see kind of the dimensions of these.
+
+24:17.460 --> 24:24.460
+ So U was the titles of the works by topics.
+
+24:24.460 --> 24:30.460
+ And note that we're kind of assigning the meaning topics. You know, that wasn't anywhere in our input.
+
+24:30.460 --> 24:36.460
+ And that's a kind of notion that makes sense for this dimension.
+
+24:36.460 --> 24:43.460
+ Then S is topics by topics. And V is topics by words.
+
+24:43.460 --> 24:50.460
+ And so here it's, I think we should look at a few examples. We can kind of go backwards.
+
+24:50.460 --> 25:02.460
+ So if we look at Darcy, well, that shows up in several. It kind of shows up most in topic four and topic seven.
+
+25:02.460 --> 25:09.460
+ So we might expect Pride and Prejudice to have a lot of topic four and topic seven.
+
+25:09.460 --> 25:15.460
+ You can check that hypothesis. Pride and Prejudice has a lot of topic two as well.
+
+25:15.460 --> 25:21.460
+ It does have a lot of topic four. What? Oh, negative of topic two.
+
+25:21.460 --> 25:24.460
+ OK. So, yeah, the largest values are for topic four and topic seven.
+
+25:24.460 --> 25:28.460
+ So we saw the word Darcy was very noticeable in topics four and seven.
+
+25:28.460 --> 25:32.460
+ Pride and Prejudice has a lot of topic four and topic seven.
+
+25:32.460 --> 25:40.460
+ Yeah, as Jeremy pointed out, I misread this topic two is negatively present in Pride and Prejudice,
+
+25:40.460 --> 25:43.460
+ which is kind of hard to think about what that means.
+
+25:43.460 --> 25:51.460
+ This is one of the downsides of SBD. There's probably less intuitive meaning there to talk about a book having a negative topic.
+
+25:51.460 --> 25:57.460
+ And let's do it. Actually, I should check. Do any of you have any favorite British novels that are showing up on here?
+
+25:57.460 --> 26:02.460
+ That you want to suggest a word from?
+
+26:02.460 --> 26:06.460
+ Check. I do not think so.
+
+26:06.460 --> 26:10.460
+ Yeah, this is kind of a bit older.
+
+26:10.460 --> 26:19.460
+ Yeah, I did have to Google a few of these as I was kind of sanity checking my data to see.
+
+26:19.460 --> 26:27.460
+ I know a lot of people say negative stuff makes sense in topic modeling, but sometimes it could, right?
+
+26:27.460 --> 26:34.460
+ Like if you've got a really miserable book and then you've got a topic which is like happy and joy,
+
+26:34.460 --> 26:38.460
+ then there would be a negative correlation. Sometimes it maybe makes sense.
+
+26:38.460 --> 26:46.460
+ Yeah, so let's look at topic two and see if it reminds us of the opposite of Pride and Prejudice.
+
+26:46.460 --> 26:54.460
+ Let's see if anything stands out as being a particularly large number here.
+
+26:54.460 --> 27:00.460
+ I bet some Dickens book would have industry-type topics and probably Pride and Prejudice would have a lot about factories.
+
+27:00.460 --> 27:05.460
+ That's true, yeah.
+
+27:05.460 --> 27:09.460
+ Yeah, this is harder because it's a lot of names.
+
+27:09.460 --> 27:14.460
+ I don't know, Phineas is, oh, well, although, so you can also get these double negatives.
+
+27:14.460 --> 27:21.460
+ So topic two is negative 0.15 Phineas.
+
+27:21.460 --> 27:30.460
+ So I would actually expect something with Phineas in it to then have, I guess, negative of topic two to get negative of a negative.
+
+27:30.460 --> 27:36.460
+ Toby is big. OK.
+
+27:36.460 --> 27:43.460
+ So, yeah, I don't remember a Toby in Pride and Prejudice, so that's fitting that it's negative.
+
+27:43.460 --> 27:47.460
+ And let's look at, let's look at Kathy Linton again for Wuthering Heights.
+
+27:47.460 --> 27:53.460
+ So if we come over here to Linton.
+
+27:53.460 --> 28:01.460
+ That shows up most in, what is line nine, I guess topic eight.
+
+28:01.460 --> 28:08.460
+ Topic eight. So let's go over here. See if Wuthering Heights has.
+
+28:08.460 --> 28:14.460
+ Yeah, so a lot of topic eight is in Wuthering Heights, so that's fitting.
+
+28:14.460 --> 28:17.460
+ Any other questions about kind of how to look at this? Yes.
+
+28:17.460 --> 28:25.460
+ I'm doing it through the microphone, Jeremy.
+
+28:25.460 --> 28:31.460
+ So here we have a lot of words, right? But we finally settle down into top ten topic.
+
+28:31.460 --> 28:34.460
+ How does this ten come around?
+
+28:34.460 --> 28:43.460
+ So and actually I cheated or I didn't tell you.
+
+28:43.460 --> 28:49.460
+ So I cheated a bit. There were originally fifty five thousand words in these novels,
+
+28:49.460 --> 28:54.460
+ and I used all of those for the Python part of this, but I didn't want to put that in Excel.
+
+28:54.460 --> 28:58.460
+ So I just chose the top sixty four words.
+
+28:58.460 --> 29:05.460
+ But really how this worked was so for a full SVE, we were getting twenty seven or twenty seven novels.
+
+29:05.460 --> 29:10.460
+ We got twenty seven topics and each could involve all fifty five thousand words.
+
+29:10.460 --> 29:19.460
+ So I just chose the top eight words from the top ten topics and put that in this Excel workbook.
+
+29:19.460 --> 29:25.460
+ So each of the twenty seven words could have components from all fifty five thousand words.
+
+29:25.460 --> 29:29.460
+ So I looked for what had the greatest magnitude.
+
+29:29.460 --> 29:43.460
+ And remember, because the topics are because S is ordered in terms of the values, taking the top ten makes sense because these have larger values.
+
+29:43.460 --> 29:49.460
+ And so what that means is they make up a bigger component of the original matrix.
+
+29:49.460 --> 29:56.460
+ So remember, the goal here is that we want U times S times V to give us our original matrix back.
+
+29:56.460 --> 30:02.460
+ And since I've only used ten of the topics, it's not going to give us the original matrix, but hopefully it's close.
+
+30:02.460 --> 30:10.460
+ And that's why this is used in data compression.
+
+30:10.460 --> 30:14.460
+ It's a general question. Would this be a block of our original matrix?
+
+30:14.460 --> 30:20.460
+ Could we throw, would this be an actual block in the original full matrix?
+
+30:20.460 --> 30:27.460
+ Oh yes, that's a good question. Let me write that down. This is a great question.
+
+30:27.460 --> 30:37.460
+ Tim brought up, you're Tim, right? Brought up block matrices, which are a pretty important concept in numerical linear algebra.
+
+30:37.460 --> 30:58.460
+ So let me go back to...
+
+30:58.460 --> 31:11.460
+ So the idea of a block matrix is to kind of think about a matrix as having smaller components. So here...
+
+31:11.460 --> 31:30.460
+ I guess if U is 27 by 55,000, we've just taken kind of this section that was... let me make it a little bit wider just so I can write on it.
+
+31:30.460 --> 31:42.460
+ I've taken this section that was 27 by 64, but we could still think of the rest of the matrix being there, and it's 27 by...
+
+31:42.460 --> 31:55.460
+ whatever 55,000 minus 64 is, so I'll round that to 54,000, but it's actually 54,900.
+
+31:55.460 --> 32:07.460
+ Then S could be written as...
+
+32:07.460 --> 32:25.460
+ So here S was 27 by 27, but we were only interested in the top 10 by 10, and that leaves us with like four other matrices.
+
+32:25.460 --> 32:47.460
+ 10 by 7, 7 by 10, and 7 by 7, and then V... oh, that's not the right...
+
+32:47.460 --> 33:01.460
+ Oh, sorry, I miswrote, guys. U is not 27 by 55,000. U is 27 by 27.
+
+33:01.460 --> 33:07.460
+ Sorry about that. Going back, U is the works by the topics.
+
+33:07.460 --> 33:28.460
+ I was confused. This was actually 27 by 10 and then 27 by 7. I was writing V there, which is 27 by 55,000.
+
+33:28.460 --> 33:44.460
+ Yes. No. Oh, yes. 17. V is the one that's 27 by 55,000, and V is topics by words.
+
+33:44.460 --> 33:58.460
+ Then here, because we've just picked off the top 10, this is where we get that 10 by 64 matrix.
+
+33:58.460 --> 34:15.460
+ This would be 10 by 54,000, 17 by 64, and 17 by 54,000.
+
+34:15.460 --> 34:30.460
+ Anyway, so block matrix is kind of breaking these matrices down into smaller matrices, and you'll notice that by how matrix multiplication works that the result can be written as block matrices, kind of products of these within them.
+
+34:30.460 --> 34:52.460
+ So here, the product would be, if I call this U1 and U2, kind of the top square would be U1 times S1 times V1, and so on.
+
+34:52.460 --> 35:00.460
+ I actually really should have done this with an example with just two matrices to start. And actually, maybe let me do that.
+
+35:00.460 --> 35:03.460
+ This is getting to be a complicated example.
+
+35:03.460 --> 35:15.460
+ But this is a really, can be a very efficient way of doing matrix multiplication or matrix operations, and it takes into account locality of the idea of, you know, you can bring in this matrix that's stored near,
+
+35:15.460 --> 35:28.460
+ kind of, you know, the part that's stored together in memory, bring it into your cache, multiply it by other block matrices, kind of use it, and then when you're done, put it back.
+
+35:28.460 --> 35:54.460
+ Okay, so, scratch that, we're going to do a much simpler example. If we have A is A1 and A2, and here A1 and A2 are both matrices, and say we multiply that by V1 and V2,
+
+35:54.460 --> 36:20.460
+ the result is A1 dot B1, A2 dot B1, oh, sorry, okay, this is getting too convoluted. I will come back to this next time with a preworked example for you.
+
+36:20.460 --> 36:30.460
+ So, yeah, we'll revisit this next time. I'm not doing this well on the fly. But that was a good question, and we'll go back to it.
+
+36:30.460 --> 36:44.460
+ So, back to kind of our perspective of SVD from within Excel. Any other questions about SVD, or kind of this way of looking at it?
+
+36:44.460 --> 36:58.460
+ Oh, and then I guess kind of one fine point is that the words I've picked out aren't all clumped together, so I was kind of having to, you would be rearranging your indices.
+
+36:58.460 --> 37:14.460
+ Alright, let's switch to NMF. So, NMF stands for non-negative matrix factorization, which kind of gives away that the key property of the matrices is that they're non-negative.
+
+37:14.460 --> 37:29.460
+ So, here, or with NMF, you get just two matrices, typically called W and H, that you're factoring into. Zoom in.
+
+37:29.460 --> 37:42.460
+ Yeah, so again, we have the 27 works, and I've chosen 10 topics. With NMF, that's a parameter. You can say how many topics you want to calculate.
+
+37:42.460 --> 37:52.460
+ Does anyone notice something that's kind of distinctive about this matrix?
+
+37:52.460 --> 38:01.460
+ So, that's true. There are no negatives. It's sparse. Yeah, I heard several people say sparse, which means there are a lot of zeros.
+
+38:01.460 --> 38:13.460
+ And this is, that's typically an additional constraint that's put on NMF matrices. And it also makes sense because kind of you don't want a value everywhere because you can't get negative.
+
+38:13.460 --> 38:20.460
+ So, if you think of kind of like building up your original matrix, you don't want to have a positive place.
+
+38:20.460 --> 38:26.460
+ You can't have it get too large because you're never going to have a negative to cancel that out.
+
+38:26.460 --> 38:33.460
+ So, here, let's take, and then I'll show you H is over here.
+
+38:33.460 --> 38:38.460
+ And again, this is also sparse and also non-negative.
+
+38:38.460 --> 38:45.460
+ And so, this we can look at. So, Kathy shows up a lot in topic six.
+
+38:45.460 --> 38:58.460
+ If we go back here, we would expect withering heights to have a lot of topic six, and it does. It has 0.79, which is kind of on the larger side.
+
+38:58.460 --> 39:09.460
+ So, this is a, on the surface at least, this seems more interpretable, I think, of kind of finding large numbers, seeing what topics they line up with.
+
+39:09.460 --> 39:19.460
+ What are some, are there any downsides to NMF?
+
+39:19.460 --> 39:25.460
+ Something, oh, Kelsey?
+
+39:25.460 --> 39:29.460
+ In the back, so it doesn't have a unique solution the way SVD does.
+
+39:29.460 --> 39:35.460
+ Sure, it doesn't have a unique solution the way SVD does. That's a good one.
+
+39:35.460 --> 39:38.460
+ Any others?
+
+39:38.460 --> 39:42.460
+ This is kind of closely related.
+
+39:42.460 --> 39:46.460
+ Yes?
+
+39:46.460 --> 39:51.460
+ Isn't it difficult to solve?
+
+39:51.460 --> 39:54.460
+ Yeah, the solution's ambiguous.
+
+39:54.460 --> 40:04.460
+ It's also, so typically you have to add additional constraints.
+
+40:04.460 --> 40:16.460
+ It is, yeah, our original approach, although SVD can also be slow to calculate depending on what you're doing, but yeah, we did run into speed problems on Thursday. Jeremy?
+
+40:16.460 --> 40:30.460
+ I was going to say the lack of a diagonal is a problem because it's not as easy to see which topics are important, but then I was wondering, can you just look at the norm of each row or the norm of each column to get the same kind of idea?
+
+40:30.460 --> 40:40.460
+ That's a really good point. I actually hadn't thought about that. I would say not having it ordered for you of what's most important, and I actually don't know if the norm gives you equivalent information.
+
+40:40.460 --> 40:53.460
+ The only reason we needed the diagonal before is because of the orthonormal constraint. This doesn't have the constraint, it has the concept of how big each row and each column is, so maybe I was wrong and that's not a problem.
+
+40:53.460 --> 41:05.460
+ I think it would not be straightforward just in that you've got the topic represented both in terms of how it intersects with the works in W and how it intersects with the vocabulary words in H.
+
+41:05.460 --> 41:18.460
+ So you'd have to do some sort of normalization on the norm. So I would say it's not as straightforward to find the topic importance. Can you toss it to Tim who has a point?
+
+41:18.460 --> 41:24.460
+ Did you say that singular value composition was unique? It's the singular values are unique.
+
+41:24.460 --> 41:32.460
+ Oh yes, thank you. That's a great clarification. It's the singular values are unique, U and V are not unique.
+
+41:32.460 --> 41:35.460
+ Why not?
+
+41:35.460 --> 41:55.460
+ I think some of it you can also, so definitely you can multiply by negatives. This will show up like if you multiply U and V by negatives, and then particularly when you're doing the full version for the kind of fill in columns and whichever has the larger dimension, those part are not unique.
+
+41:55.460 --> 42:09.460
+ Okay, so another kind of downside to NMF I was thinking about is that it's inexact. So SVD, if you do the full SVD, you can get something that fully reconstructs your matrix when you multiply back through.
+
+42:09.460 --> 42:26.460
+ NMF is inexact though, because you're not even guaranteed that a non-negative W and H exist that perfectly multiply to get your original matrix.
+
+42:26.460 --> 42:40.460
+ And the idea is you would multiply W and H together, and here you can see in blue, going row by column. Yes?
+
+42:40.460 --> 42:56.460
+ Is a downside, like in SVD having orthogonal topics maybe becomes more interpretable because there's no overlap between them, whereas in this case there might be some overlap and that might be kind of weird?
+
+42:56.460 --> 43:04.460
+ That's true, you could have overlap here, or you will have overlap since they're not not orthonormal.
+
+43:04.460 --> 43:14.460
+ Alright, I have a general question. So in practice, I just see how the process goes, right? So suppose we do the SVD decomposition, and then say,
+
+43:14.460 --> 43:24.460
+ it's exactly like we carry out every unique singular value. For example, here you only choose 10 out of maybe 30 topics.
+
+43:24.460 --> 43:41.460
+ So for example, we have 30 eigenvalues, we construct the S matrix, and then we decide whether we want top 10 or top 20, and then once we finalize the number of topics, then we reconstruct the U and V. Is that how it works?
+
+43:41.460 --> 43:57.460
+ So this is a great question. So I think you're asking, kind of, do you have to calculate the full SVD of getting all the topics and then just throw away the ones you don't want? And you do not, and we'll be talking about that in more detail with the new material today.
+
+43:57.460 --> 44:20.460
+ It is possible to just calculate the topics you want for SVD, although that's kind of a newer approach and there's still a surprising number of materials that recommend you, or like, found a lot of algorithms online that will kind of be calculating the full SVD and then just throwing information away, even though that's much slower. But yeah, you don't have to do that.
+
+44:20.460 --> 44:28.460
+ Oh, wait, grab the microphone.
+
+44:28.460 --> 44:44.460
+ So I was just wondering, in PCA, do you have to still, because in that sense I guess you do have to calculate all the eigenvalues and vectors so that you can pick the top eigenvalues that corresponds to the eigenvectors, which are going to be your principal components. Is that the case?
+
+44:44.460 --> 45:00.460
+ It actually depends. So some algorithms with, and we'll talk in a later lesson about algorithms for calculating eigenvalues, but some algorithms kind of pick out the largest eigenvalues first, particularly like iterative algorithms for finding them.
+
+45:00.460 --> 45:20.460
+ And could you also please talk about the purpose of doing NMF? Because I remember in the advanced machine learning class, we kind of talked about a recommendation system where this thing can be helpful, but in this sort of top modeling area, why it's helpful?
+
+45:20.460 --> 45:34.460
+ I think the main reason people argue for NMF is interpretability. And I tend to think interpretability is sometimes overblown, just in that you can get interpretability from any algorithm by altering your inputs that you put into it.
+
+45:34.460 --> 45:46.460
+ So a lot of kind of supposedly black box algorithms are still interpretable. But that's, I would say, the main argument I hear for it. But it is definitely something that shows up kind of a fair amount. Jeremy?
+
+45:46.460 --> 46:05.460
+ I don't know if this is interpreting, but I thought I heard something else in your question. Given that you have an algorithm that you can select how many columns, topics you want exists, do you have to run the whole thing ahead of time before knowing how many to pick off?
+
+46:05.460 --> 46:22.460
+ So I know later on you're going to show us the little pictures, like here's the graph of how the singular values decrease, but do you have to run the whole thing to draw that picture and then run it again to pick off the number of columns?
+
+46:22.460 --> 46:42.460
+ Okay. So this is kind of the question of do you know how your singular values are decreasing as you go, because that could let you know what a good stopping point is. And yes, you can kind of look at your singular values to have a sense of if you want to calculate more.
+
+46:42.460 --> 46:54.460
+ You would have to calculate the whole thing first, in that case, to draw the picture, to then go back and decide how many to keep.
+
+46:54.460 --> 47:07.460
+ That's true, but you can be calculating for a set number, see if you want to calculate more, as opposed to doing the whole thing.
+
+47:07.460 --> 47:15.460
+ If we do robust PCA, we'll actually see an approach that works that way.
+
+47:15.460 --> 47:26.460
+ Any other questions about this other view of AdamF and SVD?
+
+47:26.460 --> 47:38.460
+ Can you talk about the pros and cons of storing a sparse matrix?
+
+47:38.460 --> 47:51.460
+ So yeah, the pros and cons briefly, and we'll go into more detail of this later because we'll see kind of how SciPy handles this, and SciPy actually gives you three different ways to store sparse matrices, all of which have their own tradeoffs.
+
+47:51.460 --> 48:06.460
+ But if you don't have that many non-zero entries, it's kind of like wasting all this memory to just be storing zero in lots of spaces and can take less memory to only store the sparse version.
+
+48:06.460 --> 48:22.460
+ And this also comes up in algorithms of if you do a lot of computations with just zero, you might be doing wasted computations because you know anything times zero is zero, so that can be a way to save time as well.
+
+48:22.460 --> 48:45.460
+ Yeah, I was actually thinking with this question about the usefulness of AdamF. Actually first, just a few pictures I wanted to show to kind of revisit what we talked about, maybe I'll start here, on Thursday, and I've kind of updated the notebook from Thursday, just some minor additions, if you want to grab that again.
+
+48:45.460 --> 49:06.460
+ But I had showed that if you, actually I guess first I should show kind of using this perspective of matrix-matrix multiplication being about taking linear combinations of columns, in the case of AdamF with reconstructing someone's face, let me make this bigger,
+
+49:06.460 --> 49:17.460
+ and you can see that here we've got facial features, and so this is kind of like the bridge of someone's nose and underneath their eyes, and another feature might be the tip of somebody's nose.
+
+49:17.460 --> 49:25.460
+ And here a feature is somebody's brows, and you can think about taking these different features and wanting to add up a combination of them to make somebody's face.
+
+49:25.460 --> 49:36.460
+ And so here, kind of each face is taken by, or made by doing a linear combination of these facial feature columns.
+
+49:36.460 --> 49:41.460
+ So this is kind of a good example of this linear combination perspective.
+
+49:41.460 --> 49:52.460
+ And so here the coefficients are coming from this column, they're telling you the importance of each different facial feature, and you take your linear combination, and then over here you have faces.
+
+49:52.460 --> 49:55.460
+ So this is kind of an example of that.
+
+49:55.460 --> 50:16.460
+ And coming back to kind of the motivation for AdamF, if you were doing something like SVD, you would be able to have negative values in the faces, which has perhaps less meaning of kind of, I mean I guess that's like canceling out some other facial feature,
+
+50:16.460 --> 50:28.460
+ but kind of coming up with things that are only non-negative is more immediately interpretable.
+
+50:28.460 --> 50:33.460
+ I think we should probably stop for our break soon.
+
+50:33.460 --> 50:42.460
+ So let's meet back in seven minutes, and we will be continuing with some new material later in class.
+
+50:42.460 --> 50:52.460
+ So I just wanted to briefly show a tweet that I saw this morning that references one of the concepts we talked about last week.
+
+50:52.460 --> 50:58.460
+ Does anyone remember what temporaries are?
+
+50:58.460 --> 51:13.460
+ It's like keeping the memory A plus B, but when you add C then you have to forget the result of A plus B.
+
+51:13.460 --> 51:28.460
+ So it is that you're having to allocate memory to store A plus B, right? And if you had a longer computation, like we saw an example last week that, I forget, it was like A times B squared plus the natural log of C.
+
+51:28.460 --> 51:46.460
+ NumPy was storing, or the old version of NumPy was storing the natural log of C in one place. It was having to store A squared, A squared times B, and allocate all this temporary memory that kind of takes up time and memory to do.
+
+51:46.460 --> 52:00.460
+ And so I saw this. This is an announcement just from two weeks ago that the newest release of NumPy is allowing the reuse of temporaries. So it is still allocating temporaries, but it's allowing to reuse them.
+
+52:00.460 --> 52:17.460
+ So I thought this was kind of a neat example of how this field is kind of always changing and it's interesting to keep up on it and kind of to see it in the news.
+
+52:17.460 --> 52:38.460
+ So kind of before we move on, I wanted to revisit PyTorch and last time, and I just kind of found some material from a PyTorch AutoGrad introduction, but does anyone remember what AutoGrad is for PyTorch?
+
+52:38.460 --> 52:48.460
+ Actually, okay, even before that, let me ask, do you remember why I decided to use PyTorch last time?
+
+52:48.460 --> 53:03.460
+ Yes, I hear a lot of people saying GPU. I wanted to speed things up by running them on the GPU and PyTorch, one of its purposes is it's a deep learning framework, but another purpose is that it's a alternative to NumPy that runs on the GPU.
+
+53:03.460 --> 53:10.460
+ And does anybody remember the method that we use to tell PyTorch to put things on the GPU?
+
+53:10.460 --> 53:17.460
+ Yes, I heard a lot of people say dot CUDA. And so that, actually, let me go to that.
+
+53:17.460 --> 53:24.460
+ There was a note that if you're not using a GPU, you want to delete the dot CUDA's that show up here.
+
+53:24.460 --> 53:29.460
+ But that's where we're explicitly telling PyTorch to put things on a GPU.
+
+53:29.460 --> 53:39.460
+ Okay, so AutoGrad. Does anybody remember what that is?
+
+53:39.460 --> 53:41.460
+ Oh, yeah?
+
+53:41.460 --> 53:47.460
+ I don't think I remember it completely, but isn't it like an optimization?
+
+53:47.460 --> 53:51.460
+ So it is very useful for optimization, yes.
+
+53:51.460 --> 53:56.460
+ And so, no, that was good. Definitely in the very right ballpark.
+
+53:56.460 --> 54:01.460
+ So what do we need? We talked about stochastic gradient descent last time.
+
+54:01.460 --> 54:12.460
+ What do we need to know to be able to do gradient descent or stochastic gradient descent?
+
+54:12.460 --> 54:14.460
+ You need to know the derivatives.
+
+54:14.460 --> 54:19.460
+ Exactly, we need derivatives. And so AutoGrad is automatic differentiation.
+
+54:19.460 --> 54:23.460
+ Because if you don't know the derivative and don't want to have to calculate it,
+
+54:23.460 --> 54:26.460
+ in some cases you may not even be able to calculate it,
+
+54:26.460 --> 54:34.460
+ PyTorch's AutoGrad calculates it for you by letting variables keep track of how they were made.
+
+54:34.460 --> 54:40.460
+ When I tell people this, they always assume that it must be doing it really slowly
+
+54:40.460 --> 54:46.460
+ by calculating the function and then the function plus a little bit.
+
+54:46.460 --> 54:53.460
+ Like even Terrence here at USF, I was telling him, he was like, oh, too slow.
+
+54:53.460 --> 54:57.460
+ I kept saying to him, no, it actually calculates it really properly.
+
+54:57.460 --> 55:02.460
+ It's so amazing that it's possible that he can come up and don't believe you.
+
+55:02.460 --> 55:09.460
+ Thank you. This is calculating the derivative very fastly.
+
+55:09.460 --> 55:15.460
+ I just wanted to show some basics of PyTorch again, because I think what we did last time was very quick.
+
+55:15.460 --> 55:21.460
+ So here, creating a variable. This is just a two by two matrix.
+
+55:21.460 --> 55:24.460
+ And we're saying requires grad equals true.
+
+55:24.460 --> 55:30.460
+ And so that's letting it know, hey, we're going to want to be able to get derivatives with respect to this variable later on.
+
+55:30.460 --> 55:36.460
+ And then I'm printing X and it tells me this is just, oh, and I've initialized it to torch.ones.
+
+55:36.460 --> 55:43.460
+ NumPy has a very similar method, np.ones, that initializes a variable all to ones.
+
+55:43.460 --> 55:47.460
+ There's also zeros that initializes all to zeros.
+
+55:47.460 --> 55:52.460
+ So here we have a two by two tensor where the values are all one.
+
+55:52.460 --> 56:01.460
+ And a tensor is just a generalization of a matrix. So you can think of it as a matrix, but it can have higher dimensions.
+
+56:01.460 --> 56:07.460
+ And then X has its data, which in this case is all ones.
+
+56:07.460 --> 56:16.460
+ And it also has a grad attribute, which is going to store the gradient, which right now is zero, because we haven't done anything.
+
+56:16.460 --> 56:24.460
+ So then we do y equals x plus two. We print y. That's all threes.
+
+56:24.460 --> 56:31.460
+ And we'll come back to this idea in lesson, kind of notebook three, but there's something called broadcasting.
+
+56:31.460 --> 56:34.460
+ You'll notice here we're adding a scalar to a matrix.
+
+56:34.460 --> 56:39.460
+ And what it's done is it's basically just kind of multiplied the scalar to be the right dimensions.
+
+56:39.460 --> 56:47.460
+ So basically we added our matrix one, one, one, one, two, two, two, two, two to get all these threes.
+
+56:47.460 --> 56:51.460
+ But this idea of broadcasting is pretty important and we'll see more of it.
+
+56:51.460 --> 56:57.460
+ And then we do z equals y times y times three.
+
+56:57.460 --> 57:08.460
+ The out equals the sum of z. So if we print out z and out, z is 27, 27, 27, 27. Out is 108.
+
+57:08.460 --> 57:14.460
+ And then we do out dot backwards, which is kind of back propagation, and it's calculating the gradient.
+
+57:14.460 --> 57:19.460
+ And let's take a moment.
+
+57:19.460 --> 57:27.460
+ Let's see if this worked. Oh, yes, it did. OK, so remember.
+
+57:27.460 --> 57:31.460
+ We'll write what z is.
+
+57:31.460 --> 57:43.460
+ So y was x plus two squared times three.
+
+57:43.460 --> 57:49.460
+ And we want to take, and then z is the sum of that.
+
+57:49.460 --> 57:56.460
+ And really, kind of if we think of x being the individual entries now, the sum of that is going to be equal to four,
+
+57:56.460 --> 58:00.460
+ kind of times an individual entry, since they're all the same.
+
+58:00.460 --> 58:08.460
+ So that's 12x plus two squared.
+
+58:08.460 --> 58:20.460
+ And if we take the derivative, so we're interested in d out dx.
+
+58:20.460 --> 58:39.460
+ Hold on a moment. I'll come back. OK.
+
+58:39.460 --> 58:44.460
+ OK. So, yeah, I'm not going to sum them yet. So you take the derivative.
+
+58:44.460 --> 58:53.460
+ So you should remember, kind of with an exponent, you pull it down, subtract one off. So that would be six times x plus two to the one power,
+
+58:53.460 --> 58:59.460
+ which is just itself, times the derivative of what's inside, which is just one.
+
+58:59.460 --> 59:05.460
+ And so we're getting that the derivative is six times x plus two.
+
+59:05.460 --> 59:16.460
+ And remember, we're interested in where x is equal to one. So the derivative is six times three equals 18,
+
+59:16.460 --> 59:22.460
+ which is what it's telling us. So PyTorch has done this for us.
+
+59:22.460 --> 59:26.460
+ Any questions about that?
+
+59:26.460 --> 59:35.460
+ Do you remind us about the difference between a tensor and a variable? So tensors and variables have the same API. These are both kind of PyTorch notions,
+
+59:35.460 --> 59:41.460
+ but variables have the AutoGrad option in that they keep track of how they were created.
+
+59:41.460 --> 59:47.460
+ And so you have, if you want to use AutoGrad, you need to use variables.
+
+59:47.460 --> 59:58.460
+ Other questions? So you can see it's really handy to have it calculate the derivative for us.
+
+59:58.460 --> 1:00:13.460
+ OK, so I want to return to kind of where we left off now.
+
+1:00:13.460 --> 1:00:22.460
+ Let's start back with comparing approaches. So Scikit learns NMF. It was fast. We didn't have to tune parameters.
+
+1:00:22.460 --> 1:00:29.460
+ The people that created it used decades of academic research and it was pretty specific to NMF.
+
+1:00:29.460 --> 1:00:36.460
+ And then this is a list of kind of some relatively recent research in NMF.
+
+1:00:36.460 --> 1:00:48.460
+ So you can see it's kind of an active field. And this comes from a Python library called Nimfa that's specifically about NMF.
+
+1:00:48.460 --> 1:00:52.460
+ So then we decided we wanted something that we could use or build ourselves.
+
+1:00:52.460 --> 1:01:01.460
+ So we used PyTorch and stochastic gradient descent. Stochastic gradient descent is a very general purpose optimization algorithm.
+
+1:01:01.460 --> 1:01:08.460
+ So we were just choosing to apply it to NMF, but it works for many, many different optimization problems.
+
+1:01:08.460 --> 1:01:13.460
+ So it's a very good general purpose tool to have. It didn't take us that long to implement.
+
+1:01:13.460 --> 1:01:18.460
+ We did have to do more fiddling with the parameters though. So remember we had a learning rate,
+
+1:01:18.460 --> 1:01:25.460
+ keeping track of what size steps we wanted to take. And it was also not as fast.
+
+1:01:25.460 --> 1:01:32.460
+ We initially tried it in NumPy and because it was so slow we had to switch to PyTorch. Jeremy?
+
+1:01:32.460 --> 1:01:41.460
+ And we also found one benefit of it, another benefit of it, which was because we made the non-negativity like a penalty rather than a constraint.
+
+1:01:41.460 --> 1:01:50.460
+ We had a few small negatives and that allowed us actually to have a more accurate decomposition which maybe created some better topics.
+
+1:01:50.460 --> 1:01:58.460
+ That's true, yes. And that did give us though more parameters that we were having to tune of, you know, how much weight to give,
+
+1:01:58.460 --> 1:02:04.460
+ wanting it to be non-negative versus wanting it to multiply to give us the right answer.
+
+1:02:04.460 --> 1:02:14.460
+ So any questions about NMF or these different approaches?
+
+1:02:14.460 --> 1:02:20.460
+ OK, so we're going to return to SVD.
+
+1:02:20.460 --> 1:02:33.460
+ And we've kind of talked about this sum, this idea of truncated SVD. So for full SVD would be calculating kind of the full dimension of topics.
+
+1:02:33.460 --> 1:02:39.460
+ But we've already seen that it's handy to just have kind of a limited number of topics because those are the most important ones.
+
+1:02:39.460 --> 1:02:51.460
+ This is also how SVD is used in data compression where you are kind of choosing a smaller value because you want to kind of save space with your data.
+
+1:02:51.460 --> 1:03:01.460
+ And so, yeah, this is truncated SVD. This is the picture from the Facebook blog post again here.
+
+1:03:01.460 --> 1:03:10.460
+ Also, I realized after class Thursday that some of the examples I think were documents by words and some were words by documents.
+
+1:03:10.460 --> 1:03:17.460
+ So I think I may have misspoke a few times on Thursday about which order they were because we do see both in here.
+
+1:03:17.460 --> 1:03:38.460
+ This is saying the words are rows, the hashtags are columns. So words, this would basically be words by topics then, topics by topics, and then topics by hashtags.
+
+1:03:38.460 --> 1:03:54.460
+ And so we're going to be looking at using a randomized algorithm to calculate the truncated SVD. And so this is going to be a quick method and this kind of gets back to April's question earlier about do you have to calculate the full SVD and then throw away information.
+
+1:03:54.460 --> 1:04:05.460
+ We're going to use a randomized approach to just calculate, well, what we want plus a little bit more of buffer but to not have to calculate the full thing.
+
+1:04:05.460 --> 1:04:14.460
+ So we talked about, you know, shortcomings of classical algorithms, just matrices are so large and often data is missing or inaccurate.
+
+1:04:14.460 --> 1:04:21.460
+ So why spend the extra computation when your result is not going to be perfectly accurate.
+
+1:04:21.460 --> 1:04:32.460
+ Another key theme of the course that data transfer is a major role in the time of algorithms. So it's not just about computational complexity.
+
+1:04:32.460 --> 1:04:42.460
+ And then so we're going to be referencing this paper by Halco, let me pull it up, called Finding Structure with Randomness.
+
+1:04:42.460 --> 1:04:48.460
+ And I think it's very well written. I particularly like the introduction so you might want to check it out.
+
+1:04:48.460 --> 1:05:00.460
+ But this is where a lot of material in this lecture as well as I think some in the next lecture comes from.
+
+1:05:00.460 --> 1:05:08.460
+ And they give different examples. So just know that that's out there.
+
+1:05:08.460 --> 1:05:17.460
+ Okay, so Scikit-Learn has a randomized SVD built in and this is from the decomposition module.
+
+1:05:17.460 --> 1:05:25.460
+ Actually I should probably not start running things now because I don't know what's been run.
+
+1:05:25.460 --> 1:05:32.460
+ But you'll see here we can request how many components we want or how many singular values.
+
+1:05:32.460 --> 1:05:37.460
+ So we're saying five and it's quite quick.
+
+1:05:37.460 --> 1:05:41.460
+ So let me get back. And so just to remember the data set that we were using here was from newsgroups.
+
+1:05:41.460 --> 1:05:46.460
+ So these are kind of discussion boards on the Internet on different topics.
+
+1:05:46.460 --> 1:05:52.460
+ We had two thousand posts to newsgroups. We're saying that we just want to get five topics.
+
+1:05:52.460 --> 1:05:57.460
+ And then there were twenty six thousand different vocabulary words used.
+
+1:05:57.460 --> 1:06:04.460
+ And so the top five topics, remember we just requested things from four categories.
+
+1:06:04.460 --> 1:06:10.460
+ And those categories were space, graphics, religion, and atheism.
+
+1:06:10.460 --> 1:06:17.460
+ And the top five topics that we see are JPEG, image, EDU, file, graphics, images, GIF, data.
+
+1:06:17.460 --> 1:06:24.460
+ So these all have to do with graphics. So does the second topic.
+
+1:06:24.460 --> 1:06:34.460
+ This next one seems like a mix of space and religion.
+
+1:06:34.460 --> 1:06:44.460
+ You do have graphics showing up. So there's some problems with these not being kind of fully separated out.
+
+1:06:44.460 --> 1:06:48.460
+ But overall, they're pretty good.
+
+1:06:48.460 --> 1:06:56.460
+ So I'm going to talk about the approach of kind of how this randomized SVD was calculated, because it is really handy to not have to calculate the full thing.
+
+1:06:56.460 --> 1:07:02.460
+ And so the basic approach is that we want to find an approximation to the range of A.
+
+1:07:02.460 --> 1:07:14.460
+ And does anyone remember what the range of the matrix is? It's kind of a linear algebra vocabulary question.
+
+1:07:14.460 --> 1:07:19.460
+ Anyone?
+
+1:07:19.460 --> 1:07:24.460
+ OK, yeah, go for it.
+
+1:07:24.460 --> 1:07:27.460
+ Is it the space covered by the column basis?
+
+1:07:27.460 --> 1:07:36.460
+ Exactly, yeah. Yeah, the space covered by the column basis. And that's actually, that's really great language because that,
+
+1:07:36.460 --> 1:07:42.460
+ it's kind of getting back to this idea of thinking of the, you know, the taking linear combinations of the columns.
+
+1:07:42.460 --> 1:07:58.460
+ But so one way to write it would be that the range of a matrix A is all y such that Ax equals y for some x.
+
+1:07:58.460 --> 1:08:07.460
+ And so if you think about a lot of times, so this is going back now to the image of A being some transformation.
+
+1:08:07.460 --> 1:08:19.460
+ But if A is kind of transforming, you know, taking vectors x and transforming them to y, the range is everything that you can hit over here by multiplying by A.
+
+1:08:19.460 --> 1:08:35.460
+ But yeah, I really liked Kelsey's definition of thinking of the columns as a basis and saying, you know, what are the columns span?
+
+1:08:35.460 --> 1:08:42.460
+ I have a good one off the top of my head.
+
+1:08:42.460 --> 1:08:53.460
+ OK, so Jeremy's asking what a basis is. Can anyone answer what a basis is?
+
+1:08:53.460 --> 1:08:57.460
+ You think of your basis as like the coordinate axes for your space?
+
+1:08:57.460 --> 1:09:11.460
+ Yes. Yeah. So kind of depending on the space. So if we're talking about all the numbers in R2, then the coordinate axes are the standard basis.
+
+1:09:11.460 --> 1:09:26.460
+ Yeah. Yeah. And so really kind of depending on your space, the basis are vectors that you can take linear combinations of to get to get any value in the space that you're talking about.
+
+1:09:26.460 --> 1:09:35.460
+ I think it's like, just for R2, you can interpret it as like, what area can you tile over with parallelograms where the legs are?
+
+1:09:35.460 --> 1:09:51.460
+ Yes. Yes. OK, I actually wasn't going to show this till later, but I really think this is like the perfect time probably to watch the three blue, one brown video about bases.
+
+1:09:51.460 --> 1:10:00.460
+ So if you're not familiar with three blue, one brown, these are really fantastic videos about linear algebra.
+
+1:10:00.460 --> 1:10:04.460
+ Well, he makes them about many topics.
+
+1:10:04.460 --> 1:10:21.460
+ You're going to switch over. Let me just get to the video. But I highly recommend these. And this I've kind of specifically chosen.
+
+1:10:21.460 --> 1:10:44.460
+ Actually, OK, so I was going to show the change of basis video, which I particularly like. But do you feel like you need to see the linear combinations span and basis intro video before you see the one on change of basis?
+
+1:10:44.460 --> 1:10:56.460
+ How? OK, so no shame about your answers. Raise your hand if you feel really comfortable with the idea of bases and span.
+
+1:10:56.460 --> 1:11:02.460
+ And then raise your hand if you feel like you need a refresher on the ideas of bases and span. OK, so it was about half and half.
+
+1:11:02.460 --> 1:11:07.460
+ So I'm going to go with the review. Hopefully even for those of you that feel really comfortable with these ideas,
+
+1:11:07.460 --> 1:11:13.460
+ I find three blue, one brown to just be a really new perspective that you don't see in a lot of linear algebra classes.
+
+1:11:13.460 --> 1:11:31.460
+ So I think that you'll still kind of gain something from this.
+
+1:11:31.460 --> 1:11:47.460
+ Jeremy, do I need to do anything else?
+
+1:11:47.460 --> 1:12:05.460
+ Yes, I do. But there's another kind of interesting way to think about these coordinates, which is pretty central to linear algebra. When you have a pair of numbers that's meant to describe a vector, like 3, negative 2, I want you to think about each coordinate as a scalar, meaning think about how each one stretches or squishes vectors.
+
+1:12:05.460 --> 1:12:22.460
+ In the x-y coordinate system, there are two very special vectors, the one pointing to the right with length 1, commonly called i-hat, or the unit vector in the x direction, and the one pointing straight up with length 1, commonly called j-hat, or the unit vector in the y direction.
+
+1:12:22.460 --> 1:12:35.460
+ Now, think of the x coordinate of our vector as a scalar that scales i-hat, stretching it by a factor of 3, and the y coordinate as a scalar that scales j-hat, flipping it and stretching it by a factor of 2.
+
+1:12:35.460 --> 1:12:47.460
+ In this sense, the vector that these coordinates describe is the sum of two scaled vectors. That's a surprisingly important concept, this idea of adding together two scaled vectors.
+
+1:12:47.460 --> 1:12:54.460
+ Those two vectors, i-hat and j-hat, have a special name, by the way. Together, they're called the basis of a coordinate system.
+
+1:12:54.460 --> 1:13:02.460
+ What this means, basically, is that when you think about coordinates as scalars, the basis vectors are what those scalars actually, you know, scale.
+
+1:13:02.460 --> 1:13:07.460
+ There's also a more technical definition, but I'll get to that later.
+
+1:13:07.460 --> 1:13:14.460
+ By framing our coordinate system in terms of these two special basis vectors, it raises a pretty interesting and subtle point.
+
+1:13:14.460 --> 1:13:21.460
+ We could have chosen different basis vectors and gotten a completely reasonable new coordinate system.
+
+1:13:21.460 --> 1:13:27.460
+ For example, think some vector pointing up and to the right, along with some other vector pointing down and to the right in some way.
+
+1:13:27.460 --> 1:13:37.460
+ Take a moment to think about all the different vectors that you could get by choosing two scalars, using each one to scale one of the vectors, then adding together what you get.
+
+1:13:37.460 --> 1:13:44.460
+ Which two-dimensional vectors can you reach by altering the choices of scalars?
+
+1:13:44.460 --> 1:13:52.460
+ The answer is that you can reach every possible two-dimensional vector, and I think it's a good puzzle to contemplate why.
+
+1:13:52.460 --> 1:14:02.460
+ A new pair of basis vectors like this still gives us a valid way to go back and forth between pairs of numbers and two-dimensional vectors.
+
+1:14:02.460 --> 1:14:09.460
+ But the association is definitely different from the one that you get using the more standard basis of i-hat and j-hat.
+
+1:14:09.460 --> 1:14:15.460
+ This is something I'll go into much more detail on later, describing the exact relationship between different coordinate systems.
+
+1:14:15.460 --> 1:14:25.460
+ But for right now, I just want you to appreciate the fact that any time we describe vectors numerically, it depends on an implicit choice of what basis vectors we're using.
+
+1:14:25.460 --> 1:14:34.460
+ So any time that you're scaling two vectors and adding them like this, it's called a linear combination of those two vectors.
+
+1:14:34.460 --> 1:14:37.460
+ Where does this word linear come from? Why does this have anything to do with lines?
+
+1:14:37.460 --> 1:14:51.460
+ Well, this isn't the etymology, but one way I like to think about it is that if you fix one of those scalars and let the other one change its value freely, the tip of the resulting vector draws a straight line.
+
+1:14:51.460 --> 1:14:59.460
+ Now, if you let both scalars range freely and consider every possible vector that you can get, there are two things that can happen.
+
+1:14:59.460 --> 1:15:06.460
+ For most pairs of vectors, you'll be able to reach every possible point in the plane. Every two-dimensional vector is within your grasp.
+
+1:15:06.460 --> 1:15:16.460
+ However, in the unlucky case where your two original vectors happen to line up, the tip of the resulting vector is limited to just this single line passing through the origin.
+
+1:15:16.460 --> 1:15:24.460
+ Actually, technically there's a third possibility too. Both your vectors could be zero, in which case you'd just be stuck at the origin.
+
+1:15:24.460 --> 1:15:37.460
+ Here's some more terminology. The set of all possible vectors that you can reach with a linear combination of a given pair of vectors is called the span of those two vectors.
+
+1:15:37.460 --> 1:15:49.460
+ So restating what we just saw in this lingo, the span of most pairs of 2D vectors is all vectors of 2D space, but when they line up, their span is all vectors whose tip sit on a certain line.
+
+1:15:49.460 --> 1:16:00.460
+ Remember how I said that linear algebra revolves around vector addition and scalar multiplication? Well, the span of two vectors is basically a way of asking,
+
+1:16:00.460 --> 1:16:07.460
+ what are all the possible vectors you can reach using only these two fundamental operations, vector addition and scalar multiplication?
+
+1:16:07.460 --> 1:16:12.460
+ This is a good time to talk about how people commonly think about vectors as points.
+
+1:16:12.460 --> 1:16:21.460
+ It gets really crowded to think about a whole collection of vectors sitting on a line, and more crowded still to think about all two-dimensional vectors all at once, filling up the plane.
+
+1:16:21.460 --> 1:16:30.460
+ So when dealing with collections of vectors like this, it's common to represent each one with just a point in space, the point at the tip of that vector,
+
+1:16:30.460 --> 1:16:35.460
+ where, as usual, they want you thinking about that vector with its tail on the origin.
+
+1:16:35.460 --> 1:16:44.460
+ That way, if you want to think about every possible vector whose tip sits on a certain line, just think about the line itself.
+
+1:16:44.460 --> 1:16:59.460
+ Likewise, to think about all possible two-dimensional vectors all at once, conceptualize each one as the point where its tip sits.
+
+1:16:59.460 --> 1:17:07.460
+ In effect, what you'll be thinking about is the infinite flat sheet of two-dimensional space itself, leaving the arrows out of it.
+
+1:17:07.460 --> 1:17:17.460
+ In general, if you're thinking about a vector on its own, think of it as an arrow, and if you're dealing with a collection of vectors, it's convenient to think of them all as points.
+
+1:17:17.460 --> 1:17:32.460
+ So for a span example, the span of most pairs of vectors ends up being the entire infinite sheet of two-dimensional space, but if they line up, their span is just a line.
+
+1:17:32.460 --> 1:17:39.460
+ The idea of span is a lot more interesting if we start thinking about vectors in three-dimensional space.
+
+1:17:39.460 --> 1:17:52.460
+ For example, if you take two vectors in 3D space that are not pointing in the same direction, what does it mean to take their span?
+
+1:17:52.460 --> 1:18:05.460
+ Well, their span is the collection of all possible linear combinations of those two vectors, meaning all possible vectors you get by scaling each of the two of them in some way, and then adding them together.
+
+1:18:05.460 --> 1:18:15.460
+ You can kind of imagine turning two different knobs to change the two scalars defining the linear combination, adding the scaled vectors and following the tip of the resulting vector.
+
+1:18:15.460 --> 1:18:31.460
+ That tip will trace out some kind of flat sheet cutting through the origin of three-dimensional space. This flat sheet is the span of the two vectors, or more precisely, the set of all possible vectors whose tips sit on that flat sheet is the span of your two vectors.
+
+1:18:31.460 --> 1:18:34.460
+ Isn't that a beautiful mental image?
+
+1:18:34.460 --> 1:18:40.460
+ So what happens if we add a third vector and consider the span of all three of those guys?
+
+1:18:40.460 --> 1:18:56.460
+ A linear combination of three vectors is defined pretty much the same way as it is for two. You'll choose three different scalars, scale each of those vectors, and then add them all together.
+
+1:18:56.460 --> 1:19:04.460
+ And again, the span of these vectors is the set of all possible linear combinations.
+
+1:19:04.460 --> 1:19:14.460
+ Two different things could happen here. If your third vector happens to be sitting on the span of the first two, then the span doesn't change. You're sort of trapped on that same flat sheet.
+
+1:19:14.460 --> 1:19:22.460
+ In other words, adding a scaled version of that third vector to the linear combination doesn't really give you access to any new vectors.
+
+1:19:22.460 --> 1:19:28.460
+ But if you just randomly choose a third vector, it's almost certainly not sitting on the span of those first two.
+
+1:19:28.460 --> 1:19:35.460
+ Then, since it's pointing in a separate direction, it unlocks access to every possible three-dimensional vector.
+
+1:19:35.460 --> 1:19:45.460
+ One way I like to think about this is that as you scale that new third vector, it moves around that span sheet of the first two, sweeping it through all of space.
+
+1:19:45.460 --> 1:19:56.460
+ Another way to think about it is that you're making full use of the three freely changing scalars that you have at your disposal to access the full three dimensions of space.
+
+1:19:56.460 --> 1:20:10.460
+ Now, in the case where the third vector was already sitting on the span of the first two, or the case where two vectors happen to line up, we want some terminology to describe the fact that at least one of these vectors is redundant, not adding anything to our span.
+
+1:20:10.460 --> 1:20:20.460
+ Whenever this happens, where you have multiple vectors and you could remove one without reducing the span, the relevant terminology is to say that they are linearly dependent.
+
+1:20:20.460 --> 1:20:32.460
+ Another way of phrasing that would be to say that one of the vectors can be expressed as a linear combination of the others, since it's already in the span of the others.
+
+1:20:32.460 --> 1:20:46.460
+ On the other hand, if each vector really does add another dimension to the span, they're said to be linearly independent.
+
+1:20:46.460 --> 1:20:52.460
+ So with all of that terminology, and hopefully with some good mental images to go with it, let me leave you with a puzzle before we go.
+
+1:20:52.460 --> 1:21:01.460
+ The typical definition of a basis of a space is a set of linearly independent vectors that span that space.
+
+1:21:01.460 --> 1:21:13.460
+ Now, given how I described a basis earlier, and given your current understanding of the words span and linearly independent, think about why this definition would make sense.
+
+1:21:13.460 --> 1:21:22.460
+ In the next video, I'll get into matrices and transform of space. See you then!
+
+1:21:22.460 --> 1:21:29.460
+ Great.
+
+1:21:29.460 --> 1:21:39.460
+ Is there anything that you found particularly noteworthy or interesting about this?
+
+1:21:39.460 --> 1:21:43.460
+ It's okay if not. It can also just be a good review of the terminology.
+
+1:21:43.460 --> 1:21:51.460
+ I also just want to highlight that he has some videos not related to linear algebra that are just really interesting and beautiful.
+
+1:21:51.460 --> 1:22:02.460
+ I particularly recommend his one on the Towers of Hanoi, which is kind of this puzzle, combined with binary and with Sierpinski triangles.
+
+1:22:02.460 --> 1:22:12.460
+ So there's some really surprising connections between those three topics that I did not know about, and also some really nice visualizations.
+
+1:22:12.460 --> 1:22:20.460
+ I don't know this person at all, but I did just start supporting him through Patreon because I really love his videos.
+
+1:22:20.460 --> 1:22:36.460
+ I just mentioned it because hopefully people will see this video in the future, and if they do, they should support the person who created it.
+
+1:22:36.460 --> 1:22:54.460
+ Okay, so kind of going back to, and so we'll return another day to kind of talk about change of basis, but going back to this idea of the range of A. So as Kelsey said, that's the space spanned by the columns of A.
+
+1:22:54.460 --> 1:23:04.460
+ So hopefully this kind of helps you get up to speed on those concepts of columns of A. We're taking all possible linear combinations of them, and that's the range of A.
+
+1:23:04.460 --> 1:23:14.460
+ And so our goal, and just to kind of remind you what we're doing, our goal is to come up with an algorithm for the randomized SVD.
+
+1:23:14.460 --> 1:23:21.460
+ And so to be, or for a truncated SVD using randomized values.
+
+1:23:21.460 --> 1:23:27.460
+ So we want to be able to just calculate as many topics as we're interested in, not have to calculate them all.
+
+1:23:27.460 --> 1:23:32.460
+ We're going to use randomization, and this is kind of outlining a path for us.
+
+1:23:32.460 --> 1:23:44.460
+ So the first step is we want to find a matrix Q that has R orthonormal columns such that A is approximately Q times Q transpose times A.
+
+1:23:44.460 --> 1:24:03.460
+ And so the thing to note here, let me write this down maybe, is that suppose A is M by N and Q is just going to be M by R.
+
+1:24:03.460 --> 1:24:06.460
+ So there could be a lot of space savings there.
+
+1:24:06.460 --> 1:24:18.460
+ And so Q times Q transpose, actually this is a question for you, is Q by Q transpose going to be the identity?
+
+1:24:18.460 --> 1:24:22.460
+ You can just shout out your guesses.
+
+1:24:22.460 --> 1:24:26.460
+ I see both nodding and shaking heads.
+
+1:24:26.460 --> 1:24:31.460
+ Okay, who wants to vote for yes, it will be the identity?
+
+1:24:31.460 --> 1:24:35.460
+ Who wants to vote no, it will not be the identity?
+
+1:24:35.460 --> 1:24:42.460
+ Okay, does anyone want to say why they voted the way they did?
+
+1:24:42.460 --> 1:24:44.460
+ Okay, I'll say.
+
+1:24:44.460 --> 1:24:51.460
+ So if, oh, what?
+
+1:24:51.460 --> 1:24:57.460
+ Because it's columns, but the row, actually the multiplication of the rows might not be orthogonal.
+
+1:24:57.460 --> 1:24:58.460
+ Exactly, yes.
+
+1:24:58.460 --> 1:25:08.460
+ Yeah, so this was kind of a tricky question, if both the columns and rows of Q had been orthonormal, then it would be the identity.
+
+1:25:08.460 --> 1:25:16.460
+ And even, yeah, so if both the columns and the rows were orthonormal, we would get the identity.
+
+1:25:16.460 --> 1:25:21.460
+ However, it's just the columns, and so we kind of have this tall, skinny matrix.
+
+1:25:21.460 --> 1:25:32.460
+ So Q kind of looks like this, and we multiply Q by Q transpose, we're getting something, we want something that acts kind of like the identity for A,
+
+1:25:32.460 --> 1:25:38.460
+ but it's not actually going to be the identity because we didn't have enough inputs kind of going into it,
+
+1:25:38.460 --> 1:25:47.460
+ but we're hoping to kind of find something so that Q by Q transpose at least acts similar to the identity for A.
+
+1:25:47.460 --> 1:25:57.460
+ And so we'll come back to the question of how do we actually find such a Q, but for now just know that that's what, that it is possible.
+
+1:25:57.460 --> 1:26:03.460
+ So then we want to construct B equals Q transpose times A.
+
+1:26:03.460 --> 1:26:18.460
+ Actually, I should... OK, I guess I have to pull this up here. I'll write that again, but I will not erase it this time.
+
+1:26:18.460 --> 1:26:24.460
+ So remember A is M by N, Q is M by R.
+
+1:26:24.460 --> 1:26:34.460
+ So then when we do Q transpose times A, that's something that's R by M times M by N, and we get that the product is R by N.
+
+1:26:34.460 --> 1:26:37.460
+ So B is a lot smaller than A.
+
+1:26:37.460 --> 1:26:46.460
+ So we can compute the SVD of B by standard methods, and this will be much quicker than it would have been to compute the SVD of A.
+
+1:26:46.460 --> 1:26:55.460
+ And then plugging back in, so kind of here, that's the formula for S...
+
+1:26:55.460 --> 1:26:57.460
+ Oh, that's actually a typo.
+
+1:26:57.460 --> 1:27:05.460
+ But B is U times sigma times B transpose, typical formula for the SVD...
+
+1:27:05.460 --> 1:27:10.460
+ Oh, no, it's not a typo. I called it S because it's a different one.
+
+1:27:10.460 --> 1:27:12.460
+ We're going to have U later on.
+
+1:27:12.460 --> 1:27:19.460
+ Then remember A is approximately Q times Q transpose times A.
+
+1:27:19.460 --> 1:27:31.460
+ So we plug in for Q transpose times A, plug in this SVD for B, and we get A is approximately Q times S times sigma times B transpose.
+
+1:27:31.460 --> 1:27:39.460
+ And we can set U equal to QS, and now we have a SVD for A, a low-rank SVD.
+
+1:27:39.460 --> 1:27:44.460
+ So I have a question. Why is it okay to say U is QS?
+
+1:27:44.460 --> 1:27:50.460
+ Because we want U to have orthonormal columns.
+
+1:27:50.460 --> 1:27:55.460
+ Kelsey?
+
+1:27:55.460 --> 1:28:10.460
+ I think U is just a rotation of S.
+
+1:28:10.460 --> 1:28:12.460
+ Yeah, that's the key.
+
+1:28:12.460 --> 1:28:20.460
+ Since S and Q are orthonormal, we'll get something else that's orthonormal exactly.
+
+1:28:20.460 --> 1:28:27.460
+ Yeah, we'll talk about the topic of rotations later.
+
+1:28:27.460 --> 1:28:30.460
+ But yeah, S and Q are orthonormal, so that works.
+
+1:28:30.460 --> 1:28:34.460
+ So now we're going to return to these questions of, okay, how did we find Q?
+
+1:28:34.460 --> 1:28:39.460
+ But are there any questions just about this plan of what we're going to do?
+
+1:28:39.460 --> 1:28:50.460
+ If you happen to remember the computational complexity of SVD, so when we reduced the size of it, are we reducing its speed by linear or polynomial?
+
+1:28:50.460 --> 1:28:57.460
+ I did not remember. Let me write that down. I'll talk about that next time.
+
+1:28:57.460 --> 1:29:03.460
+ It might be squared in the number of columns.
+
+1:29:03.460 --> 1:29:07.460
+ I would believe that, but I will check.
+
+1:29:07.460 --> 1:29:15.460
+ Yeah, so general idea is kind of we're finding the special Q, then we find the SVD on a smaller matrix, Q transpose times A,
+
+1:29:15.460 --> 1:29:23.460
+ and we're able to plug that back in to have our truncated SVD for A.
+
+1:29:23.460 --> 1:29:29.460
+ Okay, so first question.
+
+1:29:29.460 --> 1:29:33.460
+ How do we find Q?
+
+1:29:33.460 --> 1:29:44.460
+ And so it turns out we can just take a bunch of random vectors, W, and look at the subspace formed by Aw for these different random vectors.
+
+1:29:44.460 --> 1:29:54.460
+ We'll form a matrix W with the W's as its columns, and we take the QR decomposition of Aw equals QR.
+
+1:29:54.460 --> 1:30:04.460
+ So we will be talking about the QR decomposition a lot. For now, all you need to know is that the QR decomposition exists for any matrix,
+
+1:30:04.460 --> 1:30:11.460
+ and it's an orthonormal matrix times an upper triangular matrix.
+
+1:30:11.460 --> 1:30:18.460
+ And so this is something I think nice about linear algebra is you kind of have these standard naming conventions,
+
+1:30:18.460 --> 1:30:25.460
+ and so pretty much any time you see a matrix named Q, you can assume it's orthonormal, because that's just a commonly used convention.
+
+1:30:25.460 --> 1:30:32.460
+ But the QR decomposition is all about getting an orthonormal matrix times an upper triangular matrix,
+
+1:30:32.460 --> 1:30:36.460
+ and we will learn how to do that in a later lesson.
+
+1:30:36.460 --> 1:30:45.460
+ So we'll take Aw, W's random, get the QR, and the Q, this is kind of a property from the QR decomposition,
+
+1:30:45.460 --> 1:30:49.460
+ and the Q forms an orthonormal basis for Aw.
+
+1:30:49.460 --> 1:31:00.460
+ And Aw is giving us the range of A, since it's kind of A times these different values.
+
+1:31:00.460 --> 1:31:12.460
+ And since Aw has far more rows than columns, it turns out that it works in practice that these columns are approximately orthonormal.
+
+1:31:12.460 --> 1:31:22.460
+ It's just really unlikely that you would get columns that were linearly dependent when you're choosing random values.
+
+1:31:22.460 --> 1:31:31.460
+ Any questions about this?
+
+1:31:31.460 --> 1:31:47.460
+ We'll come back to that under how we should choose R, I think.
+
+1:31:47.460 --> 1:32:03.460
+ And yeah, this idea of the QR decomposition will show up in almost every lesson, so you will get to see a lot of the QR decomposition in this class. It's pretty foundational to numerical linear algebra.
+
+1:32:03.460 --> 1:32:09.460
+ So yeah, for now you just need to know that Q consists of orthonormal columns, R is upper triangular.
+
+1:32:09.460 --> 1:32:15.460
+ When I say upper triangular, that means that everything below the diagonal is zero.
+
+1:32:15.460 --> 1:32:26.460
+ Trevathan says the QR decomposition is the most important idea in numerical linear algebra, so that's pretty high praise.
+
+1:32:26.460 --> 1:32:37.460
+ And then this question, so remember, we chose Q to have R orthonormal columns, and then R is giving us what the dimension of B is going to be.
+
+1:32:37.460 --> 1:32:40.460
+ So how do we want to choose R?
+
+1:32:40.460 --> 1:32:52.460
+ So if we wanted, suppose we had a matrix with 100 columns and we wanted to get 5, so in the question of, going back to our literary example, we just want 5 topics.
+
+1:32:52.460 --> 1:33:03.460
+ To be safe, we're going to choose something larger than 5, so you could just kind of as a rule of thumb say let's add 10 to what we're doing, so let's do it with 15.
+
+1:33:03.460 --> 1:33:18.460
+ So you don't want to calculate exactly 5 because we've got this randomized component, so it's kind of safer to give yourself some buffer, but we don't need to calculate the full 100 topics.
+
+1:33:18.460 --> 1:33:27.460
+ So our projection was only approximate, so we're making it a little bit bigger than we need.
+
+1:33:27.460 --> 1:33:31.460
+ Now let me show you what this looks like in code.
+
+1:33:31.460 --> 1:33:36.460
+ So we, above we used scikit-learn's implementation.
+
+1:33:36.460 --> 1:33:45.460
+ Now I'm going to write my own, which is based off of the scikit-learn source code, only it takes into account fewer special cases.
+
+1:33:45.460 --> 1:33:51.460
+ So this is a less robust version, but I think it's kind of clearer what's happening.
+
+1:33:51.460 --> 1:34:10.460
+ First we want a randomized range finder, and so this is what just finds the Q that we saw above in step one when we said like, okay, we want Q such that A is approximately Q times Q transpose times, or yeah, Q times Q transpose times A.
+
+1:34:10.460 --> 1:34:27.460
+ So what we'll do in here is just randomly initialize a matrix to our size, and here, yeah, in here size we're kind of telling it how many columns we want.
+
+1:34:27.460 --> 1:34:47.460
+ And then for now let's imagine that the number of iterations were zero, so we can ignore this inner for loop, then we could just call the QR decomposition on A times Q, and we get back kind of Q and R, and we'll return our Q.
+
+1:34:47.460 --> 1:35:00.460
+ And so that's giving us the Q that we want.
+
+1:35:00.460 --> 1:35:12.460
+ Questions about the randomized range finder? So this is kind of just finding, finding that Q we want to kind of approximate the range of A.
+
+1:35:12.460 --> 1:35:29.460
+ And then in the next lesson we'll be covering LU decomposition, but LU decomposition decomposes a matrix into a lower triangular matrix times an upper triangular matrix.
+
+1:35:29.460 --> 1:35:49.460
+ And we can add some iterations of that here in the middle, that this will make our result more accurate, and it's basically kind of gives us this chance, so we kind of want to imprint A, like we're really interested in the range of A, so we want to imprint A again and again.
+
+1:35:49.460 --> 1:35:58.460
+ And so it would be nice to just kind of keep multiplying by A, you know, because if you multiply by A a bunch of times you're getting something that's like super in the range of A.
+
+1:35:58.460 --> 1:36:05.460
+ The issue with just doing that directly is that, you know, it could shrink to zero or it could explode.
+
+1:36:05.460 --> 1:36:13.460
+ That's very unstable to kind of multiply by the same number again and again unless that number happens to be one.
+
+1:36:13.460 --> 1:36:25.460
+ And so taking the LU decomposition is a way to kind of normalize it and take into account like, okay, we want something that's normalized so that it doesn't explode or vanish.
+
+1:36:25.460 --> 1:36:32.460
+ So that's just kind of like a very kind of high-level intuitive idea of what this is doing.
+
+1:36:32.460 --> 1:36:46.460
+ And then how that's used inside the randomized SVD is first the number of random columns we're going to create is the number of components we want plus the number of oversamples.
+
+1:36:46.460 --> 1:36:58.460
+ So I mentioned since this is random we're going to give ourselves a buffer and kind of oversample, so that's defaulting to 10, but you could choose another number if you wanted.
+
+1:36:58.460 --> 1:37:07.460
+ Then we'll call the randomized range finder with our matrix and with the sum of the number of components plus the number of oversamples.
+
+1:37:07.460 --> 1:37:11.460
+ That's saying how many columns we want to find.
+
+1:37:11.460 --> 1:37:26.460
+ Then we do Q transpose times M. Another way to think about that is projecting M to this K plus P dimensional space using the basis vectors.
+
+1:37:26.460 --> 1:37:43.460
+ So Q is the, yeah, the K plus, or kind of giving us this basis of a K plus P dimensional space.
+
+1:37:43.460 --> 1:37:50.460
+ Then we calculate our SVD on B. Remember B is a lot smaller than our original matrix.
+
+1:37:50.460 --> 1:38:05.460
+ We get that back. Here we delete B to free up the memory and then we say U is equal to our Q times the U that came back for B and we'll just return the number of components.
+
+1:38:05.460 --> 1:38:21.460
+ Remember we've calculated the number of components plus oversamples so we don't want to return everything. We'll chop off the last 10 columns and last 10 singular values and just return what else is there.
+
+1:38:21.460 --> 1:38:40.460
+ So we can try this out, see that we get stuff back and this is, let me think, I think this is faster.
+
+1:38:40.460 --> 1:38:44.460
+ Just marginally.
+
+1:38:44.460 --> 1:38:59.460
+ And we're still getting topics that seem reasonable. So this is, this is working that even though we had 2000 posts by 25,000 words, if we were going to do a full SVD that would be finding 2000 topics.
+
+1:38:59.460 --> 1:39:07.460
+ We've said we just want five. We're going to calculate 15 and we get back pretty good topics.
+
+1:39:07.460 --> 1:39:23.460
+ I looked up the computational complexity and for an M by N matrix, SVDs form computational complexity is M squared N plus N cubed.
+
+1:39:23.460 --> 1:39:48.460
+ Okay. Thank you, Jeremy. Yeah. So what Jeremy was saying is it's M squared N plus N cubed. So both, both of those terms are cubic, which is really slow. So it is awesome to be able to slice stuff off of there because, you know, before we would have been, and we are still, I guess our M is staying the same for this smaller matrix B, but N is changing.
+
+1:39:48.460 --> 1:39:51.460
+ Yeah. And then
+
+1:39:51.460 --> 1:39:58.460
+ we are almost out of time. Maybe we'll start here at the end. I just had a quick exercise for you.
+
+1:39:58.460 --> 1:40:02.460
+ But we'll do that next time.
+
+1:40:02.460 --> 1:40:07.460
+ Yeah. So next time we'll kind of finish up, talk about this a little bit more.
+
+1:40:07.460 --> 1:40:16.460
+ And I think that'll be good to kind of return to it after, after two days. And then we'll be getting into background removal after that, which is exciting.
+
+1:40:16.460 --> 1:40:33.460
+ I also wanted to remind you there's homework one is available on GitHub and that is due Thursday. Yes, Tim.
+
+1:40:33.460 --> 1:40:57.460
+ That's right. I, I think either is fine. Yes, whatever. Maybe print it. But yeah, maybe print a PDF would be best. Yeah. So print a PDF. I'll say that in the Slack channel as well. But yeah, print a PDF for the homework due on Thursday.
+
+1:40:57.460 --> 1:41:13.460
+ To email us. Yeah, it's good. Great. Thank you.
+
