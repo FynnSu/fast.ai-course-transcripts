@@ -1,0 +1,1343 @@
+WEBVTT
+
+00:00.000 --> 00:03.380
+ So yeah, so what we're picking up here is privacy and surveillance,
+
+00:03.380 --> 00:06.180
+ which we did not finish last week.
+
+00:06.180 --> 00:09.940
+ So there's a lot of material and even more stuff happened
+
+00:09.940 --> 00:12.260
+ in the past week related to it.
+
+00:12.260 --> 00:17.340
+ And so I just kind of briefly wanted to kind of review where we were at.
+
+00:17.340 --> 00:21.740
+ And the first is some issues around kind of what can go wrong.
+
+00:21.740 --> 00:23.780
+ Data will be used for other purposes.
+
+00:23.780 --> 00:26.980
+ And so this link, Emulia posted in the forums
+
+00:26.980 --> 00:33.320
+ about Grindr being owned by a Chinese firm, which has created concerns
+
+00:33.320 --> 00:38.980
+ around U.S. national security of could this be used for China to get data
+
+00:38.980 --> 00:43.460
+ about military or foreign officials on their sexual preferences
+
+00:43.460 --> 00:45.980
+ or even just location tracking.
+
+00:45.980 --> 00:49.780
+ And this is something that couldn't have been foreseen or, you know,
+
+00:49.780 --> 00:53.520
+ wasn't obvious that it would happen, say, five or ten years ago
+
+00:53.520 --> 00:56.360
+ that it would end up being bought by a Chinese company.
+
+00:56.360 --> 01:00.140
+ So companies can change hands.
+
+01:00.140 --> 01:04.020
+ Another story from the last week is that Clearview AI,
+
+01:04.020 --> 01:11.300
+ which is the incredibly controversial facial recognition software that kind
+
+01:11.300 --> 01:14.180
+ of violated the terms of service for most major companies
+
+01:14.180 --> 01:16.620
+ to scrape faces from everywhere.
+
+01:16.620 --> 01:22.380
+ Its entire client list was stolen in a data breach and has since been published.
+
+01:22.380 --> 01:28.060
+ It includes a variety of governments, also lots of companies.
+
+01:28.060 --> 01:32.380
+ I think it's, I can't remember, definitely over a thousand customers.
+
+01:32.380 --> 01:38.380
+ And then also raised security concerns about just the fact that they had this data breach.
+
+01:38.380 --> 01:44.060
+ And then there was a separate article, some journalists were able to access some
+
+01:44.060 --> 01:49.000
+ of their kind of unsecured app on Amazon S3, I believe.
+
+01:49.000 --> 01:54.940
+ And so they didn't have a client login, but they could still tell certain things about the app.
+
+01:54.940 --> 01:57.460
+ So that's a news story.
+
+01:57.460 --> 02:01.380
+ Last week I shared about the story about how Saudi Arabia infiltrated Twitter.
+
+02:01.380 --> 02:08.620
+ And this was with two Twitter employees who kind of ended up being bought
+
+02:08.620 --> 02:11.580
+ by the Saudi Arabian government to pass information.
+
+02:11.580 --> 02:15.980
+ The article, though, mentioned how someone on Twitter's team,
+
+02:15.980 --> 02:19.740
+ or formerly on Twitter's team, mentioned how it was very common to be approached
+
+02:19.740 --> 02:26.420
+ by governments including the US, the CIA, the UK government.
+
+02:26.420 --> 02:27.940
+ So many governments had approached them.
+
+02:27.940 --> 02:30.500
+ So this is another thing that can happen with your data.
+
+02:30.500 --> 02:36.380
+ Either employees can be secretly sharing it or governments can request access
+
+02:36.380 --> 02:38.300
+ and in some cases get it.
+
+02:38.300 --> 02:40.900
+ And then we also saw the example
+
+02:40.900 --> 02:47.340
+ of police officers widely abusing confidential databases, in many cases,
+
+02:47.340 --> 02:55.140
+ to stalk former romantic partners or to harass people who were protesting police brutality.
+
+02:55.140 --> 03:01.020
+ And a common kind of pattern with surveillance is
+
+03:01.020 --> 03:05.140
+ that it disproportionately harms marginalized groups.
+
+03:05.140 --> 03:11.980
+ We saw this with India's intrusive biometric ID, forcing HIV patients to forgo treatment.
+
+03:11.980 --> 03:16.460
+ And so this was an article that interviewed a number of people that were HIV positive
+
+03:16.460 --> 03:21.060
+ and had successfully been getting antiretroviral treatment and then stopped
+
+03:21.060 --> 03:29.660
+ because they were worried about being outed as being HIV positive or sex workers or gay.
+
+03:29.660 --> 03:33.220
+ Trading privacy for survival is another tax on the poor.
+
+03:33.220 --> 03:37.300
+ This is one of the, this is one of the articles I linked to last week.
+
+03:37.300 --> 03:43.140
+ And then the fact that several states are requiring prisoners to give
+
+03:43.140 --> 03:48.900
+ up their voice biometric ID in order to even be allowed to make phone calls.
+
+03:51.060 --> 03:57.140
+ We also saw that there's little evidence that surveillance makes us safer.
+
+03:57.140 --> 03:59.820
+ So San Diego's massive seven-year experiment
+
+03:59.820 --> 04:02.580
+ with facial recognition technology appears to be a flop.
+
+04:02.580 --> 04:05.500
+ This is something in which I think 65,000 images were collected
+
+04:05.500 --> 04:09.300
+ and there was no proof that it led to, led to any arrest.
+
+04:09.300 --> 04:16.140
+ The investigation with interviews with 40 different police departments using Ring,
+
+04:16.140 --> 04:24.580
+ which again found little evidence that it's effective, and then even kind of some
+
+04:24.580 --> 04:28.780
+ of the companies selling facial recognition to schools are admitting
+
+04:28.780 --> 04:33.180
+ that it's not going to stop school shootings.
+
+04:33.180 --> 04:37.020
+ And then also surveillance is used to suppress dissent
+
+04:37.020 --> 04:39.180
+ and this has been shown kind of throughout history
+
+04:39.180 --> 04:44.580
+ and we have examples happening in Hong Kong and then also in the US.
+
+04:44.580 --> 04:48.220
+ And so this is very, very concerning.
+
+04:48.220 --> 04:52.780
+ So kind of in summary, harms already marginalized, data can be used
+
+04:52.780 --> 04:56.300
+ for other purposes, whether that's governments requesting it, data breaches,
+
+04:56.300 --> 05:01.020
+ sale of the company, errors in data, and it stops dissent,
+
+05:01.020 --> 05:03.620
+ which is crucial for social progress.
+
+05:03.620 --> 05:12.100
+ And that's something that Ali pointed out last week is that there are concerns either way.
+
+05:12.100 --> 05:15.620
+ So when the system is not working properly,
+
+05:15.620 --> 05:20.940
+ so the evidence that these products don't even work or the data being full of errors.
+
+05:20.940 --> 05:27.180
+ However, like if you came to me and had a new and updated study that now Ring is really effective
+
+05:27.180 --> 05:33.620
+ at fighting crime, I would still think that the risk outweigh the positives.
+
+05:33.620 --> 05:38.660
+ And so my, I should say my hesitation is not just that this doesn't work,
+
+05:38.660 --> 05:40.100
+ but around these other issues.
+
+05:40.100 --> 05:43.580
+ And so I think it's something that it's also bad when the systems do work as intended
+
+05:43.580 --> 05:48.940
+ because many of the bad consequences are about the system kind of working as intended.
+
+05:48.940 --> 05:53.500
+ And I thought that the line between these is a bit blurry.
+
+05:53.500 --> 05:59.860
+ Some of the examples, I wasn't sure exactly is this the system working as intended or not.
+
+05:59.860 --> 06:05.780
+ You know, for instance, like government collecting data from the, from a company,
+
+06:05.780 --> 06:09.940
+ is that kind of the intention or not since it is such a kind
+
+06:09.940 --> 06:11.740
+ of common pattern and seems built in.
+
+06:11.740 --> 06:17.020
+ So I just wanted to note this, though, that it's, particularly for me,
+
+06:17.020 --> 06:21.420
+ it's not just that it doesn't work currently, but that there are a lot of harms,
+
+06:21.420 --> 06:25.100
+ even when the system does work as intended.
+
+06:25.100 --> 06:28.060
+ Any more thoughts on this?
+
+06:28.060 --> 06:38.140
+ Okay. So, oh, and then I also shared the examples, so this is from two weeks ago
+
+06:38.140 --> 06:43.540
+ of computer vision researchers saying that they were giving up or considering giving
+
+06:43.540 --> 06:48.980
+ up doing computer vision research just because the negative applications,
+
+06:48.980 --> 06:52.740
+ the military applications and privacy concerns were too hard to ignore.
+
+06:52.740 --> 06:54.980
+ And I thought that would be a good segue
+
+06:54.980 --> 07:00.060
+ into discussing the Langdon Winner article, do artifacts have politics?
+
+07:00.060 --> 07:04.980
+ And so this was in the reading, I believe, two weeks ago.
+
+07:04.980 --> 07:10.660
+ And we didn't have a chance to discuss it then, but this idea of kind of rather than thinking
+
+07:10.660 --> 07:16.980
+ of technology as a neutral tool and it's just about how the person using it,
+
+07:16.980 --> 07:21.460
+ towards what purpose they use it, but is there something about particular technologies
+
+07:21.460 --> 07:23.740
+ that lend themselves to certain uses?
+
+07:23.740 --> 07:28.140
+ And actually this issue, I thought, kind of came up, and if you saw,
+
+07:28.140 --> 07:33.340
+ I think this was also in the last week, the quote from the WhatsApp founder explicitly saying
+
+07:33.340 --> 07:38.060
+ like this is just technology doesn't have morals, it's just how people use it.
+
+07:38.060 --> 07:40.780
+ There was a lot of discussion about that quote on Twitter.
+
+07:40.780 --> 07:45.260
+ So I wanted to ask about kind of your thoughts both on this article and the kind
+
+07:45.260 --> 07:53.420
+ of the more general concept of whether technologies are neutral or inclined towards certain uses
+
+07:53.420 --> 07:57.740
+ and certain redistributions of power.
+
+07:57.740 --> 08:02.860
+ Yeah. And the factory example really struck me because it was kind of presented
+
+08:02.860 --> 08:06.980
+ under this veneer of like, oh, this is about efficiency, we're getting these machines,
+
+08:06.980 --> 08:11.220
+ when really it was the machines were less efficient than the workers,
+
+08:11.220 --> 08:14.740
+ but it was about unionization or blocking it.
+
+08:14.740 --> 08:21.700
+ And I think the Zeynep Tafekci article from this week kind of talks about that of how,
+
+08:21.700 --> 08:25.140
+ you know, initially a lot of these technologies were seen as really kind
+
+08:25.140 --> 08:30.020
+ of democratizing or liberating forces, and then as people in power learned how
+
+08:30.020 --> 08:33.860
+ to utilize them towards their ends, we're seeing kind of the opposite
+
+08:33.860 --> 08:36.180
+ where they're becoming kind of more oppressive forces.
+
+08:36.180 --> 08:40.980
+ Kind of around that technologies evolve.
+
+08:40.980 --> 08:47.220
+ I particularly, when reading this article, like thinking about like the early days
+
+08:47.220 --> 08:53.700
+ of any artifact or technology, especially with all the conversation about like iterative design
+
+08:53.700 --> 08:59.060
+ and iterative development is that even if you imagine that a technology starts
+
+08:59.060 --> 09:07.220
+ in a certain direction, the areas, the populations, and the people who build it are building the early
+
+09:07.220 --> 09:11.220
+ kind of like infrastructure or baseline design decisions.
+
+09:11.220 --> 09:21.700
+ So in some ways it seems like the core scaffolding of technical systems of today suit themselves
+
+09:21.700 --> 09:25.140
+ better to be in the environment that they were built in.
+
+09:25.140 --> 09:33.620
+ A simple example could be GPS or like travel app and GPS navigation apps were built in cities
+
+09:33.620 --> 09:39.860
+ to support cities, and you can imagine that like they didn't work very well.
+
+09:39.860 --> 09:44.980
+ The early versions in places like India, which were not structured, did not have addresses,
+
+09:44.980 --> 09:49.700
+ or in Japan where it didn't start up and required a lot of modification.
+
+09:49.700 --> 09:56.020
+ In India, I think in both directions, where cities, where streets started having defined
+
+09:56.020 --> 10:01.540
+ names because people were starting to use navigation tools.
+
+10:01.540 --> 10:03.540
+ Yeah, that's an interesting point, yeah.
+
+10:03.540 --> 10:08.820
+ More than kind of what happens later.
+
+10:08.820 --> 10:11.300
+ Thanks. I love what you just shared.
+
+10:11.300 --> 10:16.900
+ Actually, so in, I used to study archaeology and when I read this article, I loved it.
+
+10:16.900 --> 10:21.700
+ It sort of reminded me a little bit of the ways that we actually infer politics from
+
+10:21.700 --> 10:23.860
+ artifacts in the axis of writing.
+
+10:23.860 --> 10:30.180
+ So a lot of early kind of excavations you have, like how the rooms are set, and from
+
+10:30.180 --> 10:35.700
+ that you see like here was the king class, the survey class, et cetera, et cetera.
+
+10:35.700 --> 10:43.060
+ I'm sure there's much better studies than anything I did before, but I think like inferring
+
+10:43.060 --> 10:47.540
+ the thing about the time, or it being used in different places, it probably is to me
+
+10:47.540 --> 10:54.900
+ that artifacts do change how things get used and have power, just because that's literally
+
+10:54.900 --> 10:59.140
+ the only things, those physical objects are the only things you have in archaeology, even
+
+10:59.140 --> 11:05.620
+ to the extent that you're often careful instead of needing something at all, maybe to structure
+
+11:05.620 --> 11:09.540
+ until you have the rest of the context, be able to, you know, like might.
+
+11:09.540 --> 11:13.860
+ Yeah, thank you, that's really helpful to hear about from archaeology.
+
+11:13.860 --> 11:22.020
+ I have one comment, and then one other small comment.
+
+11:22.020 --> 11:28.340
+ The first one is that in philosophy there's an area called social ontology, and so ontology
+
+11:28.340 --> 11:34.540
+ is the being or existence of something, and so social ontology is the study of how we
+
+11:34.540 --> 11:40.780
+ as social creatures create meaning out of the objects in the world.
+
+11:40.780 --> 11:47.420
+ I think most social ontologists would say that all objects have some sort of strong
+
+11:47.420 --> 11:51.580
+ meaning that plays with it, so that's just sort of a comment.
+
+11:51.580 --> 11:58.980
+ And the second one is that whenever you're dealing with an object or a system that involves
+
+11:58.980 --> 12:06.700
+ corporate profit, I think that we have to look closely at what that object or art really,
+
+12:06.700 --> 12:08.980
+ you know, what its intentions are.
+
+12:08.980 --> 12:10.980
+ Cool, thank you.
+
+12:10.980 --> 12:17.820
+ I think that several of the articles keep bringing up this aspect of corporate profit,
+
+12:17.820 --> 12:22.340
+ you know, the photography one that we had for last week did this as well, and where
+
+12:22.340 --> 12:29.060
+ are you getting your money for when you create this tech, you know, where you're coming from.
+
+12:29.060 --> 12:30.060
+ Yes, yeah.
+
+12:30.060 --> 12:34.380
+ Yeah, and we'll talk even more about that in the ecosystem stuff in the second half
+
+12:34.380 --> 12:35.380
+ of tonight.
+
+12:35.380 --> 12:38.460
+ Cool, thank you.
+
+12:38.460 --> 12:43.780
+ And this is, yeah, I should say this is something that people kind of disagree about.
+
+12:43.780 --> 12:49.220
+ Then I, in the interest of time, I think we'll not spend too long on the Philip Rogaway paper,
+
+12:49.220 --> 12:56.320
+ but I really, I really liked it, and just a few points that he makes are that surveillance
+
+12:56.320 --> 13:02.400
+ is an instrument of power, mass surveillance tends to produce uniform compliant and shallow
+
+13:02.400 --> 13:07.660
+ people, privacy is a social good, which I'll talk more about in a moment, but creeping
+
+13:07.660 --> 13:12.740
+ surveillance is hard to stop due to interlocking corporate and government interest, and something
+
+13:12.740 --> 13:16.680
+ I learned from the paper that I didn't know before is that Eisenhower originally talked
+
+13:16.680 --> 13:22.220
+ about the military-industrial-academic complex in a draft of his speech, but then the final
+
+13:22.220 --> 13:26.780
+ speech he just said the military-industrial complex, but I thought that was interesting
+
+13:26.780 --> 13:29.900
+ that academia was originally in there as well.
+
+13:29.900 --> 13:34.500
+ Oh, do you want a photo?
+
+13:34.500 --> 13:36.500
+ Oh, no, cool.
+
+13:36.500 --> 13:47.520
+ Yeah, so now I want to talk about some kind of steps toward solutions, and I'm gonna first
+
+13:47.520 --> 13:54.060
+ go through some proposals that I do not think will solve the problem, but that come up frequently.
+
+13:54.060 --> 13:59.100
+ An example of what motivates companies to change, some hope from history, the idea of
+
+13:59.100 --> 14:04.360
+ privacy as a public good, and then some kind of the specific use cases around regulating
+
+14:04.360 --> 14:08.220
+ data collection and political ads.
+
+14:08.220 --> 14:13.780
+ So an idea that comes up a lot is whether we should pay people for their data, and most
+
+14:13.780 --> 14:19.080
+ recently Andrew Yang announced on Twitter last week that he is going to be discussing
+
+14:19.080 --> 14:25.980
+ this with Kara Swisher at South by Southwest, and this was kind of one of his policy proposals.
+
+14:25.980 --> 14:32.500
+ So I think I see it's coming from a good place, this idea of wanting people to be compensated
+
+14:32.500 --> 14:37.980
+ because kind of their data is allowing companies to make all this money, but I disagree with
+
+14:37.980 --> 14:41.860
+ this.
+
+14:41.860 --> 14:47.400
+ Kind of one reason is this fails to treat privacy as a public good, and so, and we saw
+
+14:47.400 --> 14:53.700
+ this in kind of the Masij Cichlowski article last week on kind of making these analogies
+
+14:53.700 --> 14:58.860
+ with the environment of when we had kind of rivers catching on fire because they're so
+
+14:58.860 --> 15:07.500
+ heavily polluted or terrible smog, you know, those problems couldn't be solved by kind
+
+15:07.500 --> 15:12.420
+ of companies paying individuals for how they were being impacted or letting individuals
+
+15:12.420 --> 15:18.460
+ decide like, am I okay personally with it, with the company dumping this waste in the
+
+15:18.460 --> 15:26.980
+ river, but that you needed a kind of more collective response and to start kind of reframing
+
+15:26.980 --> 15:29.300
+ privacy as a public good.
+
+15:29.300 --> 15:37.780
+ And so Masij referred to it as ambient privacy, which actually I think I have a slide on later.
+
+15:37.780 --> 15:42.040
+ The other is that it fails to treat privacy as a human right, and so I think that there's
+
+15:42.040 --> 15:50.500
+ a concerning precedent around the idea of kind of paying money, and this is hard because
+
+15:50.500 --> 15:57.060
+ I think how we classify and think about privacy is still being framed, and so one article
+
+15:57.060 --> 16:01.380
+ referred to privacy as something that emanates from human rights, which I like, so even if
+
+16:01.380 --> 16:06.700
+ it's not officially a human right yet, but realizing that it's at least kind of related
+
+16:06.700 --> 16:12.780
+ to them, that when we start putting a monetary value on that, that that is kind of not a
+
+16:12.780 --> 16:19.620
+ great direction to go in because it legitimizes the idea of kind of it not being essential.
+
+16:19.620 --> 16:26.820
+ And also it kind of increases the class issues in which poor people may have no choice but
+
+16:26.820 --> 16:30.500
+ really feel compelled to give up their data for money.
+
+16:30.500 --> 16:34.700
+ Also this could flip and become a scenario more where people are paying to try to get
+
+16:34.700 --> 16:41.460
+ some sort of privacy as opposed to being paid and kind of will exacerbate the class difference
+
+16:41.460 --> 16:44.860
+ that we already see.
+
+16:44.860 --> 16:49.500
+ It's very virtually impossible for individuals to calculate the value of their data.
+
+16:49.500 --> 16:54.100
+ This is something that's spread over time and really changes in aggregation, and it's
+
+16:54.100 --> 16:58.040
+ hard as an individual to know, you know, what will happen with your data when it's aggregated
+
+16:58.040 --> 17:03.780
+ with the data of other people and with data from other sources.
+
+17:03.780 --> 17:08.880
+ Crypticali on Twitter, who's at I will leave now, had a great thread on this, highlighting
+
+17:08.880 --> 17:13.940
+ how this really puts the burden of time and education on the consumer, not on the firms
+
+17:13.940 --> 17:17.260
+ that have all the power.
+
+17:17.260 --> 17:21.860
+ And then Arvind Narayanan also had a great thread on this, saying that this would entrench
+
+17:21.860 --> 17:26.960
+ the asymmetric and exploitative relationship between firms and individuals.
+
+17:26.960 --> 17:32.620
+ So this is kind of my take on this, and not just my take, kind of many, many other privacy
+
+17:32.620 --> 17:34.820
+ experts have spoken out about this.
+
+17:34.820 --> 17:41.600
+ Are there thoughts on kind of this proposal, or we'll say that there's, even if an individual's
+
+17:41.600 --> 17:45.580
+ data is not out there, there are things that I think we lose as a society when we lose
+
+17:45.580 --> 17:47.380
+ kind of a broader sense of privacy.
+
+17:47.380 --> 17:53.340
+ Yeah, and sort of similar to, I guess, the experience that you were talking about, I
+
+17:53.340 --> 17:59.540
+ forgot where I heard about it, but there's like, in certain states, if you get arrested,
+
+17:59.540 --> 18:07.060
+ your mugshot and other information gets put online, and sometimes third-party companies
+
+18:07.060 --> 18:11.740
+ and organizations will often basically re-host your photo and information about your arrest
+
+18:11.740 --> 18:15.940
+ and all this other stuff, before you've been tried, before you've been charged, before
+
+18:15.940 --> 18:22.780
+ you've been convicted, and it's created this entire industry around, if you want your name
+
+18:22.780 --> 18:28.580
+ and photo off of this website, whenever someone searches your name, sort of tying you to some
+
+18:28.580 --> 18:34.340
+ alleged crime that maybe you've been found innocent of, then you have to pay $30 or whatever
+
+18:34.340 --> 18:35.340
+ it is.
+
+18:35.340 --> 18:40.980
+ And $30 may or may not be a ton of money in practical terms, but a lot of people, when
+
+18:40.980 --> 18:47.620
+ they find out about this, find it really repulsive, on a personal, principled level, and I think
+
+18:47.620 --> 18:53.980
+ that that sort of goes back to this idea that it's not a property right issue, it's a human
+
+18:53.980 --> 18:59.380
+ dignity issue, it's not reasonable or fair that somebody can take information about us
+
+18:59.380 --> 19:05.940
+ and coerce us into paying for that information to be dealt with in a way that conforms to
+
+19:05.940 --> 19:11.940
+ our consent, and like, yeah, the information is true that somebody was arrested or whatever,
+
+19:11.940 --> 19:19.420
+ but again, to echo what Rachel said, privacy is a human, or we tend to think of privacy
+
+19:19.420 --> 19:24.620
+ as a human right and not as a property right that can be like using it out in that way.
+
+19:24.620 --> 19:28.940
+ Oh, briefly wanted to say, so differential privacy, which came up last week, although
+
+19:28.940 --> 19:35.140
+ not by name, under, when we were talking about the census and kind of what are ways to kind
+
+19:35.140 --> 19:39.420
+ of help, and I think that is a use case where differential privacy can be useful, I do think
+
+19:39.420 --> 19:45.460
+ differential privacy is often overhyped, and so I share some of the critiques that Rogaway
+
+19:45.460 --> 19:51.580
+ included in his paper, that it often implicitly assumes that the database owner is the kind
+
+19:51.580 --> 19:57.860
+ of the good guy and that you're protecting the data from others, and he does share a
+
+19:57.860 --> 20:05.760
+ kind of rebuttal to this of kind of more decentralized designs, although I think that kind of default
+
+20:05.760 --> 20:10.860
+ is the more centralized version, and so, you know, as we saw kind of with some of the previous
+
+20:10.860 --> 20:16.700
+ examples that is often not necessarily the case, it's still kind of framing harm as something
+
+20:16.700 --> 20:22.620
+ that's individual and not necessarily community-wide, and it rarely considers the alternative of
+
+20:22.620 --> 20:28.100
+ collecting less data, and so I think that's kind of a key thing that is important, I think,
+
+20:28.100 --> 20:32.600
+ sometimes technical fixes can be very appealing, but I think it's really important to consider
+
+20:32.600 --> 20:38.620
+ the kind of less technical, could we just collect less data, and it also gives corporations
+
+20:38.620 --> 20:42.600
+ potentially a means for whitewashing the risk, and so this is not to say that differential
+
+20:42.600 --> 20:47.580
+ privacy is never the answer, but that I think it can be overhyped as an answer, and I do
+
+20:47.580 --> 20:52.700
+ share these kind of concerns about when it can be misused.
+
+20:52.700 --> 21:00.640
+ Okay, so now on towards solutions, and so first I'm going to just share an example of
+
+21:00.640 --> 21:05.140
+ what motivated a company to do something differently.
+
+21:05.140 --> 21:12.040
+ This starts very darkly with Facebook, so you know the UN has found that Facebook played
+
+21:12.040 --> 21:18.260
+ a determining role in the Myanmar genocide of the Rohingya.
+
+21:18.260 --> 21:24.220
+ One of the best articles I've read on it is from Timothy McLaughlin in Wired, and he interviewed
+
+21:24.220 --> 21:31.040
+ people that warned Facebook execs in 2013 and 2014 and 2015 about how the platform is
+
+21:31.040 --> 21:37.680
+ being used to incite violence, and the person that warned them in 2015 even said that there
+
+21:37.680 --> 21:42.260
+ was the potential for Facebook to play the role in Myanmar that the radio broadcast played
+
+21:42.260 --> 21:49.140
+ during the Rwandan genocide, and yet as of 2015 Facebook only had four contractors that
+
+21:49.140 --> 21:55.840
+ spoke Burmese on staff, which is just wild, it's terrible that they really did not take
+
+21:55.840 --> 22:00.560
+ significant action, and someone said in the article this is not 20-20 hindsight, the scale
+
+22:00.560 --> 22:06.340
+ of this problem was significant and it was already apparent, and so this is yeah kind
+
+22:06.340 --> 22:12.180
+ of very tragic and it's just really difficult to read kind of how little action Facebook
+
+22:12.180 --> 22:16.340
+ took.
+
+22:16.340 --> 22:22.820
+ So then this might have been 2018 when when Zuckerberg was testifying before Congress
+
+22:22.820 --> 22:28.000
+ and he said okay now we're gonna hire dozens of Burmese language content reviewers to try
+
+22:28.000 --> 22:35.820
+ to address this, so in contrast Germany passed a stricter law about hate speech called Net
+
+22:35.820 --> 22:45.500
+ DG, and Facebook hired 1,200 people in under a year, and so the the difference here is
+
+22:45.500 --> 22:52.620
+ that yes that Germany was if Facebook violated this law they could have been fined, I think
+
+22:52.620 --> 22:58.340
+ it was around 50 million euros, so a very significant number, and so yes as someone
+
+22:58.340 --> 23:02.660
+ said money is the difference between these examples, and so I'm sharing this not to say
+
+23:02.660 --> 23:08.220
+ that kind of the particular German law is a model, but just this contrast between kind
+
+23:08.220 --> 23:13.700
+ of being told that you are contributing to an actual genocide versus facing a very hefty
+
+23:13.700 --> 23:19.020
+ penalty, and so that shows kind of this is something that got Facebook to take action
+
+23:19.020 --> 23:24.200
+ when they thought there would be a substantial penalty, and it's important that the penalty
+
+23:24.200 --> 23:29.620
+ is not just a cost of doing business fine, which many end up being, but it has to be
+
+23:29.620 --> 23:35.300
+ significant and a credible threat that it's likely to happen, and so I always kind of
+
+23:35.300 --> 23:42.040
+ think about this as an example of legislation, and the threat of credible and significant
+
+23:42.040 --> 23:52.900
+ financial penalties making an impact, yes yeah because GDPR is something that, and some
+
+23:52.900 --> 23:58.660
+ of this is I think there is definitely more up to see kind of how strictly GDPR is enforced
+
+23:58.660 --> 24:04.340
+ and in what cases, but yeah that kind of credible threat of a significant penalty can motivate
+
+24:04.340 --> 24:12.380
+ companies in a way that that nothing else does, yeah so I wanted to kind of share that
+
+24:12.380 --> 24:17.060
+ some hope from history, so I find I mean I think the problems we're facing in many areas
+
+24:17.060 --> 24:25.080
+ are pretty overwhelming and complex, and so I know that can feel kind of discouraging
+
+24:25.080 --> 24:29.100
+ of just how can we even tackle this when it seems so complex, and so I think it's helpful
+
+24:29.100 --> 24:35.060
+ to remember kind of previous successes, many of which I kind of now take for granted.
+
+24:35.060 --> 24:38.640
+ Something I really liked about data sheets for data sets, which was assigned reading
+
+24:38.640 --> 24:46.180
+ in week two, is that they covered three case studies of how standardization and regulation
+
+24:46.180 --> 24:52.940
+ came to different industries, and so one in particular I'll talk about is car safety.
+
+24:52.940 --> 24:57.700
+ I also listened to a 99% invisible episode on this that was really fascinating, this
+
+24:57.700 --> 25:04.660
+ is a design podcast, but early cars had sharp metal knobs on the dashboard that would lodge
+
+25:04.660 --> 25:11.940
+ in people's skulls during crashes, non-collapsible steering columns would frequently impale drivers,
+
+25:11.940 --> 25:17.380
+ and the collapsible steering column was invented but was not implemented for many many years
+
+25:17.380 --> 25:23.260
+ because there was no financial reason to implement it, but it's said that the collapsible steering
+
+25:23.260 --> 25:29.460
+ column has saved more lives than related to car safety than anything other than seat belts.
+
+25:29.460 --> 25:35.100
+ There was also this widespread belief that cars were dangerous because of the people
+
+25:35.100 --> 25:40.820
+ driving them, and so for really for decades the kind of prevailing sentiment was like,
+
+25:40.820 --> 25:44.740
+ you know, cars are just the way they are, this is how cars are, the problem is when
+
+25:44.740 --> 25:48.820
+ we have bad people driving them, and so there's nothing we can do.
+
+25:48.820 --> 25:54.620
+ There was also the glass, they used kind of regular glass that would shatter in very dangerous
+
+25:54.620 --> 25:59.780
+ ways, and the car companies were very resistant to people even discussing car safety because
+
+25:59.780 --> 26:03.220
+ they didn't want people, you know, if people start thinking about car safety they're gonna
+
+26:03.220 --> 26:08.540
+ think about death and accidents, and so they really tried to stifle that discussion, and
+
+26:08.540 --> 26:12.920
+ kind of advocates and activists had to work for decades to even change the conversation
+
+26:12.920 --> 26:18.980
+ around this, GM hired private detectives to shadow Ralph Nader and try to dig up dirt
+
+26:18.980 --> 26:24.540
+ on him to discredit him, so it was really, and I did not know most of this history, is
+
+26:24.540 --> 26:29.900
+ something that people worked very hard and now, I mean while there are many problems
+
+26:29.900 --> 26:34.100
+ with car culture, it is something at least where car companies have acknowledged they
+
+26:34.100 --> 26:39.340
+ can change their designs, they even brag about safety as a feature, and that is kind of drastically
+
+26:39.340 --> 26:44.500
+ different than the situation a few decades ago.
+
+26:44.500 --> 26:50.580
+ Claudia's got her hand up, oh, you do, or don't, okay, can you pass the catchbox back,
+
+26:50.580 --> 26:55.460
+ and I'll say one more thing about cars while you're passing it back, it was only in 2011
+
+26:55.460 --> 27:00.500
+ that they mandated that crash test dummies needed to also represent the average woman's
+
+27:00.500 --> 27:06.540
+ body and not just be representing men, and again that's 2011, so relatively recently,
+
+27:06.540 --> 27:14.220
+ I think that's also just kind of a very concrete example of kind of the difference that regulation
+
+27:14.220 --> 27:18.620
+ can make, and something, and I don't know what the more recent statistics are, but up
+
+27:18.620 --> 27:24.180
+ until that point, women were 40% more likely to be injured in a car crash of the same impact
+
+27:24.180 --> 27:29.220
+ compared to a man, and kind of very likely due to these differences in testing, alright,
+
+27:29.220 --> 27:30.220
+ Claudia?
+
+27:30.220 --> 27:43.260
+ I guess the feeling I have about this is that it just seems so much slower than the rate
+
+27:43.260 --> 27:53.580
+ at which technology has accelerated, I mean in the last five years, you know, things have
+
+27:53.580 --> 28:00.500
+ changed dramatically, so, you know, I don't know how long it took for them to implement
+
+28:00.500 --> 28:08.500
+ seat belts or car seats for kids, but I don't know if we really have that much time.
+
+28:08.500 --> 28:13.380
+ Yeah, no, that is a valid point, this was something that took a while, technology is
+
+28:13.380 --> 28:21.620
+ rapidly evolving, and it is, I mean there are other ways that kind of the parallels
+
+28:21.620 --> 28:27.100
+ break, oh, the other interesting point they make is just beginning to even collect the
+
+28:27.100 --> 28:32.980
+ kind of the data on car crashes was kind of a key victory to even kind of have that data.
+
+28:32.980 --> 28:44.340
+ Well I don't even think we've had, well, yeah, we've had the car crashes data-wise, but I
+
+28:44.340 --> 28:52.540
+ feel like policymakers don't even get the Internet yet, so how are they going to get
+
+28:52.540 --> 28:56.340
+ a grip on this in a timely manner?
+
+28:56.340 --> 29:01.220
+ Yeah, no, that is a concern about a timely manner.
+
+29:01.220 --> 29:06.740
+ Another analogy, Julia Angwin, who was a senior reporter at ProPublica and now is editor-in-chief
+
+29:06.740 --> 29:13.620
+ of the Markup, and I'm going to link to an interview she gave in a few slides, but one
+
+29:13.620 --> 29:17.700
+ thing she compared it to the Industrial Revolution and talked about, you know, with the Industrial
+
+29:17.700 --> 29:23.880
+ Revolution we had a few decades of, you know, children working in factories, 12-hour days
+
+29:23.880 --> 29:29.420
+ in incredibly unsafe conditions, and she talks about how it just took a while to even kind
+
+29:29.420 --> 29:33.780
+ of gather the language and be able to describe the problem and that journalists kind of had
+
+29:33.780 --> 29:38.460
+ to do a lot of this just even covering what is the problem and how do we talk about this
+
+29:38.460 --> 29:44.100
+ and that, you know, and then the kind of from there that helps for kind of advocates for
+
+29:44.100 --> 29:48.740
+ organizing around this and activists in organizing, but that she says we're kind of still in this
+
+29:48.740 --> 29:55.340
+ phase of just how do we even kind of talk about and describe the problems we're facing,
+
+29:55.340 --> 29:59.300
+ which I found both kind of reassuring that it's like, okay, it's okay that, you know,
+
+29:59.300 --> 30:03.420
+ we don't have like the, this is the exact solution to implement, but that we do need
+
+30:03.420 --> 30:07.360
+ to kind of just even talk about the problems and kind of build up our language and understanding
+
+30:07.360 --> 30:14.140
+ of them.
+
+30:14.140 --> 30:18.020
+ And then I'll say data sheets for data sets also talked about the pharmaceutical industry
+
+30:18.020 --> 30:27.780
+ and the industry for kind of electronic components like circuits and resistors and transistors.
+
+30:27.780 --> 30:34.800
+ So then there is the example from Masij Ceglowski's post that I mentioned earlier of, you know,
+
+30:34.800 --> 30:40.020
+ just kind of pollution and again this is an area where it can be discouraging because
+
+30:40.020 --> 30:44.860
+ we are still facing very significant environmental issues, but to look back at some of the environmental
+
+30:44.860 --> 30:51.120
+ winds that we've had can be helpful to just kind of remember that we have made some progress
+
+30:51.120 --> 30:58.300
+ on this issue and kind of what those winds can look like.
+
+30:58.300 --> 31:03.780
+ He wrote the infrastructure of mass surveillance is too complex and the tech oligopoly too
+
+31:03.780 --> 31:09.160
+ powerful to make it meaningful to talk about individual consent.
+
+31:09.160 --> 31:13.100
+ To what extent is living in a surveillance saturated world compatible with pluralism
+
+31:13.100 --> 31:18.220
+ and democracy, which is also kind of a, I think, a big question to consider and gets
+
+31:18.220 --> 31:21.400
+ at kind of what we were talking about earlier with public goods.
+
+31:21.400 --> 31:27.980
+ But this notion that kind of ambient privacy and having a society where not all our interactions
+
+31:27.980 --> 31:32.620
+ are on the record can have kind of positive, positive impacts.
+
+31:32.620 --> 31:37.220
+ And I think there are a lot of kind of helpful analogies to be made there with kind of the
+
+31:37.220 --> 31:38.220
+ environment.
+
+31:38.220 --> 31:45.780
+ I'm sorry, I'll get to a slightly more positive framing in a moment.
+
+31:45.780 --> 31:50.180
+ This is the towards solutions section, but I do really think it's helpful to try to kind
+
+31:50.180 --> 31:56.100
+ of learn from history and look at victories in history.
+
+31:56.100 --> 31:58.260
+ So this, I really liked this.
+
+31:58.260 --> 32:02.640
+ This was an interview with Julia Angwin and Trevor Paglen, and they kind of argue that
+
+32:02.640 --> 32:08.840
+ even privacy they think is not the right framing for what we're talking about.
+
+32:08.840 --> 32:13.620
+ And so I think this quote was from Trevor, who's an artist, but he refers to anonymity
+
+32:13.620 --> 32:15.860
+ as a public resource.
+
+32:15.860 --> 32:19.860
+ And so kind of thinking about, he says there, you know, there are a lot of kind of de facto
+
+32:19.860 --> 32:24.460
+ rights and liberties that arise from not having every single action in your everyday life,
+
+32:24.460 --> 32:29.280
+ having economic and political consequences, and that's something that kind of we've been
+
+32:29.280 --> 32:34.780
+ drawing from and not necessarily realizing the benefit of.
+
+32:34.780 --> 32:39.480
+ And Julia said, I really, I like this framing, privacy is not about wanting to be alone.
+
+32:39.480 --> 32:43.020
+ It's about wanting to be able to participate in the wonderful connectedness that the internet
+
+32:43.020 --> 32:47.300
+ has brought to the world, but without giving everything up, and kind of recognizing that
+
+32:47.300 --> 32:51.740
+ there are, you know, is something wonderful about being connected and that privacy is
+
+32:51.740 --> 32:56.400
+ not an antisocial thing, but it's about kind of wanting to enjoy some of these benefits
+
+32:56.400 --> 32:59.340
+ without having to sacrifice so much.
+
+32:59.340 --> 33:05.100
+ Okay, so now kind of a hopeful story.
+
+33:05.100 --> 33:11.620
+ So this is Tawana Petty, who gave one of the keynotes at our tech policy workshop, and
+
+33:11.620 --> 33:17.580
+ she's the director of digital justice for the Detroit tech community, or Detroit Community
+
+33:17.580 --> 33:19.700
+ Tech Project.
+
+33:19.700 --> 33:24.540
+ And so in Detroit, and I think we talked about this last time, has this project Greenlight
+
+33:24.540 --> 33:29.260
+ that's putting kind of surveillance cameras all over the place.
+
+33:29.260 --> 33:32.340
+ And she talked about this program they're doing called Green Chairs Instead of Green
+
+33:32.340 --> 33:38.540
+ Lights, and the idea is to give people free chairs if they'll agree to sit on their porches
+
+33:38.540 --> 33:41.420
+ more and talk to their neighbors.
+
+33:41.420 --> 33:48.540
+ And this actually started, I believe in the 80s in Michigan, and they're kind of, people
+
+33:48.540 --> 33:52.220
+ were worried about like the safety of children walking home from school, and so they did
+
+33:52.220 --> 33:56.140
+ this community project of let's have more people sitting outside during the hours that
+
+33:56.140 --> 34:00.620
+ children are walking home from school and get people talking to their neighbors more
+
+34:00.620 --> 34:01.620
+ again.
+
+34:01.620 --> 34:05.740
+ And that was kind of successful, and so I really liked this, and so this is a very like
+
+34:05.740 --> 34:08.100
+ low-tech solution.
+
+34:08.100 --> 34:14.180
+ And she contrasted, oh, I was gonna, thought I quoted it, so I wrote about this and I linked
+
+34:14.180 --> 34:18.400
+ to a source about it in a blog post I wrote last month.
+
+34:18.400 --> 34:21.000
+ But she said that surveillance is not safety.
+
+34:21.000 --> 34:26.560
+ And so kind of making this distinction between kind of surveillance and more cameras and
+
+34:26.560 --> 34:30.220
+ kind of what actually makes people feel safe and potentially having more community and
+
+34:30.220 --> 34:35.180
+ better relationships with their neighbors can contribute to safety.
+
+34:35.180 --> 34:41.300
+ Raman Chowdhury, something she said at the conference that stood out to me was that how
+
+34:41.300 --> 34:47.860
+ surveillance is often kind of part of increasing militarization, and even though it's kind
+
+34:47.860 --> 34:54.180
+ of in the name of increasing safety, we think of heavily militarized societies as pretty
+
+34:54.180 --> 34:56.460
+ low trust societies.
+
+34:56.460 --> 35:01.940
+ And so that the kind of the relationship doesn't seem to hold in terms of militarization, doesn't
+
+35:01.940 --> 35:10.460
+ actually make people kind of safer, increase trust in society.
+
+35:10.460 --> 35:15.340
+ So okay, now I'm going to talk about some kind of, so this is kind of, I like this example
+
+35:15.340 --> 35:19.340
+ of just thinking about, you know, what are some kind of not necessarily even involving
+
+35:19.340 --> 35:24.180
+ technology solutions that could address kind of the same sort of problems that surveillance
+
+35:24.180 --> 35:28.060
+ is offering to address.
+
+35:28.060 --> 35:32.100
+ Onto policy proposals, and so these are going to be kind of a little bit more narrow in
+
+35:32.100 --> 35:34.900
+ their focus.
+
+35:34.900 --> 35:42.860
+ This was op-ed in the New York Times by the author of, I think it's the anti-social network
+
+35:42.860 --> 35:50.900
+ is the name of his book, but he says that, this is Siva Vaidhyanathan, the key is to
+
+35:50.900 --> 35:55.460
+ limit data collection and the use of personal data to ferry ads and other content to discrete
+
+35:55.460 --> 36:01.900
+ segments of Facebook users, unfortunately that's the core of Facebook's business model.
+
+36:01.900 --> 36:07.620
+ So one concrete proposal that could potentially work in the US would be to restrict the targeting
+
+36:07.620 --> 36:13.360
+ of political ads in any medium to the level of the electoral district of the race.
+
+36:13.360 --> 36:17.140
+ So kind of not allowing, you know, this extreme micro-targeting, but really trying to keep
+
+36:17.140 --> 36:19.620
+ it broader.
+
+36:19.620 --> 36:24.600
+ Other kind of proposals around advertisements are, you know, to have them based on the content
+
+36:24.600 --> 36:31.800
+ of the page you're looking at and not so much on this compilation of your personal data.
+
+36:31.800 --> 36:37.980
+ This was a report that came from John Hopkins in UNC and one of the authors said there was
+
+36:37.980 --> 36:43.020
+ even bipartisan agreement on how to regulate digital ads in a basic way, similar to how
+
+36:43.020 --> 36:49.540
+ TV ads are governed, more transparency, databases of content, actual government oversight, and
+
+36:49.540 --> 36:55.180
+ so this is something that we kind of had for particularly for political ads on TV that
+
+36:55.180 --> 37:02.100
+ we don't yet have for for digital ads.
+
+37:02.100 --> 37:07.900
+ And as Zeynep Tufekci wrote an article in 2018, and this is during the Facebook hearings
+
+37:07.900 --> 37:11.060
+ and she actually said, you know, we don't need to interview Mark Zuckerberg, we already
+
+37:11.060 --> 37:15.820
+ know more than enough about Facebook, we can just look at their actions for the last 10
+
+37:15.820 --> 37:20.540
+ years, and she proposed that data collection should only be through clear, concise, and
+
+37:20.540 --> 37:22.340
+ transparent opt-in.
+
+37:22.340 --> 37:27.140
+ People should have access to all data collected on them, data collection should be limited
+
+37:27.140 --> 37:31.400
+ to specifically enumerated purposes, and I think this also includes the time limit that
+
+37:31.400 --> 37:36.340
+ came up in previous, a previous class, but the idea of, you know, when data is collected
+
+37:36.340 --> 37:40.300
+ it's we're gonna use it for this purpose, for this length of time, and that's it, as
+
+37:40.300 --> 37:45.300
+ opposed to right now where it's kind of this, you know, indefinite, they have it forever.
+
+37:45.300 --> 37:55.100
+ Actually, I'll pause, oh, actually, we're, okay, I will finish this, I think I just have
+
+37:55.100 --> 37:57.780
+ like two slides left, and then we'll have our break, you know, we're running a little
+
+37:57.780 --> 37:58.780
+ bit late.
+
+37:58.780 --> 38:05.740
+ So, a quote I like to remember from Zeynep, who I really admire, is, what we need to fear
+
+38:05.740 --> 38:11.180
+ most is not what AI will do to us on its own, but how people in power will use AI to control
+
+38:11.180 --> 38:15.900
+ and manipulate us, and so I think that's a kind of important principle to keep in mind
+
+38:15.900 --> 38:23.380
+ when considering how, how can and should we regulate, and then these are kind of some
+
+38:23.380 --> 38:35.820
+ of the top experts I recommend following on, on issues of privacy and surveillance.
+
+38:35.820 --> 38:41.380
+ And then with that, we'll take, we'll take our seven minute break, so let's meet back at 7.15.
+

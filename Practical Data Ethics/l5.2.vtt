@@ -1,0 +1,656 @@
+WEBVTT
+
+00:00.000 --> 00:05.160
+ So let's get started for our kind of final, final class. I'm going to be
+
+00:05.160 --> 00:09.520
+ finishing up the lesson on our ecosystem.
+
+00:09.520 --> 00:14.700
+ I just briefly wanted to review what I was talking about last week and talked
+
+00:14.700 --> 00:18.960
+ about Goodhart's law. When a measure becomes a target, it ceases to be a good
+
+00:18.960 --> 00:24.040
+ measure. Another variation of this is Campbell's law. The more any quantitative
+
+00:24.040 --> 00:27.760
+ social indicator is used for social decision-making, the more subject it will
+
+00:27.760 --> 00:31.240
+ be to corruption pressures and the more apt it will be to distort and corrupt
+
+00:31.240 --> 00:37.800
+ the social processes it's intended to mirror, to monitor. And so I've written
+
+00:37.800 --> 00:43.200
+ about this more in a blog post and later a paper that overemphasizing metrics can
+
+00:43.200 --> 00:50.240
+ lead to manipulation, gaming, myopic focus on short-term goals because it's
+
+00:50.240 --> 00:54.240
+ much easier to measure short-term quantities as opposed to kind of
+
+00:54.240 --> 00:59.760
+ long-term complex relationships, unexpected negative consequences, and
+
+00:59.760 --> 01:06.440
+ unfortunately a lot of AI and machine learning centers on optimizing a metric.
+
+01:06.840 --> 01:11.720
+ So one example I shared last week came from England's health care system which
+
+01:11.720 --> 01:16.080
+ in the early 2000s implemented a number of kind of performance metrics for
+
+01:16.080 --> 01:22.640
+ accountability. There were targets around shortening ER wait times and this led to
+
+01:22.640 --> 01:27.800
+ hospitals canceling scheduled operations so that they could send extra staff into
+
+01:27.800 --> 01:33.400
+ the ER, requiring patients to wait in lines of ambulances outside the hospital
+
+01:33.400 --> 01:37.560
+ because that didn't count as part of their ER wait time, turning stretchers
+
+01:37.560 --> 01:41.960
+ into beds by putting them in hallways, and discrepancies in the numbers
+
+01:41.960 --> 01:46.240
+ reported by hospitals versus by patients. So if you asked hospitals how long
+
+01:46.240 --> 01:48.920
+ people were waiting, you're getting very different answers than if you ask
+
+01:48.920 --> 01:54.960
+ patients how long they were waiting. In the U.S. we've seen a lot of pressure
+
+01:54.960 --> 01:59.440
+ around standardized testing leading to kind of widespread cheating scandals by
+
+01:59.440 --> 02:05.240
+ school systems as well as kind of schools focusing so myopically on
+
+02:05.240 --> 02:11.160
+ teaching to the task that they're leaving out a lot of other things.
+
+02:11.160 --> 02:15.040
+ So that's just kind of a brief review about some of the issues with metrics.
+
+02:15.040 --> 02:21.480
+ One of the readings from week five that we didn't get to last time was the
+
+02:21.480 --> 02:26.680
+ platform is the message by James Gremelman and so I enjoyed this and he
+
+02:26.680 --> 02:33.800
+ talks about how kind of with meme culture there's no example of a kind of
+
+02:33.800 --> 02:39.640
+ totally kind of pure and earnest statement but also it's never kind of
+
+02:39.640 --> 02:44.760
+ totally ironic or a joke either that there's kind of this in between and that
+
+02:44.760 --> 02:50.840
+ he gives this example about eating that the Tide Pod challenge which kind of the
+
+02:50.840 --> 02:55.280
+ earliest mention of was this Onion article from 2015 which clearly seemed
+
+02:55.280 --> 03:01.600
+ to be a joke but then when this became an issue you had people kind of even in
+
+03:01.600 --> 03:06.320
+ denouncing the Tide Pod challenge is very dangerous that's you know further
+
+03:06.320 --> 03:12.420
+ promoting it and kind of encouraging its spread. He wrote online culture is
+
+03:12.420 --> 03:16.800
+ awash in layers of irony there's a sense in which there's no such thing as a pure
+
+03:16.800 --> 03:20.880
+ exemplar of eating a Tide Pod unironically or a critique of the
+
+03:20.880 --> 03:26.820
+ practice that it's not also in part an advertisement for it. And then a quote I
+
+03:26.820 --> 03:31.000
+ particularly like is he highlighted that the platforms are structurally at war
+
+03:31.000 --> 03:35.480
+ with themselves the same characteristics that make outrageous and offensive
+
+03:35.480 --> 03:40.920
+ content unacceptable are what make it go viral in the first place. I'm going to ask if
+
+03:40.920 --> 03:47.720
+ there are any kind of reactions to this paper from last week. Anyone in the room?
+
+03:48.880 --> 03:55.560
+ All right, another paper I liked and I think this was an optional reading was
+
+03:55.560 --> 04:01.120
+ by Tom Slee, The Incompatible Incentives of Private Sector AI, and he talks
+
+04:01.120 --> 04:06.100
+ about this idea of the algorithm guardrail arbitrage which is when a
+
+04:06.100 --> 04:10.580
+ recommendation system is promoting content that violates its community
+
+04:10.580 --> 04:15.020
+ guidelines. So there the guardrails are kind of the community guidelines of
+
+04:15.020 --> 04:20.800
+ what's unacceptable or should be taken down and that often these things are in
+
+04:20.800 --> 04:25.100
+ conflict that a recommendation system is promoting something that maybe
+
+04:25.100 --> 04:29.760
+ technically is against the community guidelines. However, companies have a
+
+04:29.760 --> 04:34.040
+ financial incentive to keep that gap wide and they can kind of arbitrage
+
+04:34.040 --> 04:38.420
+ across kind of you know if they're called out pointing to their guidelines
+
+04:38.420 --> 04:43.400
+ of like oh no we don't support this sort of thing yet continuing to profit in
+
+04:43.400 --> 04:48.320
+ instances where they're they're not called out about it. I thought that was
+
+04:48.320 --> 04:53.240
+ a kind of helpful helpful framing and again it points to this kind of a
+
+04:53.240 --> 05:01.080
+ structural tension or even war of kind of the misaligned or kind of different
+
+05:01.080 --> 05:08.760
+ incentives depending on your perspective. Slee also writes about how
+
+05:08.760 --> 05:13.980
+ social media recommender algorithms have three qualities needed for highly
+
+05:13.980 --> 05:20.000
+ elastic but also highly fragile systems. Those are that experimentation is very
+
+05:20.000 --> 05:24.520
+ affordable so people can you know automatically automate generating
+
+05:24.520 --> 05:28.680
+ content and just put a ton of content out there and see what's rewarded what's
+
+05:28.680 --> 05:36.120
+ not. They get fast feedback in the forms of likes and views and it has a high
+
+05:36.120 --> 05:41.040
+ impact on the recommendation system and these three qualities kind of all really
+
+05:41.040 --> 05:44.800
+ encourage gaming and manipulation because they make it make it cheap and
+
+05:44.800 --> 05:54.520
+ efficient to do so. All right let me check the the group chat to see any
+
+05:54.520 --> 06:00.600
+ comments. Someone said they really like this paper, a great explanation of meme
+
+06:00.600 --> 06:09.480
+ culture. Any comments from in person?
+
+06:10.480 --> 06:16.800
+ All right so the the next set of things I want to talk about is to kind of
+
+06:16.800 --> 06:22.640
+ understand broadly some of the forces at work in tech particularly venture
+
+06:22.640 --> 06:27.680
+ capital hyper growth and blitz scaling. And so I think it's important to
+
+06:27.680 --> 06:31.720
+ understand these to kind of understand the patterns of why we keep seeing
+
+06:31.720 --> 06:36.800
+ companies that have some of the same ethical pitfalls. This reminds me a
+
+06:36.800 --> 06:43.080
+ little bit of Zeynep Tafekci's article on sociological storytelling but
+
+06:43.080 --> 06:47.400
+ understanding some of the kind of sociological forces that have led to
+
+06:47.400 --> 06:52.680
+ kind of our current state. And so I've written a little bit in a
+
+06:52.680 --> 06:57.400
+ different context. I wrote a blog post two years ago and I want to highlight
+
+06:57.400 --> 07:01.280
+ everything I'm saying is a generality like there definitely exceptions to
+
+07:01.280 --> 07:06.280
+ these but on the whole I think there are a lot of downsides to venture capital
+
+07:06.280 --> 07:11.240
+ and to hyper growth and this is not to say that they're never useful or there
+
+07:11.240 --> 07:16.800
+ are no cases where they're where they're helpful. I think that venture capital in
+
+07:16.800 --> 07:21.000
+ many cases can push what could have been a successful kind of sustainable business
+
+07:21.000 --> 07:26.440
+ to overexpand and ultimately fail and that there's often a lot of
+
+07:26.440 --> 07:31.760
+ misalignment of incentives between VCs and founders and the rest of society
+
+07:31.760 --> 07:36.840
+ more broadly. And so this is kind of showing up in the media more. Here's a
+
+07:36.840 --> 07:40.760
+ venture capitalist saying that the vast majority of entrepreneurs should not
+
+07:40.760 --> 07:46.040
+ take venture capital because it's a binary swing for the fences exercising
+
+07:46.040 --> 07:51.880
+ exercise. There was a New York Times article on more entrepreneurs that are
+
+07:51.880 --> 07:57.760
+ just not even interested in in venture capital. And so Tim O'Reilly talks about
+
+07:57.760 --> 08:03.520
+ kind of a lot of related issues in his post that was a sign reading last week.
+
+08:03.520 --> 08:10.320
+ And kind of the the premise of our kind of current system is that if a company
+
+08:10.320 --> 08:14.840
+ grows big enough and fast enough that profits will eventually follow. So kind
+
+08:14.840 --> 08:18.880
+ of if you can just get really big really fast like it's gonna have to work out
+
+08:18.880 --> 08:26.440
+ that you're profitable is the the hypothesis. And kind of one philosophy
+
+08:26.440 --> 08:30.880
+ this goes under is blitzscaling which Reid Hoffman and Chris Yeh wrote a book
+
+08:30.880 --> 08:37.280
+ on. And it really prioritizes speed over efficiency and risk potentially
+
+08:37.280 --> 08:41.160
+ disastrous defeat but with the idea that there's a lot of upsides if you're
+
+08:41.160 --> 08:47.480
+ successful. And Tim O'Reilly is very critical of this approach in his in his
+
+08:47.480 --> 08:54.640
+ article. And so first just how is how is this related to data ethics and what
+
+08:54.640 --> 08:59.000
+ we're talking about. I'm having this kind of hyper growth typically requires
+
+08:59.000 --> 09:03.960
+ automation and reliance on metrics. This isn't something you can kind of do just
+
+09:03.960 --> 09:08.720
+ just using people or human decision makers. You typically are going to be
+
+09:08.720 --> 09:14.080
+ having to use a lot of automation and data. I also think that prioritizing
+
+09:14.080 --> 09:20.240
+ speed above all else doesn't leave time to reflect on ethics. And then when you
+
+09:20.240 --> 09:25.200
+ do have problems they happen at a large scale. And so I think if the company is
+
+09:25.200 --> 09:28.880
+ kind of growing in a more sustainable manner you know you there might be a
+
+09:28.880 --> 09:31.960
+ problem but you can recognize it when the company is still small and before
+
+09:31.960 --> 09:38.600
+ it's impacted too many people. If you kind of grow at a very fast scale your
+
+09:38.600 --> 09:44.600
+ problem may be impacting millions of people before before it becomes a parent.
+
+09:44.600 --> 09:58.040
+ Let me pause here. I'll check the group group chat. Can you explain a little bit
+
+09:58.040 --> 10:02.160
+ more about why it's important to have high elasticity? I had trouble
+
+10:02.160 --> 10:08.960
+ understanding of the concept. Oh sorry about that. So that's going back.
+
+10:08.960 --> 10:12.800
+ There's a little bit of latency with the the YouTube stream. So let me go
+
+10:12.800 --> 10:21.320
+ back to the slide on elasticity. And so actually what this was saying that is
+
+10:21.320 --> 10:30.840
+ that high elasticity is a risk. So it's associated with high fragility and so
+
+10:30.840 --> 10:34.840
+ kind of the fact that people can experiment so easily this is actually a
+
+10:34.840 --> 10:42.800
+ bad thing just because it leads to a lot of gaming and manipulation. And so this
+
+10:42.800 --> 10:47.840
+ was kind of painting it in a negative light of kind of what the risks are of
+
+10:47.840 --> 10:53.680
+ kind of being so elastic because the the recommendation system is really
+
+10:53.680 --> 10:58.880
+ responding quickly and content creators are responding quickly in terms of
+
+10:58.880 --> 11:02.520
+ creating lots of content and getting this feedback. The system can change very
+
+11:02.520 --> 11:09.560
+ quickly but these same factors are what lead to to manipulation. And so let me go
+
+11:09.560 --> 11:17.720
+ back to the the chat. And so yeah let me know if that explanation was helpful in
+
+11:17.720 --> 11:23.280
+ the chat and I'll move on to some of the other comments. One person said as a VC I
+
+11:23.280 --> 11:32.960
+ agree with these points about venture capital. Uber, Lyft is going to be a good
+
+11:32.960 --> 11:37.320
+ case study. They bootstrapped for growth without profitability.
+
+11:37.320 --> 11:45.560
+ What happens now? And I think on the kind of Uber, Lyft example something that is
+
+11:45.560 --> 11:51.280
+ to me kind of odd to see is I there were you know there were cities and areas
+
+11:51.280 --> 11:55.600
+ where Uber and Lyft could be profitable but because they were going for this
+
+11:55.600 --> 12:00.660
+ particular Uber for this kind of world domination approach they you know did
+
+12:00.660 --> 12:05.800
+ end up trying to compete in a number of markets where they were just constantly
+
+12:05.800 --> 12:09.560
+ losing money and that they did ultimately pull out of particularly in
+
+12:09.560 --> 12:16.480
+ Asia. I know so I think there's already kind of been a cost to that. Another
+
+12:16.480 --> 12:21.160
+ comment can also state that more and more AI powered startups build data
+
+12:21.160 --> 12:24.560
+ products and don't think about ethical applications during the building and
+
+12:24.560 --> 12:32.440
+ testing phases. Someone says I love the long-termism movement such as long now,
+
+12:32.440 --> 12:38.680
+ FHI at Oxford for these kinds of reasons, kind of the opposite of moving fast and
+
+12:38.680 --> 12:44.160
+ breaking things ideologically. So those are some comments from the chat. Any
+
+12:44.160 --> 12:52.440
+ comments from in person? All right. So going back yeah so we've kind of so
+
+12:52.440 --> 12:55.840
+ there's this relationship I think between hyper growth and automation and
+
+12:55.840 --> 13:00.480
+ using data and also making it harder for people to reflect on the ethics of what
+
+13:00.480 --> 13:05.640
+ they're doing. Some other characteristics of what happens are that
+
+13:05.640 --> 13:10.240
+ investors end up kind of anointing winners as opposed to market forces,
+
+13:10.240 --> 13:16.800
+ tends to create duopolies or monopolies. It's incredibly difficult for new
+
+13:16.800 --> 13:25.000
+ entrants. There's a loss of control of the company often by founders. Companies
+
+13:25.000 --> 13:30.040
+ can tend to spread themselves too thin in trying to achieve this, you know, kind
+
+13:30.040 --> 13:37.120
+ of global monopoly status. And tons of companies using the strategy fail and so
+
+13:37.120 --> 13:43.760
+ there's real survivorship bias in the success stories we hear and kind of an
+
+13:43.760 --> 13:47.760
+ advice that you get from from VCs. Always be aware of kind of the
+
+13:47.760 --> 13:52.240
+ survivorship bias if they're focusing on the few that were successful.
+
+13:52.240 --> 13:57.840
+ However many many companies fail and I think that kind of taking venture
+
+13:57.840 --> 14:02.520
+ capital in many cases can push what could have been a kind of successful but
+
+14:02.520 --> 14:11.880
+ small sustainable company kind of to this brink of failure. One of the subject
+
+14:11.880 --> 14:16.920
+ headings in O'Reilly's article was is it a business or a financial instrument and
+
+14:16.920 --> 14:23.280
+ he shares this graph which I think is just remarkable of the percent of US
+
+14:23.280 --> 14:29.440
+ IPOs with negative earnings per share at the time of IPO. And you can see it is
+
+14:29.440 --> 14:36.720
+ above 80% currently. So it's really high number of companies going public that
+
+14:36.720 --> 14:42.680
+ are losing money at the time they go public. So kind of seemingly not having
+
+14:42.680 --> 14:46.640
+ achieved a profitable business. And if you look back kind of the only time it's
+
+14:46.640 --> 14:52.720
+ been nearly as high was in 2000 right before the previous dot-com crash. But
+
+14:52.720 --> 15:00.280
+ that kind of historically it was at much lower numbers. A quote from the
+
+15:00.280 --> 15:04.040
+ article, Silicon Valley venture capitalists want entrepreneurs to pursue
+
+15:04.040 --> 15:08.440
+ exponential growth even if doing so costs more money and increases the
+
+15:08.440 --> 15:16.120
+ chances that the business will fail. So then there is a now I'm getting into that
+
+15:16.120 --> 15:19.840
+ kind of the Zeynep Tafekci article she talks about and I think this is just
+
+15:19.840 --> 15:26.880
+ kind of so prescient of her that she in 2012 was already really concerned about
+
+15:26.880 --> 15:30.760
+ the growth of the kind of the data-driven campaign and the harms of
+
+15:30.760 --> 15:36.280
+ that at a time when many people were thinking that big data would save
+
+15:36.280 --> 15:42.520
+ politics. So data had you know played a significant role in the Obama
+
+15:42.520 --> 15:48.480
+ campaign and Zeynep says she got a lot of negative feedback for her
+
+15:48.480 --> 15:57.760
+ New York Times op-ed at the time expressing hesitation about this. And so
+
+15:57.760 --> 16:02.760
+ she she talks about how he kind of went from data seeming you know to be this
+
+16:02.760 --> 16:07.200
+ really kind of positive hopeful thing so it helped Obama get elected. It was
+
+16:07.200 --> 16:14.000
+ helping people you know kind of revolt against dictators to now seeing it as
+
+16:14.000 --> 16:20.040
+ having a lot of oppressive oppressive results. Digital platforms allowed
+
+16:20.040 --> 16:24.280
+ communities to gather and form in new ways but they also dispersed existing
+
+16:24.280 --> 16:30.760
+ communities. And then a quote that I think about a lot is power always learns
+
+16:30.760 --> 16:36.080
+ and powerful tools always fall into its hands. This is a hard lesson of history
+
+16:36.080 --> 16:40.920
+ but a solid one. And so that initially kind of even though many people whose
+
+16:40.920 --> 16:45.720
+ voices you know hadn't been as widely heard were able to find a platform
+
+16:45.720 --> 16:50.040
+ through through social media and technology which was very positive we're
+
+16:50.040 --> 16:53.360
+ now seeing the powerful kind of manipulate it in some harmful ways. And
+
+16:53.360 --> 17:02.480
+ this kind of rereading this article by Zeynep reminded me of our mediating
+
+17:02.480 --> 17:07.360
+ consent article that we read in the first week and there Renee DiResta in
+
+17:07.360 --> 17:11.480
+ the context of disinformation talked about this shift from you know their
+
+17:11.480 --> 17:16.840
+ ways that the kind of the mainstream centralized media failed us such as
+
+17:16.840 --> 17:22.280
+ perhaps not enough investigation around the Vietnam War and the the downsides
+
+17:22.280 --> 17:28.120
+ there also with the Iraq War kind of not pointing out the kind of flimsy and
+
+17:28.120 --> 17:33.620
+ false evidence. However now we're seeing the downsides of having kind of such a
+
+17:33.620 --> 17:41.680
+ fractured fractured ecosystem. Are there thoughts on on this article? Any from the
+
+17:41.680 --> 17:53.720
+ in-person crowd? Let me check the chat.
+
+17:53.720 --> 18:06.080
+ Yeah and so the MIT Tech article by Zeynep how social media took us from
+
+18:06.080 --> 18:09.880
+ Tahrir Square to Donald Trump asked how did digital technologies go from
+
+18:09.880 --> 18:14.760
+ empowers empowering citizens to being used as tools of oppression and discord
+
+18:14.760 --> 18:20.120
+ and to give several reasons even though dissidents can more easily circumvent
+
+18:20.120 --> 18:24.760
+ censorship which is a positive. The public sphere is now too noisy and
+
+18:24.760 --> 18:32.040
+ confusing to have as much of an impact. The new gatekeepers succeed by fueling
+
+18:32.040 --> 18:38.200
+ mistrust and doubt. I mean there's a asymmetry there and that people trying
+
+18:38.200 --> 18:43.520
+ to enact kind of positive change in the world have to you know convince people
+
+18:43.520 --> 18:47.320
+ that here's this problem and it is something we can address as opposed to
+
+18:47.320 --> 18:54.080
+ just getting people to feel mistrustful and doubtful is easier. Local journalism
+
+18:54.080 --> 19:00.280
+ has been broken. When we encounter opposing views on social media it's like
+
+19:00.280 --> 19:04.600
+ hearing them from the opposing team in a football stadium and so Zeynep says
+
+19:04.600 --> 19:07.480
+ it's not it's not that we're like in bubbles where we don't hear the other
+
+19:07.480 --> 19:11.640
+ side it's that when we do hear them we're kind of hearing them in this very
+
+19:11.640 --> 19:17.280
+ amped up way you know where we feel kind of very charged up for our team and
+
+19:17.280 --> 19:21.800
+ against the other team and it often kind of drives people even further into their
+
+19:21.800 --> 19:26.440
+ existing views as opposed to kind of reaching a more common common
+
+19:26.440 --> 19:33.600
+ understanding. We have weak digital security in the US and the conditions of
+
+19:33.600 --> 19:38.160
+ social distrust, weak institutions, and detached elites made the United States
+
+19:38.160 --> 19:50.680
+ particularly vulnerable to some of the things we're experiencing now. Okay and
+
+19:50.680 --> 19:55.640
+ then I think I will this is kind of the conclusion of the ecosystem part and I
+
+19:55.640 --> 20:03.220
+ will move move into week six. Any more thoughts on kind of our ecosystem? So
+
+20:03.220 --> 20:09.240
+ this could be anything related to metrics, the forces on companies, the
+
+20:09.240 --> 20:16.960
+ dynamics of of social media and of these platforms. And I wanted to talk about
+
+20:16.960 --> 20:22.360
+ these things just to try to get that kind of broader view of this is these
+
+20:22.360 --> 20:34.640
+ are the forces that kind of acting on tech companies and influencing us all.
+

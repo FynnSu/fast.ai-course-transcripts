@@ -1,0 +1,767 @@
+WEBVTT
+
+00:00.000 --> 00:07.560
+ All right everyone, welcome back and so now we're gonna have a special mini guest
+
+00:07.560 --> 00:13.760
+ lecture by Ali Al-Khatib who is our data ethics fellow. He was also the author of
+
+00:13.760 --> 00:18.640
+ one of the assigned readings for this week and so he's gonna give a
+
+00:18.640 --> 00:21.680
+ presentation and then I have a kind of week five presentation that I will start
+
+00:21.680 --> 00:25.720
+ after that and this will probably go into next week's kind of my presentation
+
+00:25.720 --> 00:35.800
+ which is fine because I think we have extra time there but here's Ali. Thanks everyone.
+
+00:35.800 --> 00:44.760
+ Save it until after. Hey so I want to talk a little bit about some thoughts
+
+00:44.760 --> 00:48.160
+ that have been sort of knocking around in my head lately and it sort of starts
+
+00:48.160 --> 00:54.760
+ with this book Seeing Like a State by a guy named James Scott. In the book Seeing
+
+00:54.760 --> 00:58.880
+ Like a State, Scott makes this argument that governments basically make sense of
+
+00:58.880 --> 01:02.520
+ the world by operationalizing it in certain ways to allow them to make
+
+01:02.520 --> 01:06.760
+ comparisons and decisions and they do this in ways that are pretty intuitive
+
+01:06.760 --> 01:11.920
+ or familiar to us. Like they standardize how we make sense of family names, how
+
+01:11.920 --> 01:17.240
+ we instantiate sort of measures so that we can exchange and trade,
+
+01:17.240 --> 01:22.560
+ how to do surveys and censuses which is a topic of controversy this year in
+
+01:22.560 --> 01:27.360
+ particular, how we organize our transportation like where stops are,
+
+01:27.360 --> 01:33.260
+ when stops are, just so that we can get around. And a lot of this is to make the
+
+01:33.260 --> 01:38.880
+ world which is a really messy place legible to a state which is which sort
+
+01:38.880 --> 01:42.880
+ of thrives on order and being able to make sense of things in a clear and
+
+01:42.880 --> 01:49.700
+ coherent way. But they also scaffold power and this is sort of clear in a lot
+
+01:49.700 --> 01:52.580
+ of different ways but like one of the ways that was really salient to me when
+
+01:52.580 --> 01:57.860
+ I was reading this book was that there's this idea of like what's your domain?
+
+01:57.860 --> 02:02.200
+ Like California is one domain that has a governance and all this other stuff but
+
+02:02.200 --> 02:07.280
+ it also says what's not part of the domain and just in doing that just in
+
+02:07.280 --> 02:11.280
+ saying for instance where the boundary is which is this really fuzzy difficult
+
+02:11.280 --> 02:16.280
+ to sort of articulate thing in the real world it implicitly also starts to build
+
+02:16.280 --> 02:20.400
+ up what are the powers of a state beyond sort of establishing its boundaries and
+
+02:20.400 --> 02:24.760
+ all of these other things. And there are lots of other ways that sort of
+
+02:24.760 --> 02:29.160
+ regimenting the ways that we make sense of the world help scaffold power for
+
+02:29.160 --> 02:33.700
+ for governments. But I think the underlying point here is that we in
+
+02:33.700 --> 02:37.360
+ general people make sense of the world and make sense of the world and
+
+02:37.360 --> 02:40.480
+ interpret the world in really constrained ways and we do it because
+
+02:40.480 --> 02:45.560
+ it's how we cope with way too much information. And this was really salient
+
+02:45.560 --> 02:50.560
+ again to me in the book because one of the stories that he talks about is that
+
+02:50.560 --> 02:53.700
+ during the Industrial Revolution there were all these forests this is actually
+
+02:53.700 --> 02:58.960
+ a screenshot of like I think Lake Tahoe so not what he was talking about but in
+
+02:58.960 --> 03:02.120
+ the Industrial Revolution Europeans wanted to make sense of how many trees
+
+03:02.120 --> 03:05.960
+ there were in the forest so they could harvest trees and not totally destroy
+
+03:05.960 --> 03:10.280
+ the forest the forest sort of ecology. And what they realized was that they
+
+03:10.280 --> 03:13.760
+ could count a little subset of the trees and they would be able to sort of
+
+03:13.760 --> 03:16.400
+ extrapolate from there. A lot of the stuff if you've taken introductory
+
+03:16.400 --> 03:19.680
+ statistics is the sort of stuff that they were building and sort of like
+
+03:19.680 --> 03:24.680
+ constructing in statistical sort of methods at this time. But they also
+
+03:24.680 --> 03:28.360
+ realized that if they organized and regimented the world in really
+
+03:28.360 --> 03:32.120
+ constrained ways it would make it easier for them to reason and think about it. So
+
+03:32.120 --> 03:35.920
+ what they did was like they uprooted all of these trees and they like replanted
+
+03:35.920 --> 03:40.620
+ them so that like a lot of these trees all of the trees in this photo were the
+
+03:40.620 --> 03:45.540
+ same species, Norway spruce if anybody's curious, and the same age they were
+
+03:45.540 --> 03:51.600
+ organized in a really kind of like obsessively clean and neat way. And Scott
+
+03:51.600 --> 03:57.180
+ talked about this idea of basically high modernism. This idea not just that like
+
+03:57.180 --> 04:02.480
+ geometrically clear and sort of like geometrically clean sort of patterns are
+
+04:02.480 --> 04:07.200
+ satisfying to people but that like there's a moral value to it. That this is
+
+04:07.200 --> 04:12.120
+ actually sort of like morally ethically good to make things sort of like clear
+
+04:12.120 --> 04:16.880
+ and clean for people to reason about and make sense of. So this is sort of
+
+04:16.880 --> 04:20.040
+ this turning the interpretation of the world a very constrained very
+
+04:20.040 --> 04:24.960
+ geometrically patterned very clear sort of world into the imposition of it like
+
+04:24.960 --> 04:29.460
+ actually uprooting entire forests and replanting them. And this was fine for a
+
+04:29.460 --> 04:35.480
+ while but then about 70 or 80 years later it wasn't so fine. A number of
+
+04:35.480 --> 04:41.040
+ things happened that caused serious catastrophes. First pests when you change
+
+04:41.040 --> 04:46.240
+ the entire forest to be one species pests go they love it like they have a
+
+04:46.240 --> 04:51.000
+ field day because Norway spruce isn't particularly sort of resilient against
+
+04:51.000 --> 04:55.640
+ certain kinds of pests and those pests just went crazy. There were storms in the
+
+04:55.640 --> 04:58.360
+ previous photo you saw that all the trees were roughly the same age they
+
+04:58.360 --> 05:01.920
+ were roughly the same height they're roughly the same sort of mass and when
+
+05:01.920 --> 05:05.840
+ big storms came through rather than the big trees sort of blocking the winds and
+
+05:05.840 --> 05:11.400
+ the rains and the storms in for the sort of defense of the smaller trees all of
+
+05:11.400 --> 05:15.200
+ these trees that were basically the same age got kind of destroyed all at once.
+
+05:15.200 --> 05:20.440
+ And then there was the hollowing out of the ecosystem itself is as part of the
+
+05:20.440 --> 05:24.560
+ sort of cleaning of the forest people got rid of the underbrush they got rid
+
+05:24.560 --> 05:30.440
+ of the passing sort of fauna and in flora they basically turned the forest
+
+05:30.440 --> 05:35.960
+ into just trees. And as a result of that it turns out those animals and those
+
+05:35.960 --> 05:41.600
+ insects and those plants were necessary as part of like the ongoing total
+
+05:41.600 --> 05:47.080
+ holistic ecology of the system. And so what happened was what they called
+
+05:47.080 --> 05:52.360
+ waltz der Ben which turns out to mean forest death and that's kind of
+
+05:52.360 --> 05:56.840
+ terrifying. They lost something like 30 to 60 percent of the forest before they
+
+05:56.840 --> 06:01.360
+ realized what was going on before a national campaign to rebuild the forest
+
+06:01.360 --> 06:06.400
+ and introduce spiders and insects and all of the other pieces of wildlife back
+
+06:06.400 --> 06:10.200
+ into the forest to try to bring it back from the brink of death were ultimately
+
+06:10.200 --> 06:15.280
+ successful. But it was it was close and it was scary. It turned out that the
+
+06:15.280 --> 06:19.400
+ forest was more than just the trees it was everything that lived in and passed
+
+06:19.400 --> 06:26.040
+ through that entire sphere. Okay so what did I tell you about trees just now? I
+
+06:26.040 --> 06:29.800
+ think that narratives matter and I think that it's important how we frame and
+
+06:29.800 --> 06:33.320
+ make sense of this stuff because it helps us make sense of where we should
+
+06:33.320 --> 06:39.960
+ be going and where we are. So in this talk which hopefully I won't go over on
+
+06:39.960 --> 06:46.040
+ I think that I want to make three kind of major arguments. The first being that
+
+06:46.040 --> 06:50.480
+ we turn our really messy world into data to reason about it and to inform our
+
+06:50.480 --> 06:56.080
+ actions. Second that that's becoming a growing problem as we build systems
+
+06:56.080 --> 07:01.200
+ directly out of data. And then third that people respond to that and that I think
+
+07:01.200 --> 07:05.080
+ where we're going is that people are starting to perform for the algorithms
+
+07:05.080 --> 07:08.160
+ that dictate and direct our lives and I'm worried about where that's going to
+
+07:08.160 --> 07:12.480
+ lead us. So there are these three sort of arguments that I'm going to make. I'm not
+
+07:12.480 --> 07:15.960
+ totally sure how I feel about any or all of them and so I'm curious what all of
+
+07:15.960 --> 07:19.720
+ your thoughts are but let's get started with the first one where we've been
+
+07:19.720 --> 07:26.600
+ turning the messy world into clean sort of data to whatever extent that data is
+
+07:26.600 --> 07:33.280
+ even clean or accurate. Okay so this is part of the sort of narrative history
+
+07:33.280 --> 07:36.680
+ sort of thing. How many of you have just by a show of hands have heard of the
+
+07:36.680 --> 07:43.040
+ Mother of All Demos? Okay interesting. If you're not familiar the Mother of All
+
+07:43.040 --> 07:48.600
+ Demos was sort of this demonstration about in 1968, yeah of course on the
+
+07:48.600 --> 07:53.960
+ screen, in 1968 that introduced a lot of the paradigms that you are probably
+
+07:53.960 --> 07:57.800
+ using on your computers right now. The idea of like a text cursor, of
+
+07:57.800 --> 08:03.320
+ teleconferencing, of just editing text in general, like this was introduced here in
+
+08:03.320 --> 08:09.160
+ like an hour and a half long demo that had never been seen before. And many
+
+08:09.160 --> 08:12.200
+ people in computer science and in engineering talk about it as the
+
+08:12.200 --> 08:15.960
+ beginning of user interface paradigms that have influenced the world for the
+
+08:15.960 --> 08:21.160
+ next 50-60 probably will be the next hundred years. But a different
+
+08:21.160 --> 08:24.520
+ perspective on that is that this is the conclusion of a decade of military
+
+08:24.520 --> 08:28.680
+ research, a decade of research that was funded by the military during the Cold
+
+08:28.680 --> 08:33.560
+ War to figure out how to bomb places more effectively and more efficiently.
+
+08:33.560 --> 08:39.580
+ Now you could reasonably ask why this matters and the reason I think that it
+
+08:39.580 --> 08:44.040
+ matters is because less than 50 years later, 30 years, less than 30 years later
+
+08:44.040 --> 08:48.760
+ John Perry Barlow wrote the Declaration of Independence of Cyber, sorry the
+
+08:48.760 --> 08:52.400
+ Declaration of the Independence of Cyberspace where he talked about this
+
+08:52.400 --> 08:55.560
+ idea that we have no elected government nor are we likely to have one, that
+
+08:55.560 --> 08:58.800
+ governments derive their powers from the consent of the governed and that
+
+08:58.800 --> 09:03.720
+ we haven't given that to them. And he wrote this like on the internet and
+
+09:03.720 --> 09:08.720
+ posted it onto a network that was built by government funding, that
+
+09:08.720 --> 09:12.540
+ was built by military funding. And so I don't necessarily think that like I
+
+09:12.540 --> 09:17.040
+ would say that like this was a huge sort of hypocritical like blunder on his part
+
+09:17.040 --> 09:22.240
+ but I think that it was clearly not acknowledging the history upon which he
+
+09:22.240 --> 09:27.300
+ was building when he talked about these ideas of the Declaration of like of sort
+
+09:27.300 --> 09:33.040
+ of breaking away from from physical geographic embodied space. And I think
+
+09:33.040 --> 09:37.880
+ that that sort of translates into where we are now in this idea of kind of
+
+09:37.880 --> 09:44.280
+ building human-centered AI. You all have read about the HAI, there was the launch
+
+09:44.280 --> 09:48.800
+ of the Institute, wait sorry, the Stanford Institute for Human-Centered Artificial
+
+09:48.800 --> 09:57.620
+ Intelligence. I wrote about it at length, I had thoughts, but the real question, the
+
+09:57.620 --> 10:01.040
+ real issue that I wanted to talk about with it with that post and that I want
+
+10:01.040 --> 10:06.000
+ to talk about now is that I have real questions about what future we're
+
+10:06.000 --> 10:10.560
+ building with the stakeholders that are in the room at the HAI. Do they have the
+
+10:10.560 --> 10:13.560
+ knowledge? Do they have the experience? Do they have the methodological
+
+10:13.560 --> 10:18.120
+ backgrounds? Do they have the incentives even to solve any of these problems? I'm
+
+10:18.120 --> 10:21.680
+ not totally sure that they do and in fact it worried me to the point that I
+
+10:21.680 --> 10:26.160
+ couldn't continue to be there anymore. And I think that this is becoming a
+
+10:26.160 --> 10:29.320
+ growing problem as we continue to build systems and as artificial intelligence
+
+10:29.320 --> 10:36.480
+ turns data that we've collected and sort of aggregated for it into these
+
+10:36.480 --> 10:41.160
+ systems themselves. Now there are all sorts of examples of artificial
+
+10:41.160 --> 10:45.600
+ intelligence making really frustrating, stupid errors in judgment or errors in
+
+10:45.600 --> 10:50.360
+ classification or what have you and we could go on and on and on and
+
+10:50.360 --> 10:56.200
+ on with all of the terrible errors that these algorithmic systems have made, but
+
+10:56.200 --> 10:59.480
+ I think it's sort of empirically the case that these algorithmic systems are
+
+10:59.480 --> 11:04.680
+ taking data that we've collected without being particularly critically
+
+11:04.680 --> 11:10.560
+ analytical about what those data say and sort of thrown them
+
+11:10.560 --> 11:14.160
+ at these systems and ask them to develop patterns. And I read about that in this
+
+11:14.160 --> 11:18.600
+ paper about street-level algorithms. If you're curious there's a whole paper
+
+11:18.600 --> 11:23.040
+ about it. But basically the gist is that algorithmic systems look for
+
+11:23.040 --> 11:27.620
+ patterns in the data that we give it and those algorithms don't necessarily have
+
+11:27.620 --> 11:32.760
+ the ability to reflect on what they're observing or to even think critically
+
+11:32.760 --> 11:37.700
+ about what are the limitations of the data that they're fed. And that causes
+
+11:37.700 --> 11:41.860
+ all sorts of problems. There are these frustrations that emerge when we have
+
+11:41.860 --> 11:45.600
+ these reductive systems that tell us like you should be taking 10,000 steps
+
+11:45.600 --> 11:49.760
+ or what have you. I don't even remember what some of these data points are. Some
+
+11:49.760 --> 11:54.240
+ of them are like how many hours I was standing up or how many steps I took or
+
+11:54.240 --> 12:00.160
+ what my heart rate was or whatever. But these are all basically like really
+
+12:00.160 --> 12:05.800
+ crummy measures that sort of approximate in really crummy ways like fitness. And
+
+12:05.800 --> 12:09.400
+ like no matter how many of these things that you collect you're never gonna have
+
+12:09.400 --> 12:14.620
+ like a really good sort of holistic view of like how fit or how healthy a person
+
+12:14.620 --> 12:17.320
+ is. You're just gonna have a bunch of data points that you can ultimately sort
+
+12:17.320 --> 12:20.440
+ of like draw a boundary around and say like I guess I'm gonna say this is
+
+12:20.440 --> 12:25.440
+ fitness. And that's frustrating but it's also really damaging because it
+
+12:25.440 --> 12:30.960
+ encourages people to try to live according to certain metrics and maybe
+
+12:30.960 --> 12:33.920
+ even optimize for certain ones. Like right now I'm tricking my watch into
+
+12:33.920 --> 12:40.520
+ thinking I'm exercising. And I don't think that that necessarily benefits any
+
+12:40.520 --> 12:43.920
+ of us personally and I do think that it benefits the companies that are
+
+12:43.920 --> 12:49.360
+ collecting these data. But I think that like the sort of deeper or longer term
+
+12:49.360 --> 12:53.880
+ problem that worries me is that when we talk about things like driving for
+
+12:53.880 --> 12:58.960
+ instance and there are like some reasonably recent papers that have come
+
+12:58.960 --> 13:01.520
+ out just in the last year, I think that really what we should be talking about
+
+13:01.520 --> 13:05.360
+ is not the technical stuff, the metrics that we're optimizing for, but we should
+
+13:05.360 --> 13:08.400
+ be talking about the social problems that precipitated those problems in
+
+13:08.400 --> 13:11.960
+ the first place. We should be talking about how we've built cities to be pro
+
+13:11.960 --> 13:16.940
+ cars to the point of being dangerous for pedestrians. When we talk about clinical
+
+13:16.940 --> 13:20.600
+ decision-making systems and how algorithmic systems are like sort of
+
+13:20.600 --> 13:23.760
+ problematic and how people don't necessarily follow the instructions and
+
+13:23.760 --> 13:28.200
+ all that other stuff, we should instead talk about the history of Western
+
+13:28.200 --> 13:33.800
+ doctors doing conducting experiments on people of color and establishing a very
+
+13:33.800 --> 13:40.160
+ well-earned reputation of being horrible transgressors of human rights. And when
+
+13:40.160 --> 13:44.080
+ we talk about things like evaluating bias and algorithmic systems and
+
+13:44.080 --> 13:48.440
+ thinking about sort of like prisons and whatnot, we should really think about the
+
+13:48.440 --> 13:52.720
+ carceral state and the social environment that precipitated an entire
+
+13:52.720 --> 13:57.720
+ industry basically of slave labor that continues to this day in prisons
+
+13:57.720 --> 14:05.240
+ that motivates judges and police and legislators to put people in prison for
+
+14:05.240 --> 14:11.800
+ the purpose of extracting labor from them. So something that I kind of want to
+
+14:11.800 --> 14:16.400
+ spend a couple of minutes from people just sort of thinking amongst yourselves
+
+14:16.400 --> 14:20.680
+ about is what does the world look like that's built uncritically on historical
+
+14:20.680 --> 14:25.280
+ foundations of greed and exploitation and harm and sort of like how do we
+
+14:25.280 --> 14:29.160
+ perform for algorithmic audiences right now. And just to give like some examples
+
+14:29.160 --> 14:35.400
+ I have some sort of kind of jokey prompts that sort of illustrate that people are
+
+14:35.400 --> 14:39.480
+ sort of starting to respond to the algorithmic systems themselves and
+
+14:39.480 --> 14:43.200
+ performing I don't want to say for the algorithms benefit but for the
+
+14:43.200 --> 14:48.120
+ algorithm satisfaction certainly. And there is sort of like some fun examples
+
+14:48.120 --> 14:52.720
+ so ways to undermine a police state. In Hong Kong a lot of people were shining
+
+14:52.720 --> 14:57.080
+ lasers at cameras and whatnot. It wasn't super clear whether that was doing
+
+14:57.080 --> 15:00.880
+ anything effectively but the sort of folk wisdom was that the lasers would
+
+15:00.880 --> 15:04.400
+ like mess up the cameras sensors and it would make it difficult for them to
+
+15:04.400 --> 15:09.860
+ identify the people that were protesting in Hong Kong. And if you want to get a
+
+15:09.860 --> 15:12.760
+ slightly more personal than that you could wear a shirt that has all these
+
+15:12.760 --> 15:17.280
+ photos of in this case Michael Jackson and it would sort of like frustrate a
+
+15:17.280 --> 15:20.120
+ computer vision system that would try to figure out who you are because it would
+
+15:20.120 --> 15:22.960
+ just see Michael Jackson all over you. And if you want to get even more
+
+15:22.960 --> 15:27.480
+ personal than that you could put makeup on your face which presumably confuses
+
+15:27.480 --> 15:31.300
+ the computer vision systems and makes it difficult for to recognize that one you
+
+15:31.300 --> 15:37.000
+ are a person and that you have a face and two who you are. So yeah what I'd
+
+15:37.000 --> 15:40.680
+ like all of you to do is sort of like turn to each other and think about this
+
+15:40.680 --> 15:45.880
+ question and maybe if you run out of things think about what it would look
+
+15:45.880 --> 15:49.920
+ like if a world was built intentionally with the histories that I've talked
+
+15:49.920 --> 15:54.800
+ about in mind so that we could actually intentionally sort of consciously move
+
+15:54.800 --> 15:59.120
+ away from that and what would it look like to build a system or to build a
+
+15:59.120 --> 16:04.560
+ world that that consciously moved away from those from those histories. So take
+
+16:04.560 --> 16:08.840
+ I guess two or three minutes and talk amongst yourselves in groups of three or
+
+16:08.840 --> 16:20.200
+ four and we'll come back. Wow okay having power is great. So yeah does anybody have
+
+16:20.200 --> 16:24.040
+ any thoughts that they'd like to share about I guess either ways that they
+
+16:24.040 --> 16:29.440
+ think about how I guess like we sort of exist in this sort of uncritically built
+
+16:29.440 --> 16:41.240
+ space or potential alternative futures? Yep. Yeah so sort of I think one example
+
+16:41.240 --> 16:44.360
+ that you can kind of looked at both examples. So when you look at like gross
+
+16:44.360 --> 16:48.580
+ domestic product DDP you sort of have to have an inherent bias against all the
+
+16:48.580 --> 16:53.360
+ existing metrics because sort of they were to be measured takes active work
+
+16:53.360 --> 16:56.080
+ which means that there must be an entrenched tower structure protecting
+
+16:56.080 --> 17:01.600
+ the act of measurement. And then what I found as something to entice in those
+
+17:01.600 --> 17:05.240
+ histories is Ollie Peters an economist with the Santa Fe Institute who was the
+
+17:05.240 --> 17:08.800
+ domestic democratic product which is saying it's not looking at the average
+
+17:08.800 --> 17:12.280
+ of every dollar over time look at every person and average every person together.
+
+17:12.280 --> 17:17.040
+ So if even one person goes to zero income the whole thing is going to go go
+
+17:17.040 --> 17:22.080
+ down and sort of that sort of the erodistic you know ensemble not the
+
+17:22.080 --> 17:25.920
+ ensemble average with the time series average for each person. And so I think
+
+17:25.920 --> 17:29.960
+ that in general trying to think of how do I humanize a metric more is the way
+
+17:29.960 --> 17:34.200
+ to build intentionally and I think that when you look at an existing metric
+
+17:34.200 --> 17:38.600
+ everything for who's measuring it, why, who's allowing them to continue measuring it. Yeah
+
+17:38.600 --> 17:42.040
+ that's a really great point. I guess if anybody has any other thoughts I can
+
+17:42.040 --> 17:48.040
+ like vamp for a few seconds. Okay well feel free to raise your hand while I
+
+17:48.040 --> 17:52.240
+ talk for a minute. Yeah that's a really great point. There's a book called
+
+17:52.240 --> 17:55.840
+ Measuring What Counts which sort of talks about a lot of this stuff and they're
+
+17:55.840 --> 18:00.720
+ like former White House economists who were basically talking about like how we
+
+18:00.720 --> 18:04.360
+ had all these great metrics for the economy and they weren't accurately
+
+18:04.360 --> 18:07.920
+ reflecting like the reality like the lived experience of a lot of the people
+
+18:07.920 --> 18:13.780
+ that were that were not experiencing like super great stock market like sort
+
+18:13.780 --> 18:30.160
+ of like performance and whatnot. Any other? Yeah. We didn't get to talk as much because we were
+
+18:30.160 --> 18:40.680
+ updating each other on different things but I had asked about how many languages
+
+18:40.680 --> 18:46.400
+ are there and in the Philippines there's about 7,000 islands and 700 languages
+
+18:46.400 --> 18:50.240
+ and so you look at Facebook corporate governance, the way that they measure how
+
+18:50.240 --> 18:55.000
+ they take cases like whether it's Myanmar or something else, the metric is scale but
+
+18:55.000 --> 18:59.240
+ if you look at generally underrepresented, and I say the word
+
+18:59.240 --> 19:03.640
+ underrepresented versus minority like California has majority quote-unquote
+
+19:03.640 --> 19:09.760
+ Latinos but they are underrepresented. Asian Americans are very under
+
+19:09.760 --> 19:14.520
+ represented in number but then you compare like things in China and Asia it
+
+19:14.520 --> 19:19.600
+ just like the way that these terms that they're so ahistorical and how we're
+
+19:19.600 --> 19:24.120
+ measuring things and so what would it look like if you were to take that into
+
+19:24.120 --> 19:31.120
+ account is very complex I think by country and by history of colonialism
+
+19:31.120 --> 19:36.180
+ that it makes it so difficult to measure it but I think the hardest part of what
+
+19:36.180 --> 19:41.360
+ I highlight is scale and if you visited the Philippine consulate trying to
+
+19:41.360 --> 19:46.280
+ describe to entrepreneurs who were tech versus small business and I said well
+
+19:46.280 --> 19:50.720
+ most of these investors the way they evaluate things is does this scale and
+
+19:50.720 --> 19:55.680
+ like that is a very capitalistic notion that I was framing as much as like I
+
+19:55.680 --> 20:01.740
+ hate that like the case for tech so it's really hard to just figure out like what
+
+20:01.740 --> 20:08.120
+ would make this a much more humane environment for technology. Okay great
+
+20:08.120 --> 20:11.560
+ well if you have any more thoughts I'd love to hear it in the forum and stuff
+
+20:11.560 --> 20:32.840
+ so feel free to chime in there. Thanks.
+

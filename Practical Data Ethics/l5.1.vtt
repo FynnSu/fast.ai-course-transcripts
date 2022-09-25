@@ -1,0 +1,1070 @@
+WEBVTT
+
+00:00.000 --> 00:02.340
+ Oh, yeah, thank you, Lee.
+
+00:02.340 --> 00:07.560
+ That was fantastic, and that's also a good lead-in.
+
+00:07.560 --> 00:16.800
+ I was going to talk about our ecosystem, and I think I'm going
+
+00:16.800 --> 00:20.440
+ to skip ahead to my section on metrics, just because that seems
+
+00:20.440 --> 00:25.600
+ like such a kind of natural direction to go in from here.
+
+00:25.600 --> 00:30.720
+ And so I'll cover the other material next week,
+
+00:30.720 --> 00:35.800
+ since we definitely won't be finishing, but so this has come
+
+00:35.800 --> 00:40.880
+ up previously in class, this idea of Goodhart's Law,
+
+00:40.880 --> 00:43.280
+ that when a measure becomes a target,
+
+00:43.280 --> 00:45.760
+ it ceases to be a good measure.
+
+00:45.760 --> 00:48.920
+ Another framing, and we're about to see several examples
+
+00:48.920 --> 00:53.400
+ of what this means, another framing of it is Campbell's Law,
+
+00:53.400 --> 00:56.360
+ which is the more any quantitative social indicator is
+
+00:56.360 --> 00:59.900
+ used for social decision-making, the more subject it will be
+
+00:59.900 --> 01:02.920
+ to corruption pressures, and the more apt it will be to distort
+
+01:02.920 --> 01:06.920
+ and corrupt the social processes it is intended to monitor.
+
+01:06.920 --> 01:09.320
+ And so this is a little bit kind of more specific
+
+01:09.320 --> 01:12.760
+ than Goodhart's Law, but covers some of the same cases.
+
+01:12.760 --> 01:18.920
+ And this is a topic that I wrote a blog post about last year,
+
+01:18.920 --> 01:22.200
+ and then ended up kind of extending it into a paper,
+
+01:22.200 --> 01:24.500
+ if you want to hear more about this, but this is something
+
+01:24.500 --> 01:28.200
+ that I think is a really kind of fundamental challenge for AI.
+
+01:28.200 --> 01:33.600
+ But optimizing metrics can lead to manipulation, gaming,
+
+01:33.600 --> 01:36.520
+ myopic focus on short-term goals,
+
+01:36.520 --> 01:40.500
+ unexpected negative consequences, and unfortunately,
+
+01:40.500 --> 01:45.200
+ much of AI machine learning focuses on optimizing a metric,
+
+01:45.200 --> 01:48.800
+ because that's kind of what most techniques are doing,
+
+01:48.800 --> 01:50.000
+ and that's something that we've gotten very,
+
+01:50.000 --> 01:53.000
+ very good at is optimizing a metric.
+
+01:55.000 --> 01:59.400
+ So one example that we saw back in week two of something
+
+01:59.400 --> 02:02.100
+ that can go wrong is measurement bias, and so we talked
+
+02:02.100 --> 02:05.400
+ about a paper then where the researchers wanted
+
+02:05.400 --> 02:09.800
+ to predict who's most likely to have a stroke, and this could be used
+
+02:09.800 --> 02:14.000
+ to prioritize patients at the ER,
+
+02:14.000 --> 02:19.600
+ and they found some really surprising predictive risk factors.
+
+02:19.600 --> 02:23.400
+ Such as accidental injury, benign breast lump, colonoscopy,
+
+02:23.400 --> 02:26.800
+ and sinusitis, and it turns out that what they were picking
+
+02:26.800 --> 02:30.000
+ out was just who utilizes healthcare versus who doesn't.
+
+02:30.000 --> 02:33.500
+ And they're kind of people that have high utilization of healthcare,
+
+02:33.500 --> 02:37.600
+ others that have low utilization, and this is a case
+
+02:37.600 --> 02:41.360
+ where we don't actually have data of stroke, which is a region
+
+02:41.360 --> 02:45.100
+ of the brain being denied oxygen from new blood flow.
+
+02:45.100 --> 02:48.600
+ The data we have is a proxy, it's who had symptoms,
+
+02:48.600 --> 02:50.900
+ went to the doctor, received the right tests,
+
+02:50.900 --> 02:54.400
+ got the right diagnosis, and there are all sorts of factors
+
+02:54.400 --> 02:59.600
+ that can influence that, including who has access to healthcare,
+
+02:59.600 --> 03:02.100
+ who can afford their copay, what sort of racial
+
+03:02.100 --> 03:06.700
+ or gender biases might the doctors have, cultural influences,
+
+03:06.700 --> 03:08.400
+ so a lot of different things.
+
+03:08.400 --> 03:13.000
+ So this is one way that metrics can fail.
+
+03:13.000 --> 03:17.200
+ Another really interesting paper from the 2000s looking
+
+03:17.200 --> 03:21.800
+ at the UK's healthcare system, where they moved to trying
+
+03:21.800 --> 03:27.400
+ to have kind of more metrics, and they found that, it's depressing,
+
+03:27.400 --> 03:31.200
+ they introduced new targets around ER wait times,
+
+03:31.200 --> 03:34.700
+ and this led to people canceling scheduled operations.
+
+03:34.700 --> 03:37.000
+ The hospitals would cancel operations
+
+03:37.000 --> 03:39.200
+ so that they could draft more people into the ER
+
+03:39.200 --> 03:43.900
+ to keep the ER wait time down if it was getting too high.
+
+03:43.900 --> 03:46.100
+ Requiring patients to wait in lines
+
+03:46.100 --> 03:49.200
+ of ambulances outside the hospital, because that didn't count
+
+03:49.200 --> 03:51.600
+ as part of their wait in the ER if they were
+
+03:51.600 --> 03:55.600
+ in an ambulance outside the ER.
+
+03:55.600 --> 03:59.500
+ They turned stretchers into beds by putting them in hallways,
+
+03:59.500 --> 04:01.700
+ because then they could say the person's no longer waiting,
+
+04:01.700 --> 04:04.800
+ they're in a quote bed.
+
+04:04.800 --> 04:07.700
+ They also found a big discrepancy in numbers reported
+
+04:07.700 --> 04:11.400
+ by hospitals versus by patients, so if they surveyed hospitals
+
+04:11.400 --> 04:13.200
+ on how long people were waiting,
+
+04:13.200 --> 04:14.300
+ they were getting different results
+
+04:14.300 --> 04:18.200
+ than if they surveyed patients on how long did you wait.
+
+04:18.200 --> 04:23.400
+ And so this, and this is just kind of one
+
+04:23.400 --> 04:25.700
+ of many examples this report gives
+
+04:25.700 --> 04:29.600
+ of how there are unexpected kind of negative consequences
+
+04:29.600 --> 04:34.500
+ of this push to emphasize numbers more, and this is a mix
+
+04:34.500 --> 04:38.200
+ of, well I guess actually this is a lot of kind of gaming,
+
+04:38.200 --> 04:41.300
+ I mean some of the ones about the discrepancies in numbers,
+
+04:41.300 --> 04:43.700
+ some of that can be I think unintentional,
+
+04:43.700 --> 04:47.800
+ but people kind of knowing what they need leads them to kind
+
+04:47.800 --> 04:52.000
+ of give answers that will line up with that.
+
+04:52.000 --> 04:54.900
+ Another example we've seen in the United States of kind
+
+04:54.900 --> 04:57.100
+ of manipulation in gaming is that as more
+
+04:57.100 --> 04:59.900
+ and more emphasis has been put on standardized testing,
+
+04:59.900 --> 05:02.700
+ there have been kind of widespread scandals
+
+05:02.700 --> 05:06.100
+ of school districts cheating, so this is where teachers
+
+05:06.100 --> 05:10.400
+ or school administrators are altering their students' score,
+
+05:10.400 --> 05:13.900
+ or answers to get higher scores, and this has happened
+
+05:13.900 --> 05:16.400
+ in a number of states now that kind
+
+05:16.400 --> 05:18.400
+ of testing is so high stakes.
+
+05:18.400 --> 05:22.500
+ And I didn't include this, and I don't think I talked
+
+05:22.500 --> 05:27.200
+ about this previously, there was a case that Kathy O'Neill covers
+
+05:27.200 --> 05:29.200
+ in her book Weapons of Math Destruction,
+
+05:29.200 --> 05:32.100
+ and had been covered in the, I believe the Washington Post,
+
+05:32.100 --> 05:39.300
+ of a teacher in either Virginia or D.C. that was fired
+
+05:39.300 --> 05:44.400
+ by an algorithm, and the principal of her school loved her,
+
+05:44.400 --> 05:46.800
+ the parents of her students really loved her,
+
+05:46.800 --> 05:48.500
+ and she couldn't get a conclusive answer
+
+05:48.500 --> 05:51.800
+ of why she was fired, but her suspicion was
+
+05:51.800 --> 05:55.900
+ that her students' scores seemed artificially high
+
+05:55.900 --> 05:58.800
+ from the previous year, and they had kind of been
+
+05:58.800 --> 06:02.100
+ at a different school, and then her students' scores dropped to
+
+06:02.100 --> 06:05.600
+ kind of more normal levels after her teaching,
+
+06:05.600 --> 06:08.200
+ and her teaching was being evaluated,
+
+06:08.200 --> 06:11.200
+ and it's believed one of the factors is how the students'
+
+06:11.200 --> 06:14.800
+ scores changed while they were in her class, and so there,
+
+06:14.800 --> 06:16.200
+ I feel like it's kind of an intersection
+
+06:16.200 --> 06:18.500
+ of two negative trends.
+
+06:18.500 --> 06:21.600
+ You have the teachers who most likely
+
+06:21.600 --> 06:23.100
+ at the previous school may have cheated
+
+06:23.100 --> 06:26.960
+ because they felt pressured to do so, then when she didn't,
+
+06:26.960 --> 06:29.500
+ then you have this other algorithmic system that's firing
+
+06:29.500 --> 06:33.100
+ teachers based on these metrics, and she kind of ends
+
+06:33.100 --> 06:35.100
+ up fired because of it.
+
+06:35.100 --> 06:39.100
+ So that's kind of sobering, sobering example.
+
+06:39.100 --> 06:44.500
+ There was also an article on essay grading software,
+
+06:44.500 --> 06:48.200
+ so there's software that grades essays is being used in,
+
+06:48.200 --> 06:51.100
+ I think, at least 22 states now.
+
+06:51.100 --> 06:55.400
+ It was found that, so the software focuses
+
+06:55.400 --> 06:58.400
+ on what you can measure, right, and we can't measure everything,
+
+06:58.400 --> 07:02.000
+ but you can measure sentence length and vocabulary, spelling,
+
+07:02.000 --> 07:06.500
+ subject verb agreement, however, you can't measure creativity
+
+07:06.500 --> 07:09.800
+ or novelty or some more kind of abstract qualities
+
+07:09.800 --> 07:13.200
+ that can still be very important in writing.
+
+07:13.200 --> 07:16.900
+ And so there was a computer program that someone created
+
+07:16.900 --> 07:20.800
+ that made gibberish essays with sophisticated words
+
+07:20.800 --> 07:24.200
+ and sophisticated phrasing, and that got good scores.
+
+07:24.200 --> 07:28.800
+ It found, the research found that essays
+
+07:28.800 --> 07:31.500
+ by African-American students received lower grades
+
+07:31.500 --> 07:37.000
+ from the computer than from human graders, and essays by students
+
+07:37.000 --> 07:40.300
+ from mainland China received higher scores from the computer
+
+07:40.300 --> 07:44.600
+ than from expert human graders, which caused the researchers
+
+07:44.600 --> 07:47.100
+ to suspect that they may be using chunks
+
+07:47.100 --> 07:48.700
+ of pre-memorized text.
+
+07:48.700 --> 07:51.300
+ So this is kind of, now we're combining what we learned
+
+07:51.300 --> 07:55.500
+ about with bias, with kind of this example
+
+07:55.500 --> 07:58.660
+ of overemphasizing metrics, and for me, this kind
+
+07:58.660 --> 08:02.160
+ of really strikes me in that I think of writing as something
+
+08:02.160 --> 08:05.600
+ that has a very intrinsically human quality,
+
+08:05.600 --> 08:10.500
+ and that it's usually humans communicating with humans,
+
+08:10.500 --> 08:12.360
+ but here, you know, to have an example
+
+08:12.360 --> 08:16.700
+ where a computer program can generate a gibberish essay
+
+08:16.700 --> 08:19.800
+ that then will be evaluated by another computer program
+
+08:19.800 --> 08:22.560
+ and receive, you know, receive a high score.
+
+08:22.560 --> 08:29.900
+ But this also, to me, illustrates some of the qualities
+
+08:29.900 --> 08:32.100
+ that we can't quantify, and that we can't measure,
+
+08:32.100 --> 08:34.120
+ and that those tend to then not kind of be valued
+
+08:34.120 --> 08:36.420
+ if they can't be measured.
+
+08:38.020 --> 08:41.260
+ Now, this is an article just from the last week
+
+08:41.260 --> 08:46.060
+ about TikTok marketing, and so the image is
+
+08:46.060 --> 08:52.020
+ from Chipotle's hashtag burrito campaign, which was where you got,
+
+08:52.020 --> 08:55.060
+ I think, a half-price burrito if you wore a costume
+
+08:55.060 --> 09:00.360
+ on Halloween, and TikTok said, hey, this had 3.9 billion views.
+
+09:00.360 --> 09:01.660
+ That sounds amazing.
+
+09:01.660 --> 09:03.500
+ That's a ton of views.
+
+09:03.500 --> 09:07.500
+ In contrast, TikTok has only been downloaded 145 million
+
+09:07.500 --> 09:08.800
+ times in the USA.
+
+09:08.800 --> 09:10.620
+ This was a US campaign.
+
+09:10.620 --> 09:14.820
+ So what does this mean for these numbers?
+
+09:14.820 --> 09:19.900
+ And TikTok won't say kind of how it classifies views,
+
+09:19.900 --> 09:22.960
+ but you have a lot of companies put a lot of importance
+
+09:22.960 --> 09:24.660
+ on these metrics, and it's often kind
+
+09:24.660 --> 09:27.980
+ of not clear how they're gathered or even kind
+
+09:27.980 --> 09:31.220
+ of what sense they make in terms of impact
+
+09:31.220 --> 09:36.020
+ or even how many people actually saw this campaign.
+
+09:36.020 --> 09:39.540
+ And so then people said that it reminded them
+
+09:39.540 --> 09:46.860
+ of when Facebook pivoted to video several years ago,
+
+09:46.860 --> 09:52.100
+ Facebook exaggerated video watch time by as much as 900% was alleged
+
+09:52.100 --> 09:56.540
+ by one lawsuit, so what happened was Facebook said, you know,
+
+09:56.540 --> 10:00.220
+ we're switching to video and had these really positive numbers
+
+10:00.220 --> 10:02.660
+ of how much video was being watched,
+
+10:02.660 --> 10:06.900
+ and so many news organizations laid off journalists in response
+
+10:06.900 --> 10:09.580
+ and said, oh, you know, we want to focus more on our digital
+
+10:09.580 --> 10:13.700
+ or on our video arms, and then it turns out that the numbers
+
+10:13.700 --> 10:16.460
+ for video were inflated and misleading.
+
+10:16.460 --> 10:19.780
+ There was also kind of an error, and this is something
+
+10:19.780 --> 10:23.700
+ that there was a lawsuit about that Facebook settled
+
+10:23.700 --> 10:29.220
+ for 40 million, although that was just advertisers bringing suit,
+
+10:29.220 --> 10:34.720
+ so this doesn't even impact all the kind of news agencies
+
+10:34.720 --> 10:37.540
+ and journalists that were impacted because many
+
+10:37.540 --> 10:40.420
+ of these organizations laid off written journalists
+
+10:40.420 --> 10:42.260
+ because they wanted to put more resources into video,
+
+10:42.260 --> 10:45.540
+ and then when video turned out to not be as effective,
+
+10:45.540 --> 10:48.020
+ then they laid off the video people they had hired,
+
+10:48.020 --> 10:52.460
+ and so it was kind of two rounds of layoffs.
+
+10:52.460 --> 10:55.900
+ It captures kind of how much metrics can drive,
+
+10:55.900 --> 10:59.620
+ kind of drive behavior of organizations.
+
+11:03.620 --> 11:07.340
+ So there's an interesting paper on the different failure modes
+
+11:07.340 --> 11:13.540
+ of Goodhart's law, kind of breaking them out into four categories.
+
+11:13.540 --> 11:16.580
+ So one is when the difference between the proxy
+
+11:16.580 --> 11:19.820
+ and the goal is important, and I think in almost all cases,
+
+11:19.820 --> 11:22.140
+ we don't actually have the data that we truly want.
+
+11:22.140 --> 11:24.360
+ What we have is a proxy, and sometimes
+
+11:24.360 --> 11:27.060
+ that proxy is closer than others.
+
+11:27.060 --> 11:29.980
+ But in cases where the difference is significant,
+
+11:29.980 --> 11:33.140
+ that has an impact, and so that's what we saw with kind
+
+11:33.140 --> 11:37.140
+ of the health data about who had a stroke.
+
+11:37.140 --> 11:39.260
+ There's extremal Goodhart where the relationship
+
+11:39.260 --> 11:41.260
+ between the proxy and the goal is different
+
+11:41.260 --> 11:44.780
+ when taken to an extreme, and so sometimes a kind
+
+11:44.780 --> 11:48.300
+ of relationship makes sense, but once you emphasize it,
+
+11:48.300 --> 11:52.980
+ that sends you kind of more to an extreme where it's less,
+
+11:52.980 --> 11:55.300
+ where it's just a different relationship.
+
+11:55.300 --> 11:59.180
+ There can be a non-causal relationship between the proxy
+
+11:59.180 --> 12:03.700
+ and the goal, and intervening on one may fail to impact the other.
+
+12:03.700 --> 12:08.340
+ And then there's also adversaries attempting
+
+12:08.340 --> 12:09.980
+ to gain your chosen proxy.
+
+12:09.980 --> 12:12.660
+ And so I thought this was kind of interesting as a breakout
+
+12:12.660 --> 12:16.220
+ of different ways that this can go wrong.
+
+12:20.220 --> 12:22.420
+ And then we've talked previously
+
+12:22.420 --> 12:26.060
+ about YouTube's recommendation system.
+
+12:26.060 --> 12:30.420
+ Guillaume Treslot has a great post about this,
+
+12:30.420 --> 12:34.740
+ former kind of AI engineer at Google slash YouTube,
+
+12:34.740 --> 12:39.380
+ and he quotes a YouTube blog post from several years ago
+
+12:39.380 --> 12:43.220
+ in which Google's YouTube said,
+
+12:43.220 --> 12:46.140
+ if viewers are watching more YouTube, it signals to us
+
+12:46.140 --> 12:48.140
+ that they're happier with the content they found.
+
+12:48.140 --> 12:50.460
+ It means that creators are attracting more
+
+12:50.460 --> 12:51.500
+ engaged audience.
+
+12:51.500 --> 12:52.980
+ It opens up more opportunities
+
+12:52.980 --> 12:55.500
+ to generate revenue for our partners.
+
+12:55.500 --> 12:58.340
+ And so here they're kind of boiling down that watch time is
+
+12:58.340 --> 13:01.300
+ about happiness and revenue.
+
+13:01.300 --> 13:03.780
+ However, I think we can all think of times
+
+13:03.780 --> 13:07.940
+ that we spend online where we're not actually happy
+
+13:07.940 --> 13:11.460
+ and not proud of how we've used our time afterwards.
+
+13:11.460 --> 13:14.700
+ And I think this is kind of a very rough proxy.
+
+13:17.140 --> 13:19.180
+ And Guillaume does a good job of kind of explaining
+
+13:19.180 --> 13:22.660
+ how also this ends up incentivizing content
+
+13:22.660 --> 13:26.020
+ that says that other platforms are lying to you
+
+13:26.020 --> 13:28.740
+ because you should spend more time on the content
+
+13:28.740 --> 13:32.740
+ from that platform in order to maximize the watch time.
+
+13:32.740 --> 13:37.740
+ Are there questions so far on metrics?
+
+13:38.300 --> 13:40.540
+ Erin came past the catch box.
+
+13:44.780 --> 13:46.620
+ I had a question about TikTok
+
+13:46.620 --> 13:50.420
+ and if you had opinions about it in relation to China,
+
+13:50.420 --> 13:53.940
+ the news that's come out about that is my first question.
+
+13:53.940 --> 13:56.620
+ And then I have one small comment.
+
+13:56.620 --> 13:59.380
+ I love, absolutely love Gary Vee.
+
+13:59.380 --> 14:02.820
+ He's an early investor in a lot of social media platforms
+
+14:02.820 --> 14:07.180
+ and he's actually advocating for removing influencer numbers.
+
+14:07.180 --> 14:09.420
+ This is bring value to the user, don't think about the number,
+
+14:09.420 --> 14:12.460
+ but it's so hard because he's basically saying
+
+14:12.460 --> 14:14.980
+ don't be a slave to the algorithm.
+
+14:14.980 --> 14:17.660
+ But in fact, it's sort of like a walking contradiction.
+
+14:17.660 --> 14:22.020
+ You're still making money from the content creators
+
+14:22.020 --> 14:26.020
+ and producers that are sort of the things that algorithms do.
+
+14:26.020 --> 14:29.460
+ It's weird, it's like a two-sided thing
+
+14:29.460 --> 14:32.060
+ that I hear from him, he's promoting TikTok.
+
+14:32.060 --> 14:32.900
+ I don't know if you had.
+
+14:32.900 --> 14:35.460
+ Yeah, I'll put, I'll table TikTok.
+
+14:35.460 --> 14:37.060
+ That's something we can discuss on the forums
+
+14:37.060 --> 14:38.660
+ and I don't feel like I've been kind of
+
+14:38.660 --> 14:41.940
+ informed enough opinion on it.
+
+14:41.940 --> 14:46.100
+ Yeah, and this issue of Instagram removing likes
+
+14:46.100 --> 14:48.460
+ in certain countries.
+
+14:48.460 --> 14:50.620
+ I mean, there's still kind of this asymmetry
+
+14:50.620 --> 14:53.420
+ where Instagram is still kind of like,
+
+14:53.420 --> 14:56.420
+ there's still this asymmetry where Instagram is still using
+
+14:56.420 --> 14:58.660
+ that data on its side to promote things
+
+14:58.660 --> 15:03.340
+ and so then it's impacting people in an opaque way.
+
+15:03.340 --> 15:05.660
+ Although I do also kind of see the impact of,
+
+15:05.660 --> 15:07.140
+ and I can definitely recognize in myself
+
+15:07.140 --> 15:10.940
+ how it influences what I post on various networks,
+
+15:10.940 --> 15:15.940
+ kind of seeing what gets shared and what people respond to.
+
+15:18.780 --> 15:20.940
+ Yeah, and that is, actually that's probably a good example
+
+15:20.940 --> 15:23.580
+ of what Ali was mentioning of how people perform
+
+15:23.580 --> 15:25.620
+ for algorithms, I definitely think there's a sense
+
+15:25.620 --> 15:28.940
+ in kind of in which people can tailor their content
+
+15:28.940 --> 15:32.340
+ based on what they think the algorithm's gonna reward,
+
+15:32.340 --> 15:34.780
+ what they think will get kind of likes or views.
+
+15:34.780 --> 15:37.020
+ And I think that can be very kind of insidious,
+
+15:37.020 --> 15:39.660
+ like it's not necessarily a like,
+
+15:39.660 --> 15:41.660
+ oh, I'm explicitly doing this just for the algorithm,
+
+15:41.660 --> 15:51.500
+ but I think it does kind of influence many of us.
+
+15:51.500 --> 15:54.380
+ Another factor is that our online environments
+
+15:54.380 --> 15:58.580
+ I think are designed to be very addictive.
+
+15:58.580 --> 16:01.140
+ The incentives focus on short-term metrics
+
+16:01.140 --> 16:02.700
+ and the fundamental business models
+
+16:02.700 --> 16:04.620
+ around manipulating people's behavior
+
+16:04.620 --> 16:05.820
+ and monopolizing their time.
+
+16:05.820 --> 16:08.340
+ And I think kind of what we click like on
+
+16:08.340 --> 16:12.220
+ or what we retweet or share is often used
+
+16:12.220 --> 16:14.020
+ as this proxy of what we like,
+
+16:14.020 --> 16:17.820
+ but it's what we like in a very constrained
+
+16:17.820 --> 16:20.500
+ and designed in a specific way environment.
+
+16:20.500 --> 16:22.500
+ I don't know that it's necessarily,
+
+16:22.500 --> 16:24.180
+ or in fact I don't think it's getting it
+
+16:24.180 --> 16:26.500
+ kind of like our purist likes.
+
+16:26.500 --> 16:29.660
+ And I always think of kind of the example
+
+16:29.660 --> 16:32.940
+ of reading a long-form journalism article
+
+16:32.940 --> 16:35.620
+ that potentially is harder to read,
+
+16:35.620 --> 16:37.780
+ but months of research went into
+
+16:37.780 --> 16:41.780
+ that I'm gonna help shape my thinking on a topic
+
+16:41.780 --> 16:44.860
+ and I may be glad in the future that I read it
+
+16:44.860 --> 16:46.460
+ versus kind of the short-term impulse
+
+16:46.460 --> 16:49.740
+ of do I wanna read something more catchy
+
+16:49.740 --> 16:51.820
+ and kind of easier to read in the moment.
+
+16:51.820 --> 16:54.580
+ And I think we've gone through this with the food industry
+
+16:54.580 --> 16:56.700
+ and are a little bit further along
+
+16:56.700 --> 17:00.740
+ of a lot of junk food is really appealing in the short-term
+
+17:00.740 --> 17:02.740
+ if you don't think on a long-term perspective.
+
+17:02.740 --> 17:05.740
+ And then also depending on how your environment's designed,
+
+17:05.740 --> 17:09.460
+ Zeynep Tafekci uses the example of a cafeteria
+
+17:09.460 --> 17:12.700
+ that's kind of actively shoving junk food in our faces.
+
+17:12.700 --> 17:14.180
+ We're not even having to reach for it.
+
+17:14.180 --> 17:16.180
+ It's kind of being brought to us.
+
+17:16.180 --> 17:19.780
+ And so whenever we think about kind of using metrics
+
+17:19.780 --> 17:21.460
+ about what people prefer to remember
+
+17:21.460 --> 17:24.100
+ that we're in this kind of very constrained
+
+17:24.100 --> 17:26.060
+ and short-term focused environment.
+
+17:26.060 --> 17:38.620
+ Hand in the back corner.
+
+17:38.620 --> 17:40.740
+ I was wondering if you had any thoughts
+
+17:40.740 --> 17:44.860
+ on the iPhone stream time metric,
+
+17:44.860 --> 17:47.380
+ like how every week now it tells you
+
+17:47.380 --> 17:48.940
+ how much time you spend on your phone
+
+17:48.940 --> 17:53.380
+ and what the relationship is to your previous week.
+
+17:53.380 --> 17:56.940
+ If you like maybe, or if anyone has any idea
+
+17:56.940 --> 18:01.020
+ of like where that idea came from or how it's being received.
+
+18:02.500 --> 18:03.380
+ That's a good, yes.
+
+18:03.380 --> 18:05.100
+ I've not been following that closely.
+
+18:05.100 --> 18:06.860
+ I know that I will say like the,
+
+18:10.460 --> 18:14.260
+ Tristan Harris's time well spent
+
+18:14.260 --> 18:16.060
+ and totally blanking on the name
+
+18:16.060 --> 18:18.340
+ of Center for Humane Technology
+
+18:18.340 --> 18:21.860
+ has promoted a lot of those kind of design fixes
+
+18:21.860 --> 18:25.700
+ of kind of what can we change about design to help people.
+
+18:25.700 --> 18:29.380
+ And so that includes things like tracking
+
+18:29.380 --> 18:32.020
+ how long you're spending or sending a reminder like,
+
+18:32.020 --> 18:33.900
+ hey, you've been on Twitter for a half hour.
+
+18:33.900 --> 18:36.300
+ Is this how you wanna spend your time right now?
+
+18:36.300 --> 18:40.180
+ Another one I know is using a black and white screen
+
+18:40.180 --> 18:42.500
+ which was already an accessibility feature
+
+18:42.500 --> 18:45.620
+ but using that to kind of make your tech
+
+18:45.620 --> 18:50.140
+ less stimulating or appealing.
+
+18:50.140 --> 18:53.540
+ I think there's value to those efforts.
+
+18:53.540 --> 18:56.900
+ I don't think they get at the fundamental business model.
+
+18:56.900 --> 19:01.700
+ And so if the business model is still around advertising
+
+19:01.700 --> 19:05.220
+ and kind of time spent that there's,
+
+19:05.220 --> 19:07.140
+ I don't think that's fully gonna solve the problem
+
+19:07.140 --> 19:09.100
+ but I do think that there is some benefit
+
+19:09.100 --> 19:11.420
+ to kind of thinking about that design.
+
+19:11.420 --> 19:12.740
+ But it's important to kind of connect
+
+19:12.740 --> 19:16.300
+ that the design didn't come out of nowhere.
+
+19:16.300 --> 19:19.300
+ It's very much tied to the business model
+
+19:19.300 --> 19:22.260
+ and if the underlying business model doesn't change,
+
+19:22.260 --> 19:23.540
+ I don't know how much,
+
+19:24.500 --> 19:25.340
+ I think there are limits
+
+19:25.340 --> 19:27.220
+ to kind of what design changes can do.
+
+19:31.300 --> 19:33.860
+ Oh, and then, okay, we're at eight o'clock.
+
+19:33.860 --> 19:35.900
+ So we'll pick back up here
+
+19:35.900 --> 19:38.540
+ and finish our ecosystem next time.
+
+19:38.540 --> 19:40.100
+ So also we'll kind of talk about
+
+19:40.100 --> 19:44.060
+ what are some of the forces that are kind of acting
+
+19:44.060 --> 19:48.980
+ on entrepreneurs and companies in tech
+
+19:48.980 --> 19:51.580
+ to kind of understand kind of these broader systems
+
+19:51.580 --> 19:53.020
+ that influence us.
+
+19:53.020 --> 20:19.140
+ But I will see you back next week for our last class.
+

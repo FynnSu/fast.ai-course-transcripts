@@ -1,0 +1,2711 @@
+WEBVTT
+
+00:00.000 --> 00:03.340
+ And I'm going to start by going through a few different case studies
+
+00:03.340 --> 00:05.580
+ of bias to kind of ground what we're talking
+
+00:05.580 --> 00:11.580
+ in some practical real-world examples, and these also will illustrate some
+
+00:11.580 --> 00:17.180
+ of the different types of bias from the Harini Suresh and John Guttag paper.
+
+00:17.180 --> 00:20.340
+ And the first is gender shades,
+
+00:20.340 --> 00:22.780
+ which I would imagine many people are familiar with.
+
+00:22.780 --> 00:26.780
+ This has received a lot of media attention, which is good.
+
+00:26.780 --> 00:32.660
+ And this was a study from Joy Balamwini and Tibnit Gebru evaluating commercial computer
+
+00:32.660 --> 00:39.180
+ vision products from Microsoft, IBM, and Face++, and then they did a follow-up study that looked
+
+00:39.180 --> 00:42.980
+ at Amazon, Kairos, and a few other companies.
+
+00:42.980 --> 00:50.180
+ And they kind of consistently found that these classifiers had significantly worse performance
+
+00:50.180 --> 00:52.780
+ on dark-skinned women.
+
+00:52.780 --> 00:57.500
+ And here, it's really significant that they didn't just look at light-skinned versus dark-skinned
+
+00:57.500 --> 01:03.660
+ or women versus men, but kind of broke it out into subcategories to kind of capture
+
+01:03.660 --> 01:10.820
+ that, for instance, IBM's product was 99.7% accurate on light-skinned men and then only
+
+01:10.820 --> 01:14.300
+ 65.3% accurate on dark-skinned women.
+
+01:14.300 --> 01:19.580
+ And again, these were commercial products that had been released.
+
+01:19.580 --> 01:26.860
+ So, yeah, the follow-up found something similar with Amazon.
+
+01:26.860 --> 01:32.740
+ A separate study from the ACLU found that Amazon's facial recognition incorrectly matched
+
+01:32.740 --> 01:39.040
+ 28 members of Congress to criminal mugshots, and this disproportionately included people
+
+01:39.040 --> 01:43.900
+ of color who were wrongly matched.
+
+01:43.900 --> 01:50.500
+ This technology is already in use, even though it's virtually unregulated.
+
+01:50.500 --> 01:56.580
+ This is, I think, pretty concerning and alarming.
+
+01:56.580 --> 02:04.360
+ And so, I really like this paper that I assigned on a framework for understanding unintended
+
+02:04.360 --> 02:09.700
+ consequences of machine learning because it kind of breaks down bias into different sources
+
+02:09.700 --> 02:14.000
+ have different causes, which is helpful for addressing it.
+
+02:14.000 --> 02:19.140
+ And that kind of pretty quickly, you know, it's helpful to know that bias is an issue
+
+02:19.140 --> 02:24.380
+ and exists, but you kind of need to move beyond that surface level understanding to think
+
+02:24.380 --> 02:27.540
+ about how to address it and where it's coming from.
+
+02:27.540 --> 02:34.800
+ So, in this case, this is representation bias where the kind of data that you've trained
+
+02:34.800 --> 02:40.020
+ on is not representative of the data that this is being deployed on.
+
+02:40.020 --> 02:47.180
+ However, because this was a problem kind of not just for one company, it's also an example
+
+02:47.180 --> 02:49.740
+ of evaluation bias.
+
+02:49.740 --> 02:54.720
+ And so, in machine learning, benchmark data sets spur on a lot of research, which in some
+
+02:54.720 --> 03:00.740
+ ways is a positive, but it also means that biases in those benchmark data sets end up
+
+03:00.740 --> 03:06.140
+ kind of being replicated at scale and that you have like a whole body of research kind
+
+03:06.140 --> 03:09.500
+ of on top of those biases.
+
+03:09.500 --> 03:17.180
+ And so, a lot of the popular data sets of faces primarily included light-skinned men
+
+03:17.180 --> 03:21.460
+ up until kind of just in the last year or two where people are starting to address this.
+
+03:21.460 --> 03:27.880
+ And so, for instance, IGBA was a data set of faces and only 4% of the images were of
+
+03:27.880 --> 03:30.700
+ dark-skinned women.
+
+03:30.700 --> 03:35.100
+ We also see this with ImageNet, which is I think probably the best studied computer vision
+
+03:35.100 --> 03:36.780
+ set out there.
+
+03:36.780 --> 03:44.460
+ Two-thirds of ImageNet images are from the West, and so ImageNet is for kind of classifying
+
+03:44.460 --> 03:50.300
+ all sorts of different, you know, types of animals and household appliances and vehicles.
+
+03:50.300 --> 03:55.140
+ And so, it's not people for the most part, but kind of all these different things, but
+
+03:55.140 --> 03:58.200
+ which look different in different cultures.
+
+03:58.200 --> 04:01.280
+ And so, as a result, there are higher error rates.
+
+04:01.280 --> 04:07.380
+ Kind of if you, one example that is of a person is bridegroom, so a man getting married and
+
+04:07.380 --> 04:13.020
+ this study found that there was a much higher error rate identifying bridegrooms from really
+
+04:13.020 --> 04:19.800
+ like Egypt and India and countries outside the West.
+
+04:19.800 --> 04:26.180
+ And so, a way to address kind of representation data is creating more representative data
+
+04:26.180 --> 04:31.180
+ sets, and Joy and Timnit did that as part of gender shades.
+
+04:31.180 --> 04:35.980
+ It's really important to keep in mind consent when building data sets and not taking people's
+
+04:35.980 --> 04:38.580
+ images without their consent.
+
+04:38.580 --> 04:43.620
+ And so, this was a well-built data set, but there are examples that were not.
+
+04:43.620 --> 04:49.720
+ And I will come back because this is not the full answer and there's more to this, so we'll
+
+04:49.720 --> 04:54.480
+ kind of return to this example later.
+
+04:54.480 --> 04:56.100
+ Any questions on that?
+
+04:56.100 --> 04:57.820
+ Oh, Lauren.
+
+04:57.820 --> 05:00.900
+ And who has the catch box?
+
+05:00.900 --> 05:12.180
+ How are there ways to reduce bias in open source computer vision projects or competition
+
+05:12.180 --> 05:19.020
+ like Kaggle or Omdina, where especially with like Omdina, a nonprofit, has a challenge
+
+05:19.020 --> 05:25.420
+ and then crowd sources, you know, ML folks or data scientists from around the globe.
+
+05:25.420 --> 05:31.180
+ Is there a way, like is Kaggle or Omdina or organizations that are doing open source projects
+
+05:31.180 --> 05:34.820
+ like that, how are they reducing bias, if any?
+
+05:34.820 --> 05:35.820
+ That's a good question.
+
+05:35.820 --> 05:36.820
+ I'll get to some.
+
+05:36.820 --> 05:42.100
+ I have a section on kind of toward solutions later on, but the kind of brief answer, and
+
+05:42.100 --> 05:48.120
+ I actually don't know about Kaggle or Omdina in particular, but kind of being very thoughtful
+
+05:48.120 --> 05:54.540
+ about how you construct the data set, which is in general machine learning has often kind
+
+05:54.540 --> 05:59.760
+ of just focused on gathering huge amounts of data efficiently and not as much about
+
+05:59.760 --> 06:03.020
+ kind of how that data is structured or what sort of risk might be in there.
+
+06:03.020 --> 06:06.540
+ But yeah, we'll come back to that in the later section.
+
+06:06.540 --> 06:07.860
+ Any other questions?
+
+06:07.860 --> 06:11.380
+ Okay, further down the fourth row.
+
+06:11.380 --> 06:21.740
+ It would seem to me that as the population that it's being used on changes, we should
+
+06:21.740 --> 06:29.340
+ be adjusting the historical data to match the population as it's growing and changing.
+
+06:29.340 --> 06:32.100
+ Do we see that or how could that be seen?
+
+06:32.100 --> 06:37.840
+ I mean, so it depends how your population's changing.
+
+06:37.840 --> 06:41.780
+ It may be, it depends on also the type of data, it may be hard to change the data.
+
+06:41.780 --> 06:45.460
+ Like, I think it's easier to realize that your data is no longer representative of what
+
+06:45.460 --> 06:50.900
+ you need in many cases than to actually generate the data that would be more representative.
+
+06:50.900 --> 06:55.900
+ But we will talk about it, because I think that relates some to historical bias, which
+
+06:55.900 --> 06:59.980
+ I'll talk about in a moment.
+
+06:59.980 --> 07:02.020
+ All right.
+
+07:02.020 --> 07:07.900
+ Next up is the compass recidivism algorithm used in prison sentencing.
+
+07:07.900 --> 07:12.100
+ This is another kind of very famous and well-studied example.
+
+07:12.100 --> 07:19.380
+ But in 2016, ProPublica did an investigation inspecting the software that is sold by a
+
+07:19.380 --> 07:21.220
+ for-profit company.
+
+07:21.220 --> 07:27.140
+ It's in use in many states in the U.S. and it can be used for pretrial decisions.
+
+07:27.140 --> 07:33.900
+ So this is deciding who has to pay bail prior to even having a trial.
+
+07:33.900 --> 07:38.820
+ And many people in the U.S. are in jail because they're too poor to afford bail.
+
+07:38.820 --> 07:42.820
+ It's also used in sentencing decisions and in parole decisions.
+
+07:42.820 --> 07:46.340
+ So having a very significant impact on people's lives.
+
+07:46.340 --> 07:51.540
+ And what they found is, looking at kind of a county in Florida, that the false positive
+
+07:51.540 --> 07:58.100
+ rate for black defendants was almost twice as high as for white defendants.
+
+07:58.100 --> 08:02.860
+ And so this is people being labeled as high risk of committing another crime or of being
+
+08:02.860 --> 08:05.340
+ rearrested who were not rearrested.
+
+08:05.340 --> 08:11.060
+ And the false positive rate was 45 percent, which is also just a really terribly high
+
+08:11.060 --> 08:18.700
+ false positive rate when you're labeling people as just a binary high risk or low risk.
+
+08:18.700 --> 08:23.700
+ There was a study from Dartmouth that came out, I can't remember, a year or two ago that
+
+08:23.700 --> 08:29.780
+ found that the software is no more accurate than Amazon Mechanical Turk workers.
+
+08:29.780 --> 08:33.740
+ So random people on the internet who were kind of just as accurate in their judgments
+
+08:33.740 --> 08:37.100
+ of whether someone was high risk or low risk.
+
+08:37.100 --> 08:43.740
+ Another thing the Dartmouth study found was that, so the Compass Recidivism software is
+
+08:43.740 --> 08:51.340
+ a black box that takes, it's either 130 or 140 inputs, and it was not any more accurate
+
+08:51.340 --> 08:54.780
+ than a linear classifier on three variables.
+
+08:54.780 --> 08:57.620
+ So it's also just not, not particularly accurate.
+
+08:57.620 --> 09:00.740
+ Yet the Wisconsin Supreme Court upheld its use.
+
+09:00.740 --> 09:06.140
+ And it's used in states other than Wisconsin, but this is one place where it was challenged.
+
+09:06.140 --> 09:13.340
+ And this is kind of a, in Arvind Narayanan's 21 definitions of fairness talk, a lot of
+
+09:13.340 --> 09:17.540
+ that is kind of based off of kind of going deeper around, around Compass.
+
+09:17.540 --> 09:22.420
+ And it is true that the company was using this different definition of fairness that
+
+09:22.420 --> 09:30.840
+ is not about false positives, that it does satisfy.
+
+09:30.840 --> 09:38.060
+ And so one, one key thing to really highlight is that race is not an input to the software.
+
+09:38.060 --> 09:43.260
+ And so even though there was this huge discrepancy in the false positive rates, race was not
+
+09:43.260 --> 09:45.560
+ an explicit input.
+
+09:45.560 --> 09:50.020
+ And it's important to remember that machine learning is kind of largely about identifying
+
+09:50.020 --> 09:55.260
+ latent variables, which is, you know, a variable you haven't explicitly named or recorded in
+
+09:55.260 --> 09:56.780
+ your data set.
+
+09:56.780 --> 10:03.100
+ And so you can still have these kind of hugely different results on different groups even
+
+10:03.100 --> 10:04.500
+ when you're not using that input.
+
+10:04.500 --> 10:07.940
+ And this is a really common misconception.
+
+10:07.940 --> 10:11.940
+ A lot of companies when they're accused of bias are like, no, you know, we swear we're
+
+10:11.940 --> 10:16.180
+ not using gender as an input or we're not using race as an input, but you can still
+
+10:16.180 --> 10:23.680
+ be very biased and have very different results even if you're not.
+
+10:23.680 --> 10:25.420
+ Questions on that?
+
+10:25.420 --> 10:34.780
+ All right, this is also an example of a feedback loop, which we talked about a little bit last
+
+10:34.780 --> 10:40.560
+ week in the context of recommendation systems, and a feedback loop is kind of whenever your
+
+10:40.560 --> 10:45.760
+ model is controlling the next round of data you get, the data that is returned quickly
+
+10:45.760 --> 10:48.460
+ becomes flawed by the software itself.
+
+10:48.460 --> 10:53.540
+ So in the case of predictive policing, this is a slightly different case, but where you're
+
+10:53.540 --> 10:56.940
+ trying to predict which neighborhoods are going to have the most crime so you can send
+
+10:56.940 --> 11:02.480
+ more police to those neighborhoods, having more police in a neighborhood may also result
+
+11:02.480 --> 11:06.700
+ in more arrests just because there are more police around to see something or to arrest
+
+11:06.700 --> 11:10.660
+ someone, which could then, you know, feed back into your algorithm and say, let's send
+
+11:10.660 --> 11:14.980
+ even more police to that neighborhood.
+
+11:14.980 --> 11:21.700
+ One researcher who works on this, Suresh Venkatasubramanian says, predictive policing is aptly named.
+
+11:21.700 --> 11:27.960
+ It is predicting future policing, not future crime, and so I liked that quote as an example
+
+11:27.960 --> 11:36.480
+ of kind of how a feedback loop can happen.
+
+11:36.480 --> 11:43.020
+ And this is an example of historical bias, and historical bias is a fundamental structural
+
+11:43.020 --> 11:48.060
+ issue with the first step of the data generation process and can exist even given perfect sampling
+
+11:48.060 --> 11:49.940
+ and feature selection.
+
+11:49.940 --> 11:57.100
+ So this is a case where going out and saying like, oh, let's get crime data for more U.S.
+
+11:57.100 --> 12:01.060
+ jurisdictions is not necessarily going to remove the, or it's not going to remove the
+
+12:01.060 --> 12:05.540
+ racial bias because this is really kind of present in the data, and it's really true
+
+12:05.540 --> 12:08.480
+ because of our history.
+
+12:08.480 --> 12:12.540
+ And unfortunately, historical bias is, I think, very hard to address, and it's also a very
+
+12:12.540 --> 12:14.500
+ common type of bias.
+
+12:14.500 --> 12:17.340
+ Yes, and who has the catch box?
+
+12:17.340 --> 12:20.980
+ Okay, pass it to the front.
+
+12:20.980 --> 12:28.820
+ So I might not be phrasing this question accurately, but I'm curious about how it seems like the
+
+12:28.820 --> 12:33.980
+ biases that come up in these examples are most frequently race and gender, which are
+
+12:33.980 --> 12:37.020
+ characteristics, they're physical attributes.
+
+12:37.020 --> 12:44.500
+ Are there biases that have shown up that are less physical but still, I guess I'm trying
+
+12:44.500 --> 12:49.060
+ to ask around the latent variables, are there things that have shown up that are not necessarily
+
+12:49.060 --> 12:51.540
+ physical in a data set?
+
+12:51.540 --> 12:55.740
+ I am sure that there are, because like in machine learning, like whatever you're trying
+
+12:55.740 --> 12:59.980
+ to predict, you can describe as a latent variable because that's something that's not in the
+
+12:59.980 --> 13:00.980
+ data set.
+
+13:00.980 --> 13:05.700
+ I think why so many of the examples on bias are around race and gender, just because they're
+
+13:05.700 --> 13:17.860
+ easier to spot when they happen, whereas some things, I mean you can, I guess like education
+
+13:17.860 --> 13:24.020
+ or socioeconomic status or country of origin or language, there has been some research
+
+13:24.020 --> 13:26.620
+ around language.
+
+13:26.620 --> 13:32.980
+ So yeah, bias definitely exists on other variables, and then things that are also more seemingly
+
+13:32.980 --> 13:33.980
+ neutral.
+
+13:33.980 --> 13:38.500
+ I don't know if you were identifying species of a tree or something, like you could have
+
+13:38.500 --> 13:43.220
+ bias, but in this context we're kind of talking about, actually I should have made that clear,
+
+13:43.220 --> 13:47.220
+ bias has multiple definitions which can be confusing, and so here I'm not talking about
+
+13:47.220 --> 13:51.860
+ the statistical term, but I'm talking about kind of unjust bias.
+
+13:51.860 --> 13:53.340
+ Ali?
+
+13:53.340 --> 14:05.540
+ This could go down a rabbit hole, but arguably like race and gender are actually socially
+
+14:05.540 --> 14:11.060
+ constructed and they're not really representative of an exact biological thing, in particular
+
+14:11.060 --> 14:13.940
+ when you think about what is white.
+
+14:13.940 --> 14:19.580
+ What has qualified as white has changed over the years, and 100 years ago, people that
+
+14:19.580 --> 14:23.420
+ we would now consider to be white, based on their country of origin or whatever, would
+
+14:23.420 --> 14:24.900
+ not have been considered that.
+
+14:24.900 --> 14:29.140
+ So there is actually this strongly socially constructed component, and I realize that's
+
+14:29.140 --> 14:33.580
+ kind of a cop-out to your question, but it is sort of worth, I guess like, noticing like
+
+14:33.580 --> 14:38.540
+ oh actually a lot of the stuff that it's picking up on are things that we've socially constructed
+
+14:38.540 --> 14:39.540
+ already.
+
+14:39.540 --> 14:46.420
+ Yeah, that's a good point.
+
+14:46.420 --> 14:50.300
+ I think something I would like to add to that is like, I think basically these bias are
+
+14:50.300 --> 14:53.860
+ things that people is intentionally growing for, right?
+
+14:53.860 --> 14:58.660
+ So it's not like somehow you have the model and the model will tell you kind of what is
+
+14:58.660 --> 15:02.660
+ bias for, and people kind of breaking up this lab data in these categories, and they're
+
+15:02.660 --> 15:04.100
+ finding this imbalance, right?
+
+15:04.100 --> 15:10.300
+ So for sure, probably there is bias in many things, but it's what people kind of will
+
+15:10.300 --> 15:16.020
+ be willing to check for, okay, there's bias or not, right?
+
+15:16.020 --> 15:21.300
+ And yeah, and I don't know really about probably there's some ways to try to do some unsupervised
+
+15:21.300 --> 15:26.500
+ manner where you see some activations and try to find clusters, and then you kind of
+
+15:26.500 --> 15:31.180
+ dig in which data points are associated to those clusters in a way, and then you do the
+
+15:31.180 --> 15:32.180
+ other way around.
+
+15:32.180 --> 15:34.700
+ Yeah, and actually there is a paper on that topic.
+
+15:34.700 --> 15:38.620
+ I can find the link of, because like Elise said, because these are kind of, these are
+
+15:38.620 --> 15:45.180
+ socially constructed categories, there is something that can be, you know, iffy about
+
+15:45.180 --> 15:49.660
+ like assigning, I think this person is this race, or something around this, you know,
+
+15:49.660 --> 15:55.060
+ socially constructed category, and so there was a paper last year I know on trying to
+
+15:55.060 --> 16:00.500
+ unstructured approach in an unstructured way and looking for categories.
+
+16:00.500 --> 16:04.940
+ There's also a talk from our tech policy workshop, and we'll be hopefully releasing those in
+
+16:04.940 --> 16:10.100
+ the next month, that Christiane Lum, who works for the human rights data analysis group,
+
+16:10.100 --> 16:17.020
+ and she does a lot of work with kind of how data is used in our criminal justice system,
+
+16:17.020 --> 16:22.060
+ and she kind of talked about inspecting this a lot of data from police.
+
+16:22.060 --> 16:26.860
+ It's just the police are assigning what race that they think the person is without asking
+
+16:26.860 --> 16:30.500
+ them, and so, you know, they're like, there's, I mean this is like a kind of problem with
+
+16:30.500 --> 16:35.140
+ the data source, but then it's also like that's the data we have to look at.
+
+16:35.140 --> 16:43.140
+ So it's definitely imperfect, and there are kind of issues around it, although I do think
+
+16:43.140 --> 16:46.780
+ it is like, you know, you want to be looking for racial bias, and so sometimes you are
+
+16:46.780 --> 16:52.660
+ having to kind of work with the data you have, even when it's going to contain inaccuracies,
+
+16:52.660 --> 16:55.740
+ and is around this, yeah, kind of socially constructed categorization.
+
+16:55.740 --> 17:05.420
+ I have a question about the Cornell reading, problem formulation and fairness.
+
+17:05.420 --> 17:10.020
+ I was looking at the, I guess it was like a subscript for KDD, knowledge discovery databases.
+
+17:10.020 --> 17:14.420
+ I didn't know it was around since 1989, and I was thinking about like why only now is
+
+17:14.420 --> 17:19.100
+ ethics coming up as an issue, even though we've had this, you know, sort of like practitioners
+
+17:19.100 --> 17:20.740
+ in the field who've been considering this.
+
+17:20.740 --> 17:26.880
+ Is it only because of, I don't know, an overreaction from like the 2016 election?
+
+17:26.880 --> 17:33.420
+ Is it because we're understanding more deeply now machine learning and practice is biased?
+
+17:33.420 --> 17:34.420
+ So I was just curious.
+
+17:34.420 --> 17:38.140
+ I was going to say briefly, so I think there were people, like there are people that have
+
+17:38.140 --> 17:44.680
+ been considering ethics for longer, and often in these kind of adjacent fields of like STS
+
+17:44.680 --> 17:51.100
+ or library science, I think have more of a history of thinking about ethics, but I think
+
+17:51.100 --> 17:56.300
+ right now what we've seen is kind of the explosion of these, of machine learning and different
+
+17:56.300 --> 18:00.860
+ algorithm or automated decision systems being used much more widely in practice, and so
+
+18:00.860 --> 18:07.940
+ it's, I think, a lot of why we're seeing kind of more ethical alarm is the widespread use.
+
+18:07.940 --> 18:13.860
+ And there is, I will note that like many, many fields have had to deal with kind of
+
+18:13.860 --> 18:18.400
+ the ethical quandaries of their field, and actually Ali has a great essay that we'll
+
+18:18.400 --> 18:22.940
+ read later on kind of anthropology dealing with ethical issues, but people have talked
+
+18:22.940 --> 18:27.340
+ about, you know, physics and the atomic bomb and how that raised ethical issues.
+
+18:27.340 --> 18:32.340
+ And so it's also kind of not, you know, we are kind of experiencing like a major kind
+
+18:32.340 --> 18:36.460
+ of reckoning for the field, but we're not the first field to go through that as well.
+
+18:36.460 --> 18:40.180
+ Well, I'll keep moving and we'll come back to, I think, some kind of related things on
+
+18:40.180 --> 18:44.860
+ all of this as we go.
+
+18:44.860 --> 18:51.140
+ So what, and I'm here to give kind of one recommendation of something you can do towards
+
+18:51.140 --> 18:57.140
+ trying to address this, and that is speaking with domain experts and people impacted.
+
+18:57.140 --> 19:07.220
+ And so at the Fat Star Conference, I think in 2019, Christian Lum, Elizabeth Bender,
+
+19:07.220 --> 19:12.840
+ and Terrence Wilkerson hosted a really great workshop, and it's available online.
+
+19:12.840 --> 19:16.840
+ And so Christian Lum is the statistician I mentioned who works with Human Rights Data
+
+19:16.840 --> 19:18.340
+ Analysis Group.
+
+19:18.340 --> 19:22.220
+ And then Elizabeth Bender is a former public defender.
+
+19:22.220 --> 19:27.860
+ And Terrence Wilkerson is an innocent man who is wrongly accused of committing a crime
+
+19:27.860 --> 19:29.660
+ and couldn't afford bail.
+
+19:29.660 --> 19:33.700
+ And Elizabeth and Terrence were able to give a lot of insight into how the criminal justice
+
+19:33.700 --> 19:40.480
+ system works in practice, and it's things that I wouldn't necessarily know as a computer
+
+19:40.480 --> 19:44.740
+ scientist and coming from a more technical background, and it's really important to get
+
+19:44.740 --> 19:49.680
+ those kind of implementation and human details of how things actually work.
+
+19:49.680 --> 19:56.820
+ So Elizabeth talked about when she would go to visit one of her defendants on Rikers Island,
+
+19:56.820 --> 20:01.800
+ she was having to take a bus like two hours each way and only getting like 30 minutes
+
+20:01.800 --> 20:07.160
+ with the defendant if the guards brought them in on time and kind of all these limitations.
+
+20:07.160 --> 20:12.560
+ And Terrence talked about a lot of the just how kind of terrible it is to be in prison
+
+20:12.560 --> 20:20.460
+ and the pressure to take a guilty plea bargain to get out quicker and also how it can impact
+
+20:20.460 --> 20:24.000
+ how you appear before the judge when you've been in prison.
+
+20:24.000 --> 20:29.960
+ And so it was a really helpful session and those sorts of collaborations of talking closely
+
+20:29.960 --> 20:34.700
+ with the people that have the domain knowledge and are impacted is really crucial and I think
+
+20:34.700 --> 20:40.320
+ one step towards trying to address this type of bias or at least towards trying to address
+
+20:40.320 --> 20:41.640
+ the harms from it.
+
+20:41.640 --> 20:42.640
+ All right.
+
+20:42.640 --> 20:49.020
+ The next, so the third case study I'll talk about is online ad delivery.
+
+20:49.020 --> 20:54.520
+ And I shared this last week, so we'll just briefly go over it again, but we talked about
+
+20:54.520 --> 20:59.960
+ Latanya Sweeney, computer science professor at Harvard who was getting these ads saying
+
+20:59.960 --> 21:02.520
+ Latanya Sweeney arrested.
+
+21:02.520 --> 21:04.280
+ She had never been arrested.
+
+21:04.280 --> 21:09.020
+ She found names like Kirsten Lindquist, who has been arrested three times, got more neutral
+
+21:09.020 --> 21:12.360
+ language just saying we found Kirsten Lindquist.
+
+21:12.360 --> 21:18.420
+ She studied over 2,000 names and confirmed this pattern that disproportionately African
+
+21:18.420 --> 21:23.140
+ American names were getting the ad suggesting they'd been arrested.
+
+21:23.140 --> 21:28.760
+ And then this kind of discrimination in advertising has continued to show up in a lot of different
+
+21:28.760 --> 21:30.340
+ forms.
+
+21:30.340 --> 21:36.020
+ There was a paper last year of even when advertisers aren't trying to discriminate, their ads get
+
+21:36.020 --> 21:41.540
+ shown to very different audiences and so the researchers found that a job ad, depending
+
+21:41.540 --> 21:47.700
+ on what the job was, could be shown to an audience of 90% men or 90% women.
+
+21:47.700 --> 21:53.800
+ This is on Facebook, although I think this is true on many platforms.
+
+21:53.800 --> 21:58.200
+ Housing ads changing the picture between a white family and a black family.
+
+21:58.200 --> 22:02.260
+ They got very different audiences even when the text was identical.
+
+22:02.260 --> 22:07.680
+ And that this is an issue because things like housing and jobs really relate to kind of
+
+22:07.680 --> 22:10.140
+ our civil rights.
+
+22:10.140 --> 22:18.020
+ And this is just a series of ProPublica's, ProPublica's fantastic, it does fantastic
+
+22:18.020 --> 22:24.020
+ work, but they found that Facebook, dozens of companies were using Facebook to only show
+
+22:24.020 --> 22:28.260
+ job ads to young people.
+
+22:28.260 --> 22:34.540
+ Facebook was also letting housing advertisers explicitly exclude users by race.
+
+22:34.540 --> 22:35.660
+ And actually I should update this.
+
+22:35.660 --> 22:41.660
+ So there was an initial discovery in 2016 that they were doing this and Facebook apologized
+
+22:41.660 --> 22:44.100
+ and then over a year later they were still doing this.
+
+22:44.100 --> 22:48.780
+ And so as you could place a housing ad and say, you know, I don't want to show this to
+
+22:48.780 --> 22:53.060
+ Latinx people or I don't want to show it to, I think there was like, I don't want to show
+
+22:53.060 --> 22:58.780
+ this to wheelchair users, but kind of very, very discriminatory.
+
+22:58.780 --> 23:02.420
+ So then they were still doing it over a year later and then they did reach a settlement
+
+23:02.420 --> 23:08.380
+ last year and implemented this new system that is supposed to limit this and then ProPublica
+
+23:08.380 --> 23:15.420
+ did another investigation how their, their new platform is not, not actually effective.
+
+23:15.420 --> 23:19.860
+ And then we saw Amazon matching members of Congress to criminal mugshots.
+
+23:19.860 --> 23:25.980
+ There's also the Amazon resume screening tool that penalized resumes with the word women's
+
+23:25.980 --> 23:26.980
+ in them.
+
+23:26.980 --> 23:29.980
+ So this, this shows up lots of places, kind of this bias.
+
+23:29.980 --> 23:35.580
+ And so I do want to highlight that many AI ethics concerns are about human rights and
+
+23:35.580 --> 23:37.980
+ civil rights.
+
+23:37.980 --> 23:43.580
+ I like, there's an article from Anil Dash where he says there is no tech industry anymore.
+
+23:43.580 --> 23:47.880
+ Tech is used in every industry and so this term has kind of become meaningless and it's
+
+23:47.880 --> 23:52.680
+ important to really think about the particular verticals that you're talking about.
+
+23:52.680 --> 23:57.980
+ And so others have proposed, and I agree with kind of one, one way to, when people talk
+
+23:57.980 --> 24:02.200
+ about the idea of regulating AI is to really think about kind of what human rights and
+
+24:02.200 --> 24:07.500
+ civil rights we're trying to protect in particular areas, whether that is housing or education,
+
+24:07.500 --> 24:09.900
+ employment, criminal justice.
+
+24:09.900 --> 24:15.980
+ So going, kind of going back to this paper by Suresh and Gutag, this concept of biased
+
+24:15.980 --> 24:20.620
+ data has, is often too generic to really be useful.
+
+24:20.620 --> 24:29.800
+ And so, oh, another, another paper I like from Sendhil Malainathan and Zayed Obermeyer
+
+24:29.800 --> 24:35.920
+ looked at historical electronic health record data and asked what factors are most predictive
+
+24:35.920 --> 24:37.980
+ of stroke.
+
+24:37.980 --> 24:42.760
+ And so they found, and they were saying, you know, this could be useful in prioritizing
+
+24:42.760 --> 24:47.860
+ patients at the ER, and so they found the number one most predictive factor was having
+
+24:47.860 --> 24:51.920
+ had a prior stroke, which totally makes sense.
+
+24:51.920 --> 24:56.300
+ Second was cardiovascular disease, which also makes sense.
+
+24:56.300 --> 25:05.400
+ And then next was accidental injury, a benign breast lump, colonoscopy, and sinusitis.
+
+25:05.400 --> 25:09.860
+ And so you don't have to be a medical doctor to say, wait, those, something seems wrong.
+
+25:09.860 --> 25:15.420
+ Why would those things be predictive of, of having a stroke?
+
+25:15.420 --> 25:19.500
+ Does anyone want to guess why?
+
+25:19.500 --> 25:21.500
+ Up here?
+
+25:21.500 --> 25:26.860
+ Oh, can someone pass, pass the catch box forward?
+
+25:26.860 --> 25:32.220
+ I don't know, it's like older person or I don't know, it's more likely to experience
+
+25:32.220 --> 25:33.220
+ that, I don't know.
+
+25:33.220 --> 25:35.160
+ Oh, so the guess was older person.
+
+25:35.160 --> 25:36.880
+ That's not what they found, but good guess.
+
+25:36.880 --> 25:41.800
+ And then up here, oh, okay.
+
+25:41.800 --> 25:42.800
+ Over here.
+
+25:42.800 --> 25:50.620
+ Visits to, so like visits to the doctor, visits to the hospital, you normally go because you
+
+25:50.620 --> 25:56.160
+ have an accidental injury or a benign breast lump or something.
+
+25:56.160 --> 25:57.160
+ So close.
+
+25:57.160 --> 26:00.980
+ So I'll, oh, one more guess behind you from Colin, but then.
+
+26:00.980 --> 26:05.380
+ We needed to do someone who wasn't in the hospital for something else to be confounded
+
+26:05.380 --> 26:06.380
+ by us.
+
+26:06.380 --> 26:08.720
+ No, although that's also a good guess.
+
+26:08.720 --> 26:16.780
+ So I like how you're thinking, this, oh, Claudia has a guess in the back, that corner.
+
+26:16.780 --> 26:26.380
+ It could be part of their health history that they be self-reporting.
+
+26:26.380 --> 26:27.760
+ Yes, that's it.
+
+26:27.760 --> 26:34.300
+ So it's, well, they classify it as who utilizes healthcare versus not.
+
+26:34.300 --> 26:38.180
+ So they're basically people that utilize healthcare a lot and people that don't.
+
+26:38.180 --> 26:42.460
+ And there are a number of factors that can contribute to this of who even has access
+
+26:42.460 --> 26:47.300
+ to healthcare, who can afford their copay, who can take time off of work.
+
+26:47.300 --> 26:49.580
+ There may be cultural factors.
+
+26:49.580 --> 26:54.260
+ There's racial and gender bias and the types of treatment that people receive.
+
+26:54.260 --> 26:58.020
+ And so actually, I guess this goes back to your earlier question of picking up latent
+
+26:58.020 --> 26:59.140
+ bias of something.
+
+26:59.140 --> 27:05.100
+ They found here they're picking up bias basically of high utility versus low utility for healthcare,
+
+27:05.100 --> 27:12.580
+ which is not a physical characteristic, but is making a significant difference.
+
+27:12.580 --> 27:19.220
+ And so if you're someone who is going to go to the ER when you have an accidental injury
+
+27:19.220 --> 27:24.980
+ or sinusitis, then you also are going to go to the ER when you're having a stroke.
+
+27:24.980 --> 27:27.660
+ And so they said, you know, we haven't measured stroke.
+
+27:27.660 --> 27:32.420
+ We've measured who had symptoms, went to the doctor, got the correct test, and then received
+
+27:32.420 --> 27:34.620
+ the diagnosis of stroke.
+
+27:34.620 --> 27:38.020
+ And so this is one type of measurement bias.
+
+27:38.020 --> 27:43.300
+ And there are many kind of many types of measurement bias, but it's a way that your kind of measurements
+
+27:43.300 --> 27:48.380
+ aren't capturing exactly what you think they are.
+
+27:48.380 --> 27:53.260
+ And you know, and even kind of more biologically, stroke is about region of the brain being
+
+27:53.260 --> 27:54.260
+ denied oxygen.
+
+27:54.260 --> 27:57.800
+ And that's something we don't have, we don't even have the data for, you know, that'd be
+
+27:57.800 --> 28:02.320
+ like we would need everyone wearing brain monitors to know who has had stroke.
+
+28:02.320 --> 28:05.940
+ We have these other things, you know, in medicine it often ends up being about kind of like
+
+28:05.940 --> 28:09.580
+ a billing code in a chart.
+
+28:09.580 --> 28:15.460
+ And so this is, yeah, I think a kind of subtle form of bias that could show up.
+
+28:15.460 --> 28:21.300
+ Oh, question in the second row.
+
+28:21.300 --> 28:25.520
+ And this is, I would say this is also another example where gathering more of the same type
+
+28:25.520 --> 28:27.860
+ of data you already have is not going to help you.
+
+28:27.860 --> 28:31.420
+ I mean, if you're able to gather kind of a different type of data, that better gets at
+
+28:31.420 --> 28:37.740
+ your question, but just gathering more of the same won't help here.
+
+28:37.740 --> 28:44.120
+ And then a fifth type of bias that they talk about in the paper is aggregation bias.
+
+28:44.120 --> 28:49.720
+ And they give the example of diabetes patients having different complications across ethnicities
+
+28:49.720 --> 28:56.460
+ and also kind of some of these blood markers used to diagnose and monitor diabetes differing
+
+28:56.460 --> 28:58.720
+ across ethnicity and gender.
+
+28:58.720 --> 29:06.300
+ And so this could combine with other biases if you have, so this suggests that maybe one
+
+29:06.300 --> 29:13.620
+ model is not going to do a great job of representing people from different ethnicities or genders.
+
+29:13.620 --> 29:18.060
+ Also if your data set had representation bias, you could then end up kind of drowning out
+
+29:18.060 --> 29:22.060
+ a certain group and you would have a higher error rate for that group.
+
+29:22.060 --> 29:28.700
+ So this is another type of bias.
+
+29:28.700 --> 29:35.040
+ And so they look at five in the paper, but I think it's helpful to see that I think what's
+
+29:35.040 --> 29:39.740
+ most talked about of kind of gathering a more diverse data set is really only going to help
+
+29:39.740 --> 29:45.900
+ for representation and evaluation bias, but most likely not the other three.
+
+29:45.900 --> 29:52.680
+ Then I want to talk a little bit more about kind of where racial bias is found and all
+
+29:52.680 --> 29:57.620
+ the studies I'm going to cite here are from a New York Times article that Cynthia Melanathon
+
+29:57.620 --> 30:04.140
+ wrote, but these are all from kind of peer-reviewed academic research and this is just a sample
+
+30:04.140 --> 30:10.860
+ of what's out there, but when doctors were shown identical files they make are much less
+
+30:10.860 --> 30:17.540
+ likely to recommend a helpful cardiac procedure to black patients than to white patients.
+
+30:17.540 --> 30:22.300
+ When bargaining for a used car, black people were offered initial prices $700 higher and
+
+30:22.300 --> 30:26.660
+ received far smaller concessions.
+
+30:26.660 --> 30:31.060
+ Adding to apartment rental ads on Craigslist with a black name elicited fewer responses
+
+30:31.060 --> 30:33.380
+ than with a white name.
+
+30:33.380 --> 30:37.500
+ An all-white jury was 16 points more likely to convict a black defendant than a white
+
+30:37.500 --> 30:41.580
+ one, but when a jury had one black member it convicted both at the same rate.
+
+30:41.580 --> 30:45.620
+ And actually I think I had more and shortened it.
+
+30:45.620 --> 30:50.760
+ And so I just I just share this to show that kind of in a wide variety of types of data,
+
+30:50.760 --> 30:58.020
+ whether you're looking at medical data or sales data or housing data or political data,
+
+30:58.020 --> 31:02.300
+ that it is if it involves human it's quite humans it's quite likely that there's racial
+
+31:02.300 --> 31:08.460
+ bias in it that this is very very pervasive.
+
+31:08.460 --> 31:13.700
+ However this raises the question that I that I hear sometimes which is that you know humans
+
+31:13.700 --> 31:19.540
+ are really biased, this is well documented, so why kind of why is there so much concern
+
+31:19.540 --> 31:26.260
+ about algorithmic bias given this, that humans are so biased.
+
+31:26.260 --> 31:31.380
+ And I have a kind of four reasons that I think algorithmic bias still really matters.
+
+31:31.380 --> 31:37.320
+ And the first is machine learning can amplify bias, so in many cases it's not just encoding
+
+31:37.320 --> 31:42.220
+ kind of existing human bias, but it can also be amplifying the magnitude.
+
+31:42.220 --> 31:50.180
+ So this is some research from Maria de Arteaga et al that looked at LinkedIn kind of how
+
+31:50.180 --> 31:53.500
+ people describe their job description.
+
+31:53.500 --> 32:00.900
+ And in their data set they described it as imbalances being compounded only 14 percent
+
+32:00.900 --> 32:03.220
+ of the surgeons were female.
+
+32:03.220 --> 32:09.180
+ And then in their true positives only 11 percent of the surgeons were female.
+
+32:09.180 --> 32:16.640
+ And so basically there's kind of this asymmetry around false negatives and false positives
+
+32:16.640 --> 32:24.480
+ when you have kind of a very imbalanced data set to begin with.
+
+32:24.480 --> 32:28.620
+ Second reason that I think we really need to take algorithmic bias seriously is because
+
+32:28.620 --> 32:33.240
+ algorithms are often used differently than human decision makers in practice.
+
+32:33.240 --> 32:37.420
+ And so this is something where people will often kind of talk about them as though they're
+
+32:37.420 --> 32:45.780
+ plug-and-play, interchangeable, but in kind of in use it's not the case.
+
+32:45.780 --> 32:50.000
+ People are more likely to assume algorithms are objective or error free.
+
+32:50.000 --> 32:54.580
+ This is also true even if you portray, you know, I'm just giving this human recommendation
+
+32:54.580 --> 33:01.580
+ or a guide, people often kind of take that as more of an authority.
+
+33:01.580 --> 33:06.060
+ Algorithms are more likely to be implemented with no appeals process in place.
+
+33:06.060 --> 33:11.100
+ And I think this comes because often algorithmic or automated decision systems are being implemented
+
+33:11.100 --> 33:18.460
+ as a cost-cutting measure and allowing appeals or recourse is more expensive.
+
+33:18.460 --> 33:23.900
+ And so the motivation when it's around cost-cutting and not around approving accuracy is often
+
+33:23.900 --> 33:27.780
+ not going to include a process for recourse.
+
+33:27.780 --> 33:31.860
+ Algorithms are more likely to be used at scale so they can be replicating identical biases
+
+33:31.860 --> 33:33.900
+ at scale.
+
+33:33.900 --> 33:35.800
+ And algorithmic systems are cheap.
+
+33:35.800 --> 33:40.660
+ And I think there's a lot of interplay kind of between these factors.
+
+33:40.660 --> 33:45.420
+ Cathy O'Neill wrote in Weapons of Math Destruction that the privileged are processed by people,
+
+33:45.420 --> 33:47.500
+ the poor are processed by algorithms.
+
+33:47.500 --> 33:48.500
+ All right.
+
+33:48.500 --> 33:51.780
+ So kind of in summary, humans are biased.
+
+33:51.780 --> 33:54.300
+ Why does algorithmic bias matter?
+
+33:54.300 --> 33:58.360
+ And the reasons for that are machine learning can create feedback loops as we saw before.
+
+33:58.360 --> 34:03.620
+ So when it's helped creating outcomes, can amplify bias, it's used differently.
+
+34:03.620 --> 34:07.640
+ And then also that I think technology is very powerful and that there's a responsibility
+
+34:07.640 --> 34:08.640
+ with that.
+
+34:08.640 --> 34:11.920
+ Yeah, I'll start the next session.
+
+34:11.920 --> 34:15.420
+ So now I want to talk about it's not just the data.
+
+34:15.420 --> 34:20.940
+ And so this was kind of a focus on, okay, this is ways bias can appear in the data.
+
+34:20.940 --> 34:25.100
+ So something important to understand, so there's a joke, you know, the good thing about computers
+
+34:25.100 --> 34:27.580
+ is they do exactly what people tell them to.
+
+34:27.580 --> 34:30.700
+ The bad thing is they do exactly what people tell them to.
+
+34:30.700 --> 34:38.540
+ And often you may mean something in your head that is not what makes it into what you type.
+
+34:38.540 --> 34:43.740
+ And in machine learning in particular, you know, a person is the one that is defining
+
+34:43.740 --> 34:45.780
+ what is success.
+
+34:45.780 --> 34:51.720
+ And that typically takes the form of we're minimizing an error function or maximizing
+
+34:51.720 --> 34:53.660
+ some sort of score.
+
+34:53.660 --> 34:57.800
+ But who gets to define that error function?
+
+34:57.800 --> 35:03.540
+ And what the 21 definitions talk was kind of touching on was also that that's not necessarily
+
+35:03.540 --> 35:09.740
+ kind of straightforward what error function you choose.
+
+35:09.740 --> 35:17.500
+ And so Arvind shared this chart from Wikipedia on ways to evaluate binary classifiers.
+
+35:17.500 --> 35:26.160
+ And so here kind of the top left is giving this notion of true positive, true negative,
+
+35:26.160 --> 35:29.260
+ a false positive and a false negative.
+
+35:29.260 --> 35:34.860
+ And then there are all these different ways to combine these into accuracy and negative
+
+35:34.860 --> 35:39.980
+ predictive value and false discovery rate and F1 score and different scores you can
+
+35:39.980 --> 35:42.880
+ make to evaluate how good is your classifier.
+
+35:42.880 --> 35:48.820
+ And so to give an example, if you were using, if you're doing a medical diagnosis, maybe
+
+35:48.820 --> 35:57.140
+ something like a mammogram trying to identify, you know, is there a cancerous tumor here?
+
+35:57.140 --> 36:02.780
+ This is kind of a value judgment, but how does a false negative compare to a false positive
+
+36:02.780 --> 36:03.780
+ in this instance?
+
+36:03.780 --> 36:05.780
+ False negative is worse.
+
+36:05.780 --> 36:08.220
+ Yes, I would agree with that.
+
+36:08.220 --> 36:13.500
+ So a false negative is you're telling someone you don't have cancer and they do, which is
+
+36:13.500 --> 36:15.300
+ bad.
+
+36:15.300 --> 36:20.260
+ A false positive in that case is telling someone, hey, you may have cancer and they don't and
+
+36:20.260 --> 36:23.780
+ presumably they're going to go then get a biopsy and find out they don't.
+
+36:23.780 --> 36:25.620
+ And there is still some cost to that.
+
+36:25.620 --> 36:28.100
+ You've caused stress for a person.
+
+36:28.100 --> 36:32.380
+ This is another procedure they have to have done, but yeah, on the whole that definitely
+
+36:32.380 --> 36:36.500
+ seems less bad than telling someone they don't have cancer when they do.
+
+36:36.500 --> 36:38.460
+ How about spam?
+
+36:38.460 --> 36:43.420
+ So you're identifying if an email is spam or not, and if it is, you're going to put
+
+36:43.420 --> 36:45.740
+ it in their spam folder and not even show it to them.
+
+36:45.740 --> 36:50.140
+ This is, you know, your email server.
+
+36:50.140 --> 36:51.340
+ What do you think is worse here?
+
+36:51.340 --> 36:55.580
+ False positive or false negative?
+
+36:55.580 --> 36:56.580
+ I think so.
+
+36:56.580 --> 36:57.580
+ Yeah.
+
+36:57.580 --> 36:59.580
+ So this is a false positive.
+
+36:59.580 --> 37:00.580
+ Okay.
+
+37:00.580 --> 37:05.460
+ And what was the email?
+
+37:05.460 --> 37:12.460
+ If you want to, you don't have to say.
+
+37:12.460 --> 37:22.260
+ Yeah, so yeah, if it's an email from a loved one or about a job offer or something important,
+
+37:22.260 --> 37:26.640
+ you don't want it going to your promotions tab or your spam folder.
+
+37:26.640 --> 37:28.980
+ And with all these, though, you can also think about the trade off.
+
+37:28.980 --> 37:33.900
+ So I would totally agree on that, but there is a point where, you know, getting one spam
+
+37:33.900 --> 37:40.160
+ email in your regular inbox, like, hey, that's okay, but if you get 10 spam emails in your
+
+37:40.160 --> 37:43.020
+ regular inbox, you know, there's probably some tipping point where you're like, this
+
+37:43.020 --> 37:51.020
+ is stop putting the spam emails in my regular inbox and ditto with the cancer screening
+
+37:51.020 --> 37:52.660
+ example.
+
+37:52.660 --> 37:54.620
+ Right.
+
+37:54.620 --> 37:55.620
+ Another case.
+
+37:55.620 --> 37:58.860
+ How about going back to this criminal recidivism algorithm?
+
+37:58.860 --> 38:05.140
+ So predicting if a defendant is low risk or high risk for committing another crime.
+
+38:05.140 --> 38:13.900
+ And I say committing another crime, but this includes people that haven't even had a trial.
+
+38:13.900 --> 38:20.540
+ So what's worse, false positive or false negative?
+
+38:20.540 --> 38:30.700
+ So mostly here, false positives, you know, can you pass the, okay, say that again, because
+
+38:30.700 --> 38:37.340
+ who you ask, because basically, obviously for a non guilty person to say that, basically
+
+38:37.340 --> 38:43.540
+ be trying to say you have to come back to jail because you don't get free because you
+
+38:43.540 --> 38:48.740
+ are likely to commit a crime, obviously, and you wouldn't obviously, but the other way
+
+38:48.740 --> 38:52.380
+ around is you're releasing people that is committing crimes, then they have actually
+
+38:52.380 --> 38:54.420
+ impacted the victims of the crime, right?
+
+38:54.420 --> 38:59.620
+ So who you ask there kind of depends on, I don't know if it's very obvious.
+
+38:59.620 --> 39:02.060
+ Yes, who you ask will definitely vary your answer.
+
+39:02.060 --> 39:06.500
+ I see another hand in the fourth row.
+
+39:06.500 --> 39:10.500
+ So I see that case for perspective as it's made in one of the papers.
+
+39:10.500 --> 39:14.500
+ What bothers me about them is that they all seem to go past the idea of a system of justice
+
+39:14.500 --> 39:16.320
+ having its own moral center.
+
+39:16.320 --> 39:21.380
+ So if you have a Jeffersonian statement like it's better to let 10 guilty people go than
+
+39:21.380 --> 39:26.580
+ put one innocent person in jail and you come up with systems where you can simply undercut
+
+39:26.580 --> 39:31.900
+ that principle because it's profitable for you to imprison more people or so on, then
+
+39:31.900 --> 39:35.860
+ the idea that there is no moral center to begin with and we have to redefine it, I think
+
+39:35.860 --> 39:39.460
+ boils back to, no, there is, we're just ignoring it.
+
+39:39.460 --> 39:45.140
+ And so in that case, false positives are clearly bad unless you disagree with the system.
+
+39:45.140 --> 39:51.020
+ I mean, I think, so you're kind of saying that like with a for profit prison system,
+
+39:51.020 --> 39:57.300
+ you're not even trying to hold to an ideal of it's better to let 10 guilty people go
+
+39:57.300 --> 40:00.940
+ free than put one innocent person in prison.
+
+40:00.940 --> 40:05.180
+ I think that, I don't know that everyone would agree with that statement though.
+
+40:05.180 --> 40:09.980
+ I mean, I agree that there's a lot of problems with the for profit prison system.
+
+40:09.980 --> 40:16.620
+ But I think even in a healthier system, I think there are people that would say like
+
+40:16.620 --> 40:22.540
+ law and order is a high ideal and might not agree with the letting 10 guilty people go
+
+40:22.540 --> 40:23.540
+ free.
+
+40:23.540 --> 40:28.660
+ So I think there is still something of a value judgment there, although I do think it's definitely
+
+40:28.660 --> 40:30.860
+ clouded by kind of other factors.
+
+40:30.860 --> 40:31.860
+ Yes.
+
+40:31.860 --> 40:40.180
+ I would just make a general comment that applies to all of these cases is that they're so fact
+
+40:40.180 --> 40:41.180
+ specific.
+
+40:41.180 --> 40:42.180
+ What was the crime?
+
+40:42.180 --> 40:48.820
+ What was the misdemeanor versus like everything is so fact specific as to the false negative
+
+40:48.820 --> 40:53.220
+ and then the criminal goes and is a recidivist and murders another person.
+
+40:53.220 --> 40:58.740
+ It's very difficult to just contain all of these same with spam, you know.
+
+40:58.740 --> 40:59.740
+ Yeah.
+
+40:59.740 --> 41:03.700
+ There is a lot of nuance that is not going to necessarily be captured.
+
+41:03.700 --> 41:04.700
+ Yeah.
+
+41:04.700 --> 41:12.020
+ So this was to kind of highlight that there's not that your perspective does matter and
+
+41:12.020 --> 41:20.260
+ that in some of these we had more agreement than others or you know some of these I think
+
+41:20.260 --> 41:25.520
+ it's possible to reach broader consensus than others that there's not necessarily a clear
+
+41:25.520 --> 41:28.920
+ cut answer and then even more so there's not necessarily a clear cut.
+
+41:28.920 --> 41:34.900
+ This is the best way to evaluate the error rate for a given scenario.
+
+41:34.900 --> 41:35.900
+ Okay.
+
+41:35.900 --> 41:39.600
+ Then it's about seven o'clock.
+
+41:39.600 --> 41:46.060
+ So let's stop here for our seven minute break and then we'll resume back.
+
+41:46.060 --> 41:47.060
+ Let's start back up.
+
+41:47.060 --> 41:53.860
+ I want to check if there are any questions about the 21 definitions video or any thoughts.
+
+41:53.860 --> 42:01.620
+ I thought I wanted to move on to the problem formulation and fairness paper and so this
+
+42:01.620 --> 42:07.740
+ was a ethnographic field study where they followed this team of kind of data scientists
+
+42:07.740 --> 42:16.960
+ and product managers, business analysts, product managers and so on of a company that was working
+
+42:16.960 --> 42:25.540
+ with car companies to pass on leads to kind of to auto dealers and the initial project
+
+42:25.540 --> 42:30.220
+ goal was to improve the quality of the leads and actually I'm curious what did what did
+
+42:30.220 --> 42:32.220
+ people think of this paper?
+
+42:32.220 --> 42:33.860
+ Any thoughts or reactions?
+
+42:33.860 --> 42:38.820
+ Okay so I'll repeat it for the microphones once they were mad they care so much about
+
+42:38.820 --> 42:43.440
+ their score.
+
+42:43.440 --> 42:47.020
+ Any other thoughts?
+
+42:47.020 --> 42:52.340
+ And I'll say like I thought it was kind of interesting to see having worked as a data
+
+42:52.340 --> 42:57.780
+ scientist someone describe the process of what to me felt very familiar in this kind
+
+42:57.780 --> 43:03.000
+ of academic and studied way but I thought that was helpful and they had started out
+
+43:03.000 --> 43:09.060
+ with this question of what makes a lead high quality and there were various answers from
+
+43:09.060 --> 43:14.940
+ various people in the project you know it could be the buyers salary whether the car
+
+43:14.940 --> 43:20.900
+ they want is in stock which is neat kind of thinking about from the buyers perspective
+
+43:20.900 --> 43:23.380
+ what they're looking for.
+
+43:23.380 --> 43:30.620
+ Dealer specific finance ability so different dealers have different financing processes
+
+43:30.620 --> 43:34.740
+ and so they kind of you know started out with this broad brainstorm of like oh these are
+
+43:34.740 --> 43:39.740
+ the things that could make a lead high quality and then ran into difficulties the dealers
+
+43:39.740 --> 43:45.180
+ won't share that data the credit scores were segmented into different ranges so they kind
+
+43:45.180 --> 43:51.160
+ of had these course ranges that didn't really align and so they end up reducing the problem
+
+43:51.160 --> 43:57.260
+ to predicting the credit score below 500 versus above 500 and so it's kind of in disappointing
+
+43:57.260 --> 44:01.140
+ but it's a trajectory I have been on where they I feel like start with this you know
+
+44:01.140 --> 44:05.860
+ broader and more interesting question about high quality leads and then they have to boil
+
+44:05.860 --> 44:10.660
+ it down to well we kind of don't really have any data other than these big buckets for
+
+44:10.660 --> 44:15.680
+ credit score so let's go with that.
+
+44:15.680 --> 44:19.960
+ They did talk about you know should they try to purchase higher quality data sets but ruled
+
+44:19.960 --> 44:26.580
+ that those were too expensive and the project ended up failing and so it was I thought kind
+
+44:26.580 --> 44:33.260
+ of helpful to go on this trajectory and it's one that I have witnessed firsthand that yeah
+
+44:33.260 --> 44:38.700
+ that often I think projects are kind of limited by the data that you have and I think that's
+
+44:38.700 --> 44:43.780
+ important to keep in mind and keep in mind also these like business constraints that
+
+44:43.780 --> 44:48.900
+ that really matter in the workplace when discussing these problems because I think it can be easy
+
+44:48.900 --> 44:55.820
+ to kind of focus on you know a more academic or idealized like oh it'd be great if we had
+
+44:55.820 --> 45:01.220
+ you know this type of data or could do this sort of process but that may often not work
+
+45:01.220 --> 45:04.860
+ out.
+
+45:04.860 --> 45:08.480
+ Different people gave different reasons that the project failed whether it was the data
+
+45:08.480 --> 45:15.020
+ quality, the expectations, the the nature of what they are trying to do.
+
+45:15.020 --> 45:19.820
+ So something I wanted to ask you is what and for this I think I want you to try talking
+
+45:19.820 --> 45:25.420
+ in groups of three or four again and so yeah you can pair up with people near you or you
+
+45:25.420 --> 45:32.760
+ can also cross rows and we'll just take maybe seven minutes to discuss just if what if anything
+
+45:32.760 --> 45:36.700
+ do you think this team could have done differently to consider bias and fairness?
+
+45:36.700 --> 45:40.660
+ I mean do you think they should have done it anything differently and if so what and
+
+45:40.660 --> 45:47.940
+ if not why not kind of curious to hear does anyone want to does anyone want to share something
+
+45:47.940 --> 45:51.460
+ that their group discussed?
+
+45:51.460 --> 45:54.420
+ The catch box is sitting on the third row I don't know if anyone on the third row wants
+
+45:54.420 --> 45:59.820
+ to say anything or pass it forward to the second.
+
+45:59.820 --> 46:03.420
+ Yeah so we were just discussing that it's kind of a question of alignment where when
+
+46:03.420 --> 46:07.780
+ you're saying you're looking for quality that can kind of you can have these fuzzy beliefs
+
+46:07.780 --> 46:12.540
+ about what quality may or may not be but when you don't kind of have a company-wide alignment
+
+46:12.540 --> 46:16.380
+ when everyone agrees what it means and when you're going telling them what a machine what
+
+46:16.380 --> 46:20.860
+ quality means that's kind of when it gets reductive and biased almost a sort of the
+
+46:20.860 --> 46:24.980
+ mission so you can't really eliminate the bias because their time is how can we figure
+
+46:24.980 --> 46:30.460
+ out their credit scores for cheaper and there's this quote from Maciej Ceglowski that machine
+
+46:30.460 --> 46:36.100
+ learning is just money laundering for bias and so that bias laundering because quality
+
+46:36.100 --> 46:41.220
+ wasn't defined what it ended up being is just saying well let's try to do bias but with
+
+46:41.220 --> 46:46.500
+ this machine so nobody knows so we kind of had the pessimistic view that you couldn't
+
+46:46.500 --> 46:51.620
+ really eliminate bias from it because unless quality sort of had a rigorous definition
+
+46:51.620 --> 46:55.620
+ before they started this project then bias is kind of what they were trying to achieve.
+
+46:55.620 --> 47:02.820
+ One thing that came to mind for me was just changing the business model to accommodate
+
+47:02.820 --> 47:07.020
+ the idea of selling more cars to more people like the modern-day leasing model we have
+
+47:07.020 --> 47:12.660
+ today is some perversion of the initial model but it was all aimed at depreciating the value
+
+47:12.660 --> 47:18.480
+ of the car and looking at the secondary market before you sold that car and the end result
+
+47:18.480 --> 47:23.940
+ was you could go to any particular customer say do you have X amount down payment and
+
+47:23.940 --> 47:28.780
+ can you afford $380 a month if they could answer that knowing full well that the consequences
+
+47:28.780 --> 47:32.460
+ were lying were immediately in possession they automatically qualified themselves out
+
+47:32.460 --> 47:38.340
+ from the stress of losing a car that they just got so just changing the model to address
+
+47:38.340 --> 47:42.860
+ your market rather than trying to figure out you know your customer your potential customer
+
+47:42.860 --> 47:47.060
+ by date you can't have or don't want to pay for seem like one way to go about that yeah
+
+47:47.060 --> 47:52.220
+ and that's it that's a good point also about just when you have clear simple rules as opposed
+
+47:52.220 --> 47:57.540
+ to you know even the credit score itself is kind of this opaque system but you're suggesting
+
+47:57.540 --> 48:02.780
+ something with clear rules of if you have this much money and can pay this much money
+
+48:02.780 --> 48:08.580
+ per month then you can get X or well thank you all that was interesting I didn't have
+
+48:08.580 --> 48:12.680
+ like a I was actually not sure what you would come up with but I appreciated those answers
+
+48:12.680 --> 48:18.780
+ and and thinking about it and in some of this stuff I guess in the privacy and surveillance
+
+48:18.780 --> 48:25.340
+ lesson we'll talk a little bit more about financing both the big three in the US as
+
+48:25.340 --> 48:37.020
+ well as some kind of a micro financing projects as well all right so hopefully so I kind of
+
+48:37.020 --> 48:42.340
+ in the the first part you know wanted to make a case that algorithmic bias matters and is
+
+48:42.340 --> 48:47.380
+ significant I also want to highlight that bias isn't the whole story or the only issue
+
+48:47.380 --> 48:52.780
+ and some of you have already kind of touched on this in your kind of in your comments first
+
+48:52.780 --> 49:00.780
+ that I think accuracy is not it's not everything and so referring back to the compass recidivism
+
+49:00.780 --> 49:10.820
+ algorithm point that Abe Gong shared he's a data scientist part of the input to the
+
+49:10.820 --> 49:16.800
+ system is this questionnaire that the defendants fill out and it includes questions such as
+
+49:16.800 --> 49:21.860
+ if you lived with both parents and they later separated how old were you at the time was
+
+49:21.860 --> 49:27.300
+ your father figure or father figure who principally raised you ever arrested that you know of
+
+49:27.300 --> 49:33.460
+ and so keep in mind these questions are then inputs to this algorithm that's helping determine
+
+49:33.460 --> 49:41.060
+ who who has to pay parole or sorry pay bail who might get parole really significantly
+
+49:41.060 --> 49:46.180
+ impacting someone's life and as we saw from the kind of Dartmouth study I ancient mentioned
+
+49:46.180 --> 49:51.060
+ this is actually not very accurate and there's not evidence that this makes it more accurate
+
+49:51.060 --> 49:59.000
+ but even if it did I think this is unethical to have these sorts of factors used in making
+
+49:59.000 --> 50:04.220
+ such a decision just in that you know people have no control over what happened to them
+
+50:04.220 --> 50:08.500
+ as children or what their parents may have done and it seems to me kind of very unethical
+
+50:08.500 --> 50:13.820
+ to use that in someone's prison sentence and so I think it's important to keep in mind
+
+50:13.820 --> 50:19.180
+ that kind of improving accuracy shouldn't be be your only goal but that there may still
+
+50:19.180 --> 50:29.420
+ be types of data or particular factors that are unethical to use.
+
+50:29.420 --> 50:33.980
+ I remember reading this and it didn't go into it so I'm wondering if you have additional
+
+50:33.980 --> 50:39.380
+ information about how this question set was even administered.
+
+50:39.380 --> 50:50.540
+ Yeah this is the other the other factor is that it's and I actually don't know the answer
+
+50:50.540 --> 50:54.740
+ to this but my understanding is that people could lie on this questionnaire and so then
+
+50:54.740 --> 51:08.640
+ are you yeah rewarding people that lie or it's right so that yeah so there is a probably
+
+51:08.640 --> 51:13.860
+ significant significant yeah like who knows what people were saying for this I mean I
+
+51:13.860 --> 51:17.980
+ can imagine some people may have felt intimidated and felt like they needed to give correct
+
+51:17.980 --> 51:26.980
+ answers well it's 140 inputs they're not all questions and actually don't know yeah what
+
+51:26.980 --> 51:30.260
+ what else is in the question yeah so that no this should raise a lot of issues like
+
+51:30.260 --> 51:41.200
+ yeah this just seems like terrible for many reasons all right so yeah that's one kind
+
+51:41.200 --> 51:51.640
+ of just issue apart from bias but that is relevant yeah then kind of returning to facial
+
+51:51.640 --> 51:58.060
+ recognition and it's important to think about its uses so it's kind of wrong to have these
+
+51:58.060 --> 52:06.820
+ very very different error rates the same time in in 2015 after Freddie Gray a black man
+
+52:06.820 --> 52:13.140
+ was killed by police in Baltimore Baltimore police used facial recognition to identify
+
+52:13.140 --> 52:21.300
+ protesters protesting his death and this was specifically to identify people that had existing
+
+52:21.300 --> 52:25.180
+ warrants although there's no information on what these warrants were for if they were
+
+52:25.180 --> 52:33.140
+ for very minor offenses or not and this was from this private company and this only came
+
+52:33.140 --> 52:38.860
+ to light because the ACLU ended up obtaining some of its marketing materials and the company
+
+52:38.860 --> 52:43.780
+ was bragging about this is like a successful case study and they even I should have included
+
+52:43.780 --> 52:47.780
+ the language but it's like oh it's so great we were able to like arrest these people before
+
+52:47.780 --> 52:52.780
+ they harmed anyone but it was like why why were you arresting them if they if they hadn't
+
+52:52.780 --> 52:57.780
+ done anything and so this is this is really concerning I think the idea of identifying
+
+52:57.780 --> 53:07.020
+ protesters you know if this became widespread or even not widespread if this became you
+
+53:07.020 --> 53:12.780
+ know was being used more I think could really impact civil rights and so it's important
+
+53:12.780 --> 53:18.820
+ to think about applications like this so this is not something where you know having less
+
+53:18.820 --> 53:22.940
+ bias facial recognition I mean this is you know it'd be bad to be making errors here
+
+53:22.940 --> 53:27.740
+ but it's also bad to be doing this accurately like this is not I think this is not a good
+
+53:27.740 --> 53:34.660
+ use case at all and so wanted to wanted to highlight that yes
+
+53:34.660 --> 53:49.860
+ yeah at the end it's like they are finding ways to do what they need to do in a cheaper
+
+53:49.860 --> 53:56.820
+ way right and that's I think what pushed them to actually implement this system right because
+
+53:56.820 --> 54:02.420
+ so in general I would say because even for example I don't know all the companies in
+
+54:02.420 --> 54:06.460
+ the US who decide okay yeah no we are not going to develop these technologies because
+
+54:06.460 --> 54:11.860
+ we know all this stuff is going on and there's bias and things and so we are not going to
+
+54:11.860 --> 54:16.500
+ develop these technologies right and then I think the need or the pressure that I don't
+
+54:16.500 --> 54:20.860
+ know the police or other type of organization are feeling to implement these technologies
+
+54:20.860 --> 54:26.860
+ because kind of budgets are like that I don't know maybe they will start buying these technologies
+
+54:26.860 --> 54:33.460
+ why are they developed where there's no this concern right so so the question is like there's
+
+54:33.460 --> 54:38.700
+ some drive so what is how you approach and develop the technology but somehow there's
+
+54:38.700 --> 54:44.860
+ some drive for forgetting these technologies that are not so clear for me what is the source
+
+54:44.860 --> 54:48.660
+ and so how you need to control that for the people deciding to buy these technologies
+
+54:48.660 --> 54:53.900
+ so how they don't so I would I would disagree with your original statement that the police
+
+54:53.900 --> 54:59.580
+ are a that they need to do this and that be this is allowing them to do it cheaper and
+
+54:59.580 --> 55:06.300
+ there are many things that are very inefficient about the market for technologies sold to
+
+55:06.300 --> 55:10.560
+ police so in the and we'll talk more about this in the privacy and surveillance lesson
+
+55:10.560 --> 55:16.860
+ but just briefly so one policing in the US is kind of hyper local so these decisions
+
+55:16.860 --> 55:23.020
+ are kind of made department by department but often I don't know that tech companies
+
+55:23.020 --> 55:29.820
+ are identifying like hey this is a legitimate and necessary need that we're fulfilling they're
+
+55:29.820 --> 55:35.420
+ often kind of pushing like hey isn't this technology cool and selling it there and it
+
+55:35.420 --> 55:42.000
+ can be very expensive in many cases so for many types of technology there's kind of near
+
+55:42.000 --> 55:48.820
+ monopoly so for instance police body cameras taser now branded axon has virtual monopoly
+
+55:48.820 --> 55:54.480
+ on the market as also I'll post an article I wrote with kind of some relevant pieces
+
+55:54.480 --> 55:59.460
+ of information but yeah I would disagree that this was something that needed to happen or
+
+55:59.460 --> 56:03.680
+ that would be done either way and also even that this is lowering the cost because these
+
+56:03.680 --> 56:09.200
+ can be quite expensive and many of these companies are then kind of pushing cloud storage of
+
+56:09.200 --> 56:17.800
+ keeping this data forever but this is I would prefer to wait to the kind of privacy and
+
+56:17.800 --> 56:25.440
+ surveillance and I mostly I'm kind of highlighting this to show that even and you know and as
+
+56:25.440 --> 56:30.800
+ we discussed earlier you are probably never going to get the exact same accuracy on different
+
+56:30.800 --> 56:35.540
+ measures across groups but even if you had significantly less biased facial recognition
+
+56:35.540 --> 56:39.400
+ I think there are applications of it that would be very questionable and so it's not
+
+56:39.400 --> 56:43.440
+ just a question of removing bias but also thinking of kind of how how the technology
+
+56:43.440 --> 56:53.720
+ is being used I'm sorry there's I realize more editorializing here if you but yeah so
+
+56:53.720 --> 57:05.260
+ that is my kind of opinion that it is very would be very harmful to be identifying protesters
+
+57:05.260 --> 57:11.560
+ and that this is something that's happened in the United States there was the digital
+
+57:11.560 --> 57:18.360
+ justice lab hosted a workshop unfortunately in Boston called please don't include us of
+
+57:18.360 --> 57:24.660
+ groups kind of not wanting to be included in kind of creating a more or you know less
+
+57:24.660 --> 57:30.360
+ biased technology because of concerns about how it was being used and so kind of many
+
+57:30.360 --> 57:36.360
+ others have kind of raised these these concerns and this happened this fall and I was not
+
+57:36.360 --> 57:40.200
+ able to find much much information about it but I was very or something where I was like
+
+57:40.200 --> 57:48.200
+ if this was local I would have I would have loved to go another kind of issue and this
+
+57:48.200 --> 57:52.680
+ gets back a little bit to what Ali was saying earlier about kind of race and gender being
+
+57:52.680 --> 57:59.880
+ social constructs these are two papers by trans researchers on the problem with doing
+
+57:59.880 --> 58:06.660
+ gender gender classification using facial recognition and so so first of all kind of
+
+58:06.660 --> 58:12.280
+ doing gender classification with facial recognition has much higher error rates for for trans
+
+58:12.280 --> 58:18.600
+ and non-binary people but it's not I mean so that that's an example of bias you have
+
+58:18.600 --> 58:23.800
+ you know higher error rates on certain groups however particularly in the OS keys paper
+
+58:23.800 --> 58:30.280
+ they argue that the goal shouldn't be like oh let's just you know improve the error rates
+
+58:30.280 --> 58:36.200
+ on trans and non-binary people it's that the whole premise of you know that gender is something
+
+58:36.200 --> 58:43.560
+ you're assigning to someone externally you know whether that's by a person kind of looking
+
+58:43.560 --> 58:47.960
+ at you or a computer you know taking your image and then determining this for you but
+
+58:47.960 --> 58:53.600
+ that that whole kind of premise is incorrect and not something to be pursuing and so that's
+
+58:53.600 --> 58:58.680
+ kind of another example where it's not just oh let's gather a more diverse data set and
+
+58:58.680 --> 59:07.800
+ then we can can reduce our bias but that the premise may be incorrect and then Joy Ballamwini
+
+59:07.800 --> 59:12.120
+ has spoken about this that that algorithmic fairness is not justice and they're kind of
+
+59:12.120 --> 59:22.960
+ many many issues that aren't aren't captured questions kind of on this part of yeah like
+
+59:22.960 --> 59:26.740
+ that there are places that we just shouldn't be using facial recognition and it's not just
+
+59:26.740 --> 59:32.820
+ okay let's get police more accurately identifying black black women but let's really think about
+
+59:32.820 --> 59:34.240
+ how it's being used.
+
+59:34.240 --> 59:35.240
+ Ali?
+
+59:35.240 --> 59:46.440
+ Yeah so actually Oz published a paper at CHI at a conference recently that I had the pleasure
+
+59:46.440 --> 59:52.440
+ of presenting it was basically like critiquing the idea of fairness and even accountability
+
+59:52.440 --> 59:57.680
+ transparency where they were suggesting like let's turn old people into food and let's
+
+59:57.680 --> 1:00:03.480
+ do it fairly and let's do it accountability and let's do it transparently and they like
+
+1:00:03.480 --> 1:00:07.920
+ provably argued that you can do all of these things in fair ways but like if the point
+
+1:00:07.920 --> 1:00:15.240
+ of it at the end is to turn people into food then this is like a completely misguided endeavor
+
+1:00:15.240 --> 1:00:21.400
+ yeah it was I think it was a mulching proposal is the title of it yeah but so I think that
+
+1:00:21.400 --> 1:00:25.820
+ if I understood like Joy's point correctly like that was a similar sort of like ethos
+
+1:00:25.820 --> 1:00:30.020
+ that she was going for which is that like you can have like fairness of the application
+
+1:00:30.020 --> 1:00:33.920
+ of the algorithmic system but if the algorithmic system is there to hurt all of us or to oppress
+
+1:00:33.920 --> 1:00:39.200
+ all of us like it's fair in its oppression I guess but that's awful.
+
+1:00:39.200 --> 1:00:44.760
+ Yeah thank you Ali and I'll post a link to the the mulching proposal paper because yeah
+
+1:00:44.760 --> 1:00:46.920
+ I read that and that is that is a great example.
+
+1:00:46.920 --> 1:00:54.640
+ Okay at the end of end of your row.
+
+1:00:54.640 --> 1:01:07.520
+ Well I think that if we have algorithms assessing for example the criminality of people in the
+
+1:01:07.520 --> 1:01:17.560
+ world justice system it's going to be worse and worse because if you can say today that
+
+1:01:17.560 --> 1:01:30.520
+ based on SAC's score this guy might be a recidivist in the future, aren't we going to be like
+
+1:01:30.520 --> 1:01:39.160
+ okay let's predict for example someone we seek to predict the chances that that person
+
+1:01:39.160 --> 1:01:47.600
+ is going to die or not and if that's the case for example why not put an end to their life
+
+1:01:47.600 --> 1:01:51.040
+ why not?
+
+1:01:51.040 --> 1:01:56.920
+ I think you're getting at many of kind of concerns around surveillance of collecting
+
+1:01:56.920 --> 1:02:02.600
+ a lot of data yeah if we don't have safeguards in place that it could be used in pretty bad
+
+1:02:02.600 --> 1:02:08.520
+ ways and yeah we will talk more about that but yeah I think there are definitely concerns
+
+1:02:08.520 --> 1:02:14.400
+ of kind of if you you know and a lot of this even just goes into insurance but it's like
+
+1:02:14.400 --> 1:02:19.460
+ if we get super accurate and are collecting tons of data yeah like health insurance could
+
+1:02:19.460 --> 1:02:26.620
+ become even more inaccessible for people that are predicted to to be unhealthy or to have
+
+1:02:26.620 --> 1:02:34.080
+ issues so so yeah we'll talk about some of those issues kind of in the privacy week.
+
+1:02:34.080 --> 1:02:45.200
+ Let me move on but I'll take some more questions kind of in a moment and another paper I thought
+
+1:02:45.200 --> 1:02:53.000
+ was really interesting this is from ICML last year was on fair washing and here they showed
+
+1:02:53.000 --> 1:02:59.880
+ that if you had a unfair algorithm basically you could go back given a fairness definition
+
+1:02:59.880 --> 1:03:05.320
+ and make a kind of post hoc justification to make it seem fairer than it was but still
+
+1:03:05.320 --> 1:03:10.360
+ come up to the same answers and so this is kind of like from a mathematical perspective
+
+1:03:10.360 --> 1:03:16.160
+ but I thought was really interesting and so this also kind of shows that you know meeting
+
+1:03:16.160 --> 1:03:20.440
+ some fairness criteria will not be sufficient because you could still be kind of hiding
+
+1:03:20.440 --> 1:03:31.520
+ the the real reasons you're making decisions all right so then in the kind of the the final
+
+1:03:31.520 --> 1:03:37.120
+ section I want to talk about some steps towards solutions and as you as you may have guessed
+
+1:03:37.120 --> 1:03:43.080
+ there's no kind of oh this solves it and and now you're done but some of the I think kind
+
+1:03:43.080 --> 1:03:48.280
+ of positive steps towards solutions and then also I want to note that next week we'll we'll
+
+1:03:48.280 --> 1:03:52.120
+ be talking more about kind of processes to implement and things that could be helpful
+
+1:03:52.120 --> 1:03:58.040
+ kind of practically in in terms of working towards solutions and the first and this is
+
+1:03:58.040 --> 1:04:03.360
+ a kind of adopted from a talk I gave but I really encouraged people to kind of go back
+
+1:04:03.360 --> 1:04:09.680
+ and analyze a project at your workplace or in your school as a kind of concrete thing
+
+1:04:09.680 --> 1:04:18.280
+ you can do to kind of look for kind of look for types of bias also starting with the the
+
+1:04:18.280 --> 1:04:24.880
+ question of should we even be doing this and remembering I think bias in particular because
+
+1:04:24.880 --> 1:04:29.400
+ it's getting more attention which on the whole is positive and really glad that it's being
+
+1:04:29.400 --> 1:04:34.820
+ covered in the news more often leads people to potentially think though that like any
+
+1:04:34.820 --> 1:04:43.360
+ project can be de-biased and then it's it's good and so a paper that will be will be reading
+
+1:04:43.360 --> 1:04:49.440
+ in a later week is when the implication is not to design and this kind of says you know
+
+1:04:49.440 --> 1:04:53.180
+ engineers tend to respond to problems with oh you know like what can I make or build
+
+1:04:53.180 --> 1:04:56.680
+ to fix this and I think that can be coming from a really good place of you know like
+
+1:04:56.680 --> 1:05:01.680
+ these are the tools I have what can I what can I do but sometimes the answer is to not
+
+1:05:01.680 --> 1:05:07.680
+ to not make or build anything and so some examples I think of really troubling technology
+
+1:05:07.680 --> 1:05:16.200
+ include the facial recognition for ethnicity recognition and so these were papers that
+
+1:05:16.200 --> 1:05:21.440
+ were distinguishing between Chinese Uyghurs Tibetans and Koreans and the Chinese Uyghur
+
+1:05:21.440 --> 1:05:28.040
+ are the Muslim minority in western China that are being put in internment camps there's
+
+1:05:28.040 --> 1:05:33.960
+ also been at least two research product projects now about trying to identify people's sexuality
+
+1:05:33.960 --> 1:05:41.560
+ from their pictures and it's you know it's really what they're doing is identifying kind
+
+1:05:41.560 --> 1:05:45.880
+ of cultural differences and in kind of how people are presenting themselves on dating
+
+1:05:45.880 --> 1:05:50.880
+ sites I believe for the the most part but just that this whole idea is kind of a problem
+
+1:05:50.880 --> 1:05:56.160
+ of you know a this could be very dangerous for people in many parts of the world if it
+
+1:05:56.160 --> 1:06:00.200
+ was I mean again these are these things are often like they're bad if they're wrong and
+
+1:06:00.200 --> 1:06:05.960
+ they're also bad if they if they were to work accurately as well as just the premise that
+
+1:06:05.960 --> 1:06:11.960
+ sexuality is something you assign to somebody by by looking at them so those are some kind
+
+1:06:11.960 --> 1:06:19.260
+ of examples of things to not do and I will talk more about those later and so really
+
+1:06:19.260 --> 1:06:24.000
+ kind of starting there but from there if you've determined it's you know a project that that
+
+1:06:24.000 --> 1:06:29.400
+ is good to be doing looking for what biases in the data and recognizing that all data
+
+1:06:29.400 --> 1:06:34.200
+ is biased there's not kind of unbiased and I think someone said this earlier there's
+
+1:06:34.200 --> 1:06:39.160
+ not unbiased data out there but the important thing is to kind of understand it and understand
+
+1:06:39.160 --> 1:06:46.180
+ how it's gathered also looking for kind of what accountability mechanisms are in place
+
+1:06:46.180 --> 1:06:51.360
+ you know can the the code and data here be audited what are error rates for different
+
+1:06:51.360 --> 1:06:59.080
+ subgroups what is the accuracy of a simple rule-based alternative and this is something
+
+1:06:59.080 --> 1:07:03.040
+ that I mean this is a good first step kind of for any machine learning project is just
+
+1:07:03.040 --> 1:07:07.880
+ to know what can you get with a simple rule-based alternative and you know something we saw
+
+1:07:07.880 --> 1:07:12.480
+ with the compass recidivism algorithm where it's not even more more accurate than a linear
+
+1:07:12.480 --> 1:07:18.240
+ classifier on three variables but to kind of know you know is my algorithm even that
+
+1:07:18.240 --> 1:07:21.520
+ accurate or doing what I think it is question in the fourth row
+
+1:07:21.520 --> 1:07:30.360
+ just now but are you aware of any studies comparing like a machine learning based approach
+
+1:07:30.360 --> 1:07:34.920
+ against a rules engine and just saying which of these is you know do we have any provable
+
+1:07:34.920 --> 1:07:40.400
+ evidence that one can work better than the other for any given data set or any given
+
+1:07:40.400 --> 1:07:52.160
+ question Ellie Scott yeah so I'm not sure if there's evidence that rule-based systems
+
+1:07:52.160 --> 1:07:57.960
+ perform better but there is a pretty substantial amount of evidence a lot of it coming from
+
+1:07:57.960 --> 1:08:04.360
+ Sharad Goel who's at Stanford in management sciences basically showing that rule-based
+
+1:08:04.360 --> 1:08:07.920
+ systems like really simple rule-based systems where like a judge would like have a scorecard
+
+1:08:07.920 --> 1:08:12.120
+ and it would basically say like has this person committed a crime if like in previously to
+
+1:08:12.120 --> 1:08:16.240
+ this bail hearing if so add four points and then at the end of that like if it's over
+
+1:08:16.240 --> 1:08:22.000
+ the stretch hold and you know don't give them bail that that performs like so close to as
+
+1:08:22.000 --> 1:08:29.000
+ well as the top of the line AI systems that were around at the time that it it was extremely
+
+1:08:29.000 --> 1:08:35.080
+ difficult for them to provide any motivated reason for why you would use a very complex
+
+1:08:35.080 --> 1:08:40.800
+ machine learning system I'm not sure whether it's demonstrably possible to say that like
+
+1:08:40.800 --> 1:08:45.560
+ a rule-based system would actually outperform the eyes but because in AI which is sort of
+
+1:08:45.560 --> 1:08:51.640
+ start to kind of consume that but yeah there is quite a bit that shows that it's so close
+
+1:08:51.640 --> 1:08:57.320
+ and the ability to explain why you came to that conclusion is pretty substantial yeah
+
+1:08:57.320 --> 1:09:03.720
+ and I would say kind of from more a philosophical point I think it can provide a kind of consistency
+
+1:09:03.720 --> 1:09:08.600
+ that seems very fair to say I kind of know why I'm doing it for rules that I think are
+
+1:09:08.600 --> 1:09:18.860
+ fair and are being applied consistently then as I mentioned before kind of having a place
+
+1:09:18.860 --> 1:09:26.500
+ to a way to handle appeals and mistakes and recognizing that computers make mistakes data
+
+1:09:26.500 --> 1:09:33.660
+ has heirs can you catch them before kind of something disastrous happens and can you kind
+
+1:09:33.660 --> 1:09:39.440
+ of write things that are that are wrong and then also looking at the the diversity of
+
+1:09:39.440 --> 1:09:44.520
+ the team that built it because I believe that's a factor in in kind of creating creating better
+
+1:09:44.520 --> 1:09:52.200
+ technology a hand in the fourth row going along with that how diverse is the team that
+
+1:09:52.200 --> 1:10:00.200
+ built it kind of historically in technology it's been a lot of primarily white males and
+
+1:10:00.200 --> 1:10:07.680
+ so seeing something like the compass where it's like down performing african-americans
+
+1:10:07.680 --> 1:10:13.040
+ is that maybe because of the inherent bias of the in-group bias of the people that created
+
+1:10:13.040 --> 1:10:20.600
+ it yeah I think that's definitely a factor in general and not just I think it also shows
+
+1:10:20.600 --> 1:10:26.200
+ up in kind of not always thinking about what can go wrong and how this technology could
+
+1:10:26.200 --> 1:10:33.760
+ be applied but I think that the the homogeneity in tech is has played a role in kind of many
+
+1:10:33.760 --> 1:10:43.000
+ of the misuses and negative impacts and then another problem that we may get to get to
+
+1:10:43.000 --> 1:10:47.620
+ more later is you know often they're tight NDAs and this is an issue in police use of
+
+1:10:47.620 --> 1:10:51.400
+ technology as well often there are these very restrictive NDAs and so you don't even know
+
+1:10:51.400 --> 1:11:01.600
+ kind of that this technology exists much less how it's being being applied to you and so
+
+1:11:01.600 --> 1:11:05.260
+ I mean I guess one here I was kind of trying to get at the response the responsibility
+
+1:11:05.260 --> 1:11:11.420
+ of those kind of working at a company or help making the tech to recognize the the need
+
+1:11:11.420 --> 1:11:19.560
+ for for appeals I guess as an outsider I think this also highlights in some cases the the
+
+1:11:19.560 --> 1:11:27.640
+ need for you know do we need policies to restrict or address the the use of some questionable
+
+1:11:27.640 --> 1:11:35.800
+ technology although yeah often just even finding out that it exists can be can be really helpful
+
+1:11:35.800 --> 1:11:42.040
+ to even start figuring out what's going on so then a paper that I love is data sheets
+
+1:11:42.040 --> 1:11:47.360
+ for data sets this is one of the ones that was in the assigned reading by Timnit Gebru
+
+1:11:47.360 --> 1:11:53.800
+ et al and here Timnit's kind of drawing on her past as an electrical engineer and looking
+
+1:11:53.800 --> 1:12:00.840
+ at the kind of electronics industry of you know like circuits and resistors and all these
+
+1:12:00.840 --> 1:12:06.360
+ electronics pieces and it's very standardized there to have these data sheets that tell
+
+1:12:06.360 --> 1:12:12.780
+ you information about how and when and where they were manufactured and under what conditions
+
+1:12:12.780 --> 1:12:19.080
+ are they safe to use and so on and this is kind of a totally totally standard process
+
+1:12:19.080 --> 1:12:25.120
+ and so this group proposed something similar for data sets of just recording this information
+
+1:12:25.120 --> 1:12:30.000
+ and so this is in keeping with this idea that we can't remove bias from data sets but it
+
+1:12:30.000 --> 1:12:35.200
+ would be helpful just to understand how the data set was created and so here they listed
+
+1:12:35.200 --> 1:12:41.480
+ kind of some sample questions that could be could be potentially included you know what
+
+1:12:41.480 --> 1:12:46.680
+ are the instances in this data who wasn't who was involved in the data collection process
+
+1:12:46.680 --> 1:12:53.280
+ over what time frame will the data set be updated this gets to an earlier question about
+
+1:12:53.280 --> 1:12:59.320
+ the the recency or if it's changed who was supporting hosting maintaining the data set
+
+1:12:59.320 --> 1:13:05.140
+ if the data set relates to people or was generated by people were they informed were they told
+
+1:13:05.140 --> 1:13:09.200
+ what the data set would be used for and did they can consent and so on and so I think
+
+1:13:09.200 --> 1:13:14.920
+ these are kind of really interesting and important questions and I like this idea of standardizing
+
+1:13:14.920 --> 1:13:19.120
+ what information you have about a data set because a lot of times bias shows up and I
+
+1:13:19.120 --> 1:13:23.120
+ think someone was talking about this earlier it's not it's not malicious but it's just
+
+1:13:23.120 --> 1:13:27.280
+ because people aren't necessarily thinking and there's something that they've missed
+
+1:13:27.280 --> 1:13:31.400
+ and this is kind of one of the risk of homogeneous groups of if everyone has the same background
+
+1:13:31.400 --> 1:13:35.680
+ they're just kind of more likely to all have certain areas that they haven't thought about
+
+1:13:35.680 --> 1:13:41.960
+ or kind of miss miss particular worries and data sheets for data sets is kind of part
+
+1:13:41.960 --> 1:13:48.240
+ of there have been many kind of similar related proposals including one group framed them
+
+1:13:48.240 --> 1:13:53.640
+ as nutrition facts and so similar to kind of the nutrition label that you have around
+
+1:13:53.640 --> 1:13:58.080
+ food and how that's that's standardized that's something we did not always have but you know
+
+1:13:58.080 --> 1:14:04.360
+ developed developed kind of as a safety mechanism in part and a transparency mechanism there
+
+1:14:04.360 --> 1:14:09.760
+ was an NLP specific version from Emily Bender and Bhatia Friedman on data statements for
+
+1:14:09.760 --> 1:14:18.160
+ NLP and then there's the standardization of data licenses the Montreal data license and
+
+1:14:18.160 --> 1:14:24.200
+ so that this is kind of a positive sign when you have researchers in a field coming up
+
+1:14:24.200 --> 1:14:29.260
+ with related proposals that kind of many experts are seeing this as a as a promising direction
+
+1:14:29.260 --> 1:14:36.780
+ to go in and then actually just read this in the last week timid together with you and
+
+1:14:36.780 --> 1:14:43.740
+ CEO Joe wrote a new paper that just came out on kind of what could machine learning learn
+
+1:14:43.740 --> 1:14:51.640
+ about data collection from archives and library sciences and so in the field of archives and
+
+1:14:51.640 --> 1:14:59.760
+ library sciences a lot more kind of thought and consideration has gone into how data sets
+
+1:14:59.760 --> 1:15:06.080
+ are collected and constructed whereas in you know data collection and ml is often kind
+
+1:15:06.080 --> 1:15:10.800
+ of pretty haphazard and so this was this was an interesting paper and I'll post a link
+
+1:15:10.800 --> 1:15:15.800
+ on just what kind of what lessons could we learn about starting to standardize this and
+
+1:15:15.800 --> 1:15:21.920
+ seeing this as an area that requires expertise and thoughtfulness in the development of process
+
+1:15:21.920 --> 1:15:30.760
+ family just check okay two minutes nice I'll pause though and take because we can we can
+
+1:15:30.760 --> 1:15:48.960
+ finish up next time on this their questions about about these ideas but how horrible projects
+
+1:15:48.960 --> 1:15:52.520
+ in particular have such a different cadence and software brought me and so they allow
+
+1:15:52.520 --> 1:15:57.720
+ themselves for that type of documentation and it necessitates a little bit more also
+
+1:15:57.720 --> 1:16:02.760
+ because manufacturing all the other things that go into it and just how you can apply
+
+1:16:02.760 --> 1:16:06.880
+ this to so much of what we're talking about it just slowly down cadence the software projects
+
+1:16:06.880 --> 1:16:14.040
+ would be yes yeah so whether this is like the thing or other gates along the way yes
+
+1:16:14.040 --> 1:16:18.400
+ yeah that's that's a good point yeah no I heard a talk once this was it was in a closed
+
+1:16:18.400 --> 1:16:22.800
+ environment so I won't quote the person but they won't name the company they were talking
+
+1:16:22.800 --> 1:16:27.720
+ about one of the kind of ethics practices that their company was building in pauses
+
+1:16:27.720 --> 1:16:30.320
+ and it was something that like sounded like revolutionary when I heard it it was like
+
+1:16:30.320 --> 1:16:35.880
+ wow like a tech company is pausing to reflect on what they're doing but yeah I think that
+
+1:16:35.880 --> 1:16:41.500
+ that can be that can be really helpful all right then kind of referring to earlier this
+
+1:16:41.500 --> 1:16:47.560
+ idea of checking on the accuracy on subgroups it's also important to note that gender shades
+
+1:16:47.560 --> 1:16:53.960
+ was very kind of very deliberately designed to be an experiment that would have a kind
+
+1:16:53.960 --> 1:17:00.140
+ of this really tangible practical real-world impact and it's not just chance that it has
+
+1:17:00.140 --> 1:17:03.960
+ but that it was very kind of thoughtfully designed around what kind of what kind of
+
+1:17:03.960 --> 1:17:09.880
+ change they wanted to affect and Deborah Raji gave a great talk on that that I'll share
+
+1:17:09.880 --> 1:17:18.280
+ the link to and she did the follow-up work with joy and all actually I'll talk more about
+
+1:17:18.280 --> 1:17:23.600
+ kind of the diversity aspect next time but so kind of in closing although we'll return
+
+1:17:23.600 --> 1:17:27.680
+ to this idea of kind of what what practices can can we be doing to kind of to improve
+
+1:17:27.680 --> 1:17:34.940
+ our companies our work but here are some suggestions for getting started so just even analyzing
+
+1:17:34.940 --> 1:17:40.100
+ a project to see try creating a data sheet about about a data set that you're working
+
+1:17:40.100 --> 1:17:47.040
+ with the suggestion earlier that I gave from Christian Lum's tutorial on the compass recidivism
+
+1:17:47.040 --> 1:17:50.640
+ algorithm where she partnered with a public defender and an innocent man who couldn't
+
+1:17:50.640 --> 1:17:57.280
+ afford bail to work with domain experts and people impacted increasing diversity in your
+
+1:17:57.280 --> 1:18:02.180
+ workplace and then I'll say also just to kind of be on the ongoing lookout for bias because
+
+1:18:02.180 --> 1:18:05.840
+ it's not something where you're like oh okay I've checked for it I'm done I don't have
+
+1:18:05.840 --> 1:18:32.360
+ to worry about it but it's kind of an ongoing ongoing issue well thank you it's eight o'clock.
+
